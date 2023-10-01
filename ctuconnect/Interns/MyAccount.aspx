@@ -109,7 +109,7 @@
                 <div class="top"></div>
                 <div class="bottom">
                     <center>
-                    <image src="images/defaultprofile.jpg" class="profile" height="100" width="100"></image>
+                    <image src="/images/defaultprofile.jpg" class="profile" height="100" width="100"></image>
                     </center>
                     <div class="row">
                         <div class="col-sm-3">
