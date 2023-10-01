@@ -145,7 +145,7 @@
     <Content Include="IndustryHome.aspx" />
     <Content Include="JobPortal.aspx" />
     <Content Include="Login.aspx" />
-    <Content Include="MyAccount.aspx" />
+    <Content Include="Interns\MyAccount.aspx" />
     <Content Include="NoticePage.aspx" />
     <Content Include="ReferralList.aspx" />
     <Content Include="RegisterIndustry.aspx" />
@@ -298,11 +298,11 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MyAccount.aspx.cs">
+    <Compile Include="Interns\MyAccount.aspx.cs">
       <DependentUpon>MyAccount.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="MyAccount.aspx.designer.cs">
+    <Compile Include="Interns\MyAccount.aspx.designer.cs">
       <DependentUpon>MyAccount.aspx</DependentUpon>
     </Compile>
     <Compile Include="NoticePage.aspx.cs">
@@ -400,6 +400,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="images\Uploads\" />
+    <Folder Include="Industry\" />
+    <Folder Include="OjtCoordinator\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
