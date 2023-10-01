@@ -2,7 +2,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <style>
+
         .box{
             min-width:250px;
             height: 250px;
@@ -43,7 +45,7 @@
             min-height:300px;
             background: #FFFFFF;
             border: 1px solid #FFFFFF;
-            padding: 4px 4px 4px 4px;
+            padding:10px;
             border-radius: 5px;
         }
 
@@ -71,8 +73,27 @@
             color:#881A30;
             position:center;
         }
-        
+        .buttonStyle {
+            background-color: white; 
+            min-width: 100%; 
+            min-height: 35px; 
+            color: orange; 
+            background-color: white;
+            border-radius: 20px; 
+            border: 1.5px solid orange;
+        }
+        .buttonStyle:hover {
+            background:orange;
+            color:white;
+        }
+        .col {
+            font-size: 15px;
+        }
+        h3 {
+            font-size: 20px;
+        }
     </style>
+   
     <div class="container-fluid">
         <div class="row">
             <div class="col-3 d-flex flex-column align-items-center text-center" >
@@ -93,15 +114,116 @@
                 <br />
                 <div class="reco">
                     <p>Recommended for you</p>
-
+                    <asp:DataList ID="DataList1" runat="server" class="container-fluid">
+    <ItemTemplate>
+        <div style="border: 3px solid #a2a3a2 ; padding: 10px; margin:auto; margin-bottom:10px; width: 100%; height: 100%" class="row d-flex align-items-center">
+            <div class="col-sm-2">
+                <img src="#" alt="Logo" />
+            </div>
+            <div class="col-sm-7">
+                <div class="row">
+                    <div class="align-items-start">
+                        <span>
+                            <h3><%#Eval("industryName")%></h3>
+                        </span>
+                    </div>
+                    <div class="col">
+                        <label>Job Title: </label>
+                        <span><%#Eval("jobTitle")%></span>
+                    </div>
+                    <div class="col">
+                        <label>
+                            Job Course: 
+                        </label>
+                        <span><%#Eval("jobCourse") %></span>
+                    </div>
+                    <div class="col">
+                        <label>Job Location: </label>
+                        <span><%#Eval("jobLocation") %></span>
+                    </div>
+                    
+               </div>                                  
+            </div>
+             <div class="col-1" style="border-right: 2px solid #bdbdbd ; height:60px;">
+             </div>
+            <div class="col-sm-2 d-flex align-items-center">
+            <div class="flex-fill">
+                <asp:Button ID="ApplyJob" runat="server" class="buttonStyle" Text="Apply" OnClick="ApplyJob_Click" AutoPostBack="false"/>
+            </div>
+            </div>
+        </div>
+    </ItemTemplate>
+</asp:DataList>
                 </div>
                 <hr class="line"/>
-                <div class="jobs">
-                    
+                <div class="jobs" >
+                    <asp:DataList ID="JobHiring" runat="server" class="container-fluid">
+                        <ItemTemplate>
+                            <div style="border: 3px solid #a2a3a2 ; padding: 10px; margin:auto; margin-bottom:10px; width: 100%; height: 100%" class="row d-flex align-items-center">
+                                <div class="col-sm-2">
+                                    <img src="#" alt="Logo" />
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="row">
+                                        <div class="align-items-start">
+                                            <span>
+                                                <h3><%#Eval("industryName")%></h3>
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                            <label>Job Title: </label>
+                                            <span><%#Eval("jobTitle")%></span>
+                                        </div>
+                                        <div class="col">
+                                            <label>
+                                                Job Course: 
+                                            </label>
+                                            <span><%#Eval("jobCourse") %></span>
+                                        </div>
+                                        <div class="col">
+                                            <label>Job Location: </label>
+                                            <span><%#Eval("jobLocation") %></span>
+                                        </div>
+                                        
+                                   </div>                                  
+                                </div>
+                                 <div class="col-1" style="border-right: 2px solid #bdbdbd ; height:60px;">
+                                 </div>
+                                <div class="col-sm-2 d-flex align-items-center">
+                                <div class="flex-fill">
+                                   <asp:Button ID="ApplyJob" runat="server" class="buttonStyle" Text="Apply" OnClick="ApplyJob_Click" />
+                                </div>
+                                </div>
+                            </div>
+                        </ItemTemplate>
+                    </asp:DataList>
 
                 </div>
             </div>
         </div>
     </div>
     <br /><br />
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 </asp:Content>
