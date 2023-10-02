@@ -16,7 +16,7 @@ namespace ctuconnect
         {
             if (!IsPostBack && Session["Email"] != null)
             {
-                Response.Redirect("homepage.aspx");
+                Response.Redirect("Home.aspx");
             }
             LoginErrorMessage.Visible = false;
 
@@ -43,19 +43,19 @@ namespace ctuconnect
                 string loginEmail = txtemail.Text;
                 string loginPassword = txtpwd.Text;
 
-                using (SqlConnection dataBase = new SqlConnection())
+                using (conDB)
                 {
-                    dataBase.Open();
+                    conDB.Open();
 
                     string query = "SELECT COUNT(1) FROM INDUSTRY_ACCOUNT WHERE email = @email AND password = @password";
-                    SqlCommand command = new SqlCommand(query, dataBase);
+                    SqlCommand command = new SqlCommand(query, conDB);
                     command.Parameters.AddWithValue("@email", loginEmail);
                     command.Parameters.AddWithValue("@password", loginPassword);
                     int count = Convert.ToInt32(command.ExecuteScalar());
 
                     Session["Email"] = txtemail.Text;
                     Response.Redirect("Home.aspx");
-                    dataBase.Close();
+                    conDB.Close();
                 }
             }
             catch
