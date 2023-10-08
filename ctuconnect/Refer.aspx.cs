@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace UserInterface
+namespace ctuconnect
 {
     public partial class Refer : System.Web.UI.Page
     {

@@ -147,6 +147,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Interns\MyAccount.aspx" />
     <Content Include="NoticePage.aspx" />
+    <Content Include="Refer.aspx" />
     <Content Include="ReferralList.aspx" />
     <Content Include="RegisterIndustry.aspx" />
     <Content Include="RegisterStudent.aspx" />
@@ -313,6 +314,13 @@
       <DependentUpon>NoticePage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Refer.aspx.cs">
+      <DependentUpon>Refer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Refer.aspx.designer.cs">
+      <DependentUpon>Refer.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ReferralList.aspx.cs">
       <DependentUpon>ReferralList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
