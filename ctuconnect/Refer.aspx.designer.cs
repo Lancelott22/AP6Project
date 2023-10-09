@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UserInterface
+namespace ctuconnect
 {
 
 
