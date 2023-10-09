@@ -81,7 +81,7 @@
                 padding: 2% 7% 4% 7%;
                 overflow: auto;
                 /*background-color:white;*/
-                height:550px;
+                height:100vh;
                 /*overflow: auto;
                 float:left;
                 margin-left:25%;
@@ -210,7 +210,7 @@
             <asp:TableCell Style="vertical-align:top; height:200px;" >
                 <div class="profile-container">
                 <img src="images/industrypic.png" />
-                <p >Industry Name</p>
+                <p>Industry Name</p>
                 </div>
             </asp:TableCell> 
             <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
@@ -218,10 +218,10 @@
                     <h1 class="title">Post a Job</h1>
                    
                         <asp:Label ID="Label1" runat="server" Text="Job Title " Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                        <asp:TextBox ID="TextBox1" runat="server" CssClass="txtbox" Placeholder="e.g. Financial Planning Assistant" ></asp:TextBox>
+                        <asp:TextBox ID="JobTitle" runat="server" CssClass="txtbox" Placeholder="e.g. Financial Planning Assistant" ></asp:TextBox>
                 
                         <asp:Label ID="Label2" runat="server" Text="Industry Name " Style="font-size:18px;"></asp:Label><span style="color: red">*</span>
-                        <asp:TextBox ID="TextBox2" runat="server" CssClass="txtbox" Placeholder="e.g. Gaus Electonics"></asp:TextBox>
+                        <asp:TextBox ID="IndName" runat="server" CssClass="txtbox" Placeholder="e.g. Gaus Electonics"></asp:TextBox>
                    
 
                         <asp:Label ID="Label3" runat="server" Text="Job Type " Style="font-size:18px;"></asp:Label><span style="color: red">*</span>
@@ -229,11 +229,11 @@
 
 
                            <div class="dropdown1">
-                            <select name="jobtype" id="jobtype" Style="border-radius: 10px;  min-width: 47%; min-height:35px; margin-bottom:2%; padding-left:20px;">
+                            <select runat="server" name="jobtype" id="jobtype" Style="border-radius: 10px;  min-width: 47%; min-height:35px; margin-bottom:2%; padding-left:20px;">
                                 <option value="fulltime">Full-time</option>
                                 <option value="internship">Internship</option>
                             </select>
-                            <select name="course" id="course" Style="border-radius: 10px;  min-width: 47%; min-height:35px; margin-bottom:2%; padding-left:20px;" >
+                            <select runat="server" name="course" id="course" Style="border-radius: 10px;  min-width: 47%; min-height:35px; margin-bottom:2%; padding-left:20px;" >
                                 <option value="fulltime">Full-time</option>
                                 <option value="internship">Internship</option>
                                 <option value="fulltime">Full-time</option>
@@ -244,19 +244,21 @@
                                 <option value="internship">Internship</option>
                             </select>
                        </div>
+                   
                     <asp:Label ID="Label5" runat="server" Text="Job Location " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="TextBox3" runat="server" CssClass="txtbox" Style="padding-left:20px;" Placeholder="e.g. M.J. Cuenco Ave, Cor R. Palma Street, 6000 Cebu" ></asp:TextBox>
+                     <asp:TextBox ID="jobLoc" runat="server" CssClass="txtbox" Style="padding-left:20px;" Placeholder="e.g. M.J. Cuenco Ave, Cor R. Palma Street, 6000 Cebu" ></asp:TextBox>
 
                      <asp:Label ID="Label6" runat="server" Text="Job Description " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="TextBox4" runat="server" CssClass="txtbox-description" Placeholder="job location" ></asp:TextBox>
+                     <asp:TextBox ID="jobDescript" runat="server" CssClass="txtbox-description" Placeholder="job location" ></asp:TextBox>
 
                     <asp:Label ID="Label7" runat="server" Text="Job Qualifications " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="TextBox5" runat="server" CssClass="txtbox" Placeholder="Enter job qualifications" ></asp:TextBox>
+                     <asp:TextBox ID="jobQuali" runat="server" CssClass="txtbox" Placeholder="Enter job qualifications" ></asp:TextBox>
 
                     <asp:Label ID="Label8" runat="server" Text="Instructions to apply " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="TextBox6" runat="server" CssClass="txtbox" Style="height:70px;">job location</asp:TextBox>
-                     <asp:Button runat="server" Style="background-color:white; min-width:25%; min-height:35px; float:right; color:white; background-color:orange;  border-radius: 10px; border: 1.5px solid orange; " Text="Post"/>
-            </asp:TableCell>
+                     <asp:TextBox ID="jobInstruct" runat="server" CssClass="txtbox" Style="height:70px;">job location</asp:TextBox>
+                     <asp:Button ID="PostJob" runat="server" Style="background-color:white; min-width:25%; min-height:35px; float:right; color:white; background-color:orange;  border-radius: 10px; border: 1.5px solid orange; " Text="Post" OnClick="PostJob_Click"/>
+            </div>
+                    </asp:TableCell>
             </asp:TableRow>
 
         <asp:TableRow>

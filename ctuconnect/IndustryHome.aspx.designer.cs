@@ -33,13 +33,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
-        /// TextBox1 control.
+        /// JobTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox JobTitle;
 
         /// <summary>
         /// Label2 control.
@@ -51,13 +51,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label Label2;
 
         /// <summary>
-        /// TextBox2 control.
+        /// IndName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox2;
+        protected global::System.Web.UI.WebControls.TextBox IndName;
 
         /// <summary>
         /// Label3 control.
@@ -78,6 +78,24 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label Label4;
 
         /// <summary>
+        /// jobtype control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect jobtype;
+
+        /// <summary>
+        /// course control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect course;
+
+        /// <summary>
         /// Label5 control.
         /// </summary>
         /// <remarks>
@@ -87,13 +105,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label Label5;
 
         /// <summary>
-        /// TextBox3 control.
+        /// jobLoc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox3;
+        protected global::System.Web.UI.WebControls.TextBox jobLoc;
 
         /// <summary>
         /// Label6 control.
@@ -105,13 +123,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label Label6;
 
         /// <summary>
-        /// TextBox4 control.
+        /// jobDescript control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox4;
+        protected global::System.Web.UI.WebControls.TextBox jobDescript;
 
         /// <summary>
         /// Label7 control.
@@ -123,13 +141,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label Label7;
 
         /// <summary>
-        /// TextBox5 control.
+        /// jobQuali control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox5;
+        protected global::System.Web.UI.WebControls.TextBox jobQuali;
 
         /// <summary>
         /// Label8 control.
@@ -141,12 +159,21 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label Label8;
 
         /// <summary>
-        /// TextBox6 control.
+        /// jobInstruct control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox6;
+        protected global::System.Web.UI.WebControls.TextBox jobInstruct;
+
+        /// <summary>
+        /// PostJob control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button PostJob;
     }
 }
