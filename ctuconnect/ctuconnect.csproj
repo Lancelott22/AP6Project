@@ -146,6 +146,9 @@
     <Content Include="JobPortal.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Interns\MyAccount.aspx" />
+    <Content Include="LoginIndustry.aspx" />
+    <Content Include="LoginOJTCoordinator.aspx" />
+    <Content Include="LoginStudent.aspx" />
     <Content Include="NoticePage.aspx" />
     <Content Include="Refer.aspx" />
     <Content Include="ReferralList.aspx" />
@@ -306,6 +309,27 @@
     <Compile Include="Interns\MyAccount.aspx.designer.cs">
       <DependentUpon>MyAccount.aspx</DependentUpon>
     </Compile>
+    <Compile Include="LoginIndustry.aspx.cs">
+      <DependentUpon>LoginIndustry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginIndustry.aspx.designer.cs">
+      <DependentUpon>LoginIndustry.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LoginOJTCoordinator.aspx.cs">
+      <DependentUpon>LoginOJTCoordinator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginOJTCoordinator.aspx.designer.cs">
+      <DependentUpon>LoginOJTCoordinator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LoginStudent.aspx.cs">
+      <DependentUpon>LoginStudent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginStudent.aspx.designer.cs">
+      <DependentUpon>LoginStudent.aspx</DependentUpon>
+    </Compile>
     <Compile Include="NoticePage.aspx.cs">
       <DependentUpon>NoticePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -408,7 +432,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="images\Uploads\" />
+    <Folder Include="images\COR\" />
+    <Folder Include="images\IndsutryProfile\" />
+    <Folder Include="images\MOU\" />
+    <Folder Include="images\StudentProfiles\" />
     <Folder Include="Industry\" />
     <Folder Include="OjtCoordinator\" />
   </ItemGroup>
