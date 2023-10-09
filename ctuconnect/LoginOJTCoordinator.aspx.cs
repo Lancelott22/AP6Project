@@ -72,5 +72,125 @@ namespace ctuconnect
                 CheckBox1.Text = "Hide Password";
             }
         }
+
+        void getAcc_id()
+        {
+            try
+            {
+                string getEmail = txtemail.Text;
+                using (conDB)
+                {
+                    conDB.Open();
+                    string query = "SELECT COORDINATOR_ACCID FROM COORDINATOR_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    SqlCommand command = new SqlCommand(query, conDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Session["ACC_ID"] = reader["COORDINATOR_ACCID"];
+                    }
+
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginOJTCoordinator.aspx'</script>");
+            }
+        }
+
+        void getFname()
+        {
+            try
+            {
+                string getEmail = txtemail.Text;
+                using (conDB)
+                {
+                    conDB.Open();
+                    string query = "SELECT FIRSTNAME FROM COORDINATOR_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    SqlCommand command = new SqlCommand(query, conDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Session["FNAME"] = reader["FIRSTNAME"];
+                    }
+
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginOJTCoordinator.aspx'</script>");
+            }
+        }
+
+        void getInitial()
+        {
+            try
+            {
+                string getEmail = txtemail.Text;
+                using (conDB)
+                {
+                    conDB.Open();
+                    string query = "SELECT MIDINITIALS FROM COORDINATOR_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    SqlCommand command = new SqlCommand(query, conDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Session["INITIAL"] = reader["MIDINITIALS"];
+                    }
+
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginOJTCoordinator.aspx'</script>");
+            }
+        }
+
+        void getLNAME()
+        {
+            try
+            {
+                string getEmail = txtemail.Text;
+                using (conDB)
+                {
+                    conDB.Open();
+                    string query = "SELECT LASTNAME FROM COORDINATOR_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    SqlCommand command = new SqlCommand(query, conDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Session["LNAME"] = reader["LASTNAME"];
+                    }
+
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginOJTCoordinator.aspx'</script>");
+            }
+        }
+
+        void getDepartment()
+        {
+            try
+            {
+                string getEmail = txtemail.Text;
+                using (conDB)
+                {
+                    conDB.Open();
+                    string query = "SELECT DEPARTMENT FROM COORDINATOR_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    SqlCommand command = new SqlCommand(query, conDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Session["DEPARTMENT"] = reader["DEPARTMENT"];
+                    }
+
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginOJTCoordinator.aspx'</script>");
+            }
+        }
     }
 }
