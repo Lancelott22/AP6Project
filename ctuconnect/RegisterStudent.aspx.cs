@@ -43,9 +43,14 @@ namespace ctuconnect
                 string logpath2 = "C:\\Users\\Gebby\\source\\repos\\ctuconnect\\ctuconnect\\images\\StudentProfiles";
                 string filepath2 = Path.Combine(logpath2, filename2);
                 if (fileExtension == ".bmp" || fileExtension.Equals(".jpg") || fileExtension.Equals(".png") || fileExtension.Equals(".jpeg") || fileExtension.Equals(".pdf") &&
-                    fileExtension2 == ".bmp" || fileExtension2.Equals(".jpg") || fileExtension2.Equals(".png") || fileExtension2.Equals(".jpeg") || fileExtension2.Equals(".pdf")) //check the filename extension
+                    fileExtension2 == ".bmp" || fileExtension2.Equals(".jpg") || fileExtension2.Equals(".png") || fileExtension2.Equals(".jpeg") ) //check the filename extension
                 {
-                    postedFile.SaveAs(filepath); //save the file in the folder or drive
+                if (File.Exists(filepath) || File.Exists(filepath2))
+                {
+                    Response.Write("<script>alert('A file with the same name already exists. Please choose a different name.');document.location='RegisterStudent.aspx'</script>");
+                    return; // Return to stop further execution
+                }
+                postedFile.SaveAs(filepath); //save the file in the folder or drive
                     postedFile2.SaveAs(filepath2);
                     using (conDB)
                     {
