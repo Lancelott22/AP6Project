@@ -98,10 +98,18 @@
         }
 
         .ContainerBox {
-            border: solid 2px black;
-
+            border: solid 2px #c3c7c4;
+            height:160px;
+            margin: 10px;
+             margin-bottom: 15px;
         }
-
+        .statusStyle {
+            border: solid 1px #06ba1b;
+            background:#06ba1b;
+            height:50px;
+            padding: 6px;
+            color:white;
+        }
     </style>
     <div class="container-fluid">
         <div class="row">
@@ -142,11 +150,12 @@
                         <ItemTemplate>
                             <div id="myApplicationList" runat="server" style="border: 3px solid #a2a3a2; padding: 10px; margin: auto; margin-bottom: 10px; width: 100%; height: 100%" class="row d-flex align-items-center">
                                 <div class="col-sm-2">
-                                    <img id="IndstryLogo" src='<%#String.Format("images/{0}", Eval("IndustryLogo"))%>' runat="server" alt="Logo" class="imgStyle" />
+                                    <img id="IndstryLogo" src='<%#String.Format("images/{0}", Eval("industryPicture"))%>' runat="server" alt="Logo" class="imgStyle" />
                                 </div>
                                 <div class="col-sm-7">
                                     <div class="row">
                                         <label id="JobID" runat="server" hidden="hidden"><%#Eval("applicantID")%></label>
+                                         <label id="Label1" runat="server" hidden="hidden"><%#Eval("jobID")%></label>
                                         <label runat="server" hidden="hidden"><%#Eval("jobType")%></label>
                                         <div class="align-items-start">
                                             <span>
@@ -174,7 +183,7 @@
                                 </div>
                                 <div class="col-sm-2 d-flex align-items-center">
                                     <div class="flex-fill">
-                                        <asp:Button ID="ViewApplication" Text="View" class="buttonStyle" runat="server" CommandName="View" OnCommand="ViewApplication_Command"  CommandArgument='<%#Eval("applicantID")%>' AutoPostBack="false" CausesValidation="false" />
+                                        <asp:Button ID="ViewApplication" Text="View" class="buttonStyle" runat="server" CommandName='<%#Eval("jobID")%>' OnCommand="ViewApplication_Command"  CommandArgument='<%#Eval("applicantID")%>' AutoPostBack="false" CausesValidation="false" />
                                     </div>
 
                                 </div>
@@ -198,14 +207,26 @@
                 </div>
                 <div class="modal-body">
                     <div id="ResumeStatus" runat="server" class="ContainerBox">
-                        <label>ResumeStatus</label>
+                        <div style="background: #881A30; color:white; padding:10px; padding-left:10px;">
+                            <label>Resume Status</label>
+                        </div>
+                        <div style ="padding:10px;">
+                        <br /> 
+                         <span><b>Status:</b> </span><asp:Label ID="resumeStatusCheck" runat="server" Text="Waiting for your resume review status..."></asp:Label>
+                           <br />  <br /> 
+                           <span id="statusResume" visible="false" runat="server" class="statusStyle">Reviewed</span>
+                        </div>
                     </div>
                     <div id="InterviewStatus" runat="server" class="ContainerBox">
-                        <label>InterviewStatus</label>
+                        <div style="background: #881A30; color:white; padding:10px; padding-left:10px;">
+                        <label>Interview Status</label>
                     </div>
+                        </div>
                     <div id="applicantStatus" runat="server" class="ContainerBox">
-                        <label>applicantStatus</label>
+                        <div style="background: #881A30; color:white; padding:10px; padding-left:10px;">
+                        <label>Applicantion Status</label>
                     </div>
+                        </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 

@@ -60,15 +60,6 @@ namespace ctuconnect
         protected global::System.Web.UI.HtmlControls.HtmlImage IndstryLogo;
 
         /// <summary>
-        /// JobTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label JobTitle;
-
-        /// <summary>
         /// IndustryName control.
         /// </summary>
         /// <remarks>
@@ -76,6 +67,15 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label IndustryName;
+
+        /// <summary>
+        /// JobTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label JobTitle;
 
         /// <summary>
         /// JobId control.

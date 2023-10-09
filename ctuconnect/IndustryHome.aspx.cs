@@ -30,12 +30,11 @@ namespace ctuconnect
                 string jobQualification = jobQuali.Text;
                 string jobInstruction = jobInstruct.Text;
                 conDB.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO HIRING(jobID, industry_accID, jobTitle, industryName, " +
-                    "jobType, jobCourse, jobLocation, jobDescription, jobQualifications, applicationInstruction)" +
-                    "VALUES(@jobID,@industry_accID, @jobTitle, @industryName,@jobType,@jobCourse,@jobLocation,@jobDescription," +
-                    "@jobQualifications,@applicationInstruction)", conDB);
-                cmd.Parameters.AddWithValue("@jobID", 100000000);
-                cmd.Parameters.AddWithValue("@industry_accID", 11111);
+                SqlCommand cmd = new SqlCommand("INSERT INTO HIRING( industry_accID, jobTitle, industryName, " +
+                    "jobType, jobCourse, jobLocation, jobDescription, jobQualifications, applicationInstruction,salaryRange)" +
+                    "VALUES(@industry_accID, @jobTitle, @industryName,@jobType,@jobCourse,@jobLocation,@jobDescription," +
+                    "@jobQualifications,@applicationInstruction, @salary)", conDB);
+                cmd.Parameters.AddWithValue("@industry_accID", 600000002);
                 cmd.Parameters.AddWithValue("@jobTitle", jobTitle);
                 cmd.Parameters.AddWithValue("@industryName", industryName);
                 cmd.Parameters.AddWithValue("@jobType", jobType);
@@ -44,6 +43,7 @@ namespace ctuconnect
                 cmd.Parameters.AddWithValue("@jobDescription", jobDescription);
                 cmd.Parameters.AddWithValue("@jobQualifications", jobQualification);
                 cmd.Parameters.AddWithValue("@applicationInstruction", jobInstruction);
+                cmd.Parameters.AddWithValue("@salary", 10000);
                 var ctr = cmd.ExecuteNonQuery();
 
                 if(ctr > 0 )

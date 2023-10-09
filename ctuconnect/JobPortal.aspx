@@ -85,6 +85,40 @@
                 background: orange;
                 color: white;
             }
+        .buttonStyleSubmit {
+            background-color: white;
+            width:20%;
+            text-align: center;
+            text-decoration: none;
+            min-height: 35px;
+            color: orange;
+            background-color: white;
+            border-radius: 20px;
+            border: 1.5px solid orange;
+        padding:5px;
+        }
+
+            .buttonStyleSubmit:hover {
+                background: orange;
+                color: white;
+                  text-decoration: none;
+            }
+        .buttonStyleSubmitDisable {
+            background-color: white;
+            width:20%;
+            text-align: center;
+            text-decoration: none;
+            min-height: 35px;
+            color: orange;
+            background-color: white;
+            border-radius: 20px;
+            border: 1.5px solid orange;
+        padding:5px;
+        }
+        .buttonStyleSubmitDisable:hover {
+            text-decoration: none;
+              color: orange;
+        }
 
         .col {
             font-size: 15px;
@@ -127,7 +161,7 @@
                         <ItemTemplate>
                             <div id="jobList" runat="server" style="border: 3px solid #a2a3a2; padding: 10px; margin: auto; margin-bottom: 10px; width: 100%; height: 100%" class="row d-flex align-items-center">
                                 <div class="col-sm-2">
-                                    <img id="IndstryLogo" src='<%#String.Format("images/{0}", Eval("IndustryLogo"))%>' runat="server" alt="Logo" class="imgStyle"/>
+                                    <img id="IndstryLogo" src='<%#String.Format("images/{0}", Eval("industryPicture"))%>' runat="server" alt="Logo" class="imgStyle"/>
                                    
                                 </div>
                                 <div class="col-sm-7">
@@ -177,22 +211,26 @@
 
     <!-- Modal -->
     <div class="modal fade" id="ApplyJobModal" tabindex="-1" role="dialog"  aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="row">
-                        <div class="col-1">
+                   <div class ="container row" style="max-width:300px;">
+                        <div class="d-flex justify-content-start">
                             <img id="IndstryLogo" runat="server" alt="Logo" class="imgStyle" />
                         </div>
-                        <div class="col-4">
-                            <asp:Label ID="JobTitle" runat="server" />
+                   
+                           <div class="d-flex justify-content-start" >
+                            <asp:Label ID="IndustryName" runat="server" style="font-size:20px;"/>
                         </div>
-                        <div class="col-6">
-                            <asp:Label ID="IndustryName" runat="server" /><br />
-                            <br />
+                     </div>
+                    <div class ="container-fluid row">
+                        <div class="align-items-center justify-content-center">
+                            <asp:Label ID="JobTitle" runat="server" style="font-size:25px; font-weight:bold;"/>
                         </div>
-
-                    </div>
+                      </div>
+                     
+                    
                 </div>
                 <div class="modal-body">
                     <asp:Label ID="JobId" runat="server" visible="false"/>
@@ -212,10 +250,13 @@
                     <asp:Label ID="SalaryRange" runat="server" /><br />
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <asp:LinkButton ID="SubmitApply"  class="buttonStyle" runat="server"  OnCommand="SubmitApply_Command" AutoPostBack="false">Submit Application</asp:LinkButton>
-                </div>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                     
+                    <asp:LinkButton ID="SubmitApply"  class="buttonStyleSubmit" runat="server"  OnCommand="SubmitApply_Command" AutoPostBack="false">Submit Application</asp:LinkButton>
+       
+                     </div>
             </div>
+            
         </div>
     </div>
 </asp:Content>

@@ -44,12 +44,12 @@ namespace ctuconnect
             {
                 SubmitApply.Enabled = false;
                 SubmitApply.Text = "Applied";
-                SubmitApply.CssClass = "buttonStyle";
+                SubmitApply.CssClass = "buttonStyleSubmitDisable";
             } else
             {
                 SubmitApply.Enabled = true;
                 SubmitApply.Text = "Submit Application";
-               
+                SubmitApply.CssClass = "buttonStyleSubmit";
             }
                 conDB.Open();
                 SqlCommand cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID where jobID = @jobID", conDB);
@@ -58,7 +58,7 @@ namespace ctuconnect
                 if (reader.Read())
                 {
                     JobId.Text = reader["jobID"].ToString();
-                    IndstryLogo.Src = "images/" + reader["IndustryLogo"].ToString();
+                    IndstryLogo.Src = "images/" + reader["industryPicture"].ToString();
                     IndustryName.Text = reader["industryName"].ToString();
                     JobTitle.Text = reader["jobTitle"].ToString();
                     JobDetail.Text = reader["jobDescription"].ToString();
@@ -95,21 +95,22 @@ namespace ctuconnect
              int industry_accId = int.Parse(Session["industry_accID"].ToString());*/
             string Usertype = "Student";
             string type = "Intern";
-            int student_accId = 1;
+            int student_accId = 100000000;
             int alumni_accId = 1;
              string applicantFName = "AKosi";
              string applicantLName = "MYLastName";
              string dateApplied = DateTime.Now.ToString("dd MMMM yyyy");
              string resume = "resume";
             int jobID = int.Parse(JobId.Text);
-            int industry_accId = 11111;
+            int industry_accId = 600000000;
 
             conDB.Open();
             if (Usertype == "Alumni")
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (applicantID,type,alumni_accID,firstName, lastName, industry_accID,dateApplied, resume, jobID  ) " +
-                    "Values(@applicantID, @type, @student_accId, @applicantFName, @applicantLName,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
-                cmd.Parameters.AddWithValue("@type", type);
+                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,firstName, lastName, industry_accID,dateApplied, resume, jobID  ) " +
+                    "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
+               
+                cmd.Parameters.AddWithValue("@jobtype", type);
                 cmd.Parameters.AddWithValue("@student_accId", student_accId);
                 cmd.Parameters.AddWithValue("@applicantFName", applicantFName);
                 cmd.Parameters.AddWithValue("@applicantLName", applicantLName);
@@ -121,10 +122,10 @@ namespace ctuconnect
             }
             else if (Usertype == "Student")
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (applicantID,type,student_accID,firstName, lastName, industry_accID,dateApplied, resume, jobID  ) " +
-                  "Values(@applicantID, @type, @student_accId, @applicantFName, @applicantLName,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
-                cmd.Parameters.AddWithValue("@applicantID", 116);
-                cmd.Parameters.AddWithValue("@type", type);
+                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accID,applicantFName, applicantLName, industry_accID,dateApplied, resume, jobID  ) " +
+                  "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
+               
+                cmd.Parameters.AddWithValue("@jobtype", type);
                 cmd.Parameters.AddWithValue("@student_accId", student_accId);
                 cmd.Parameters.AddWithValue("@applicantFName", applicantFName);
                 cmd.Parameters.AddWithValue("@applicantLName", applicantLName);
@@ -132,7 +133,7 @@ namespace ctuconnect
                 cmd.Parameters.AddWithValue("@dateApplied", dateApplied);
                 cmd.Parameters.AddWithValue("@resume", resume);
                 cmd.Parameters.AddWithValue("@jobID", jobID);
-                 cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
             }
             conDB.Close();
 
@@ -167,7 +168,7 @@ namespace ctuconnect
         {
             /*int student_accId = int.Parse(Session["Student_accID"].ToString());*/
             int selectedJobID = jobID;
-            int student_accId = 1;
+            int student_accId = 100000000;
             conDB.Open();
             SqlCommand cmd = new SqlCommand("Select * from APPLICANT Where jobID = @jobId and student_accID = @student_accId", conDB);
             cmd.Parameters.AddWithValue("@jobId", selectedJobID);
