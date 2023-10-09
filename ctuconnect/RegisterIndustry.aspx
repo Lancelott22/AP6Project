@@ -113,9 +113,11 @@
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" forecolor="#F7941F" ControlToValidate="txtpwd" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="revpwd" runat="server" ControlToValidate="txtpwd" ErrorMessage="Invalid Password" ForeColor="Black" ValidationExpression="(?=^.{8,10}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$"></asp:RegularExpressionValidator>
                 </div>
+                <!-- Profile Picture -->
                 <div class="col-sm-6 d-flex flex-column justify-content-center ">
                     Attach Profile Picture*<br />
-                    <asp:FileUpload ID="profileUpload" runat="server" Width="300px"/>                    
+                    <asp:FileUpload ID="profileUpload" runat="server" Width="300px"/>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator7" forecolor="#F7941F" ControlToValidate="profileUpload" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
                 </div>
             </div>
             <br />
@@ -135,8 +137,9 @@
             <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center">
                 <p><asp:Button ID="btn" class="btn btn-primary btn-md" runat="server" Text="Sign Up" OnClick="btn_Click"/></p>   
             </div>
+            <!-- Login link -->
             <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center">
-                <p class="ask">Already have an account? <a href="Login.aspx" class="link">Login here</a></p> 
+                <p class="ask">Already have an account? <a href="LoginIndustry.aspx" class="link">Login here</a></p> 
             </div>
             
         </div>
