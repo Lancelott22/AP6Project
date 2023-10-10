@@ -60,7 +60,6 @@ namespace ctuconnect
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl InterviewStatus;
 
         /// <summary>
-<<<<<<< HEAD
         /// StatusOrDetails control.
         /// </summary>
         /// <remarks>
@@ -88,8 +87,6 @@ namespace ctuconnect
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusInterview;
 
         /// <summary>
-=======
->>>>>>> 08744d7ef82c753fea9cbf96441e04d9552c8a40
         /// applicantStatus control.
         /// </summary>
         /// <remarks>
@@ -97,7 +94,6 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl applicantStatus;
-<<<<<<< HEAD
 
         /// <summary>
         /// applicationStatusCheck control.
@@ -116,7 +112,5 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusApplication;
-=======
->>>>>>> 08744d7ef82c753fea9cbf96441e04d9552c8a40
     }
 }

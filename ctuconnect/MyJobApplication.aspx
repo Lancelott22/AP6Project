@@ -99,16 +99,11 @@
 
         .ContainerBox {
             border: solid 2px #c3c7c4;
-<<<<<<< HEAD
+
             height:auto;
             margin: 10px;
              margin-bottom: 15px;
            vertical-align: bottom;
-=======
-            height:160px;
-            margin: 10px;
-             margin-bottom: 15px;
->>>>>>> 08744d7ef82c753fea9cbf96441e04d9552c8a40
         }
         .statusStyle {
             border: solid 1px #06ba1b;
@@ -117,7 +112,6 @@
             padding: 6px;
             color:white;
         }
-<<<<<<< HEAD
         .statusStyleReject {
             border: solid 1px #e30510;
             background:#e30510;
@@ -125,8 +119,6 @@
             padding: 6px;
             color:white;
         }
-=======
->>>>>>> 08744d7ef82c753fea9cbf96441e04d9552c8a40
     </style>
     <div class="container-fluid">
         <div class="row">
@@ -224,23 +216,26 @@
                 </div>
                 <div class="modal-body">
                     <div id="ResumeStatus" runat="server" class="ContainerBox">
-                        <div style="background: #881A30; color:white; padding:10px; padding-left:10px;">
+                        <div style="background: #881A30; color: white; padding: 10px; padding-left: 10px;">
                             <label>Resume Status</label>
                         </div>
-                        <div style ="padding:10px;">
-                        <br /> 
-<<<<<<< HEAD
-                         <b><span>Status: </span></b><asp:Label ID="resumeStatusCheck" runat="server" Text="Waiting for your resume review status..."></asp:Label>
-                           <br />  <br /> 
-                           <span id="statusResume" visible="false" runat="server" class="statusStyle">Reviewed</span>
-                             <br />
-                             <br />
+                        <div style="padding: 10px;">
+                            <br />
+                            <b><span>Status: </span></b>
+                            <asp:Label ID="resumeStatusCheck" runat="server" Text="Waiting for your resume review status..."></asp:Label>
+
+                            <br />
+                            <br />
+                            <span id="statusResume" visible="false" runat="server" class="statusStyle">Reviewed</span>
+                            <br />
+                            <br />
                         </div>
                     </div>
                     <div id="InterviewStatus" runat="server" class="ContainerBox">
                         <div style="background: #881A30; color: white; padding: 10px; padding-left: 10px;">
                             <label>Interview Status</label>
                         </div>
+
                         <div style="padding: 10px;">
                             <br />
                             <b><span id="StatusOrDetails" runat="server">Status: </span></b>
@@ -248,46 +243,30 @@
                             <br />
                             <br />
                             <span id="statusInterview" visible="false" runat="server" class="statusStyle">Scheduled</span>
-                             <br />
-                             <br />
+                            <br />
+                            <br />
                         </div>
                     </div>
-=======
-                         <span><b>Status:</b> </span><asp:Label ID="resumeStatusCheck" runat="server" Text="Waiting for your resume review status..."></asp:Label>
-                           <br />  <br /> 
-                           <span id="statusResume" visible="false" runat="server" class="statusStyle">Reviewed</span>
-                        </div>
-                    </div>
-                    <div id="InterviewStatus" runat="server" class="ContainerBox">
-                        <div style="background: #881A30; color:white; padding:10px; padding-left:10px;">
-                        <label>Interview Status</label>
-                    </div>
-                        </div>
->>>>>>> 08744d7ef82c753fea9cbf96441e04d9552c8a40
                     <div id="applicantStatus" runat="server" class="ContainerBox">
-                        <div style="background: #881A30; color:white; padding:10px; padding-left:10px;">
-                        <label>Applicantion Status</label>
-                    </div>
-<<<<<<< HEAD
-                         <div style="padding: 10px;">
+                        <div style="background: #881A30; color: white; padding: 10px; padding-left: 10px;">
+                            <label>Applicantion Status</label>
+                        </div>
+                        <div style="padding: 10px;">
                             <br />
                             <b><span>Status: </span></b>
                             <asp:Label ID="applicationStatusCheck" runat="server" Text="Waiting for your application approval..."></asp:Label>
                             <br />
                             <br />
                             <span id="statusApplication" visible="false" runat="server" class="statusStyle"></span>
-                             <br />
-                             <br />
+                            <br />
+                            <br />
                         </div>
-=======
->>>>>>> 08744d7ef82c753fea9cbf96441e04d9552c8a40
-                        </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
-           </div>
-    </div>
+        </div>
     </div>
 </asp:Content>
