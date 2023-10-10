@@ -29,17 +29,21 @@ namespace ctuconnect
                 string filename = Path.GetFileName(postedFile.FileName); ///to check the filename
                 string fileExtension = Path.GetExtension(filename).ToLower(); //to get the extension filename
                 int filezise = postedFile.ContentLength; //to get the filesize
+
                 string logpath = "C:\\Users\\Gebby\\source\\repos\\ctuconnect\\ctuconnect\\images\\MOU"; //creating a drive to upload or save the image
+
                 string filepath = Path.Combine(logpath, filename);
                 string industryName = txtindustry.Text;
-                string location = txtlocation.Text;
+                string location = txtlocation.Text; 
                 string email = txtemail.Text;
                 string password = txtcpwd.Text;
                 HttpPostedFile postedFile2 = profileUpload.PostedFile;
                 string filename2 = Path.GetFileName(postedFile2.FileName);
                 string fileExtension2 = Path.GetExtension(filename2).ToLower();
                 int filezise2 = postedFile2.ContentLength;
+
                 string logpath2 = "C:\\Users\\Gebby\\source\\repos\\ctuconnect\\ctuconnect\\images\\IndsutryProfile";
+
                 string filepath2 = Path.Combine(logpath2, filename2);
                 if (fileExtension == ".bmp" || fileExtension.Equals(".jpg") || fileExtension.Equals(".png") || fileExtension.Equals(".jpeg") || fileExtension.Equals(".pdf") && 
                     fileExtension2 == ".bmp" || fileExtension2.Equals(".jpg") || fileExtension2.Equals(".png") || fileExtension2.Equals(".jpeg") || fileExtension2.Equals(".pdf")) //check the filename extension
@@ -59,16 +63,22 @@ namespace ctuconnect
                         {
                             //SQL Statement
                             cmd.CommandType = CommandType.Text;
+
                             cmd.CommandText = "INSERT INTO INDUSTRY_ACCOUNT (INDUSTRYNAME, LOCATION, EMAIL, PASSWORD, MOU, INDUSTRYPICTURE, DATEREGISTERED )"
                                 + "VALUES (@industryName, @location, @email, @password, @mou, @industryPicture, @datereg )";
                             
+
+                            
+
                             cmd.Parameters.AddWithValue("@industryName", industryName);
                             cmd.Parameters.AddWithValue("@location", location);
                             cmd.Parameters.AddWithValue("@email", email);
                             cmd.Parameters.AddWithValue("@password", password);
                             cmd.Parameters.AddWithValue("@mou", filename);
+
                             cmd.Parameters.AddWithValue("@industryPicture", filename2);
                             cmd.Parameters.AddWithValue("@datereg", DateTime.Now.ToString("yyyy/MM/dd"));
+
                             cmd.ExecuteNonQuery();
                             conDB.Close();
 

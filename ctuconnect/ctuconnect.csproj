@@ -150,6 +150,7 @@
     <Content Include="LoginOJTCoordinator.aspx" />
     <Content Include="LoginStudent.aspx" />
     <Content Include="NoticePage.aspx" />
+    <Content Include="Refer.aspx" />
     <Content Include="ReferralList.aspx" />
     <Content Include="RegisterIndustry.aspx" />
     <Content Include="RegisterStudent.aspx" />
@@ -182,6 +183,7 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="MyJobApplication.aspx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -337,6 +339,13 @@
       <DependentUpon>NoticePage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Refer.aspx.cs">
+      <DependentUpon>Refer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Refer.aspx.designer.cs">
+      <DependentUpon>Refer.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ReferralList.aspx.cs">
       <DependentUpon>ReferralList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -420,6 +429,13 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MyJobApplication.aspx.cs">
+      <DependentUpon>MyJobApplication.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyJobApplication.aspx.designer.cs">
+      <DependentUpon>MyJobApplication.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

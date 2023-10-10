@@ -113,9 +113,11 @@
                     Password*<br />
                     <asp:TextBox ID="txtpwd" CssClass="txtbox" runat="server" Width="500px" Height="30px"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" forecolor="#F7941F" ControlToValidate="txtpwd" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
+
                     <asp:RegularExpressionValidator ID="revpwd" runat="server" ControlToValidate="txtpwd" ErrorMessage="Invalid Password" Display="Dynamic" CssClass="text-danger" ValidationExpression="^(?=.*\d)(?=.*[A-Z])(?=.*\W)(?!.*\s).{8,}$"></asp:RegularExpressionValidator>
                 </div>
                 <!-- Profile Picture -->
+
                 <div class="col-sm-6 d-flex flex-column justify-content-center ">
                     Attach Profile Picture*<br />
                     <asp:FileUpload ID="profileUpload" runat="server" Width="300px"/>
