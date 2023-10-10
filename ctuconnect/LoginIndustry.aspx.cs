@@ -60,7 +60,7 @@ namespace ctuconnect
             }
             catch
             {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='Login.aspx'</script>");
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginIndustry.aspx'</script>");
             }
         }
 
@@ -70,6 +70,102 @@ namespace ctuconnect
             {
                 txtpwd.TextMode = TextBoxMode.SingleLine;
                 CheckBox1.Text = "Hide Password";
+            }
+        }
+
+        void getAcc_ID()
+        {
+            try
+            {
+                string getEmail = txtemail.Text;
+                using (conDB)
+                {
+                    conDB.Open();
+                    string query = "SELECT INDUSTRY_ACCID FROM INDUSTRY_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    SqlCommand command = new SqlCommand(query, conDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Session["ACC_ID"] = reader["INDUSTRY_ACCID"];
+                    }
+
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginIndustry.aspx'</script>");
+            }
+        }
+
+        void getIndustryName()
+        {
+            try
+            {
+                string getEmail = txtemail.Text;
+                using (conDB)
+                {
+                    conDB.Open();
+                    string query = "SELECT INDUSTRYNAME FROM INDUSTRY_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    SqlCommand command = new SqlCommand(query, conDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Session["INDUSTRYNAME"] = reader["INDUSTRYNAME"];
+                    }
+
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginIndsutry.aspx'</script>");
+            }
+        }
+
+        void getLocation()
+        {
+            try
+            {
+                string getEmail = txtemail.Text;
+                using (conDB)
+                {
+                    conDB.Open();
+                    string query = "SELECT LOCATION FROM INDUSTRY_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    SqlCommand command = new SqlCommand(query, conDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Session["LOCATION"] = reader["LOCATION"];
+                    }
+
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginIndustry.aspx'</script>");
+            }
+        }
+
+        void getIndustryPic()
+        {
+            try
+            {
+                string getEmail = txtemail.Text;
+                using (conDB)
+                {
+                    conDB.Open();
+                    string query = "SELECT INDUSTRYPICTURE FROM INDUSTRY_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    SqlCommand command = new SqlCommand(query, conDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Session["INDUSTRYPIC"] = reader["INDUSTRYPICTURE"];
+                    }
+
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginIndustry.aspx'</script>");
             }
         }
     }

@@ -115,7 +115,7 @@
 
         <br /><br /><br /><br /><br /><br />
         <section class="row align-items-center justify-content-center text-center">
-            <p class="ask">Do not have an account yet? <a href="RegisterStudent.aspx" class="link">Register here</a></p>
+            <p class="ask">Do not have an account yet? <a href="RegisterIndustry.aspx" class="link">Register here</a></p>
         </section>
         <br /><br />
 

@@ -72,5 +72,150 @@ namespace ctuconnect
                 CheckBox1.Text = "Hide Password";
             }
         }
+
+        void getAcc_ID()
+        {
+            try
+            {
+                string getEmail = txtemail.Text;
+                using (conDB)
+                {
+                    conDB.Open();
+                    string query = "SELECT STUDENT_ACCID FROM STUDENT_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    SqlCommand command = new SqlCommand(query, conDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Session["ACC_ID"] = reader["STUDENT_ACCID"];
+                    }
+
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
+            }
+        }
+
+        void getFname()
+        {
+            try
+            {
+                string getEmail = txtemail.Text;
+                using (conDB)
+                {
+                    conDB.Open();
+                    string query = "SELECT FIRSTNAME FROM STUDENT_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    SqlCommand command = new SqlCommand (query, conDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Session["FNAME"] = reader["FIRSTNAME"];
+                    }
+
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
+            }
+        }
+        void getMidInitial()
+        {
+            try
+            {
+                string getEmail = txtemail.Text;
+                using (conDB)
+                {
+                    conDB.Open();
+                    string query = "SELECT MIDINITIALS FROM STUDENT_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    SqlCommand command = new SqlCommand(query, conDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Session["INITIAL"] = reader["MIDINITIALS"];
+                    }
+
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
+            }
+        }
+
+        void getLname()
+        {
+            try
+            {
+                string getEmail = txtemail.Text;
+                using (conDB)
+                {
+                    conDB.Open();
+                    string query = "SELECT LASTNAME FROM STUDENT_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    SqlCommand command = new SqlCommand(query, conDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Session["LNAME"] = reader["LASTNAME"];
+                    }
+
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
+            }
+        }
+
+        void getStatus()
+        {
+            try
+            {
+                string getEmail = txtemail.Text;
+                using (conDB)
+                {
+                    conDB.Open();
+                    string query = "SELECT STUDENTSTATUS FROM STUDENT_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    SqlCommand command = new SqlCommand(query, conDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Session["STATUS"] = reader["STUDENTSTATUS"];
+                    }
+
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
+            }
+        }
+
+        void getStudProfile()
+        {
+            try
+            {
+                string getEmail = txtemail.Text;
+                using (conDB)
+                {
+                    conDB.Open();
+                    string query = "SELECT STUDENTPROFILE FROM STUDENT_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    SqlCommand command = new SqlCommand(query, conDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Session["PROFILE"] = reader["STUDENTPROFILE"];
+                    }
+
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
+            }
+        }
     }
+
+    
 }
