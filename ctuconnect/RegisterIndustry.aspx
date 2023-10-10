@@ -95,6 +95,7 @@
                 <div class="col-sm-6 d-flex flex-column justify-content-center">      
                     Email*<br />
                     <asp:TextBox ID="txtemail" CssClass="txtbox" runat="server" Width="500px" Height="30px"></asp:TextBox>
+                    <asp:RegularExpressionValidator ID="chkemail" runat="server" ControlToValidate="txtemail" ErrorMessage="Invalid Email" Display="Dynamic" CssClass="text-danger" ValidationExpression="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"></asp:RegularExpressionValidator>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" forecolor="#F7941F" ControlToValidate="txtemail" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
                 </div>
                 <!-- MOA -->
@@ -102,6 +103,7 @@
                     Attach Memorandum of Understanding*<br />
                     <asp:FileUpload ID="mouUpload" runat="server" Width="300px"/>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator4" forecolor="#F7941F" ControlToValidate="mouUpload" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
+                    <asp:Label ID="StatusLabel" runat="server" CssClass="text-danger"></asp:Label>
                 </div>
             </div>
             <br />
@@ -111,11 +113,15 @@
                     Password*<br />
                     <asp:TextBox ID="txtpwd" CssClass="txtbox" runat="server" Width="500px" Height="30px"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" forecolor="#F7941F" ControlToValidate="txtpwd" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
-                    <asp:RegularExpressionValidator ID="revpwd" runat="server" ControlToValidate="txtpwd" ErrorMessage="Invalid Password" ForeColor="Black" ValidationExpression="(?=^.{8,10}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$"></asp:RegularExpressionValidator>
+
+                    <asp:RegularExpressionValidator ID="revpwd" runat="server" ControlToValidate="txtpwd" ErrorMessage="Invalid Password" Display="Dynamic" CssClass="text-danger" ValidationExpression="^(?=.*\d)(?=.*[A-Z])(?=.*\W)(?!.*\s).{8,}$"></asp:RegularExpressionValidator>
                 </div>
+                <!-- Profile Picture -->
+
                 <div class="col-sm-6 d-flex flex-column justify-content-center ">
                     Attach Profile Picture*<br />
-                    <asp:FileUpload ID="profileUpload" runat="server" Width="300px"/>                    
+                    <asp:FileUpload ID="profileUpload" runat="server" Width="300px"/>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator7" forecolor="#F7941F" ControlToValidate="profileUpload" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
                 </div>
             </div>
             <br />
@@ -135,8 +141,9 @@
             <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center">
                 <p><asp:Button ID="btn" class="btn btn-primary btn-md" runat="server" Text="Sign Up" OnClick="btn_Click"/></p>   
             </div>
+            <!-- Login link -->
             <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center">
-                <p class="ask">Already have an account? <a href="Login.aspx" class="link">Login here</a></p> 
+                <p class="ask">Already have an account? <a href="LoginIndustry.aspx" class="link">Login here</a></p> 
             </div>
             
         </div>

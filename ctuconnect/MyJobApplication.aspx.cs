@@ -120,6 +120,7 @@ namespace ctuconnect
                 resumeStatusCheck.Text = "Your resume has been reviewed.";
                 statusResume.Visible = true;
                 InterviewStatus.Visible = true;
+<<<<<<< HEAD
                 if (checkInterviewStatus(applicantID, jobId) == true)
                 {
                     StatusOrDetails.InnerText =  "Interview Details: ";
@@ -133,6 +134,8 @@ namespace ctuconnect
                     statusInterview.Visible = false;
                     StatusOrDetails.InnerText = "Status: ";
                 }
+=======
+>>>>>>> 08744d7ef82c753fea9cbf96441e04d9552c8a40
             }
             else
             {
@@ -142,6 +145,7 @@ namespace ctuconnect
 
             }
             if ((checkInterviewStatus(applicantID, jobId) == true && checkResumeStatus(applicantID, jobId) == true))
+<<<<<<< HEAD
             {  
                 applicantStatus.Visible = true;
                if(checkApplicantStatus(applicantID, jobId) == true)
@@ -158,6 +162,11 @@ namespace ctuconnect
                     statusApplication.Visible = false;
                     statusApplication.InnerText = "Rejected";
                 }
+=======
+            {
+                applicantStatus.Visible = true;
+               
+>>>>>>> 08744d7ef82c753fea9cbf96441e04d9552c8a40
             }
             else
             {
@@ -167,6 +176,7 @@ namespace ctuconnect
             ClientScript.RegisterStartupScript(this.GetType(), "Popup", script, true);
             
         }
+<<<<<<< HEAD
         string showInterviewDetails(int applicantID, int jobId)
         {
             string interviewDetail = "";
@@ -186,5 +196,7 @@ namespace ctuconnect
             conDB.Close();
             return interviewDetail;
         }
+=======
+>>>>>>> 08744d7ef82c753fea9cbf96441e04d9552c8a40
     }
 }
