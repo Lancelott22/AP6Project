@@ -435,6 +435,7 @@
     <Folder Include="images\COR\" />
     <Folder Include="images\IndsutryProfile\" />
     <Folder Include="images\MOU\" />
+    <Folder Include="images\Resume\" />
     <Folder Include="images\StudentProfiles\" />
     <Folder Include="Industry\" />
     <Folder Include="OjtCoordinator\" />
