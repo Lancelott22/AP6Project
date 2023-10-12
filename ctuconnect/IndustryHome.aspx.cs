@@ -14,7 +14,8 @@ namespace ctuconnect
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            disp_industryName.Text = Session["INDUSTRYNAME"].ToString();
+            disp_accID.Text = Session["ACC_ID"].ToString();
         }
 
         protected void PostJob_Click(object sender, EventArgs e)
