@@ -104,12 +104,14 @@
                     <asp:TextBox ID="txtemail" CssClass="txtbox" runat="server" Width="300px" Height="30px"></asp:TextBox>
                     <asp:RegularExpressionValidator ID="chkemail" runat="server" ControlToValidate="txtemail" ErrorMessage="Invalid Email" Display="Dynamic" CssClass="text-danger" ValidationExpression="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"></asp:RegularExpressionValidator>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator4" forecolor="#F7941F" ControlToValidate="txtemail" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
+                    <asp:Label ID="lblErrorMessage" runat="server" Text="" Visible="false"></asp:Label>
                 </div>
                 <!-- Student ID -->
                 <div class="col-sm-4 d-flex flex-column justify-content-center ">
                     Student ID*<br />
                     <asp:TextBox ID="txtid" CssClass="txtbox" runat="server" Width="200px" Height="30px"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" forecolor="#F7941F" ControlToValidate="txtid" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
+                    <asp:Label ID="lblErrorMessage2" runat="server" Text="" Visible="false"></asp:Label>
                 </div>
                 <!-- Course -->
                 <div class="col-sm-4 d-flex flex-column justify-content-center">
