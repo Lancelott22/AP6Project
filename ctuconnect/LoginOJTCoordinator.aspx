@@ -87,8 +87,8 @@
                     </div>
                     <!-- Email -->
                     <div class="col-lg-12 align-self-end">       
-                        <asp:TextBox ID="txtemail" CssClass="txtbox" runat="server" placeholder="Email address" Height="40px" Width="285px"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Enter email" ControlToValidate="txtemail" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
+                        <asp:TextBox ID="txtusername" CssClass="txtbox" runat="server" placeholder="Email address" Height="40px" Width="285px"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Enter email" ControlToValidate="txtusername" CssClass="text-danger"></asp:RequiredFieldValidator>
                     </div>
                     <div class="col-lg-12 align-self-end">
                         <br />
@@ -96,7 +96,7 @@
                     <!-- Password -->
                     <div class="col-lg-12 align-self-end">
                         <asp:TextBox ID="txtpwd" CssClass="txtbox" runat="server" TextMode="Password" placeholder="Password" Height="40px" Width="285px"></asp:TextBox><br />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Enter password" ControlToValidate="txtpwd" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Enter password" ControlToValidate="txtpwd"  CssClass="text-danger"></asp:RequiredFieldValidator>
                         <asp:Label ID="LoginErrorMessage" runat="server" Text="The password or email is incorrect!" CssClass="connect"></asp:Label>
                     </div>
                     <!-- Check Box for Hide Password -->

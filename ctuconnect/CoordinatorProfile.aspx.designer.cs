@@ -11,7 +11,7 @@ namespace ctuconnect
 {
 
 
-    public partial class HiredList
+    public partial class CoordinatorProfile
     {
 
         /// <summary>
@@ -24,31 +24,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Table Table1;
 
         /// <summary>
-        /// myLinkButton1 control.
+        /// ddlSortBy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton myLinkButton1;
-
-        /// <summary>
-        /// myLinkButton2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton myLinkButton2;
-
-        /// <summary>
-        /// UpdatePanel1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSortBy;
 
         /// <summary>
         /// GridView1 control.
@@ -58,14 +40,5 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridView1;
-
-        /// <summary>
-        /// GridView2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView2;
     }
 }

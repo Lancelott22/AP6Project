@@ -149,6 +149,7 @@
     <Content Include="LoginIndustry.aspx" />
     <Content Include="LoginOJTCoordinator.aspx" />
     <Content Include="LoginStudent.aspx" />
+    <Content Include="MyAccount.aspx" />
     <Content Include="NoticePage.aspx" />
     <Content Include="Refer.aspx" />
     <Content Include="ReferralList.aspx" />
@@ -331,6 +332,13 @@
     <Compile Include="LoginStudent.aspx.designer.cs">
       <DependentUpon>LoginStudent.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MyAccount.aspx.cs">
+      <DependentUpon>MyAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyAccount.aspx.designer.cs">
+      <DependentUpon>MyAccount.aspx</DependentUpon>
+    </Compile>
     <Compile Include="NoticePage.aspx.cs">
       <DependentUpon>NoticePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -443,6 +451,7 @@
     <Folder Include="images\COR\" />
     <Folder Include="images\IndsutryProfile\" />
     <Folder Include="images\MOU\" />
+    <Folder Include="images\Resume\" />
     <Folder Include="images\StudentProfiles\" />
     <Folder Include="Industry\" />
     <Folder Include="OjtCoordinator\" />
