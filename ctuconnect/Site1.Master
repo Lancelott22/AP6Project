@@ -97,7 +97,7 @@
 
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-custom">
             <div class="container-fluid">
-                <img src="images/ctuconnectlogo.png" alt="Bootstrap" width="63" height="65">
+                <img src="/images/ctuconnectlogo.png" alt="Bootstrap" width="63" height="65">
                 <a class="navbar-brand" runat="server" >CTU Connect<br /><p class="mini">Internship and job searching platform</p></a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
