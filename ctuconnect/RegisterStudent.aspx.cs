@@ -26,7 +26,7 @@ namespace ctuconnect
                 string filename = Path.GetFileName(postedFile.FileName); ///to check the filename
                 string fileExtension = Path.GetExtension(filename).ToLower(); //to get the extension filename
                 int filezise = postedFile.ContentLength; //to get the filesize
-                string logpath = "C:\\Users\\Gebby\\source\\repos\\ctuconnect\\ctuconnect\\images\\COR"; //creating a drive to upload or save the image
+                string logpath = "C:\\Users\\irish\\source\\repos\\ctuconnect\\ctuconnect\\images\\COR"; //creating a drive to upload or save the image
                 string filepath = Path.Combine(logpath, filename);
                 string fname = txtfname.Text;
                 string midinitial = txtinitial.Text;
@@ -40,7 +40,7 @@ namespace ctuconnect
                 string filename2 = Path.GetFileName(postedFile2.FileName);
                 string fileExtension2 = Path.GetExtension(filename2).ToLower();
                 int filezise2 = postedFile2.ContentLength;
-                string logpath2 = "C:\\Users\\Gebby\\source\\repos\\ctuconnect\\ctuconnect\\images\\StudentProfiles";
+                string logpath2 = "C:\\Users\\irish\\source\\repos\\ctuconnect\\ctuconnect\\images\\StudentProfiles";
                 string filepath2 = Path.Combine(logpath2, filename2);
                 if (fileExtension == ".bmp" || fileExtension.Equals(".jpg") || fileExtension.Equals(".png") || fileExtension.Equals(".jpeg") || fileExtension.Equals(".pdf") &&
                     fileExtension2 == ".bmp" || fileExtension2.Equals(".jpg") || fileExtension2.Equals(".png") || fileExtension2.Equals(".jpeg") ) //check the filename extension
