@@ -62,7 +62,7 @@ namespace ctuconnect
                             Response.Write("<script>alert('Invalid Credentials')</script>");
                             conDB2.Close();
                             reader.Close();
-                }
+                    }
                     Session["Email"] = txtemail.Text;
                     Response.Redirect("MyAccount.aspx");
                     

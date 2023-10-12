@@ -38,8 +38,7 @@ namespace ctuconnect
         protected void btn_Click(object sender, EventArgs e)
         {
             SqlConnection conDB2 = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
-            try
-            {
+            
 
                 string loginUsername = txtusername.Text;
                 string loginPassword = txtpwd.Text;
@@ -48,27 +47,23 @@ namespace ctuconnect
                 {
                     conDB2.Open();
 
-                    string query = "SELECT COUNT(1) FROM INDUSTRY_ACCOUNT WHERE username = @username AND password = @password";
+                    string query = "SELECT COUNT(1) FROM COORDINATOR_ACCOUNT WHERE username = @username AND password = @password";
                     SqlCommand command = new SqlCommand(query, conDB2);
-                    command.Parameters.AddWithValue("@email", loginUsername);
+                    command.Parameters.AddWithValue("@username", loginUsername);
                     command.Parameters.AddWithValue("@password", loginPassword);
-                    int count = Convert.ToInt32(command.ExecuteScalar());
-                    SqlDataReader reader = command.ExecuteReader();
+
+                    using (SqlDataReader reader = command.ExecuteReader()) {
                     if (reader.Read())
                     {
                         getOJTCoordinatorInfo();
                     }
-
                     Session["Username"] = txtusername.Text;
                     Response.Redirect("Home.aspx");
                     conDB2.Close();
                     reader.Close();
+                }  
                 }
-            }
-            catch
-            {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginOJTCoordinator.aspx'</script>");
-            }
+            
         }
 
         protected void CheckBox1_CheckedChanged(object sender, EventArgs e)
