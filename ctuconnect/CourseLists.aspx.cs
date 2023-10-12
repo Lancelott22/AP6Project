@@ -40,6 +40,23 @@ namespace ctuconnect
         }
         void BindGridView1()
         {
+            /*SqlCommand command = new SqlCommand(query, conDB);
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                Session["ACC_ID"] = reader["coordinator_accID"];
+                Session["FNAME"] = reader["firstNanme"];
+                Session["MIDNAME"] = reader["midInitials"];
+                Session["LNAME"] = reader["lastName"];
+                Session["DEPART"] = reader["department"];
+                Session["USRNAME"] = reader["username"];
+                Session["PWD"] = reader["password"];
+
+            }
+            if (Session["ACC_ID"] == )
+            {
+
+            }*/
             string query = "SELECT department, course, major, hoursNeeded FROM PROGRAM ";
             SqlCommand cmd = new SqlCommand(query, conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);

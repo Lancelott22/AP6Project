@@ -42,16 +42,28 @@ namespace ctuconnect
                 //// Bind the empty DataTable to the GridView
                 //GridView1.DataSource = dataTable;
                 //GridView1.DataBind();
-                BindGridView1();
+                if (Session["ACC_ID"] != null)
+                {
+                    // Retrieve the coordinator_accID from the session
+                    int coordinatorID = Convert.ToInt32(Session["ACC_ID"]);
+
+                    BindGridView1(coordinatorID);
+                }
+                else
+                {
+                    // Handle the case where the user is not logged in or doesn't have a coordinator_accID.
+                }
+               
             }
         }
-        void BindGridView1()
+        void BindGridView1(int coordinatorID)
         {
             
                 string query = "SELECT STUDENT_ACCOUNT.firstName, STUDENT_ACCOUNT.lastName, STUDENT_ACCOUNT.midInitials,  INDUSTRY_ACCOUNT.industryName,   COORDINATOR_ACCOUNT.firstName + ' ' + COORDINATOR_ACCOUNT.lastName AS referredBy " +
                 "FROM REFERRAL  JOIN STUDENT_ACCOUNT ON REFERRAL.student_accID = STUDENT_ACCOUNT.student_accID " +
                 "JOIN INDUSTRY_ACCOUNT  ON REFERRAL.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
-                "JOIN COORDINATOR_ACCOUNT ON REFERRAL.coordinator_accID = COORDINATOR_ACCOUNT.coordinator_accID";
+                "JOIN COORDINATOR_ACCOUNT ON REFERRAL.coordinator_accID = COORDINATOR_ACCOUNT.coordinator_accID " +
+                "WHERE REFERRAL.coordinator_accID = @CoordinatorID";
                 SqlCommand cmd = new SqlCommand(query, conDB);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();

@@ -50,7 +50,7 @@ namespace ctuconnect
 
                     string query = "SELECT COUNT(1) FROM INDUSTRY_ACCOUNT WHERE username = @username AND password = @password";
                     SqlCommand command = new SqlCommand(query, conDB2);
-                    command.Parameters.AddWithValue("@email", loginUsername);
+                    command.Parameters.AddWithValue("@username", loginUsername);
                     command.Parameters.AddWithValue("@password", loginPassword);
                     int count = Convert.ToInt32(command.ExecuteScalar());
                     SqlDataReader reader = command.ExecuteReader();
@@ -60,7 +60,7 @@ namespace ctuconnect
                     }
 
                     Session["Username"] = txtusername.Text;
-                    Response.Redirect("Home.aspx");
+                    Response.Redirect("CoordinatorProfile.aspx");
                     conDB2.Close();
                     reader.Close();
                 }
