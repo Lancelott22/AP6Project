@@ -58,10 +58,7 @@ namespace ctuconnect
         }
         void BindGridView1()
         {
-                    string query = @"
-                                SELECT hl.lastName, hl.firstName, hl.dateStarted, hl.position, sa.resumeFile
-                                FROM HIRED_LIST hl
-                                INNER JOIN STUDENT_ACCOUNT sa ON hl.student_accID = sa.student_accID";
+                    string query = "SELECT lastName, firstName, dateStarted, position, resumeFile FROM HIRED_LIST WHERE jobType = 'job'";
                 SqlCommand cmd = new SqlCommand(query, conDB);
                         SqlDataAdapter da = new SqlDataAdapter(cmd);
                         DataSet ds = new DataSet();
@@ -80,7 +77,7 @@ namespace ctuconnect
         {
              
             
-                string query = "SELECT lastName, firstName, dateStarted, internshipStatus, renderedHours, evaluationRequest FROM HIRED_LIST";
+                string query = "SELECT lastName, firstName, dateStarted, internshipStatus, renderedHours, evaluationRequest FROM HIRED_LIST WHERE jobType = 'internship'";
             SqlCommand cmd = new SqlCommand(query, conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();

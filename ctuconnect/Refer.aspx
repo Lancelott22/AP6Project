@@ -270,7 +270,7 @@
                             <asp:ListItem Text="Date" Value="ColumnName1"></asp:ListItem>
                             <asp:ListItem Text="Status" Value="ColumnName2"></asp:ListItem>
                         </asp:DropDownList></p>
-                        <asp:Button ID="addreferstudent" runat="server" Text="Add Refer Student" OnClick="addRefer_Click" style="float:right;" AutoPostBack="false"   />
+                        <asp:Button ID="addreferstudent" runat="server" Text="Add Refer Student" AutoPostBack="false" OnClick="addRefer_Click" style="float:right;"    />
                            <%-- <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p> --%>
                             <asp:GridView ID="GridView1" runat="server" Style="color:black; " AutoGenerateColumns="false"  ShowHeaderWhenEmpty="true" CssClass="gridview-style"
                                               AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" CellPadding="50" CellSpacing="50" 
@@ -278,14 +278,12 @@
                             <PagerStyle  HorizontalAlign="Center" />
                             <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
                                 <Columns >
-                                        <asp:BoundField DataField="referralID" HeaderText="Referral ID"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                         <asp:BoundField DataField="lastName" HeaderText="Last Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                         <asp:BoundField DataField="firstName" HeaderText="First Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                         <asp:BoundField DataField="midInitials" HeaderText="Middle Initial" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                         <asp:BoundField DataField="industryName" HeaderText="Industry" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                                        <asp:BoundField DataField="fullName" HeaderText="Referred by" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                                        <asp:BoundField DataField="dateReferred" HeaderText="Date Referred" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" SortExpression="ColumnName1"/>
-                                        <asp:BoundField DataField="status" HeaderText="Status" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" SortExpression="ColumnName2"/>
+                                        <asp:BoundField DataField="referredBy" HeaderText="Referred by" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
+                                        
                                </Columns>
                     </asp:GridView>
                 </div>
@@ -353,7 +351,7 @@
                                 <div class="column">
                                      <asp:Label ID="Label1" runat="server" Text="Student ID" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
                                      <asp:TextBox ID="txtID_student" runat="server" CssClass="txtbox-id" AutoPostBack="false"  Placeholder="e.g. 1202200" ></asp:TextBox>
-                                     <asp:Button runat="server" OnClick="findByID_Student" Text="Find" CssClass="button-find" />
+                                     <asp:Button runat="server" OnClick="findByID_Student" Text="Find"  CssClass="button-find" CausesValidation="false" />
                                 </div>
 
                                       <asp:Label ID="Label8" runat="server" Text="First Name" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
