@@ -13,7 +13,8 @@
         }
         .profile-container{
             max-width:260px;
-            max-height:300px;
+            height:auto;
+            padding: 10px;
             background-color:white;
             margin-left:4%;
         }
@@ -88,7 +89,7 @@
                 position:relative;
                 padding: 4% 0% 0% 6%;*/
             }
-            }
+            
             @media (max-width: 790px) {
                 .display-container {
                     max-width: 50%;
@@ -203,14 +204,19 @@
             .fa {
                 width:20px;
                 margin-right: 19px; 
-    }
+            }
+            .disp_industryName {
+                font-size: 24px;
+            }
+            
     </style>
     <asp:Table ID="Table1" runat="server" CssClass="content" >
         <asp:TableRow>
             <asp:TableCell Style="vertical-align:top; height:200px;" >
                 <div class="profile-container">
                 <img src="images/industrypic.png" />
-                <p>Industry Name</p>
+                    <center><b><asp:Label ID="disp_industryName" CssClass="disp_industryName"  runat="server" Text=""></asp:Label></b></center>
+                    <center><p style="font-size: 14px;">Account ID: <b><asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b></p></center>
                 </div>
             </asp:TableCell> 
             <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">

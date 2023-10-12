@@ -14,7 +14,7 @@ namespace ctuconnect
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack && Session["Email"] != null)
+            if (!IsPostBack && Session["Username"] != null)
             {
                 Response.Redirect("Home.aspx");
             }
@@ -27,9 +27,9 @@ namespace ctuconnect
 
             if (!IsPostBack)
             {
-                if (Request.Cookies["Email"] != null && Request.Cookies["Password"] != null)
+                if (Request.Cookies["Username"] != null && Request.Cookies["Password"] != null)
                 {
-                    txtemail.Text = Request.Cookies["Email"].Value;
+                    txtusername.Text = Request.Cookies["Username"].Value;
                     txtpwd.Attributes["value"] = Request.Cookies["Password"].Value;
                 }
             }
@@ -37,30 +37,37 @@ namespace ctuconnect
 
         protected void btn_Click(object sender, EventArgs e)
         {
+            SqlConnection conDB2 = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
             try
             {
 
-                string loginEmail = txtemail.Text;
+                string loginUsername = txtusername.Text;
                 string loginPassword = txtpwd.Text;
 
-                using (conDB)
+                using (conDB2)
                 {
-                    conDB.Open();
+                    conDB2.Open();
 
-                    string query = "SELECT COUNT(1) FROM INDUSTRY_ACCOUNT WHERE email = @email AND password = @password";
-                    SqlCommand command = new SqlCommand(query, conDB);
-                    command.Parameters.AddWithValue("@email", loginEmail);
+                    string query = "SELECT COUNT(1) FROM INDUSTRY_ACCOUNT WHERE username = @username AND password = @password";
+                    SqlCommand command = new SqlCommand(query, conDB2);
+                    command.Parameters.AddWithValue("@email", loginUsername);
                     command.Parameters.AddWithValue("@password", loginPassword);
                     int count = Convert.ToInt32(command.ExecuteScalar());
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        getOJTCoordinatorInfo();
+                    }
 
-                    Session["Email"] = txtemail.Text;
+                    Session["Username"] = txtusername.Text;
                     Response.Redirect("Home.aspx");
-                    conDB.Close();
+                    conDB2.Close();
+                    reader.Close();
                 }
             }
             catch
             {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='Login.aspx'</script>");
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginOJTCoordinator.aspx'</script>");
             }
         }
 
@@ -73,118 +80,29 @@ namespace ctuconnect
             }
         }
 
-        void getAcc_id()
+        void getOJTCoordinatorInfo()
         {
             try
             {
-                string getEmail = txtemail.Text;
+                string getUsername = txtusername.Text;
                 using (conDB)
                 {
                     conDB.Open();
-                    string query = "SELECT COORDINATOR_ACCID FROM COORDINATOR_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    string query = "SELECT * FROM COORDINATOR_ACCOUNT WHERE USERNAME = '" + getUsername + "' ";
                     SqlCommand command = new SqlCommand(query, conDB);
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.Read())
                     {
-                        Session["ACC_ID"] = reader["COORDINATOR_ACCID"];
+                        Session["ACC_ID"] = reader["coordinator_accID"];
+                        Session["FNAME"] = reader["firstNanme"];
+                        Session["MIDNAME"] = reader["midInitials"];
+                        Session["LNAME"] = reader["lastName"];
+                        Session["DEPART"] = reader["department"];
+                        Session["USRNAME"] = reader["username"];
+                        Session["PWD"] = reader["password"];
+                        
                     }
-
-                }
-            }
-            catch
-            {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginOJTCoordinator.aspx'</script>");
-            }
-        }
-
-        void getFname()
-        {
-            try
-            {
-                string getEmail = txtemail.Text;
-                using (conDB)
-                {
-                    conDB.Open();
-                    string query = "SELECT FIRSTNAME FROM COORDINATOR_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
-                    SqlCommand command = new SqlCommand(query, conDB);
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        Session["FNAME"] = reader["FIRSTNAME"];
-                    }
-
-                }
-            }
-            catch
-            {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginOJTCoordinator.aspx'</script>");
-            }
-        }
-
-        void getInitial()
-        {
-            try
-            {
-                string getEmail = txtemail.Text;
-                using (conDB)
-                {
-                    conDB.Open();
-                    string query = "SELECT MIDINITIALS FROM COORDINATOR_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
-                    SqlCommand command = new SqlCommand(query, conDB);
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        Session["INITIAL"] = reader["MIDINITIALS"];
-                    }
-
-                }
-            }
-            catch
-            {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginOJTCoordinator.aspx'</script>");
-            }
-        }
-
-        void getLNAME()
-        {
-            try
-            {
-                string getEmail = txtemail.Text;
-                using (conDB)
-                {
-                    conDB.Open();
-                    string query = "SELECT LASTNAME FROM COORDINATOR_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
-                    SqlCommand command = new SqlCommand(query, conDB);
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        Session["LNAME"] = reader["LASTNAME"];
-                    }
-
-                }
-            }
-            catch
-            {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginOJTCoordinator.aspx'</script>");
-            }
-        }
-
-        void getDepartment()
-        {
-            try
-            {
-                string getEmail = txtemail.Text;
-                using (conDB)
-                {
-                    conDB.Open();
-                    string query = "SELECT DEPARTMENT FROM COORDINATOR_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
-                    SqlCommand command = new SqlCommand(query, conDB);
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        Session["DEPARTMENT"] = reader["DEPARTMENT"];
-                    }
-
+                    reader.Close();
                 }
             }
             catch

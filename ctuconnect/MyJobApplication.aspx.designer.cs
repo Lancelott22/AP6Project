@@ -60,6 +60,33 @@ namespace ctuconnect
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl InterviewStatus;
 
         /// <summary>
+        /// StatusOrDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StatusOrDetails;
+
+        /// <summary>
+        /// interviewStatusCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label interviewStatusCheck;
+
+        /// <summary>
+        /// statusInterview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusInterview;
+
+        /// <summary>
         /// applicantStatus control.
         /// </summary>
         /// <remarks>
@@ -67,5 +94,23 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl applicantStatus;
+
+        /// <summary>
+        /// applicationStatusCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label applicationStatusCheck;
+
+        /// <summary>
+        /// statusApplication control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusApplication;
     }
 }

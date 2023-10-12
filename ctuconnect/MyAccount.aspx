@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~//Site1.Master" AutoEventWireup="true" CodeBehind="MyAccount.aspx.cs" Inherits="ctuconnect.MyAccount" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="MyAccount.aspx.cs" Inherits="ctuconnect.MyAccount1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -113,10 +113,10 @@
                     </center>
                     <div class="row">
                         <div class="col-sm-3">
-                            Name:
+                            <asp:Label ID="disp_name" runat="server" Text=""></asp:Label>
                         </div>
                         <div class="col-sm-9">
-                            <asp:Label ID="disp_name" runat="server" Text=""></asp:Label>
+                            <%# Eval("Name") %>
                         </div>
                     </div>
                     <hr class="line"/>
@@ -125,7 +125,7 @@
                             Student ID
                         </div>
                         <div class="col-sm-9">
-                            <asp:Label ID="disp_studentId" runat="server" Text="" Visible="true"></asp:Label>
+                            <%# Eval("Student ID") %>
                         </div>
                     </div>
                     <hr class="line"/>
@@ -134,7 +134,7 @@
                             Student Status
                         </div>
                         <div class="col-sm-9">
-                            
+                            <%# Eval("Student Status") %>
                         </div>
                     </div>
                     <hr class="line"/>
@@ -143,7 +143,7 @@
                             Course
                         </div>
                         <div class="col-sm-9">
-                           
+                            <%# Eval("Course") %>  
                         </div>
                     </div>
                     <hr class="line"/>
@@ -152,7 +152,7 @@
                             Employment Status
                         </div>
                         <div class="col-sm-9">
-                            
+                            <%# Eval("Employment Status") %>
                         </div>
                     </div>
                     <br /><br />

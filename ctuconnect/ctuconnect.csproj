@@ -151,6 +151,7 @@
     <Content Include="LoginIndustry.aspx" />
     <Content Include="LoginOJTCoordinator.aspx" />
     <Content Include="LoginStudent.aspx" />
+    <Content Include="MyAccount.aspx" />
     <Content Include="NoticePage.aspx" />
     <Content Include="Refer.aspx" />
     <Content Include="ReferralList.aspx" />
@@ -346,6 +347,13 @@
     </Compile>
     <Compile Include="LoginStudent.aspx.designer.cs">
       <DependentUpon>LoginStudent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyAccount.aspx.cs">
+      <DependentUpon>MyAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyAccount.aspx.designer.cs">
+      <DependentUpon>MyAccount.aspx</DependentUpon>
     </Compile>
     <Compile Include="NoticePage.aspx.cs">
       <DependentUpon>NoticePage.aspx</DependentUpon>
