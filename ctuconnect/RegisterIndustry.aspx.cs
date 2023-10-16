@@ -67,7 +67,10 @@ namespace ctuconnect
                 string fileExtension = Path.GetExtension(filename).ToLower(); //to get the extension filename
                 int filezise = postedFile.ContentLength; //to get the filesize
 
-                string logpath = "C:\\Users\\Marly\\source\\repos\\Kenthdavis\\ctuconnect\\ctuconnect\\images\\MOU"; //creating a drive to upload or save the image
+
+                string logpath = "C:\\Users\\irish\\source\\repos\\ctuconnect\\ctuconnect\\images\\MOU"; //creating a drive to upload or save the image
+
+               
 
                 string filepath = Path.Combine(logpath, filename);
                 string industryName = txtindustry.Text;
@@ -79,7 +82,9 @@ namespace ctuconnect
                 string fileExtension2 = Path.GetExtension(filename2).ToLower();
                 int filezise2 = postedFile2.ContentLength;
 
-                string logpath2 = "C:\\Users\\Marly\\source\\repos\\Kenthdavis\\ctuconnect\\ctuconnect\\images\\IndsutryProfile";
+
+                string logpath2 = "C:\\Users\\irish\\source\\repos\\ctuconnect\\ctuconnect\\images\\IndsutryProfile";
+
 
                 string filepath2 = Path.Combine(logpath2, filename2);
                 if (fileExtension == ".bmp" || fileExtension.Equals(".jpg") || fileExtension.Equals(".png") || fileExtension.Equals(".jpeg") || fileExtension.Equals(".pdf") && 

@@ -1,8 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="ReferralList.aspx.cs" Inherits="ctuconnect.ReferralList" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="CourseLists.aspx.cs" Inherits="ctuconnect.CourseLists" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
@@ -11,22 +10,28 @@
         }
         .profile-container{
             max-width:260px;
-            max-height:300px;
+            max-height:630px;
             background-color:white;
             margin-left:4%;
+            padding-bottom:8px;
+             border: 2px ;
+            box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
         }
         @media (max-width: 790px) {
             .profile-container, .sidemenu-container {
                 max-width: 50%;
                 max-height:auto;
-                padding:0px 5px 5px 5px;
+                
+                 padding:5px 5px 5px 5px;
             }
         }
         .profile-container img{
             display:block;
-            width:80%;
+            width:50%;
             margin-left:auto;
             margin-right:auto;
+            margin-top:auto;
+            padding-top:10px;
 
         }
         .profile-container p{
@@ -49,26 +54,26 @@
             
         }
        
-            .sidemenu-container a {
+            a {
                 position:static;
-                border-radius: 25px;
+                border-radius: 10px;
                 color: black;
                 text-decoration: none;
                 font-size: 19px;
-                display: flex;
-                margin: 10px 15px 5px 15px ;
-                padding: 0px 0px 0px 20px;
-                align-items:center;
+                display: block;
+                margin: 2px 15px 5px 15px ;
+                padding: 0px 0px 0px 30px;
             }
-            .sidemenu-container a.active{
+            a.active{
                  background-color:#F6B665;
                 color:#606060;
             }
-            .sidemenu-container a:hover{
+            a:hover{
                 background-color:#fcd49a;
                 color:#606060;
-                margin: 10px 15px 5px 15px ;
-                padding: 0px 0px 0px 20px;
+                margin: 2px 15px 5px 15px ;
+                padding: 0px 0px 0px 30px;
+                text-decoration: none;
             }
             .display-container{
                 background-color:white; 
@@ -116,13 +121,12 @@
              }
              .gridview-style{
                  margin-top:5%;
-                 text-align:center;
              }
-             .gridview-style .header-style{
+             /*.gridview-style .header-style{
                  width:20px;
                  text-align:center;
                  align-items:center;
-             }
+             }*/
             .sort-dropdown{
                 border-radius: 12px;
                 width:100px;
@@ -143,14 +147,24 @@
         width: 100%;
         display: none;
     }
-   /* .horizontal-line {
+   .horizontal-line {
         border: none;
-        border-top: 1px solid black;
-        width: 100%;
+        border-top: 2px solid black;
+        width: 90%;
+        margin-left:auto;
+        margin-right:auto;
         margin-top:1%;
         margin-bottom:0%;
-    }*/
-    
+    }
+    .second{
+        border: none;
+        border-top: 2px solid black;
+        width: 90%;
+        margin-left:auto;
+        margin-right:auto;
+        margin-top:13%;
+        margin-bottom:0%;
+    }
     .full-time:active::before{
                 content:'';
                 position:absolute;
@@ -160,58 +174,56 @@
                 background-color: #881A30;
 
     }
-    .fa {
-                width:20px;
-                margin-right: 19px; 
-    }
+   
     </style>
-     <asp:Table ID="Table1" runat="server"  CssClass="content">
+    <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
-            <asp:TableCell Style="vertical-align:top; height:200px; ">
+            <asp:TableCell  style="vertical-align: top;">
                 <div class="profile-container">
                 <img src="images/industrypic.png" />
-                <p >Industry Name</p>
+                <p >OJT Coordinator</p>
+                    <hr class="horizontal-line" />
+                    <a  href="Coordinator.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
+                     <a href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:12px; width:32px;"></i>Refer Student</a>
+                    <a class="active" href="CourseList.aspx"> <i class="fa fa-book" aria-hidden="true" style="padding-right:12px;"></i>Course List</a>
+                     <a  href="Applicants.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
+                     <hr class="second" />
+                     <a  href="ReferralLIst.aspx"><i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>Sign-out</a>
                 </div>
             </asp:TableCell>
-            <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
+            <asp:TableCell Style="padding:0px 5px 0px 40px">
                <div class="display-container">
-                   <h1 class="title">Referral List</h1>
+                   <h1 class="title">List of Course</h1>
+                    <p style="float:left;">Sort by <asp:DropDownList ID="ddlSortBy" runat="server" AutoPostBack="true"  CssClass="sort-dropdown">
+                        <asp:ListItem Text="COED" Value="ColumnName1"></asp:ListItem>
+                        <asp:ListItem Text="CME" Value="ColumnName1"></asp:ListItem>
+                        <asp:ListItem Text="CCICT" Value="ColumnName1"></asp:ListItem>
+                        <asp:ListItem Text="COE" Value="ColumnName1"></asp:ListItem>
+                    </asp:DropDownList></p>
                    <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
                    <asp:GridView ID="GridView1" runat="server" Style="color:black; " AutoGenerateColumns="false"  ShowHeaderWhenEmpty="true" CssClass="gridview-style"
                                       AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" CellPadding="50" CellSpacing="50" 
-                                      Font-Bold="False" Font-Size="13px"  Height="100%" Width="100%" >  
+                                      Font-Bold="False" Font-Size="13px"  Height="100%" Width="100%" HorizontalAlign="Center" VerticalAlign="Middle" >  
                         <PagerStyle  HorizontalAlign="Center" />
-                        <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
+                        <HeaderStyle Font-Bold="false" BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle" Width="100%" />
                        
                             <Columns >
-                                 <asp:TemplateField HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
+                                <asp:TemplateField HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
                                      <ItemTemplate>
                                          <%# Container.DataItemIndex + 1 %>
                                      </ItemTemplate>
                                  </asp:TemplateField>
-                               <asp:BoundField DataField="ReferralID" HeaderText="Referral ID"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                <asp:BoundField DataField="LastName" HeaderText="Last Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                <asp:BoundField DataField="FirstName" HeaderText="First Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                 <asp:BoundField DataField="referredBy" HeaderText="Referred by" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                 <asp:BoundField DataField="dateReferred" HeaderText="Date Referred" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                 <asp:BoundField DataField="resumeFile" HeaderText="Resume" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-
+                                <asp:BoundField DataField="Department" HeaderText="Department" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
+                                <asp:BoundField DataField="Course" HeaderText="Course" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
+                                 <asp:BoundField DataField="Major" HeaderText="Major" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" SortExpression="ColumnName1"/>
+                                <asp:BoundField DataField="hoursNeeded" HeaderText="Internship hours" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
+                               
                            
                                 </Columns>
                     </asp:GridView>
                </div>
             </asp:TableCell>
         </asp:TableRow>
-          <asp:TableRow>
-            <asp:TableCell Style=" vertical-align:top;">
-                <div class="sidemenu-container">
-                     <a  href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
-                     <a href="#"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
-                     <a href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
-                     <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
-                     <a class="active" href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
-               </div>
-            </asp:TableCell>
-        </asp:TableRow>
+          
     </asp:Table>
 </asp:Content>

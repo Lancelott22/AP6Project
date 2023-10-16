@@ -56,9 +56,10 @@ namespace ctuconnect
                     if (reader.Read())
                     {
                         getOJTCoordinatorInfo();
+
                     }
                     Session["Username"] = txtusername.Text;
-                    Response.Redirect("Home.aspx");
+                    Response.Redirect("CoordinatorProfile.aspx");
                     conDB2.Close();
                     reader.Close();
                 }  
