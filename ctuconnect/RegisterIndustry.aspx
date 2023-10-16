@@ -111,7 +111,7 @@
                 <!-- Password -->
                 <div class="col-sm-6 d-flex flex-column justify-content-center">      
                     Password*<br />
-                    <asp:TextBox ID="txtpwd" CssClass="txtbox" runat="server" Width="500px" Height="30px"></asp:TextBox>
+                    <asp:TextBox ID="txtpwd" CssClass="txtbox" runat="server" Width="500px" Height="30px" TextMode="Password"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" forecolor="#F7941F" ControlToValidate="txtpwd" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
 
                     <asp:RegularExpressionValidator ID="revpwd" runat="server" ControlToValidate="txtpwd" ErrorMessage="Invalid Password" Display="Dynamic" CssClass="text-danger" ValidationExpression="^(?=.*\d)(?=.*[A-Z])(?=.*\W)(?!.*\s).{8,}$"></asp:RegularExpressionValidator>
@@ -129,7 +129,7 @@
                 <!-- Confirm Password -->
                 <div class="col-sm-6 d-flex flex-column justify-content-center">
                     Confirm Password*<br />
-                    <asp:TextBox ID="txtcpwd" CssClass="txtbox" runat="server" Width="500px" Height="30px"></asp:TextBox>
+                    <asp:TextBox ID="txtcpwd" CssClass="txtbox" runat="server" Width="500px" Height="30px" TextMode="Password"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator6" forecolor="#F7941F" ControlToValidate="txtcpwd" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
                     <asp:CompareValidator ID="cvcpwd" runat="server" ErrorMessage="Password did not match!" ControlToCompare="txtpwd" ControlToValidate="txtcpwd"></asp:CompareValidator>
                 </div>
