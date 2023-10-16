@@ -61,13 +61,24 @@ namespace ctuconnect
                     IndstryLogo.Src = "images/" + reader["industryPicture"].ToString();
                     IndustryName.Text = reader["industryName"].ToString();
                     JobTitle.Text = reader["jobTitle"].ToString();
-                    JobDetail.Text = reader["jobDescription"].ToString();
+                    JobDescription.Text = reader["jobDescription"].ToString();
                     JobType.Text = reader["jobType"].ToString();
                     JobLocation.Text = reader["jobLocation"].ToString();
                     JobCourse.Text = reader["jobCourse"].ToString();
                     JobQualification.Text = reader["jobQualifications"].ToString();
                     ApplicationInstruction.Text = reader["applicationInstruction"].ToString();
+                if (reader["salaryRange"] == null || reader["salaryRange"].ToString() == string.Empty)
+                {                
+                    salaryData.Visible = false;
+                    SalaryRange.Visible = false;
+                }
+                else
+                {
+                    salaryData.Visible = true;
                     SalaryRange.Text = reader["salaryRange"].ToString();
+                    SalaryRange.Visible = true;
+                }
+                   
                 }
                 reader.Close();
                 conDB.Close();
@@ -79,6 +90,7 @@ namespace ctuconnect
 
         protected void SubmitApply_Command(object sender, CommandEventArgs e) //submitApplication
         {
+            
             /*  if (checkResume())
               {
 
@@ -87,6 +99,7 @@ namespace ctuconnect
              string type = e.CommandName.ToString();
              int student_accId = int.Parse(Session["Student_accID"].ToString());
              int alumni_accId = int.Parse(Session["Alumni_accID"].ToString());
+            string position = JobTitle.Text.ToString();
              string applicantFName = Session["Fname"].ToString();
              string applicantLName = Session["Lname"].ToString();
              string dateApplied = DateTime.Now.ToString("dd MMMM yyyy");
@@ -96,6 +109,7 @@ namespace ctuconnect
             string Usertype = "Student";
             string type = "Intern";
             int student_accId = 100000000;
+            string position = JobTitle.Text.ToString();
             int alumni_accId = 1;
              string applicantFName = "AKosi";
              string applicantLName = "MYLastName";
@@ -107,9 +121,9 @@ namespace ctuconnect
             conDB.Open();
             if (Usertype == "Alumni")
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,firstName, lastName, industry_accID,dateApplied, resume, jobID  ) " +
+                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,applicantFName, applicantLName, industry_accID,dateApplied, resume, jobID  ) " +
                     "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
-               
+  
                 cmd.Parameters.AddWithValue("@jobtype", type);
                 cmd.Parameters.AddWithValue("@student_accId", student_accId);
                 cmd.Parameters.AddWithValue("@applicantFName", applicantFName);
@@ -137,21 +151,21 @@ namespace ctuconnect
             }
             conDB.Close();
 
-
+           
         }
         bool checkResume() //check resume
         {
             int student_accId = int.Parse(Session["Student_accID"].ToString());
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select ResumeFile from STUDENT_ACCOUNT where student_accID = @student_accID", conDB);
+            SqlCommand cmd = new SqlCommand("select resumeFile from STUDENT_ACCOUNT where student_accID = @student_accID", conDB);
             cmd.Parameters.AddWithValue("@student_accID", student_accId);
             SqlDataReader reader = cmd.ExecuteReader();
             if(reader.Read())
             {
-                if(reader["ResumeFile"].ToString() == null)
+                if(reader["resumeFile"].ToString() == null)
                 {
                     conDB.Close();
-                    return false;
+                    return true;
                 }
                 reader.Close();
                
@@ -183,11 +197,21 @@ namespace ctuconnect
             return false;
         }
 
-        /*protected void JobHiring_ItemDataBound(object sender, DataListItemEventArgs e)
+        protected void JobHiring_ItemDataBound(object sender, DataListItemEventArgs e)
         {
-            
-            Button button = e.Item.FindControl("ApplyJob") as Button;
-            button.Text = "Applied";
-        }*/
+            Label jobID = e.Item.FindControl("JobID") as Label;
+            int JobId = int.Parse(jobID.Text);
+            Button btn = e.Item.FindControl("ApplyJob") as Button;
+
+            if (checkJobApplied(JobId) == true)
+            {
+                btn.Text = "Applied";
+            }
+            else if (checkJobApplied(JobId) == false)
+            {
+                btn.Text = "Apply";
+            }
+        }
+
     }
 }  
