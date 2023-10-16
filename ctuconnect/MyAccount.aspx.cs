@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,17 +12,47 @@ namespace ctuconnect
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
-            disp_name.Text = Session["FNAME"].ToString() + " " + Session["INITIAL"].ToString()+ ". " + Session["LNAME"].ToString();
-            disp_studentID.Text = Session["STUDENT_ID"].ToString();
-            disp_studentStatus.Text = Session["STATUS"].ToString();
-            disp_course.Text = Session["COURSE"].ToString();
-            disp_employeeStatus.Text = "Pending";
+            if (!IsPostBack)
+            {
 
-            string imagePath = "~/images/StudentProfiles/" + Session["PROFILE"].ToString();
-            profileImage1.ImageUrl = imagePath;
+                disp_name.Text = Session["FNAME"].ToString() + " " + Session["INITIAL"].ToString() + ". " + Session["LNAME"].ToString();
+                disp_studentID.Text = Session["STUDENT_ID"].ToString();
+                disp_studentStatus.Text = Session["STATUS"].ToString();
+                disp_course.Text = Session["COURSE"].ToString();
+                string resume = Session["RESUMEFILE"].ToString();
+
+                string profilePicturePath = Session["PROFILE"].ToString();
+
+                LoadProfilePicture(profilePicturePath);
+
+                if (!string.IsNullOrEmpty(resume))
+                {
+                    lblResume.Text = "Uploaded";
+                }
+                else
+                {
+                    lblResume.Text = "No attached file";
+                }
+            }
 
 
+        }
+
+        private void LoadProfilePicture(string profilePicturePath)
+        {
+            if (!string.IsNullOrEmpty(profilePicturePath))
+            {
+                profileImage.ImageUrl = profilePicturePath;
+            }
+            else
+            {
+                profileImage.ImageUrl = "~/images/StudentProfiles/defaultprofile.jpg";
+            }
+        }
+
+        protected void btnEdit_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("EditAccount");
         }
     }
 }
