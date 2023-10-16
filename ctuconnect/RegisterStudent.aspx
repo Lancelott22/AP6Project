@@ -54,6 +54,7 @@
             width: 120px;
         }
 
+
         </style>
 
     <section>
@@ -104,14 +105,14 @@
                     <asp:TextBox ID="txtemail" CssClass="txtbox" runat="server" Width="300px" Height="30px"></asp:TextBox>
                     <asp:RegularExpressionValidator ID="chkemail" runat="server" ControlToValidate="txtemail" ErrorMessage="Invalid Email" Display="Dynamic" CssClass="text-danger" ValidationExpression="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"></asp:RegularExpressionValidator>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator4" forecolor="#F7941F" ControlToValidate="txtemail" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
-                    <asp:Label ID="lblErrorMessage" runat="server" Text="" Visible="false"></asp:Label>
+                    <asp:Label ID="lblErrorMessage" CssClass="text-danger" runat="server" Text="" Visible="false"></asp:Label>
                 </div>
                 <!-- Student ID -->
                 <div class="col-sm-4 d-flex flex-column justify-content-center ">
                     Student ID*<br />
                     <asp:TextBox ID="txtid" CssClass="txtbox" runat="server" Width="200px" Height="30px"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" forecolor="#F7941F" ControlToValidate="txtid" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
-                    <asp:Label ID="lblErrorMessage2" runat="server" Text="" Visible="false"></asp:Label>
+                    <asp:Label ID="lblErrorMessage2" runat="server" Text="" Visible="false" CssClass="text-danger"></asp:Label>
                 </div>
                 <!-- Course -->
                 <div class="col-sm-4 d-flex flex-column justify-content-center">
@@ -130,7 +131,7 @@
                 <!-- Password -->
                 <div class="col-sm-4 d-flex flex-column justify-content-center">      
                     Password*<br />
-                    <asp:TextBox ID="txtpwd" CssClass="txtbox" runat="server" Width="300px" Height="30px"></asp:TextBox>
+                    <asp:TextBox ID="txtpwd" CssClass="txtbox" runat="server" Width="300px" Height="30px" TextMode="Password"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator7" forecolor="#F7941F" ControlToValidate="txtpwd" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="revpwd" runat="server" ControlToValidate="txtpwd" ErrorMessage="Invalid Password" CssClass="text-danger" ValidationExpression="^(?=.*\d)(?=.*[A-Z])(?=.*\W)(?!.*\s).{8,}$"></asp:RegularExpressionValidator>
                 </div>
@@ -146,7 +147,7 @@
                 <!-- Confirm Password -->
                 <div class="col-sm-4 d-flex flex-column justify-content-center">      
                     Confirm Password*<br />
-                    <asp:TextBox ID="txtcpwd" CssClass="txtbox" runat="server" Width="300px" Height="30px"></asp:TextBox>
+                    <asp:TextBox ID="txtcpwd" CssClass="txtbox" runat="server" Width="300px" Height="30px" TextMode="Password"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator9" forecolor="#F7941F" ControlToValidate="txtcpwd" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
                     <asp:CompareValidator ID="cvcpwd" runat="server" ErrorMessage="Password did not match!" ControlToCompare="txtpwd" ControlToValidate="txtcpwd" CssClass="text-danger"></asp:CompareValidator>
                 </div>
@@ -164,7 +165,7 @@
             </div>
             <!-- Login Link -->
             <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center">
-                <p class="ask">Already have an account? <a href="Login.aspx" class="link">Login here</a></p> 
+                <p class="ask">Already have an account? <a href="LoginStudent.aspx" class="link">Login here</a></p> 
             </div>
             
         </div>

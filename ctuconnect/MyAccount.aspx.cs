@@ -11,11 +11,17 @@ namespace ctuconnect
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+           
             disp_name.Text = Session["FNAME"].ToString() + " " + Session["INITIAL"].ToString()+ ". " + Session["LNAME"].ToString();
-            
+            disp_studentID.Text = Session["STUDENT_ID"].ToString();
+            disp_studentStatus.Text = Session["STATUS"].ToString();
+            disp_course.Text = Session["COURSE"].ToString();
+            disp_employeeStatus.Text = "Pending";
+
+            string imagePath = "~/images/StudentProfiles/" + Session["PROFILE"].ToString();
+            profileImage1.ImageUrl = imagePath;
 
 
-            
         }
     }
 }

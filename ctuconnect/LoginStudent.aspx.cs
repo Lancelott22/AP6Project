@@ -101,6 +101,7 @@ namespace ctuconnect
                         Session["LNAME"] = reader["lastName"];
                         Session["STATUS"] = reader["studentStatus"];
                         Session["COURSE"] = reader["course_ID"];
+                        Session["PROFILE"] = reader["studentPicture"];
                         Session["COR"] = reader["cor"];
                         Session["EMAIL"] = reader["email"];
                         Session["PASSWORD"] = reader["password"];
