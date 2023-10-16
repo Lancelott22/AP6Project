@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Xml.Linq;
 
 namespace ctuconnect
 {
@@ -19,12 +20,48 @@ namespace ctuconnect
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack) 
+            {
+                // Check if there's saved data and populate the fields
+                if (Session["savedName"] != null)
+                {
+                    txtindustry.Text = Session["savedName"].ToString();
+                }
+
+                if (Session["savedLocation"] != null)
+                {
+                    txtlocation.Text = Session["savedLocation"].ToString();
+                }
+
+                if (Session["savedEmail"] != null)
+                {
+                    txtemail.Text = Session["savedEmail"].ToString();
+                }
+
+                if (Session["savedPassword"] != null)
+                {
+                    txtpwd.Text = Session["savedPassword"].ToString();
+                }
+
+                if (Session["savedConfirmPwd"] != null)
+                {
+                    txtcpwd.Text = Session["savedConfirmPwd"].ToString();
+                }
+
+
+
+            }
 
         }
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            
+            // Save input data to session before encountering an error
+            Session["savedName"] = txtindustry.Text;
+            Session["savedLocation"] = txtlocation.Text;
+            Session["savedEmail"] = txtemail.Text;
+
+
                 HttpPostedFile postedFile = mouUpload.PostedFile; /// upload file
                 string filename = Path.GetFileName(postedFile.FileName); ///to check the filename
                 string fileExtension = Path.GetExtension(filename).ToLower(); //to get the extension filename
@@ -42,7 +79,7 @@ namespace ctuconnect
                 string fileExtension2 = Path.GetExtension(filename2).ToLower();
                 int filezise2 = postedFile2.ContentLength;
 
-                string logpath2 = "C:\\Users\\irish\\source\\repos\\ctuconnect\\ctuconnect\\images\\IndsutryProfile";
+                string logpath2 = "C:\\Users\\Gebby\\source\\repos\\ctuconnect\\ctuconnect\\images\\IndsutryProfile";
 
                 string filepath2 = Path.Combine(logpath2, filename2);
                 if (fileExtension == ".bmp" || fileExtension.Equals(".jpg") || fileExtension.Equals(".png") || fileExtension.Equals(".jpeg") || fileExtension.Equals(".pdf") && 
@@ -84,6 +121,7 @@ namespace ctuconnect
 
                         }
                         Response.Write("<script>alert('Created Successfully');document.location='LoginIndustry.aspx'</script>");
+                    Session.RemoveAll();
                     }
                 }
                 else
