@@ -19,6 +19,7 @@
             font-family:'Arial Rounded MT';
             color:#000000;
             padding-left:3px;
+             text-decoration:none;
         }
 
         .nav a.active{
@@ -100,11 +101,13 @@
     </style>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3 d-flex flex-column">
+            <div class="col-3 d-flex flex-column align-self-start">
                 <div class="nav flex-column flex-nowrap vh-100 overflow-auto p-2">
+
 
                     <a href="MyAccount.aspx">
                             <i class='bx bx-user-circle icon' aria-hidden="true" ></i>
+
                             <span class="text nav-text">My Account</span>
                     </a>
                     <a class="active" href="#resume">

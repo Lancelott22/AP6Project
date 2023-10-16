@@ -29,7 +29,6 @@
             width:80%;
             margin-left:auto;
             margin-right:auto;
-
         }
         .profile-container p{
              display:block;
