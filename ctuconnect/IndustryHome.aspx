@@ -214,7 +214,7 @@
         <asp:TableRow>
             <asp:TableCell Style="vertical-align:top; height:200px;" >
                 <div class="profile-container">
-                <img src="images/industrypic.png" />
+                <asp:Image ID="industryImage1" runat="server" />
                     <center><b><asp:Label ID="disp_industryName" CssClass="disp_industryName"  runat="server" Text=""></asp:Label></b></center>
                     <center><p style="font-size: 14px;">Account ID: <b><asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b></p></center>
                 </div>

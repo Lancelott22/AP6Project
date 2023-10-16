@@ -16,6 +16,9 @@ namespace ctuconnect
         {
             disp_industryName.Text = Session["INDUSTRYNAME"].ToString();
             disp_accID.Text = Session["ACC_ID"].ToString();
+
+            string imagePath = "~/images/IndustryProfile/" + Session["INDUSTRYPIC"].ToString();
+            industryImage1.ImageUrl = imagePath;
         }
 
         protected void PostJob_Click(object sender, EventArgs e)

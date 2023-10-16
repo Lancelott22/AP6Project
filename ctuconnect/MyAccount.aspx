@@ -109,50 +109,51 @@
                 <div class="top"></div>
                 <div class="bottom">
                     <center>
-                    <image src="/images/defaultprofile.jpg" class="profile" height="100" width="100"></image>
+                    
+                        <asp:Image ID="profileImage1" CssClass="profile" Width="100" Height="100" runat="server" />
                     </center>
                     <div class="row">
                         <div class="col-sm-3">
-                            <asp:Label ID="disp_name" runat="server" Text=""></asp:Label>
+                            Full Name:
                         </div>
                         <div class="col-sm-9">
-                            <%# Eval("Name") %>
+                           <asp:Label ID="disp_name" runat="server" Text=""></asp:Label>
                         </div>
                     </div>
                     <hr class="line"/>
                     <div class="row">
                         <div class="col-sm-3">
-                            Student ID
+                            Student ID:
                         </div>
                         <div class="col-sm-9">
-                            <%# Eval("Student ID") %>
+                            <asp:Label ID="disp_studentID" runat="server" Text=""></asp:Label>
                         </div>
                     </div>
                     <hr class="line"/>
                     <div class="row">
                         <div class="col-sm-3">
-                            Student Status
+                            Student Status:
                         </div>
                         <div class="col-sm-9">
-                            <%# Eval("Student Status") %>
+                            <asp:Label ID="disp_studentStatus" runat="server" Text=""></asp:Label>
                         </div>
                     </div>
                     <hr class="line"/>
                     <div class="row">
                         <div class="col-sm-3">
-                            Course
+                            Course:
                         </div>
                         <div class="col-sm-9">
-                            <%# Eval("Course") %>  
+                            <asp:Label ID="disp_course" runat="server" Text=""></asp:Label>  
                         </div>
                     </div>
                     <hr class="line"/>
                     <div class="row">
                         <div class="col-sm-3">
-                            Employment Status
+                            Employment Status:
                         </div>
                         <div class="col-sm-9">
-                            <%# Eval("Employment Status") %>
+                            <asp:Label ID="disp_employeeStatus" runat="server" Text=""></asp:Label>
                         </div>
                     </div>
                     <br /><br />
