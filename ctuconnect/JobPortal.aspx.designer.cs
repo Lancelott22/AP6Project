@@ -60,15 +60,6 @@ namespace ctuconnect
         protected global::System.Web.UI.HtmlControls.HtmlImage IndstryLogo;
 
         /// <summary>
-        /// IndustryName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label IndustryName;
-
-        /// <summary>
         /// JobTitle control.
         /// </summary>
         /// <remarks>
@@ -78,31 +69,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label JobTitle;
 
         /// <summary>
-        /// JobId control.
+        /// IndustryName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label JobId;
-
-        /// <summary>
-        /// JobDetail control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label JobDetail;
-
-        /// <summary>
-        /// JobType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label JobType;
+        protected global::System.Web.UI.WebControls.Label IndustryName;
 
         /// <summary>
         /// JobLocation control.
@@ -114,6 +87,24 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label JobLocation;
 
         /// <summary>
+        /// JobId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label JobId;
+
+        /// <summary>
+        /// JobType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label JobType;
+
+        /// <summary>
         /// JobCourse control.
         /// </summary>
         /// <remarks>
@@ -121,6 +112,33 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label JobCourse;
+
+        /// <summary>
+        /// salaryData control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl salaryData;
+
+        /// <summary>
+        /// SalaryRange control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label SalaryRange;
+
+        /// <summary>
+        /// JobDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label JobDescription;
 
         /// <summary>
         /// JobQualification control.
@@ -139,15 +157,6 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ApplicationInstruction;
-
-        /// <summary>
-        /// SalaryRange control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label SalaryRange;
 
         /// <summary>
         /// SubmitApply control.
