@@ -224,6 +224,18 @@
                 width:20px;
                 margin-right: 19px; 
     }
+            .postJobStyle {
+                float:right;
+                color:white;
+                background-color: orange;
+                border-radius: 15px;
+                height:40px;
+                width:20%;
+                border:1px solid orange;
+            }
+            .postJobStyle:hover {
+                box-shadow: 3px 6px 7px -4px  grey;
+            }
     </style>
     <asp:Table ID="Table1" runat="server" CssClass="content" >
         <asp:TableRow>
@@ -251,12 +263,12 @@
 
                            <div class="dropdown1">
                             <select runat="server" name="jobtype" id="jobtype" Style="border-radius: 10px;  min-width: 47%; min-height:35px; margin-bottom:2%; padding-left:20px;">
-                                <option selected disabled hidden>--Select--</option>
+                                <option value="0" selected disabled hidden>--Select--</option>
                                 <option value="fulltime">Full-time</option>
                                 <option value="internship">Internship</option>
                             </select>
                             <select runat="server" name="course" id="course" Style="border-radius: 10px;  min-width: 47%; min-height:35px; margin-bottom:2%; padding-left:20px;" >
-                                  <option selected disabled hidden>--Select--</option>
+                                  <option  value="0" selected disabled hidden>--Select--</option>
                                 <option value="fulltime">BSIT</option>
                                 <option value="internship">BIT-CT</option>
                                 <option value="fulltime">BSIS</option>
@@ -275,7 +287,12 @@
 
                     <asp:Label ID="Label8" runat="server" Text="Instructions to apply " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
                      <asp:TextBox ID="jobInstruct" runat="server" TextMode="MultiLine" CssClass="txtbox-instruction" Placeholder="How to apply?"></asp:TextBox>
-                     <asp:Button ID="PostJob" runat="server" CssClass="postJobStyle"  Text="Post" OnClick="PostJob_Click"/>
+                     
+                    <asp:Label ID="Label9" runat="server" Text="Salary Range" Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
+                     <asp:TextBox ID="SalaryRange" runat="server" CssClass="txtbox" Placeholder="PHP XXX,XXX - PHP XXX,XXX" ></asp:TextBox>
+
+                    
+                    <asp:Button ID="PostJob" runat="server" CssClass="postJobStyle"  Text="Post" OnClick="PostJob_Click"/>
             </div>
                     </asp:TableCell>
             </asp:TableRow>

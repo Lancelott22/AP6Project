@@ -14,7 +14,7 @@ namespace ctuconnect
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack && Session["Email"] != null)
+            if (!IsPostBack && Session["IndustryEmail"] != null)
             {
                 Response.Redirect("IndustryHome.aspx");
             }
@@ -62,7 +62,7 @@ namespace ctuconnect
                         reader.Close();
                     }
 
-                    Session["Email"] = txtemail.Text;
+                    Session["IndustryEmail"] = txtemail.Text;
                     Response.Redirect("IndustryHome.aspx");
                     conDB2.Close();
                     
@@ -96,10 +96,10 @@ namespace ctuconnect
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.Read())
                     {
-                        Session["ACC_ID"] = reader["industry_accID"];
+                        Session["INDUSTRY_ACC_ID"] = reader["industry_accID"];
                         Session["INDUSTRYNAME"] = reader["industryName"];
                         Session["LOCATION"] = reader["location"];
-                        Session["EMAIL"] = reader["email"];
+                        Session["IndustryEmail"] = reader["email"];
                         Session["PASSWORD"] = reader["password"];
                         Session["MOU"] = reader["mou"];
                         Session["INDUSTRYPIC"] = reader["industryPicture"];

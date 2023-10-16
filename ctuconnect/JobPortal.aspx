@@ -208,7 +208,7 @@
                                 <div class="col-sm-7">
                                     <div class="row">
                                         <asp:Label ID="JobID" runat="server" Visible="false" Text='<%#Eval("jobID")%>'></asp:Label>
-                                       
+                                       <asp:Label ID="Industry_accID" runat="server" Visible="false" Text='<%#Eval("industry_accID")%>'></asp:Label>
                                         <label  runat="server" hidden="hidden"><%#Eval("jobType")%></label>
                                         <div class="align-items-start">                                         
                                             <span>
@@ -258,7 +258,8 @@
     <!-- Modal -->
     <div class="modal fade" id="ApplyJobModal" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-            
+            <asp:Label ID="IndustryID" runat="server" Visible="false"></asp:Label>
+            <asp:Label ID="Job_ID" runat="server" Visible="false"></asp:Label>
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="container row" style="margin-left: 5px;"></div>

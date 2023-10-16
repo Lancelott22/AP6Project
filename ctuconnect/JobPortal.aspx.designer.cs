@@ -51,6 +51,24 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.DataList JobHiring;
 
         /// <summary>
+        /// IndustryID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label IndustryID;
+
+        /// <summary>
+        /// Job_ID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Job_ID;
+
+        /// <summary>
         /// IndstryLogo control.
         /// </summary>
         /// <remarks>

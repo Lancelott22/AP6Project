@@ -16,16 +16,21 @@ namespace ctuconnect
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+           
+            if (!IsPostBack && Session["StudentEmail"] == null)
             {
-                JobBind();
+                Response.Redirect("LoginStudent.aspx");
+
+            }
+            else if (!IsPostBack)
+            {
+                myApplicationBind();
             }
 
-
         }
-        void JobBind()
+        void myApplicationBind()
         {
-            int studentAccID = 100000000;
+            int studentAccID = int.Parse( Session["Student_ACC_ID"].ToString());
             SqlCommand cmd = new SqlCommand("select * from APPLICANT JOIN INDUSTRY_ACCOUNT ON APPLICANT.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN HIRING ON APPLICANT.jobID = HIRING.jobID Where student_accID = @Student_accID", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -36,7 +41,7 @@ namespace ctuconnect
         }
         bool checkResumeStatus(int applicantID, int jobId)
         {
-            int studentAccID = 100000000; //int.Parse(Sessios["student_accID"].ToString());
+            int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString()); //int.Parse(Sessios["student_accID"].ToString());
             conDB.Open();
             SqlCommand cmd = new SqlCommand("select resumeStatus from APPLICANT Where student_accID = @Student_accID and applicantID = @applicantId and jobID = @jobId", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
@@ -62,7 +67,7 @@ namespace ctuconnect
         }
         bool checkInterviewStatus(int applicantID, int jobId)
         {
-            int studentAccID = 100000000; //int.Parse(Sessios["student_accID"].ToString());
+            int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString()); //int.Parse(Sessios["student_accID"].ToString());
             conDB.Open();
             SqlCommand cmd = new SqlCommand("select interviewStatus from APPLICANT Where student_accID = @Student_accID and applicantID = @applicantId and jobID = @jobId", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
@@ -88,7 +93,7 @@ namespace ctuconnect
         }
         bool checkApplicantStatus(int applicantID, int jobId)
         {
-            int studentAccID = 100000000; //int.Parse(Sessios["student_accID"].ToString());
+            int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString()); //int.Parse(Sessios["student_accID"].ToString());
             conDB.Open();
             SqlCommand cmd = new SqlCommand("select applicantStatus from APPLICANT Where student_accID = @Student_accID and applicantID = @applicantId and jobID = @jobId", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
@@ -189,7 +194,7 @@ namespace ctuconnect
         }
         string getApplicantStatus(int applicantID, int jobId)
         {
-            int studentAccID = 100000000; //int.Parse(Sessios["student_accID"].ToString());
+            int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString()); //int.Parse(Sessios["student_accID"].ToString());
             conDB.Open();
             SqlCommand cmd = new SqlCommand("select applicantStatus from APPLICANT Where student_accID = @Student_accID and applicantID = @applicantId and jobID = @jobId", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
@@ -208,7 +213,7 @@ namespace ctuconnect
         string showInterviewDetails(int applicantID, int jobId)
         {
             string interviewDetail = "";
-            int studentAccID = 100000000; //int.Parse(Sessios["student_accID"].ToString());
+            int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString()); //int.Parse(Sessios["student_accID"].ToString());
             conDB.Open();
             SqlCommand cmd = new SqlCommand("select interviewDetails from APPLICANT Where student_accID = @Student_accID and applicantID = @applicantId and jobID = @jobId", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
