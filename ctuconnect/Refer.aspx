@@ -186,7 +186,7 @@
                 margin-bottom:2%;
                 padding-left:20px;
                 border: 1px solid gray;
-                justify-content: center; /* Add this property to include padding in the width calculation */
+                justify-content: center; 
                
     }
     .txtbox-id {
@@ -197,7 +197,7 @@
             margin-bottom:2%;
             padding-left:20px;
             border: 1px solid gray;
-            justify-content: center; /* Add this property to include padding in the width calculation */
+            justify-content: center; 
            
 }
     .dropdown1{
@@ -277,7 +277,7 @@
                             <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
                                 <EmptyDataTemplate>
                                      <p>No data available</p>
-                                 </EmptyDataTemplate>
+                                </EmptyDataTemplate>
                             <Columns >
                                         <asp:TemplateField HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
                                             <ItemTemplate>
@@ -314,40 +314,66 @@
                                 </div>
 
                                       <asp:Label ID="Label8" runat="server" Text="First Name" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                      <asp:TextBox ID="txtFirstName_student" runat="server" CssClass="txtbox"  ></asp:TextBox>
+                                      <asp:TextBox ID="txtFirstName_student" runat="server" ReadOnly="true" CssClass="txtbox"  ></asp:TextBox>
                                       <asp:Label ID="Label9" runat="server" Text="Middle Initial" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                      <asp:TextBox ID="txtMiddleInitial_student" runat="server" CssClass="txtbox"  ></asp:TextBox>
+                                      <asp:TextBox ID="txtMiddleInitial_student" runat="server"  ReadOnly="true" CssClass="txtbox"  ></asp:TextBox>
                                       <asp:Label ID="Label3" runat="server" Text="Last Name" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                      <asp:TextBox ID="txtLastName_student" runat="server" CssClass="txtbox"  ></asp:TextBox>
+                                      <asp:TextBox ID="txtLastName_student" runat="server" ReadOnly="true" CssClass="txtbox"  ></asp:TextBox>
 
                                       <asp:Label ID="Label6" runat="server" Text="Industry" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                       <div class="dropdown1">
-                                           <select name="jobtype" id="jobtype" Style="border-radius: 10px;  min-width: 100%; min-height:35px; margin-bottom:2%; padding-left:20px; padding-right:20px;">
-                                               <option value="100000000">Accenture.Inc</option>
-                                               <option value="#">Concentrix</option>
-                                               </select>
-                                      </div>
+                                       <asp:DropDownList ID="dropdownIndustries" runat="server" CssClass="dropdown1"></asp:DropDownList>
 
                                       <asp:Label ID="Label7" runat="server" Text="Resume" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                     <asp:TextBox ID="TextBox1" runat="server" CssClass="txtbox"  ></asp:TextBox> <br>
+                                      <asp:Label ID="txtResumeFileName" runat="server" Text="" Style="font-size:14px;" ></asp:Label><br>
 
                                      <div class="column">
                                       <asp:Label ID="Label4" runat="server" Text="Referred by" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                      <asp:TextBox ID="txtID_coordinator" runat="server" CssClass="txtbox-id" Placeholder="Enter your ID" ></asp:TextBox>
+                                      <asp:TextBox ID="txtID_coordinator" runat="server" CssClass="txtbox-id" Placeholder="Enter your ID" ReadOnly="true" AutoPostBack="true"></asp:TextBox>
                                          </div>
                                       <asp:Label ID="Label2" runat="server" Text="First Name" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                      <asp:TextBox ID="txtFirstName_coordinator" runat="server" CssClass="txtbox"  ></asp:TextBox>
+                                      <asp:TextBox ID="txtFirstName_coordinator" runat="server" ReadOnly="true" CssClass="txtbox"  ></asp:TextBox>
                                       <asp:Label ID="Label10" runat="server" Text="Middle Initial" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                      <asp:TextBox ID="txtMiddleInitial_coordinator" runat="server" CssClass="txtbox"  ></asp:TextBox>
+                                      <asp:TextBox ID="txtMiddleInitial_coordinator" runat="server" ReadOnly="true" CssClass="txtbox"  ></asp:TextBox>
                                       <asp:Label ID="Label5" runat="server" Text="Last Name" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                      <asp:TextBox ID="txtLastName_coordinator" runat="server" CssClass="txtbox"  ></asp:TextBox>
+                                      <asp:TextBox ID="txtLastName_coordinator" runat="server" ReadOnly="true" CssClass="txtbox"  ></asp:TextBox>
                       
              </div>
              <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                 <%--<asp:linkbutton id="submit"  class="buttonstyle" runat="server"  oncommand="submit_command" autopostback="false">submit</asp:linkbutton>--%>
+                 <asp:linkbutton id="submit"  class="buttonstyle" runat="server"  OnCLick="Submit_ButtonClick" autopostback="false">submit</asp:linkbutton>
              </div>
          </div>
      </div>
   </div>
+    
+   <%-- <div class="modal fade" id="SuccessPrompt" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="title"></h1>
+            </div>
+             <asp:Label ID="SuccesfulPrompt" runat="server" Text="Your referral succesfully added." Style="font-size:18px;" ></asp:Label>
+        </div>
+        <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+        </div>
+    </div>
+    </div>--%>
+    <div class="modal fade" id="SuccessPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                        
+                        <asp:Label ID="Label11" runat="server" Text="Success !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label12" runat="server" Text="Your referral succesfully added." Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+</div>
+
 </asp:Content>

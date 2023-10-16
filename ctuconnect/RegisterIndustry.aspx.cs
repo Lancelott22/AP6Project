@@ -79,7 +79,7 @@ namespace ctuconnect
                 string fileExtension2 = Path.GetExtension(filename2).ToLower();
                 int filezise2 = postedFile2.ContentLength;
 
-                string logpath2 = "C:\\Users\\Gebby\\source\\repos\\ctuconnect\\ctuconnect\\images\\IndsutryProfile";
+                string logpath2 = "C:\\Users\\irish\\source\\repos\\ctuconnect\\ctuconnect\\images\\IndsutryProfile";
 
                 string filepath2 = Path.Combine(logpath2, filename2);
                 if (fileExtension == ".bmp" || fileExtension.Equals(".jpg") || fileExtension.Equals(".png") || fileExtension.Equals(".jpeg") || fileExtension.Equals(".pdf") && 
