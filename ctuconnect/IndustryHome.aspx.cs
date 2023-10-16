@@ -16,8 +16,10 @@ namespace ctuconnect
         {
             disp_industryName.Text = Session["INDUSTRYNAME"].ToString();
             disp_accID.Text = Session["ACC_ID"].ToString();
-        }
 
+            string imagePath = "~/images/IndustryProfile/" + Session["INDUSTRYPIC"].ToString();
+            industryImage1.ImageUrl = imagePath;
+        }
         protected void PostJob_Click(object sender, EventArgs e)
         {
             try
@@ -47,7 +49,7 @@ namespace ctuconnect
                 cmd.Parameters.AddWithValue("@salary", 10000);
                 var ctr = cmd.ExecuteNonQuery();
 
-                if(ctr > 0 )
+                if (ctr > 0)
                 {
                     Response.Write("<script>alert('The job has been posted successfully.')</script>");
                 }
@@ -57,7 +59,7 @@ namespace ctuconnect
                 }
                 conDB.Close();
             }
-            catch 
+            catch
             {
                 Response.Write("<script>alert('Cannot post a job now! Please try again later.')</script>");
             }
