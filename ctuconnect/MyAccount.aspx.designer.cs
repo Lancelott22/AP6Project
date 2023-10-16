@@ -11,61 +11,61 @@ namespace ctuconnect
 {
 
 
-    public partial class HiredList
+    public partial class MyAccount1
     {
 
         /// <summary>
-        /// Table1 control.
+        /// profileImage1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table Table1;
+        protected global::System.Web.UI.WebControls.Image profileImage1;
 
         /// <summary>
-        /// myLinkButton1 control.
+        /// disp_name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton myLinkButton1;
+        protected global::System.Web.UI.WebControls.Label disp_name;
 
         /// <summary>
-        /// myLinkButton2 control.
+        /// disp_studentID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton myLinkButton2;
+        protected global::System.Web.UI.WebControls.Label disp_studentID;
 
         /// <summary>
-        /// UpdatePanel1 control.
+        /// disp_studentStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.WebControls.Label disp_studentStatus;
 
         /// <summary>
-        /// GridView1 control.
+        /// disp_course control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.Label disp_course;
 
         /// <summary>
-        /// GridView2 control.
+        /// disp_employeeStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView2;
+        protected global::System.Web.UI.WebControls.Label disp_employeeStatus;
     }
 }

@@ -16,7 +16,7 @@ namespace ctuconnect
         {
             if (!IsPostBack && Session["Email"] != null)
             {
-                Response.Redirect("Home.aspx");
+                Response.Redirect("IndustryHome.aspx");
             }
             LoginErrorMessage.Visible = false;
 
@@ -37,25 +37,35 @@ namespace ctuconnect
 
         protected void btn_Click(object sender, EventArgs e)
         {
+            SqlConnection conDB2 = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
             try
             {
 
                 string loginEmail = txtemail.Text;
                 string loginPassword = txtpwd.Text;
 
-                using (conDB)
+                using (conDB2)
                 {
-                    conDB.Open();
+                    conDB2.Open();
 
-                    string query = "SELECT COUNT(1) FROM INDUSTRY_ACCOUNT WHERE email = @email AND password = @password";
-                    SqlCommand command = new SqlCommand(query, conDB);
+                    string query = "SELECT * FROM INDUSTRY_ACCOUNT WHERE email = @email AND password = @password";
+                    SqlCommand command = new SqlCommand(query, conDB2);
                     command.Parameters.AddWithValue("@email", loginEmail);
                     command.Parameters.AddWithValue("@password", loginPassword);
                     int count = Convert.ToInt32(command.ExecuteScalar());
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if(reader.Read())
+                        {
+                            getIndustryInfo();
+                        }
+                        reader.Close();
+                    }
 
                     Session["Email"] = txtemail.Text;
-                    Response.Redirect("Home.aspx");
-                    conDB.Close();
+                    Response.Redirect("IndustryHome.aspx");
+                    conDB2.Close();
+                    
                 }
             }
             catch
@@ -73,7 +83,7 @@ namespace ctuconnect
             }
         }
 
-        void getAcc_ID()
+        void getIndustryInfo()
         {
             try
             {
@@ -81,14 +91,22 @@ namespace ctuconnect
                 using (conDB)
                 {
                     conDB.Open();
-                    string query = "SELECT INDUSTRY_ACCID FROM INDUSTRY_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    string query = "SELECT * FROM INDUSTRY_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
                     SqlCommand command = new SqlCommand(query, conDB);
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.Read())
                     {
-                        Session["ACC_ID"] = reader["INDUSTRY_ACCID"];
+                        Session["ACC_ID"] = reader["industry_accID"];
+                        Session["INDUSTRYNAME"] = reader["industryName"];
+                        Session["LOCATION"] = reader["location"];
+                        Session["EMAIL"] = reader["email"];
+                        Session["PASSWORD"] = reader["password"];
+                        Session["MOU"] = reader["mou"];
+                        Session["INDUSTRYPIC"] = reader["industryPicture"];
+                        Session["DATEREG"] = reader["dateRegistered"];
                     }
-
+                    conDB.Close();
+                    reader.Close();
                 }
             }
             catch
@@ -97,76 +115,6 @@ namespace ctuconnect
             }
         }
 
-        void getIndustryName()
-        {
-            try
-            {
-                string getEmail = txtemail.Text;
-                using (conDB)
-                {
-                    conDB.Open();
-                    string query = "SELECT INDUSTRYNAME FROM INDUSTRY_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
-                    SqlCommand command = new SqlCommand(query, conDB);
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        Session["INDUSTRYNAME"] = reader["INDUSTRYNAME"];
-                    }
-
-                }
-            }
-            catch
-            {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginIndsutry.aspx'</script>");
-            }
-        }
-
-        void getLocation()
-        {
-            try
-            {
-                string getEmail = txtemail.Text;
-                using (conDB)
-                {
-                    conDB.Open();
-                    string query = "SELECT LOCATION FROM INDUSTRY_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
-                    SqlCommand command = new SqlCommand(query, conDB);
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        Session["LOCATION"] = reader["LOCATION"];
-                    }
-
-                }
-            }
-            catch
-            {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginIndustry.aspx'</script>");
-            }
-        }
-
-        void getIndustryPic()
-        {
-            try
-            {
-                string getEmail = txtemail.Text;
-                using (conDB)
-                {
-                    conDB.Open();
-                    string query = "SELECT INDUSTRYPICTURE FROM INDUSTRY_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
-                    SqlCommand command = new SqlCommand(query, conDB);
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        Session["INDUSTRYPIC"] = reader["INDUSTRYPICTURE"];
-                    }
-
-                }
-            }
-            catch
-            {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginIndustry.aspx'</script>");
-            }
-        }
+       
     }
 }

@@ -13,7 +13,8 @@
         }
         .profile-container{
             max-width:260px;
-            max-height:300px;
+            height:auto;
+            padding: 10px;
             background-color:white;
             margin-left:4%;
         }
@@ -89,7 +90,7 @@
                 padding: 4% 0% 0% 6%;*/
                 margin-bottom: 30px;
             }
-            }
+            
             @media (max-width: 790px) {
                 .display-container {
                     max-width: 50%;
@@ -223,21 +224,14 @@
                 width:20px;
                 margin-right: 19px; 
     }
-            .postJobStyle {
-                background-color:orange; min-width:25%; min-height:35px; float:right; color:white; border-radius:15px; border: 1.5px solid orange; 
-            }
-             .postJobStyle:hover {
-  
-                  text-decoration: none;
-                   box-shadow: 3px 6px 7px -4px  grey;
-             }
     </style>
     <asp:Table ID="Table1" runat="server" CssClass="content" >
         <asp:TableRow>
             <asp:TableCell Style="vertical-align:top; height:200px;" >
                 <div class="profile-container">
-                <img src="images/industrypic.png" />
-                <p>Industry Name</p>
+                <asp:Image ID="industryImage1" runat="server" />
+                    <center><b><asp:Label ID="disp_industryName" CssClass="disp_industryName"  runat="server" Text=""></asp:Label></b></center>
+                    <center><p style="font-size: 14px;">Account ID: <b><asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b></p></center>
                 </div>
             </asp:TableCell> 
             <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">

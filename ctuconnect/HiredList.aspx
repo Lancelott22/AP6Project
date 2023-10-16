@@ -165,6 +165,28 @@
                 width:20px;
                 margin-right: 19px; 
     }
+    .topnav {
+      overflow: hidden;
+    }
+
+    .topnav .linkbutton {
+      float: left;
+      display: block;
+      color: black;
+      text-align: center;
+      padding: 2px 15px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .topnav .linkbutton:hover {
+      border-bottom: 2px solid black;
+    }
+
+    .topnav .linkbutton.active {
+      border-bottom: 2px solid black;
+      color:#881A30;
+}
     </style>
     <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
@@ -177,32 +199,48 @@
             <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
                <div class="display-container">
                    <h1 class="title">Hired List</h1>
-                    <asp:Button ID="Button1" runat="server" Text="Full Time" OnClick="btnSwitchGrid_Click1" CssClass="active" Style="background-color:white; border:none;"/>
-                     <asp:Button ID="Button3" runat="server" Text="Internship" OnClick="btnSwitchGrid_Click2"  />
+                    <div class="col-lg-5 order-1 order-lg-2 topnav">
+                       <asp:LinkButton ID="myLinkButton1"  runat="server" OnClick="btnSwitchGrid_Click1" CssClass="linkbutton" >Full Time</asp:LinkButton>
+                       <asp:LinkButton ID="myLinkButton2" runat="server" OnClick="btnSwitchGrid_Click2" CssClass="linkbutton">Internship</asp:LinkButton>      
+                    </div>
                     <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p> 
                    <%--<hr class="horizontal-line" />--%>
                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                         <ContentTemplate>
                             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Style="text-align:center;" Height="100%" Width="100%"  AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" 
-                                CellPadding="50" CellSpacing="50" Font-Bold="False" Font-Size="13px">
+                                CellPadding="50" CellSpacing="50" Font-Bold="False" Font-Size="13px" ShowHeaderWhenEmpty="true">
                                  <PagerStyle  HorizontalAlign="Center" />
-                        <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
+                                <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
+                                <EmptyDataTemplate>
+                                    <p>No data available</p>
+                                </EmptyDataTemplate>
                                 <Columns>
-                                <asp:BoundField DataField="ID" HeaderText="No."  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
+                                    <asp:TemplateField HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
+                                        <ItemTemplate>
+                                            <%# Container.DataItemIndex + 1 %>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                <asp:BoundField DataField="LastName" HeaderText="Last Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                 <asp:BoundField DataField="FirstName" HeaderText="First Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                  <asp:BoundField DataField="DateStarted" HeaderText="Date Started" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
                                  <asp:BoundField DataField="Position" HeaderText="Position" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                <asp:BoundField DataField="Resume" HeaderText="Resume" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
+                                <asp:BoundField DataField="ResumeFile" HeaderText="Resume" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
                                     </Columns>
                             </asp:GridView>
 
                             <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Visible="false" Style="text-align:center;" Height="100%" Width="100%"  AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" 
-                                CellPadding="50" CellSpacing="50" Font-Bold="False" Font-Size="13px" OnRowDataBound="GridView2_RowDataBound">
+                                CellPadding="50" CellSpacing="50" Font-Bold="False" Font-Size="13px" ShowHeaderWhenEmpty="true" OnRowDataBound="GridView2_RowDataBound">
                                 <PagerStyle  HorizontalAlign="Center" />
                                 <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
-                               <Columns>
-                                    <asp:BoundField DataField="ID" HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
+                                <EmptyDataTemplate>
+                                     <p>No data available</p>
+                                 </EmptyDataTemplate>
+                                <Columns>
+                                    <asp:TemplateField HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
+                                        <ItemTemplate>
+                                            <%# Container.DataItemIndex + 1 %>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:BoundField DataField="LastName" HeaderText="Last Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                    <asp:BoundField DataField="FirstName" HeaderText="First Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                    <asp:BoundField DataField="DateStarted" HeaderText="Date Started" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~//Site1.Master" AutoEventWireup="true" CodeBehind="MyAccount.aspx.cs" Inherits="ctuconnect.MyAccount" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="MyAccount.aspx.cs" Inherits="ctuconnect.MyAccount1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -18,7 +18,6 @@
             font-family:'Arial Rounded MT';
             color:#000000;
             padding-left:3px;
-             text-decoration:none;
         }
 
         .nav a.active{
@@ -75,18 +74,18 @@
     </style>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3 d-flex flex-column align-self-start" >
+            <div class="col-3 d-flex flex-column" >
                 <div class="nav flex-column flex-nowrap vh-100 overflow-auto p-2">
 
-                    <a class="active" href="#">
+                    <a class="active" href="#myaccount">
                             <i class='bx bx-user-circle icon' ></i>
                             <span class="text nav-text">My Account</span>
                     </a>
-                    <a href="../Resume.aspx">
+                    <a href="Resume.aspx">
                             <i class='bx bx-file-blank icon' ></i>
                             <span class="text nav-text">Resume</span>
                     </a>
-                    <a href="../MyJobApplication.aspx">
+                    <a href="#application">
                             <i class='bx bx-layer icon' ></i>
                             <span class="text nav-text">Application</span>
                     </a>
@@ -110,50 +109,51 @@
                 <div class="top"></div>
                 <div class="bottom">
                     <center>
-                    <image src="/images/defaultprofile.jpg" class="profile" height="100" width="100"></image>
+                    
+                        <asp:Image ID="profileImage1" CssClass="profile" Width="100" Height="100" runat="server" />
                     </center>
                     <div class="row">
                         <div class="col-sm-3">
-                            Name:
+                            Full Name:
                         </div>
                         <div class="col-sm-9">
-                            <asp:Label ID="disp_name" runat="server" Text=""></asp:Label>
+                           <asp:Label ID="disp_name" runat="server" Text=""></asp:Label>
                         </div>
                     </div>
                     <hr class="line"/>
                     <div class="row">
                         <div class="col-sm-3">
-                            Student ID
+                            Student ID:
                         </div>
                         <div class="col-sm-9">
-                            <asp:Label ID="disp_studentId" runat="server" Text="" Visible="true"></asp:Label>
+                            <asp:Label ID="disp_studentID" runat="server" Text=""></asp:Label>
                         </div>
                     </div>
                     <hr class="line"/>
                     <div class="row">
                         <div class="col-sm-3">
-                            Student Status
+                            Student Status:
                         </div>
                         <div class="col-sm-9">
-                            
+                            <asp:Label ID="disp_studentStatus" runat="server" Text=""></asp:Label>
                         </div>
                     </div>
                     <hr class="line"/>
                     <div class="row">
                         <div class="col-sm-3">
-                            Course
+                            Course:
                         </div>
                         <div class="col-sm-9">
-                           
+                            <asp:Label ID="disp_course" runat="server" Text=""></asp:Label>  
                         </div>
                     </div>
                     <hr class="line"/>
                     <div class="row">
                         <div class="col-sm-3">
-                            Employment Status
+                            Employment Status:
                         </div>
                         <div class="col-sm-9">
-                            
+                            <asp:Label ID="disp_employeeStatus" runat="server" Text=""></asp:Label>
                         </div>
                     </div>
                     <br /><br />

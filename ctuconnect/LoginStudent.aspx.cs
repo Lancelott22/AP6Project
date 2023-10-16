@@ -16,7 +16,7 @@ namespace ctuconnect
         {
             if (!IsPostBack && Session["Email"] != null)
             {
-                Response.Redirect("Home.aspx");
+                Response.Redirect("MyAccount.aspx");
             }
             LoginErrorMessage.Visible = false;
 
@@ -37,31 +37,39 @@ namespace ctuconnect
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            try
-            {
+            SqlConnection conDB2 = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
 
-                string loginEmail = txtemail.Text;
+            string loginEmail = txtemail.Text;
                 string loginPassword = txtpwd.Text;
 
-                using (conDB)
+                using (conDB2)
                 {
-                    conDB.Open();
+                    conDB2.Open();
 
                     string query = "SELECT COUNT(1) FROM INDUSTRY_ACCOUNT WHERE email = @email AND password = @password";
-                    SqlCommand command = new SqlCommand(query, conDB);
+                    SqlCommand command = new SqlCommand(query, conDB2);
                     command.Parameters.AddWithValue("@email", loginEmail);
                     command.Parameters.AddWithValue("@password", loginPassword);
-                    int count = Convert.ToInt32(command.ExecuteScalar());
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
 
+                        while (reader.Read())
+                        {
+
+                        getStudentInfo();
+                        
+                        }
+                            Response.Write("<script>alert('Invalid Credentials')</script>");
+                            conDB2.Close();
+                            reader.Close();
+                    }
                     Session["Email"] = txtemail.Text;
-                    Response.Redirect("Home.aspx");
-                    conDB.Close();
+                    Response.Redirect("MyAccount.aspx");
+                    
                 }
-            }
-            catch
-            {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='Login.aspx'</script>");
-            }
+            
+                //Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
+            
         }
 
         protected void CheckBox1_CheckedChanged(object sender, EventArgs e)
@@ -73,147 +81,36 @@ namespace ctuconnect
             }
         }
 
-        void getAcc_ID()
+        void getStudentInfo()
         {
-            try
-            {
+            
                 string getEmail = txtemail.Text;
                 using (conDB)
                 {
                     conDB.Open();
-                    string query = "SELECT STUDENT_ACCID FROM STUDENT_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    string query = "SELECT * FROM STUDENT_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
                     SqlCommand command = new SqlCommand(query, conDB);
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.Read())
                     {
-                        Session["ACC_ID"] = reader["STUDENT_ACCID"];
+                    
+                        Session["ACC_ID"] = reader["student_accID"];
+                        Session["STUDENT_ID"] = reader["studentId"];
+                        Session["FNAME"] = reader["firstName"];
+                        Session["INITIAL"] = reader["midInitials"];
+                        Session["LNAME"] = reader["lastName"];
+                        Session["STATUS"] = reader["studentStatus"];
+                        Session["COURSE"] = reader["course_ID"];
+                        Session["PROFILE"] = reader["studentPicture"];
+                        Session["COR"] = reader["cor"];
+                        Session["EMAIL"] = reader["email"];
+                        Session["PASSWORD"] = reader["password"];
+                        Session["DATEREG"] = reader["dateRegistered"];
                     }
-
+                    conDB.Close();
+                    reader.Close();
                 }
-            }
-            catch
-            {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
-            }
-        }
-
-        void getFname()
-        {
-            try
-            {
-                string getEmail = txtemail.Text;
-                using (conDB)
-                {
-                    conDB.Open();
-                    string query = "SELECT FIRSTNAME FROM STUDENT_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
-                    SqlCommand command = new SqlCommand (query, conDB);
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        Session["FNAME"] = reader["FIRSTNAME"];
-                    }
-
-                }
-            }
-            catch
-            {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
-            }
-        }
-        void getMidInitial()
-        {
-            try
-            {
-                string getEmail = txtemail.Text;
-                using (conDB)
-                {
-                    conDB.Open();
-                    string query = "SELECT MIDINITIALS FROM STUDENT_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
-                    SqlCommand command = new SqlCommand(query, conDB);
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        Session["INITIAL"] = reader["MIDINITIALS"];
-                    }
-
-                }
-            }
-            catch
-            {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
-            }
-        }
-
-        void getLname()
-        {
-            try
-            {
-                string getEmail = txtemail.Text;
-                using (conDB)
-                {
-                    conDB.Open();
-                    string query = "SELECT LASTNAME FROM STUDENT_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
-                    SqlCommand command = new SqlCommand(query, conDB);
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        Session["LNAME"] = reader["LASTNAME"];
-                    }
-
-                }
-            }
-            catch
-            {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
-            }
-        }
-
-        void getStatus()
-        {
-            try
-            {
-                string getEmail = txtemail.Text;
-                using (conDB)
-                {
-                    conDB.Open();
-                    string query = "SELECT STUDENTSTATUS FROM STUDENT_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
-                    SqlCommand command = new SqlCommand(query, conDB);
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        Session["STATUS"] = reader["STUDENTSTATUS"];
-                    }
-
-                }
-            }
-            catch
-            {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
-            }
-        }
-
-        void getStudProfile()
-        {
-            try
-            {
-                string getEmail = txtemail.Text;
-                using (conDB)
-                {
-                    conDB.Open();
-                    string query = "SELECT STUDENTPROFILE FROM STUDENT_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
-                    SqlCommand command = new SqlCommand(query, conDB);
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        Session["PROFILE"] = reader["STUDENTPROFILE"];
-                    }
-
-                }
-            }
-            catch
-            {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
-            }
+                //Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>"); 
         }
     }
 
