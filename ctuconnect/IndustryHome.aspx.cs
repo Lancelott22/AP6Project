@@ -31,7 +31,6 @@ namespace ctuconnect
             IndName.Text = Session["INDUSTRYNAME"].ToString();
             IndName.Enabled = false;
         }
-
         protected void PostJob_Click(object sender, EventArgs e)
         {
             try

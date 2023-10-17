@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,12 +24,24 @@ namespace ctuconnect
                 disp_course.Text = Session["COURSE"].ToString();
                 disp_employeeStatus.Text = "Pending";
 
-                string imagePath = "~/images/StudentProfiles/" + Session["PROFILE"].ToString();
-                profileImage1.ImageUrl = imagePath;
+            string imagePath = "~/images/StudentProfiles/" + Session["PROFILE"].ToString();
+            profileImage1.ImageUrl = imagePath;
+
+        private void LoadProfilePicture(string profilePicturePath)
+        {
+            if (!string.IsNullOrEmpty(profilePicturePath))
+            {
+                profileImage.ImageUrl = profilePicturePath;
             }
-            
+            else
+            {
+                profileImage.ImageUrl = "~/images/StudentProfiles/defaultprofile.jpg";
+            }
+        }
 
-
+        protected void btnEdit_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("EditAccount");
         }
     }
 }

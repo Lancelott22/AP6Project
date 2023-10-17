@@ -9,8 +9,9 @@
             padding:10px 10px 10px 10px;
             width:200px;
             margin:auto;
-            margin-top:auto;
-            
+            margin-top:20px;
+            position: absolute;
+            margin-left:70px;
         }
 
         .nav a{
@@ -76,6 +77,25 @@
             color:  #881A30;
         }
 
+        .school{
+            padding-left:5em;
+            padding-right:2em;
+            margin:auto;
+        }
+
+        .skills{
+            padding-left:7em;
+            padding-right:2em;
+        }
+
+        .personal-info{
+            padding-left:7em;
+        }
+
+        .resume-section{
+            padding-left:7em;
+        }
+
 
 
     </style>
@@ -84,7 +104,7 @@
             <div class="col-3 d-flex flex-column align-self-start">
                 <div class="nav flex-column flex-nowrap vh-100 overflow-auto p-2">
 
-                    <a href="MyAccount.aspx">
+                    <a href="Interns/MyAccount.aspx">
                             <i class='bx bx-user-circle icon' ></i>
                             <span class="text nav-text">My Account</span>
                     </a>
@@ -124,24 +144,76 @@
                     <div class="row">
                         <div class="col-12 d-flex flex-column">
                             <b>PERSONAL INFORMATION</b>
-                            <asp:Label ID="lblName" runat="server" Text="Name:"></asp:Label>
-                            <asp:Label ID="lblContact" runat="server" Text="Contact Number:"></asp:Label>
-                            <asp:Label ID="lblEmail" runat="server" Text="Email:"></asp:Label>
-                            <asp:Label ID="lblBirthdate" runat="server" Text="Birthdate:"></asp:Label>
-                            <asp:Label ID="lblGender" runat="server" Text="Gender:"></asp:Label>
-                            <asp:Label ID="lblAddress" runat="server" Text="Address:"></asp:Label>
-                            <asp:Label ID="lblJobLevel" runat="server" Text="Job Level:"></asp:Label>
+                            <br />
+                            <div class="row personal-info">
+                                <div class="col-3 d-flex flex-column">
+                                    Name:
+                                </div>
+                                <div class="col-9 d-flex flex-column">
+                                    <asp:Label ID="lblName" runat="server"> </asp:Label>
+                                </div>             
+                            </div>
+                            <div class="row personal-info">
+                                <div class="col-3 d-flex flex-column">
+                                    Contact Number:
+                                </div>
+                                <div class="col-9 d-flex flex-column">
+                                    <asp:Label ID="lblContact" runat="server"> </asp:Label>
+                                </div>             
+                            </div>
+                            <div class="row personal-info">
+                                <div class="col-3 d-flex flex-column">
+                                    Email:
+                                </div>
+                                <div class="col-9 d-flex flex-column">
+                                    <asp:Label ID="lblEmail" runat="server"> </asp:Label>
+                                </div>             
+                            </div>
+                            <div class="row personal-info">
+                                <div class="col-3 d-flex flex-column">
+                                    Birthdate:
+                                </div>
+                                <div class="col-9 d-flex flex-column">
+                                    <asp:Label ID="lblBirthdate" runat="server"> </asp:Label>
+                                </div>             
+                            </div>
+                            <div class="row personal-info">
+                                <div class="col-3 d-flex flex-column">
+                                    Gender:
+                                </div>
+                                <div class="col-9 d-flex flex-column">
+                                    <asp:Label ID="lblGender" runat="server"> </asp:Label>
+                                </div>             
+                            </div>
+                            <div class="row personal-info">
+                                <div class="col-3 d-flex flex-column">
+                                    Address:
+                                </div>
+                                <div class="col-9 d-flex flex-column">
+                                    <asp:Label ID="lblAddress" runat="server"> </asp:Label>
+                                </div>             
+                            </div>
+                            <div class="row personal-info">
+                                <div class="col-3 d-flex flex-column">
+                                    Job Level:
+                                </div>
+                                <div class="col-9 d-flex flex-column">
+                                    <asp:Label ID="lblJobLevel" runat="server"> </asp:Label>
+                                </div>             
+                            </div>
                         </div>
                     </div>
                     <hr class="line"/>
                     <div class="row">
                         <div class="col-12 d-flex flex-column">
                             <b>SKILLS</b>
-                            <asp:Repeater ID="rptEducationalBackground" runat="server">
+                            <asp:Repeater ID="rptSkills" runat="server">
                                 <ItemTemplate>
-                                    <div class="resume-section">
-                                        <asp:Label runat="server" Text='<%# Eval("Skills") %>'></asp:Label>
-                                        <br />
+                                    <div class="row resume-section">                                        
+                                            <div class="col-3 d-flex flex-column">
+                                                <asp:Label ID="lblSkills" runat="server" Text='<%# Eval("Skills") %>'></asp:Label>                                                
+                                            </div>
+                                        
                                     </div>
                                 </ItemTemplate>
                             </asp:Repeater>
@@ -151,15 +223,19 @@
                     <div class="row">
                         <div class="col-12 d-flex flex-column">
                             <b>EDUCATION</b>
-                            <asp:Repeater ID="Repeater1" runat="server">
+                            <br />
+                            <asp:Repeater ID="rptEducation" runat="server">
                                 <ItemTemplate>
-                                    <div class="resume-section">
-                                        <asp:Label runat="server" Text='<%# Eval("Degree") %>'></asp:Label>
-                                        <br />
-                                        <asp:Label runat="server" Text='<%# Eval("Institution") %>'></asp:Label>
-                                        <br />
-                                        <asp:Label runat="server" Text='<%# Eval("Year") %>'></asp:Label>
-                                        <br />
+                                    <div class="row resume-section">                                             
+                                        <div class="col-3 d-flex flex-column">
+                                            <b><asp:Label ID="lblDegree" runat="server" Text='<%# Eval("edDegree") %>'></asp:Label></b>
+                                        </div>
+                                        <div class="col-9 d-flex flex-column">
+                                            <b><asp:Label ID="lblSchool" runat="server" Text='<%# Eval("edNameOfSchool") %>'></asp:Label></b>
+                                            <asp:Label ID="lblGrad" runat="server" Text='<%# Eval("edGraduationDate") %>'></asp:Label>
+                                            <br />
+                                        </div>
+                                        
                                     </div>
                                 </ItemTemplate>
                             </asp:Repeater>
@@ -169,25 +245,30 @@
                     <div class="row">
                         <div class="col-12 d-flex flex-column">
                             <b>CERTIFICATES OR AWARDS</b>
-                            <asp:Repeater ID="Repeater2" runat="server">
+                            <br />
+                            <asp:Repeater ID="rptCertificates" runat="server">
                                 <ItemTemplate>
-                                    <div class="resume-section">
-                                        <asp:Label runat="server" Text='<%# Eval("Certificates") %>'></asp:Label>
-                                        <br />
+                                    <div class="row resume-section">
+                                        <div class="col-12 d-flex flex-column">
+                                            <asp:Label ID="lblCertificates" runat="server" Text='<%# Eval("certificate") %>'></asp:Label>              
+                                        </div>
                                     </div>
                                 </ItemTemplate>
                             </asp:Repeater>
                         </div>
                     </div>
+                    <br />
+                    <br /><br />
                 </div>
                 <br />
                 <div class="container2">
                     <div class="row">
                         <div class="col-2 d-flex flex-column">
-                            <asp:Button ID="btn" class="btn btn-primary btn-md" runat="server" Text="Edit"/>
+                            <asp:Button ID="btnEdit" class="btn btn-primary btn-md" runat="server" Text="Edit" OnClick="btnEdit_Click"/>
                         </div>
+                        
                         <div class="col-2 d-flex flex-column">
-                            <asp:Button ID="btnDownload" class="btn btn-primary btn-md btn-download" runat="server" Text="Download"/>
+                            <asp:Button ID="btnDownload" class="btn btn-primary btn-md btn-download" runat="server" Text="Download" OnClick="btnDownload_Click"/>
                         </div>
 
                     </div>

@@ -15,13 +15,13 @@ namespace ctuconnect
     {
 
         /// <summary>
-        /// profileImage1 control.
+        /// profileImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image profileImage1;
+        protected global::System.Web.UI.WebControls.Image profileImage;
 
         /// <summary>
         /// disp_name control.
@@ -60,12 +60,21 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label disp_course;
 
         /// <summary>
-        /// disp_employeeStatus control.
+        /// lblResume control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label disp_employeeStatus;
+        protected global::System.Web.UI.WebControls.Label lblResume;
+
+        /// <summary>
+        /// btnEdit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEdit;
     }
 }
