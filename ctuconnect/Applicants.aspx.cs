@@ -101,7 +101,9 @@ namespace ctuconnect
                     using (SqlCommand command = connection.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
-                        command.CommandText = "SELECT type, student_accID, applicantFname, applicantLname, jobID, industry_accID, StudentType, alumni_accID FROM APPLICANT WHERE applicantID = @ApplicantID";
+                        command.CommandText = "SELECT type, student_accID, applicantFname, applicantLname, appliedPosition, jobID,APPLICANT.industry_ACCID, StudentType, INDUSTRY_ACCOUNT.industryName FROM APPLICANT " +
+                            "JOIN INDUSTRY_ACCOUNT ON APPLICANT.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
+                            "WHERE applicantID = @ApplicantID";
                         command.Parameters.AddWithValue("@ApplicantID", applicantID);
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
@@ -117,8 +119,10 @@ namespace ctuconnect
                                 string industry_accID = reader["industry_accID"].ToString();
                                 int industryID = Convert.ToInt32(industry_accID);
                                 string studentType = reader["StudentType"].ToString();
-                                string alumni_accID = reader["alumni_accID"].ToString();
-                                int alumniID = Convert.ToInt32(alumni_accID);
+                                string WorkedAt = reader["industryName"].ToString();
+                                string position = reader["appliedPosition"].ToString();
+                                /*string alumni_accID = reader["alumni_accID"].ToString();*/
+                                /*int alumniID = Convert.ToInt32(alumni_accID);*/
                                 string intershipStatus = "Ongoing";
 
                                 reader.Close();
@@ -126,8 +130,8 @@ namespace ctuconnect
                                 using (var dmd = connection.CreateCommand())
                                 { //SQL Statement
                                     dmd.CommandType = CommandType.Text;
-                                    dmd.CommandText = "INSERT INTO HIRED_LIST (student_accID, firstName, lastName, jobID, industry_accID, studentType, alumni_accID, jobType, internshipStatus)  "
-                                                    + " VALUES (@StudentAccID,@Firstname,@Lastname,@JobID,@IndustryAccID,@StudentType,@AlumniAccID,@JobType,@InternshipStatus)";
+                                    dmd.CommandText = "INSERT INTO HIRED_LIST (student_accID, firstName, lastName, jobID, workedAt, position,dateHired,  industry_accID, studentType, jobType, internshipStatus)  "
+                                                    + " VALUES (@StudentAccID,@Firstname,@Lastname,@JobID,@workedAt, @position,@dateHired, @IndustryAccID,@StudentType,@JobType,@InternshipStatus)";
 
                                     dmd.Parameters.AddWithValue("@StudentAccID", studentID);
                                     dmd.Parameters.AddWithValue("@Firstname", applicantfname);
@@ -135,7 +139,10 @@ namespace ctuconnect
                                     dmd.Parameters.AddWithValue("@JobID", jobid);
                                     dmd.Parameters.AddWithValue("@IndustryAccID", industryID);
                                     dmd.Parameters.AddWithValue("@StudentType", studentType);
-                                    dmd.Parameters.AddWithValue("@AlumniAccID", alumniID);
+                                    dmd.Parameters.AddWithValue("@workedAt", WorkedAt);
+                                    dmd.Parameters.AddWithValue("@position", position);
+                                    dmd.Parameters.AddWithValue("@dateHired", DateTime.Now.ToString("yyyy/MM/dd"));
+                                    /*dmd.Parameters.AddWithValue("@AlumniAccID", alumniID);*/
                                     dmd.Parameters.AddWithValue("@JobType", jobType);
                                     dmd.Parameters.AddWithValue("@InternshipStatus", intershipStatus);
 

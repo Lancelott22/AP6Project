@@ -289,9 +289,8 @@
                      <asp:TextBox ID="jobInstruct" runat="server" TextMode="MultiLine" CssClass="txtbox-instruction" Placeholder="How to apply?"></asp:TextBox>
                      
                     <asp:Label ID="Label9" runat="server" Text="Salary Range" Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="SalaryRange" runat="server" CssClass="txtbox" Placeholder="PHP XXX,XXX - PHP XXX,XXX" ></asp:TextBox>
+                    <asp:TextBox ID="salary" runat="server" CssClass="txtbox" Placeholder="PHP XXX,XXX - PHP XXX,XXX"></asp:TextBox>
 
-                    
                     <asp:Button ID="PostJob" runat="server" CssClass="postJobStyle"  Text="Post" OnClick="PostJob_Click"/>
             </div>
                     </asp:TableCell>

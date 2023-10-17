@@ -33,8 +33,7 @@ namespace ctuconnect
         }
         protected void PostJob_Click(object sender, EventArgs e)
         {
-            try
-            {
+            
                 if (string.IsNullOrEmpty(JobTitle.Text) || string.IsNullOrEmpty(IndName.Text) || jobtype.Value.Equals("0") || course.Value.Equals("0") || string.IsNullOrEmpty(jobLoc.Text) || string.IsNullOrEmpty(jobDescript.Text) || string.IsNullOrEmpty(jobQuali.Text)) 
                 {
 
@@ -52,12 +51,12 @@ namespace ctuconnect
                     string jobDescription = jobDescript.Text;
                     string jobQualification = jobQuali.Text;
                     string jobInstruction = jobInstruct.Text;
-                    string salaryRange = SalaryRange.Text;
+                    string salaryRange = salary.Text;
                     conDB.Open();
                     SqlCommand cmd = new SqlCommand("INSERT INTO HIRING( industry_accID, jobTitle, industryName, " +
-                        "jobType, jobCourse, jobLocation, jobDescription, jobQualifications, applicationInstruction,salaryRange)" +
+                        "jobType, jobCourse, jobLocation, jobDescription, jobQualifications, applicationInstruction,salaryRange,jobPostedDate)" +
                         "VALUES(@industry_accID, @jobTitle, @industryName,@jobType,@jobCourse,@jobLocation,@jobDescription," +
-                        "@jobQualifications,@applicationInstruction, @salary)", conDB);
+                        "@jobQualifications,@applicationInstruction, @salary,@jobPostedDate)", conDB);
                     cmd.Parameters.AddWithValue("@industry_accID", industryAccID);
                     cmd.Parameters.AddWithValue("@jobTitle", jobTitle);
                     cmd.Parameters.AddWithValue("@industryName", industryName);
@@ -68,7 +67,8 @@ namespace ctuconnect
                     cmd.Parameters.AddWithValue("@jobQualifications", jobQualification);
                     cmd.Parameters.AddWithValue("@applicationInstruction", jobInstruction);
                     cmd.Parameters.AddWithValue("@salary", salaryRange);
-                    var ctr = cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@jobPostedDate", DateTime.Now.ToString("yyyy/MM/dd"));
+                var ctr = cmd.ExecuteNonQuery();
 
                     if (ctr > 0)
                     {
@@ -80,11 +80,8 @@ namespace ctuconnect
                     }
                     conDB.Close();
                 }
-            }
-            catch 
-            {
-                Response.Write("<script>alert('Cannot post a job now! Please try again later.')</script>");
-            }
+            
+            
         }
     }
 }

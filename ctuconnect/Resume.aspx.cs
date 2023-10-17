@@ -33,7 +33,7 @@ namespace ctuconnect
             if (!IsPostBack)
             {
 
-                int studentaccID = Convert.ToInt32(Session["ACC_ID"].ToString());
+                int studentaccID = Convert.ToInt32(Session["STUDENT_ACC_ID"].ToString());
                 if (studentaccID > 0)
                 {
                     DisplayResume(studentaccID);

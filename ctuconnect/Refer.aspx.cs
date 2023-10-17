@@ -23,19 +23,17 @@ namespace ctuconnect
         {
             if (!IsPostBack)
             {
-                if (Session["ACC_ID"] != null)
+                /*if (Session["Coor_ACC_ID"] != null)
                 {
                     // Retrieve the coordinator_accID from the session
-                    int coordinatorID = Convert.ToInt32(Session["ACC_ID"]);
-
-                    BindGridView1(coordinatorID);
+                    *//*BindGridView1();*//*
                 }
                 else
                 {
                     // Handle the case where the user is not logged in or doesn't have a coordinator_accID.
-                }
+                }*/
              
-
+                BindGridView1();
                 using (conDB)
                 {
                     conDB.Open();
@@ -55,8 +53,9 @@ namespace ctuconnect
             }
         }
 
-        void BindGridView1(int coordinatorID)
+        void BindGridView1()
         {
+            int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
 
             string query = "SELECT STUDENT_ACCOUNT.firstName, STUDENT_ACCOUNT.lastName, STUDENT_ACCOUNT.midInitials,  INDUSTRY_ACCOUNT.industryName,   COORDINATOR_ACCOUNT.firstName + ' ' + COORDINATOR_ACCOUNT.lastName AS referredBy " +
             "FROM REFERRAL  JOIN STUDENT_ACCOUNT ON REFERRAL.student_accID = STUDENT_ACCOUNT.student_accID " +
@@ -77,7 +76,7 @@ namespace ctuconnect
         {
 
             ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#AddReferralModal').modal('show');", true);
-            int coordinatorID = Convert.ToInt32(Session["ACC_ID"]);
+            int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
             conDB.Open();
             string query = "SELECT firstName, midInitials, lastName FROM COORDINATOR_ACCOUNT where coordinator_accID = @coordinator_accID";
             SqlCommand command = new SqlCommand(query, conDB);
@@ -135,12 +134,16 @@ namespace ctuconnect
             }
             ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#AddReferralModal').modal('show');", true);
         }
-       
+        protected void Close_SuccessPrompt(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('hide');document.location='Refer.aspx'", true);
+        }
         protected void Submit_ButtonClick(object sender, EventArgs e)
         {
             string studentID = txtID_student.Text;
-            string industryID = dropdownIndustries.SelectedValue; 
-            string coordinatorID = txtID_coordinator.Text;
+            string industryID = dropdownIndustries.SelectedValue;
+            
+            int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
 
             // Add the data to the Referral table in the database
             using (conDB)
@@ -160,9 +163,14 @@ namespace ctuconnect
                     cmd.ExecuteNonQuery();
                 }
                 ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('show');", true);
-               
+                
             }
+           /* Response.Redirect("Refer.aspx");*/
+            /*
+            this.BindGridView1();*/
         }
+
+        
 
     }
 }

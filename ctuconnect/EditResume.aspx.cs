@@ -29,7 +29,7 @@ namespace ctuconnect
                 rptSkills.DataBind();
                 rptCertificate.DataSource = GetEmptyCertificateTable();
                 rptCertificate.DataBind();
-                int studentAcctID = Convert.ToInt32(Session["ACC_ID"].ToString());
+                int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
                 if (studentAcctID > 0)
                 {
                     LoadResumeForEdit(studentAcctID);
@@ -77,7 +77,7 @@ namespace ctuconnect
         {
             if (fileUploadProfilePicture.HasFile)
             {
-                int studentAcctID = Convert.ToInt32(Session["ACC_ID"].ToString());
+                int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
                 string fileName = Path.GetFileName(fileUploadProfilePicture.FileName);
                 string filePath = Server.MapPath("~/ResumeProfile/") + studentAcctID + "_" + fileName;
 
@@ -155,7 +155,7 @@ namespace ctuconnect
             string month = ddlMonth.SelectedValue;
             string year = ddlYear.SelectedValue;
 
-            int studentAcctID = Convert.ToInt32(Session["ACC_ID"].ToString());
+            int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
 
             try
             {

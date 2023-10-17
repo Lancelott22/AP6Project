@@ -73,7 +73,7 @@ namespace ctuconnect
                     JobCourse.Text = reader["jobCourse"].ToString();
                     JobQualification.Text = reader["jobQualifications"].ToString();
                     ApplicationInstruction.Text = reader["applicationInstruction"].ToString();
-                IndustryID.Text = reader["industry_accID"].ToString();
+                    IndustryID.Text = reader["industry_accID"].ToString();
                     
                 if (reader["salaryRange"] == null || reader["salaryRange"].ToString() == string.Empty)
                 {                
@@ -107,7 +107,7 @@ namespace ctuconnect
             {
                 alumni_accId = int.Parse(Session["Alumni_accID"].ToString());
             }
-            else if (Usertype == "Student")
+            else if (Usertype == "student")
             {
                  student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
             }          
@@ -126,28 +126,30 @@ namespace ctuconnect
                 conDB.Open();
                 if (Usertype == "Alumni")
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,applicantFName, applicantLName, industry_accID,dateApplied, resume, jobID  ) " +
-                        "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (type,alumni_accID,applicantFName, appliedPosition, applicantLName, industry_accID,dateApplied, resume, jobID  ) " +
+                        "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
 
                     cmd.Parameters.AddWithValue("@jobtype", jobtype);
                     cmd.Parameters.AddWithValue("@student_accId", alumni_accId);
                     cmd.Parameters.AddWithValue("@applicantFName", applicantFName);
                     cmd.Parameters.AddWithValue("@applicantLName", applicantLName);
+                    cmd.Parameters.AddWithValue("@appliedPosition",position);
                     cmd.Parameters.AddWithValue("@industry_accId", industry_accId);
                     cmd.Parameters.AddWithValue("@dateApplied", dateApplied);
                     cmd.Parameters.AddWithValue("@resume", resume);
                     cmd.Parameters.AddWithValue("@jobID", jobID);
                     cmd.ExecuteNonQuery();
                 }
-                else if (Usertype == "Student")
+                else if (Usertype == "student")
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accID,applicantFName, applicantLName, industry_accID,dateApplied, resume, jobID  ) " +
-                      "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (type,student_accID,applicantFName, applicantLName, appliedPosition, industry_accID,dateApplied, resume, jobID  ) " +
+                      "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
 
                     cmd.Parameters.AddWithValue("@jobtype", jobtype);
                     cmd.Parameters.AddWithValue("@student_accId", student_accId);
                     cmd.Parameters.AddWithValue("@applicantFName", applicantFName);
                     cmd.Parameters.AddWithValue("@applicantLName", applicantLName);
+                    cmd.Parameters.AddWithValue("@appliedPosition", position);
                     cmd.Parameters.AddWithValue("@industry_accId", industry_accId);
                     cmd.Parameters.AddWithValue("@dateApplied", dateApplied);
                     cmd.Parameters.AddWithValue("@resume", resume);
@@ -208,10 +210,10 @@ namespace ctuconnect
             return false;
         }
 
-        protected void JobHiring_ItemDataBound(object sender, DataListItemEventArgs e)
+        /*protected void JobHiring_ItemDataBound(object sender, DataListItemEventArgs e)
         {
-            Label jobID = e.Item.FindControl("JobID") as Label;
-            int JobId = int.Parse(jobID.Text);
+            Label PostID = e.Item.FindControl("PostID") as Label;
+            int JobId = int.Parse(PostID.Text);
             Button btn = e.Item.FindControl("ApplyJob") as Button;
 
             if (checkJobApplied(JobId) == true)
@@ -223,7 +225,7 @@ namespace ctuconnect
                 btn.Text = "Apply";
             }
             JobBind();
-        }
+        }*/
 
     }
 }  

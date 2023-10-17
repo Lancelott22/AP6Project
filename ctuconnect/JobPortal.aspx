@@ -188,7 +188,7 @@
                     <br />
                     <asp:Label ID="lblacctid" CssClass="accountid" runat="server" Text="account id"></asp:Label>
                     <hr style="height: 2px; border-width: 0; color: gray; background-color: gray">
-                    <a href="Interns/MyAccount.aspx" class="btn btn-primary btn-md">View Profile</a>
+                    <a href="MyAccount.aspx" class="btn btn-primary btn-md">View Profile</a>
                 </div>
             </div>
             <div class="col-9 d-flex flex-column">
@@ -198,16 +198,16 @@
             
               
                 <div class="jobs">
-                    <asp:DataList ID="JobHiring" runat="server" class="container-fluid" OnItemDataBound="JobHiring_ItemDataBound" >
+                    <asp:DataList ID="JobHiring" runat="server" class="container-fluid"  >
                         <ItemTemplate>
                             <div id="jobList" runat="server" class="row d-flex align-items-center jobBox">
                                 <div class="col-sm-2">
-                                    <img id="IndstryLogo" src='<%#String.Format("images/{0}", Eval("industryPicture"))%>' runat="server" alt="Logo" class="imgStyle"/>
+                                    <img id="IndstryLogo" src='<%#String.Format("../images/IndustryProfile/{0}", Eval("industryPicture"))%>' runat="server" alt="Logo" class="imgStyle"/>
                                     
                                 </div>
                                 <div class="col-sm-7">
                                     <div class="row">
-                                        <asp:Label ID="JobID" runat="server" Visible="false" Text='<%#Eval("jobID")%>'></asp:Label>
+                                        <asp:Label ID="PostID" runat="server" Visible="false" Text='<%#Eval("jobID")%>'></asp:Label>
                                        <asp:Label ID="Industry_accID" runat="server" Visible="false" Text='<%#Eval("industry_accID")%>'></asp:Label>
                                         <label  runat="server" hidden="hidden"><%#Eval("jobType")%></label>
                                         <div class="align-items-start">                                         
@@ -285,7 +285,6 @@
                 </div>
                 <div class="modal-body">
                     <div style="padding: 10px;">
-                        <asp:Label ID="JobId" runat="server" Visible="false" />
                         <div class="container-fluid row">
                             <h3><b>Job Details</b></h3>
                             <br /><br />

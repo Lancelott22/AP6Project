@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+   <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <style>
         
         .nav{
@@ -18,7 +18,6 @@
             font-family:'Arial Rounded MT';
             color:#000000;
             padding-left:3px;
-             text-decoration:none;
         }
 
         .nav a.active{
@@ -84,14 +83,13 @@
 
 
 
-
     </style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-3 d-flex flex-column" >
                 <div class="nav flex-column flex-nowrap vh-100 overflow-auto p-2">
 
-                     <a class="active" href="#">
+                    <a class="active" href="#myaccount">
                             <i class='bx bx-user-circle icon' ></i>
                             <span class="text nav-text">My Account</span>
                     </a>

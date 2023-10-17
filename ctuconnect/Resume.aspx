@@ -12,6 +12,7 @@
             margin-top:20px;
             position: absolute;
             margin-left:70px;
+            text-decoration:none;
         }
 
         .nav a{
@@ -104,7 +105,7 @@
             <div class="col-3 d-flex flex-column align-self-start">
                 <div class="nav flex-column flex-nowrap vh-100 overflow-auto p-2">
 
-                    <a href="Interns/MyAccount.aspx">
+                    <a href="MyAccount.aspx">
                             <i class='bx bx-user-circle icon' ></i>
                             <span class="text nav-text">My Account</span>
                     </a>

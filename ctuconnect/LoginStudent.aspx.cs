@@ -88,7 +88,7 @@ namespace ctuconnect
                 using (conDB)
                 {
                     conDB.Open();
-                    string query = "SELECT * FROM STUDENT_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
+                    string query = "SELECT * FROM STUDENT_ACCOUNT JOIN PROGRAM ON STUDENT_ACCOUNT.COURSE_ID = PROGRAM.COURSE_ID WHERE EMAIL = '" + getEmail + "' ";
                     SqlCommand command = new SqlCommand(query, conDB);
                     SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
@@ -100,14 +100,13 @@ namespace ctuconnect
                     Session["INITIAL"] = reader["midInitials"];
                     Session["LNAME"] = reader["lastName"];
                     Session["STATUSorTYPE"] = reader["studentStatus"];
-                    Session["Student_COURSE"] = reader["course_ID"];
+                    Session["Student_COURSE"] = reader["course"];
                     Session["PROFILE"] = reader["studentPicture"];
                     Session["COR"] = reader["cor"];
                     Session["ResumeFile"] = reader["resumeFile"];
                     Session["StudentEmail"] = reader["email"];
                         Session["PASSWORD"] = reader["password"];
                         Session["DATEREG"] = reader["dateRegistered"];
-                        Session["RESUMEFILE"] = reader["resumeFile"];
                 }
                     conDB.Close();
                     reader.Close();

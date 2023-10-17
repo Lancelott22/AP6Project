@@ -20,7 +20,7 @@ namespace ctuconnect
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            int studentAcctID = Convert.ToInt32(Session["ACC_ID"].ToString());
+            int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
             if (!IsPostBack)
             {
                 if (studentAcctID > 0)
@@ -52,7 +52,7 @@ namespace ctuconnect
         {
             if (fileUploadProfilePicture.HasFile)
             {
-                int studentAcctID = Convert.ToInt32(Session["ACC_ID"].ToString());
+                int studentAcctID = Convert.ToInt32(Session["Students_ACC_ID"].ToString());
                 string fileName = Path.GetFileName(fileUploadProfilePicture.FileName);
                 string filePath = Server.MapPath("~/images/StudentProfiles/") + studentAcctID + "_" + fileName;
 
@@ -127,7 +127,7 @@ namespace ctuconnect
             var initials = txtinitials.Text;
             var status = drpStudentStatus.Text;
 
-            int studentAcctID = Convert.ToInt32(Session["ACC_ID"].ToString());
+            int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
 
             using (var db = new SqlConnection(connDB))
             {

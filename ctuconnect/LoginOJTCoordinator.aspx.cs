@@ -89,7 +89,7 @@ namespace ctuconnect
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.Read())
                     {
-                        Session["ACC_ID"] = reader["coordinator_accID"];
+                        Session["Coor_ACC_ID"] = reader["coordinator_accID"];
                         Session["FNAME"] = reader["firstNanme"];
                         Session["MIDNAME"] = reader["midInitials"];
                         Session["LNAME"] = reader["lastName"];

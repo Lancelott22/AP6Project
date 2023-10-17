@@ -1,8 +1,10 @@
 ﻿using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -10,23 +12,52 @@ namespace ctuconnect
 {
     public partial class MyAccount1 : System.Web.UI.Page
     {
+        string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack && Session["StudentEmail"] == null)
+            if (!IsPostBack && Session["StudentEmail"] != null)
             {
-                Response.Redirect("LoginStudent.aspx");
+                int studentAccID = Convert.ToInt32(Session["STUDENT_ACC_ID"].ToString());
+                DisplayStudent(studentAccID);
+            }
 
-            } else
+        }
+
+        private void DisplayStudent(int studentaccID)
+        {
+            using (var db = new SqlConnection(conDB))
             {
-                disp_name.Text = Session["FNAME"].ToString() + " " + Session["INITIAL"].ToString() + ". " + Session["LNAME"].ToString();
-                disp_studentID.Text = Session["STUDENT_ID"].ToString();
-                disp_studentStatus.Text = Session["STATUS"].ToString();
-                disp_course.Text = Session["COURSE"].ToString();
-                disp_employeeStatus.Text = "Pending";
+                string query = "SELECT * FROM STUDENT_ACCOUNT JOIN PROGRAM ON STUDENT_ACCOUNT.COURSE_ID = PROGRAM.COURSE_ID WHERE student_accID = @studentAcctID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@studentAcctID", studentaccID);
 
-            string imagePath = "~/images/StudentProfiles/" + Session["PROFILE"].ToString();
-            profileImage1.ImageUrl = imagePath;
+                db.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    disp_name.Text = reader["firstName"].ToString() + " " + reader["midInitials"].ToString() + " " + reader["lastName"].ToString();
+                    disp_studentStatus.Text = reader["studentStatus"].ToString();
+                    LoadProfilePicture(reader["studentPicture"].ToString());
+                    disp_course.Text = reader["course"].ToString();
+                    string resume = reader["resumeFile"].ToString();
+                    disp_studentID.Text = reader["student_accID"].ToString();
 
+                    if (!string.IsNullOrEmpty(resume))
+                    {
+                        lblResume.Text = "Uploaded";
+                    }
+                    else
+                    {
+                        lblResume.Text = "No attached file";
+                    }
+
+
+
+                }
+                reader.Close();
+
+            }
+        }
         private void LoadProfilePicture(string profilePicturePath)
         {
             if (!string.IsNullOrEmpty(profilePicturePath))
@@ -35,7 +66,7 @@ namespace ctuconnect
             }
             else
             {
-                profileImage.ImageUrl = "~/images/StudentProfiles/defaultprofile.jpg";
+                profileImage.ImageUrl = "~/StudentProfiles/defaultprofile.jpg";
             }
         }
 

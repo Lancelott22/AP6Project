@@ -135,6 +135,7 @@
     <Content Include="CoordinatorProfile.aspx" />
     <Content Include="CourseLists.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="EditAccount.aspx" />
     <Content Include="EditResume.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -282,6 +283,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditAccount.aspx.cs">
+      <DependentUpon>EditAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditAccount.aspx.designer.cs">
+      <DependentUpon>EditAccount.aspx</DependentUpon>
     </Compile>
     <Compile Include="EditResume.aspx.cs">
       <DependentUpon>EditResume.aspx</DependentUpon>
