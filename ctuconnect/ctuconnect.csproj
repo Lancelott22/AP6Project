@@ -44,6 +44,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.3\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itextsharp.xmlworker.5.5.13.3\lib\itextsharp.xmlworker.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
@@ -147,7 +156,6 @@
     <Content Include="IndustryHome.aspx" />
     <Content Include="JobPortal.aspx" />
     <Content Include="Login.aspx" />
-    <Content Include="Interns\MyAccount.aspx" />
     <Content Include="LoginIndustry.aspx" />
     <Content Include="LoginOJTCoordinator.aspx" />
     <Content Include="LoginStudent.aspx" />
@@ -320,13 +328,6 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Interns\MyAccount.aspx.cs">
-      <DependentUpon>MyAccount.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Interns\MyAccount.aspx.designer.cs">
-      <DependentUpon>MyAccount.aspx</DependentUpon>
-    </Compile>
     <Compile Include="LoginIndustry.aspx.cs">
       <DependentUpon>LoginIndustry.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -471,6 +472,7 @@
     <Folder Include="images\Resume\" />
     <Folder Include="images\StudentProfiles\" />
     <Folder Include="Industry\" />
+    <Folder Include="Interns\" />
     <Folder Include="OjtCoordinator\" />
   </ItemGroup>
   <ItemGroup>

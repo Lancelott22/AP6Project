@@ -17,8 +17,6 @@ namespace ctuconnect
         {
             if (!IsPostBack)
             {
-               
-*/
                 BindGridView1();
             }
         }

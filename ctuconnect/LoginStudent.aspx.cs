@@ -106,7 +106,8 @@ namespace ctuconnect
                         Session["EMAIL"] = reader["email"];
                         Session["PASSWORD"] = reader["password"];
                         Session["DATEREG"] = reader["dateRegistered"];
-                    }
+                        Session["RESUMEFILE"] = reader["resumeFile"];
+                }
                     conDB.Close();
                     reader.Close();
                 }
