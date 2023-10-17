@@ -12,31 +12,20 @@ namespace ctuconnect
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (!IsPostBack && Session["StudentEmail"] == null)
             {
+                Response.Redirect("LoginStudent.aspx");
 
+            } else
+            {
                 disp_name.Text = Session["FNAME"].ToString() + " " + Session["INITIAL"].ToString() + ". " + Session["LNAME"].ToString();
                 disp_studentID.Text = Session["STUDENT_ID"].ToString();
                 disp_studentStatus.Text = Session["STATUS"].ToString();
                 disp_course.Text = Session["COURSE"].ToString();
-                string resume = Session["RESUMEFILE"].ToString();
+                disp_employeeStatus.Text = "Pending";
 
-                string profilePicturePath = Session["PROFILE"].ToString();
-
-                LoadProfilePicture(profilePicturePath);
-
-                if (!string.IsNullOrEmpty(resume))
-                {
-                    lblResume.Text = "Uploaded";
-                }
-                else
-                {
-                    lblResume.Text = "No attached file";
-                }
-            }
-
-
-        }
+            string imagePath = "~/images/StudentProfiles/" + Session["PROFILE"].ToString();
+            profileImage1.ImageUrl = imagePath;
 
         private void LoadProfilePicture(string profilePicturePath)
         {

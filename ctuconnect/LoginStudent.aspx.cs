@@ -14,7 +14,7 @@ namespace ctuconnect
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack && Session["Email"] != null)
+            if (!IsPostBack && Session["StudentEmail"] != null)
             {
                 Response.Redirect("MyAccount.aspx");
             }
@@ -63,7 +63,7 @@ namespace ctuconnect
                             conDB2.Close();
                             reader.Close();
                     }
-                    Session["Email"] = txtemail.Text;
+                    Session["StudentEmail"] = txtemail.Text;
                     Response.Redirect("MyAccount.aspx");
                     
                 }
@@ -91,19 +91,20 @@ namespace ctuconnect
                     string query = "SELECT * FROM STUDENT_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
                     SqlCommand command = new SqlCommand(query, conDB);
                     SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                    
-                        Session["ACC_ID"] = reader["student_accID"];
-                        Session["STUDENT_ID"] = reader["studentId"];
-                        Session["FNAME"] = reader["firstName"];
-                        Session["INITIAL"] = reader["midInitials"];
-                        Session["LNAME"] = reader["lastName"];
-                        Session["STATUS"] = reader["studentStatus"];
-                        Session["COURSE"] = reader["course_ID"];
-                        Session["PROFILE"] = reader["studentPicture"];
-                        Session["COR"] = reader["cor"];
-                        Session["EMAIL"] = reader["email"];
+                if (reader.Read())
+                {
+
+                    Session["Student_ACC_ID"] = reader["student_accID"];
+                    Session["STUDENT_ID"] = reader["studentId"];
+                    Session["FNAME"] = reader["firstName"];
+                    Session["INITIAL"] = reader["midInitials"];
+                    Session["LNAME"] = reader["lastName"];
+                    Session["STATUSorTYPE"] = reader["studentStatus"];
+                    Session["Student_COURSE"] = reader["course_ID"];
+                    Session["PROFILE"] = reader["studentPicture"];
+                    Session["COR"] = reader["cor"];
+                    Session["ResumeFile"] = reader["resumeFile"];
+                    Session["StudentEmail"] = reader["email"];
                         Session["PASSWORD"] = reader["password"];
                         Session["DATEREG"] = reader["dateRegistered"];
                         Session["RESUMEFILE"] = reader["resumeFile"];

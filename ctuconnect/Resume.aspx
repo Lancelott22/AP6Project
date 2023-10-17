@@ -104,10 +104,8 @@
             <div class="col-3 d-flex flex-column align-self-start">
                 <div class="nav flex-column flex-nowrap vh-100 overflow-auto p-2">
 
-
-                    <a href="MyAccount.aspx">
-                            <i class='bx bx-user-circle icon' aria-hidden="true" ></i>
-
+                    <a href="Interns/MyAccount.aspx">
+                            <i class='bx bx-user-circle icon' ></i>
                             <span class="text nav-text">My Account</span>
                     </a>
                     <a class="active" href="#resume">

@@ -18,18 +18,24 @@ namespace ctuconnect
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (!IsPostBack && Session["StudentEmail"] == null)
+            {
+                Response.Redirect("LoginStudent.aspx");
+
+            }
+            else if (!IsPostBack)
             {
                 JobBind();
             }
-            
+
         }
         void JobBind()
         {
-            string studentCourse = "IT";
+            string studentCourse = Session["Student_COURSE"].ToString();
             /*SqlCommand cmd = new SqlCommand("select * from HIRING WHERE jobCourse = @studCourse", conDB);
             cmd.Parameters.AddWithValue("@studCourse", studentCourse);*/
-            SqlCommand cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID", conDB);
+            SqlCommand cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE jobCourse = @studCourse", conDB);
+            cmd.Parameters.AddWithValue("@studCourse", studentCourse);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             da.Fill(ds);
@@ -57,7 +63,7 @@ namespace ctuconnect
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    JobId.Text = reader["jobID"].ToString();
+                    Job_ID.Text = reader["jobID"].ToString();
                     IndstryLogo.Src = "images/" + reader["industryPicture"].ToString();
                     IndustryName.Text = reader["industryName"].ToString();
                     JobTitle.Text = reader["jobTitle"].ToString();
@@ -67,6 +73,8 @@ namespace ctuconnect
                     JobCourse.Text = reader["jobCourse"].ToString();
                     JobQualification.Text = reader["jobQualifications"].ToString();
                     ApplicationInstruction.Text = reader["applicationInstruction"].ToString();
+                IndustryID.Text = reader["industry_accID"].ToString();
+                    
                 if (reader["salaryRange"] == null || reader["salaryRange"].ToString() == string.Empty)
                 {                
                     salaryData.Visible = false;
@@ -90,99 +98,102 @@ namespace ctuconnect
 
         protected void SubmitApply_Command(object sender, CommandEventArgs e) //submitApplication
         {
+            int alumni_accId = -1;
+            int student_accId = -1; ;
             
-            /*  if (checkResume())
-              {
-
-              }*/
-            /* string Usertype = Session["UserType"].ToString();
-             string type = e.CommandName.ToString();
-             int student_accId = int.Parse(Session["Student_accID"].ToString());
-             int alumni_accId = int.Parse(Session["Alumni_accID"].ToString());
-            string position = JobTitle.Text.ToString();
-             string applicantFName = Session["Fname"].ToString();
-             string applicantLName = Session["Lname"].ToString();
-             string dateApplied = DateTime.Now.ToString("dd MMMM yyyy");
-             string resume = Session["ResumeFile"].ToString();
-             int jobID = int.Parse(e.CommandArgument.ToString());
-             int industry_accId = int.Parse(Session["industry_accID"].ToString());*/
-            string Usertype = "Student";
-            string type = "Intern";
-            int student_accId = 100000000;
-            string position = JobTitle.Text.ToString();
-            int alumni_accId = 1;
-             string applicantFName = "AKosi";
-             string applicantLName = "MYLastName";
-             string dateApplied = DateTime.Now.ToString("dd MMMM yyyy");
-             string resume = "resume";
-            int jobID = int.Parse(JobId.Text);
-            int industry_accId = 600000000;
-
-            conDB.Open();
-            if (Usertype == "Alumni")
+             string Usertype = Session["STATUSorTYPE"].ToString();
+                string jobtype = JobType.Text.ToString();
+            if(Usertype == "Alumni")
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,applicantFName, applicantLName, industry_accID,dateApplied, resume, jobID  ) " +
-                    "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
-  
-                cmd.Parameters.AddWithValue("@jobtype", type);
-                cmd.Parameters.AddWithValue("@student_accId", student_accId);
-                cmd.Parameters.AddWithValue("@applicantFName", applicantFName);
-                cmd.Parameters.AddWithValue("@applicantLName", applicantLName);
-                cmd.Parameters.AddWithValue("@industry_accId", industry_accId);
-                cmd.Parameters.AddWithValue("@dateApplied", dateApplied);
-                cmd.Parameters.AddWithValue("@resume", resume);
-                cmd.Parameters.AddWithValue("@jobID", jobID);
-                cmd.ExecuteNonQuery();
+                alumni_accId = int.Parse(Session["Alumni_accID"].ToString());
             }
             else if (Usertype == "Student")
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accID,applicantFName, applicantLName, industry_accID,dateApplied, resume, jobID  ) " +
-                  "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
-               
-                cmd.Parameters.AddWithValue("@jobtype", type);
-                cmd.Parameters.AddWithValue("@student_accId", student_accId);
-                cmd.Parameters.AddWithValue("@applicantFName", applicantFName);
-                cmd.Parameters.AddWithValue("@applicantLName", applicantLName);
-                cmd.Parameters.AddWithValue("@industry_accId", industry_accId);
-                cmd.Parameters.AddWithValue("@dateApplied", dateApplied);
-                cmd.Parameters.AddWithValue("@resume", resume);
-                cmd.Parameters.AddWithValue("@jobID", jobID);
-                cmd.ExecuteNonQuery();
-            }
-            conDB.Close();
+                 student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
+            }          
+             string position = JobTitle.Text.ToString();
+             string applicantFName = Session["FNAME"].ToString();
+             string applicantLName = Session["LNAME"].ToString();
+             string dateApplied = DateTime.Now.ToString("dd MMMM yyyy");
+             string resume = Session["ResumeFile"].ToString();
+             int jobID = int.Parse(Job_ID.Text.ToString());
+            int industry_accId = int.Parse(IndustryID.Text.ToString());
 
+            if (checkResume())
+            {
+
+
+                conDB.Open();
+                if (Usertype == "Alumni")
+                {
+                    SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,applicantFName, applicantLName, industry_accID,dateApplied, resume, jobID  ) " +
+                        "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
+
+                    cmd.Parameters.AddWithValue("@jobtype", jobtype);
+                    cmd.Parameters.AddWithValue("@student_accId", alumni_accId);
+                    cmd.Parameters.AddWithValue("@applicantFName", applicantFName);
+                    cmd.Parameters.AddWithValue("@applicantLName", applicantLName);
+                    cmd.Parameters.AddWithValue("@industry_accId", industry_accId);
+                    cmd.Parameters.AddWithValue("@dateApplied", dateApplied);
+                    cmd.Parameters.AddWithValue("@resume", resume);
+                    cmd.Parameters.AddWithValue("@jobID", jobID);
+                    cmd.ExecuteNonQuery();
+                }
+                else if (Usertype == "Student")
+                {
+                    SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accID,applicantFName, applicantLName, industry_accID,dateApplied, resume, jobID  ) " +
+                      "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
+
+                    cmd.Parameters.AddWithValue("@jobtype", jobtype);
+                    cmd.Parameters.AddWithValue("@student_accId", student_accId);
+                    cmd.Parameters.AddWithValue("@applicantFName", applicantFName);
+                    cmd.Parameters.AddWithValue("@applicantLName", applicantLName);
+                    cmd.Parameters.AddWithValue("@industry_accId", industry_accId);
+                    cmd.Parameters.AddWithValue("@dateApplied", dateApplied);
+                    cmd.Parameters.AddWithValue("@resume", resume);
+                    cmd.Parameters.AddWithValue("@jobID", jobID);
+                    cmd.ExecuteNonQuery();
+                }
+                conDB.Close();
+            }else
+            {
+                Response.Write("<script>alert('Please upload or create resume first before applying job.');document.location='Resume.aspx'</script>");
+            }
            
         }
         bool checkResume() //check resume
         {
-            int student_accId = int.Parse(Session["Student_accID"].ToString());
+            int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
             conDB.Open();
             SqlCommand cmd = new SqlCommand("select resumeFile from STUDENT_ACCOUNT where student_accID = @student_accID", conDB);
             cmd.Parameters.AddWithValue("@student_accID", student_accId);
             SqlDataReader reader = cmd.ExecuteReader();
             if(reader.Read())
             {
-                if(reader["resumeFile"].ToString() == null)
+                if(reader["resumeFile"] == null || reader["resumeFile"].ToString() == string.Empty)
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return false;
+                    
+                }
+                else
                 {
                     conDB.Close();
                     return true;
                 }
-                reader.Close();
+               
                
             }
 
-            else 
-            {
-                conDB.Close();
-                return false;
-            }
-            return true;
+           
+            return false;
         }
         bool checkJobApplied(int jobID) //check if already applied to selected job
         {
-            /*int student_accId = int.Parse(Session["Student_accID"].ToString());*/
+          
             int selectedJobID = jobID;
-            int student_accId = 100000000;
+            int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
             conDB.Open();
             SqlCommand cmd = new SqlCommand("Select * from APPLICANT Where jobID = @jobId and student_accID = @student_accId", conDB);
             cmd.Parameters.AddWithValue("@jobId", selectedJobID);
@@ -211,6 +222,7 @@ namespace ctuconnect
             {
                 btn.Text = "Apply";
             }
+            JobBind();
         }
 
     }
