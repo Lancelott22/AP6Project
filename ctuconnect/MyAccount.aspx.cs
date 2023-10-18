@@ -62,11 +62,11 @@ namespace ctuconnect
         {
             if (!string.IsNullOrEmpty(profilePicturePath))
             {
-                profileImage.ImageUrl = profilePicturePath;
+                profileImage.ImageUrl = "~/images/StudentProfiles/" + profilePicturePath;
             }
             else
             {
-                profileImage.ImageUrl = "~/StudentProfiles/defaultprofile.jpg";
+                profileImage.ImageUrl = "~/images/StudentProfiles/defaultprofile.jpg";
             }
         }
 

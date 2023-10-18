@@ -13,6 +13,11 @@
                 opacity: 0.9;
                 
             }
+            .errorMessage{
+                color: #F7941F;
+                font-family: Arial;
+                font-size: 15px;
+            }
             .btn-md{
                 border: 1px #F7941F;
                 background-color: #F7941F;
@@ -87,15 +92,17 @@
                     </div>
                     <!-- Email -->
                     <div class="col-lg-12 align-self-end">       
-                        <asp:TextBox ID="txtusername" CssClass="txtbox" runat="server" placeholder="username" Height="40px" Width="285px"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Enter username" ControlToValidate="txtusername" CssClass="text-danger"></asp:RequiredFieldValidator>
+                        <asp:TextBox ID="txtusername" CssClass="txtbox" runat="server" placeholder="username" Height="40px" Width="285px"></asp:TextBox><br />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Enter username" ControlToValidate="txtusername" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
                     </div>
-                     
+                     <div class="col-lg-12 align-self-end">
+                        <br />
+                    </div>
                     <!-- Password -->
                     <div class="col-lg-12 align-self-end">
                         <asp:TextBox ID="txtpwd" CssClass="txtbox" runat="server" TextMode="Password" placeholder="Password" Height="40px" Width="285px"></asp:TextBox><br />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Enter password" ControlToValidate="txtpwd"  CssClass="text-danger"></asp:RequiredFieldValidator>
-                        <asp:Label ID="LoginErrorMessage" runat="server" Text="The password or email is incorrect!" CssClass="connect"></asp:Label>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Enter password" ControlToValidate="txtpwd" Display="Dynamic"  CssClass="text-danger"></asp:RequiredFieldValidator>
+                        <asp:Label ID="LoginErrorMessage" runat="server" Text="The password or email is incorrect!" CssClass="errorMessage"></asp:Label>
                     </div>
                     <!-- Check Box for Hide Password -->
                     <div>
