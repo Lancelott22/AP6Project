@@ -52,7 +52,7 @@ namespace ctuconnect
         {
             if (fileUploadProfilePicture.HasFile)
             {
-                int studentAcctID = Convert.ToInt32(Session["Students_ACC_ID"].ToString());
+                int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
                 string fileName = Path.GetFileName(fileUploadProfilePicture.FileName);
                 string filePath = Server.MapPath("~/images/StudentProfiles/") + studentAcctID + "_" + fileName;
 
