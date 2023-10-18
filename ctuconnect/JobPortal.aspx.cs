@@ -64,7 +64,7 @@ namespace ctuconnect
                 if (reader.Read())
                 {
                     Job_ID.Text = reader["jobID"].ToString();
-                    IndstryLogo.Src = "images/" + reader["industryPicture"].ToString();
+                    IndstryLogo.Src = "~/images/IndustryProfile/" + reader["industryPicture"].ToString();
                     IndustryName.Text = reader["industryName"].ToString();
                     JobTitle.Text = reader["jobTitle"].ToString();
                     JobDescription.Text = reader["jobDescription"].ToString();

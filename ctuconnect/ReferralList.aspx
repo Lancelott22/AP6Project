@@ -182,7 +182,9 @@
                                       Font-Bold="False" Font-Size="13px"  Height="100%" Width="100%" >  
                         <PagerStyle  HorizontalAlign="Center" />
                         <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
-                       
+                       <EmptyDataTemplate>
+                             <p>No data available</p>
+                        </EmptyDataTemplate>
                             <Columns >
                                  <asp:TemplateField HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
                                      <ItemTemplate>
