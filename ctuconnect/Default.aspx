@@ -78,7 +78,7 @@
         </section>
         <br />
         <section class="row align-items-center justify-content-center text-center">
-            <p><a href="Login.aspx" class="btn btn-primary btn-md">Login</a></p>
+            <p><a href="LoginStudent.aspx" class="btn btn-primary btn-md">Login</a></p>
         </section>
         <section class="row align-items-center justify-content-center text-center">
             <p class="ask">Do not have an account yet? <a href="RegisterStudent.aspx" class="link">Register here</a></p>
