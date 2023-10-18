@@ -16,7 +16,7 @@ namespace ctuconnect
         {
             if (!IsPostBack && Session["Username"] != null)
             {
-                Response.Redirect("Home.aspx");
+                Response.Redirect("CoordinatorProfile.aspx");
             }
             LoginErrorMessage.Visible = false;
 
@@ -43,28 +43,45 @@ namespace ctuconnect
                 string loginUsername = txtusername.Text;
                 string loginPassword = txtpwd.Text;
 
+            if (!string.IsNullOrEmpty(loginUsername) && !string.IsNullOrEmpty(loginPassword))
+            {
                 using (conDB2)
                 {
                     conDB2.Open();
-
-                    string query = "SELECT COUNT(1) FROM COORDINATOR_ACCOUNT WHERE username = @username AND password = @password";
-                    SqlCommand command = new SqlCommand(query, conDB2);
-                    command.Parameters.AddWithValue("@username", loginUsername);
-                    command.Parameters.AddWithValue("@password", loginPassword);
-
-                    using (SqlDataReader reader = command.ExecuteReader()) {
-                    if (reader.Read())
+                    string query = "SELECT COUNT(1) FROM COORDINATOR_ACCOUNT WHERE username=@Email AND password=@Password";
+                    using (SqlCommand command = new SqlCommand(query, conDB2))
                     {
-                        getOJTCoordinatorInfo();
+                        command.Parameters.AddWithValue("@Email", loginUsername);
+                        command.Parameters.AddWithValue("@Password", loginPassword);
+                        int count = Convert.ToInt32(command.ExecuteScalar());
+                        if (count == 1)
+                        {
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
 
+                                while (reader.Read())
+                                {
+
+                                    getOJTCoordinatorInfo();
+
+                                }
+                                Response.Write("<script>alert('Invalid Credentials')</script>");
+                                conDB2.Close();
+                                reader.Close();
+                            }
+                            Session["Username"] = txtusername.Text;
+                            Response.Redirect("CoordinatorProfile.aspx");// User is authenticated, you can redirect to another page
+                            
+                        }
+                        else
+                        {
+                            // Invalid credentials, show error message
+                            LoginErrorMessage.Visible = true;
+                        }
                     }
-                    Session["Username"] = txtusername.Text;
-                    Response.Redirect("CoordinatorProfile.aspx");
-                    conDB2.Close();
-                    reader.Close();
-                }  
                 }
-            
+            }
+
         }
 
         protected void CheckBox1_CheckedChanged(object sender, EventArgs e)

@@ -52,14 +52,14 @@ namespace ctuconnect
         {
             if (fileUploadProfilePicture.HasFile)
             {
-                int studentAcctID = Convert.ToInt32(Session["Students_ACC_ID"].ToString());
+                int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
                 string fileName = Path.GetFileName(fileUploadProfilePicture.FileName);
                 string filePath = Server.MapPath("~/images/StudentProfiles/") + studentAcctID + "_" + fileName;
 
                 fileUploadProfilePicture.SaveAs(filePath);
 
                 // Save the profile picture file path to the database (you need to implement this part)
-                SaveProfilePicturePath(studentAcctID.ToString(), "~/images/StudentProfiles/" + studentAcctID + "_" + fileName);
+                SaveProfilePicturePath(studentAcctID.ToString(),  studentAcctID + "_" + fileName);
 
                 LoadProfilePicture(studentAcctID); // Reload the profile picture after uploading
             }
@@ -106,7 +106,7 @@ namespace ctuconnect
 
             if (!string.IsNullOrEmpty(profilePicture))
             {
-                imgProfilePicture.ImageUrl = profilePicture;
+                imgProfilePicture.ImageUrl = "~/images/StudentProfiles/" + profilePicture;
             }
             else
             {

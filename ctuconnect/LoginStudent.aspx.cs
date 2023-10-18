@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
@@ -40,36 +41,48 @@ namespace ctuconnect
             SqlConnection conDB2 = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
 
             string loginEmail = txtemail.Text;
-                string loginPassword = txtpwd.Text;
+            string loginPassword = txtpwd.Text;
 
-                using (conDB2)
+                if (!string.IsNullOrEmpty(loginEmail) && !string.IsNullOrEmpty(loginPassword))
                 {
-                    conDB2.Open();
-
-                    string query = "SELECT COUNT(1) FROM INDUSTRY_ACCOUNT WHERE email = @email AND password = @password";
-                    SqlCommand command = new SqlCommand(query, conDB2);
-                    command.Parameters.AddWithValue("@email", loginEmail);
-                    command.Parameters.AddWithValue("@password", loginPassword);
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (conDB2)
                     {
-
-                        while (reader.Read())
+                        conDB2.Open();
+                        string query = "SELECT COUNT(1) FROM STUDENT_ACCOUNT WHERE Email=@Email AND Password=@Password";
+                        using (SqlCommand command = new SqlCommand(query, conDB2))
                         {
+                            command.Parameters.AddWithValue("@Email", loginEmail);
+                            command.Parameters.AddWithValue("@Password", loginPassword);
+                            int count = Convert.ToInt32(command.ExecuteScalar());
+                            if (count == 1)
+                            {
+                                using (SqlDataReader reader = command.ExecuteReader())
+                                {
 
-                        getStudentInfo();
-                        
+                                    while (reader.Read())
+                                    {
+
+                                        getStudentInfo();
+
+                                    }
+                                    Response.Write("<script>alert('Invalid Credentials')</script>");
+                                    conDB2.Close();
+                                    reader.Close();
+                                }
+                                Session["StudentEmail"] = txtemail.Text;
+                                Response.Redirect("MyAccount.aspx");// User is authenticated, you can redirect to another page
+                            }
+                            else
+                            {
+                            // Invalid credentials, show error message
+                            LoginErrorMessage.Visible = true;
                         }
-                            Response.Write("<script>alert('Invalid Credentials')</script>");
-                            conDB2.Close();
-                            reader.Close();
+                        }
                     }
-                    Session["StudentEmail"] = txtemail.Text;
-                    Response.Redirect("MyAccount.aspx");
-                    
                 }
-            
+
                 //Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
-            
+
         }
 
         protected void CheckBox1_CheckedChanged(object sender, EventArgs e)

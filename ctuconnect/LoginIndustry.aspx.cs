@@ -16,7 +16,7 @@ namespace ctuconnect
         {
             if (!IsPostBack && Session["IndustryEmail"] != null)
             {
-                Response.Redirect("IndustryHome.aspx");
+                Response.Redirect("LoginIndustry.aspx");
             }
             LoginErrorMessage.Visible = false;
 
@@ -44,28 +44,42 @@ namespace ctuconnect
                 string loginEmail = txtemail.Text;
                 string loginPassword = txtpwd.Text;
 
-                using (conDB2)
+                if (!string.IsNullOrEmpty(loginEmail) && !string.IsNullOrEmpty(loginPassword))
                 {
-                    conDB2.Open();
-
-                    string query = "SELECT * FROM INDUSTRY_ACCOUNT WHERE email = @email AND password = @password";
-                    SqlCommand command = new SqlCommand(query, conDB2);
-                    command.Parameters.AddWithValue("@email", loginEmail);
-                    command.Parameters.AddWithValue("@password", loginPassword);
-                    int count = Convert.ToInt32(command.ExecuteScalar());
-                    using(SqlDataReader reader = command.ExecuteReader())
+                    using (conDB2)
                     {
-                        if(reader.Read())
+                        conDB2.Open();
+                        string query = "SELECT COUNT(1) FROM INDUSTRY_ACCOUNT WHERE Email=@Email AND Password=@Password";
+                        using (SqlCommand command = new SqlCommand(query, conDB2))
                         {
-                            getIndustryInfo();
-                        }
-                        reader.Close();
-                    }
+                            command.Parameters.AddWithValue("@Email", loginEmail);
+                            command.Parameters.AddWithValue("@Password", loginPassword);
+                            int count = Convert.ToInt32(command.ExecuteScalar());
+                            if (count == 1)
+                            {
+                                using (SqlDataReader reader = command.ExecuteReader())
+                                {
 
-                    Session["IndustryEmail"] = txtemail.Text;
-                    Response.Redirect("IndustryHome.aspx");
-                    conDB2.Close();
-                    
+                                    while (reader.Read())
+                                    {
+
+                                        getIndustryInfo();
+
+                                    }
+                                    Response.Write("<script>alert('Invalid Credentials')</script>");
+                                    conDB2.Close();
+                                    reader.Close();
+                                }
+                                Session["IndustryEmail"] = txtemail.Text;
+                                Response.Redirect("IndustryHome.aspx");// User is authenticated, you can redirect to another page
+                            }
+                            else
+                            {
+                                // Invalid credentials, show error message
+                                LoginErrorMessage.Visible = true;
+                            }
+                        }
+                    }
                 }
             }
             catch
