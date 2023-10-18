@@ -82,12 +82,13 @@
                 padding: 2% 7% 4% 7%;
                 overflow: auto;
                 /*background-color:white;*/
-                height:100vh;
+                height:auto;
                 /*overflow: auto;
                 float:left;
                 margin-left:25%;
                 position:relative;
                 padding: 4% 0% 0% 6%;*/
+                margin-bottom: 30px;
             }
             
             @media (max-width: 790px) {
@@ -152,21 +153,39 @@
                  min-width: 100%;
                 min-height:35px;
                 margin-bottom:2%;
-                padding-left:20px;
+               
+                padding: 10px;
+                 padding-left:20px;
                 border: 1px solid gray;
                 justify-content: center; /* Add this property to include padding in the width calculation */
                
     }
              .txtbox-description{
-                 padding-left:20px;
+            
                   border-radius: 10px;
                   min-width: 100%;
-                min-height:190px;
+                  min-height:100px;
+               height:auto;
                 margin-bottom:2%;
               border: 1px solid gray;
+              padding:10px; 
+                   padding-left:20px;
+                   padding-top:20px;
+             }
+             .txtbox-instruction {
+                
+                  border-radius: 10px;
+                  min-width: 100%;
+                  min-height:100px;
+                height:auto;
+                margin-bottom:2%;
+              border: 1px solid gray;
+              padding:10px;
+                   padding-left:20px;
+                     padding-top:20px;
              }
              .content{
-                 height:100%; 
+                 height:auto; 
                  width:97%; 
                  margin-left:2%; 
                  margin-right:2%;
@@ -204,11 +223,19 @@
             .fa {
                 width:20px;
                 margin-right: 19px; 
+    }
+            .postJobStyle {
+                float:right;
+                color:white;
+                background-color: orange;
+                border-radius: 15px;
+                height:40px;
+                width:20%;
+                border:1px solid orange;
             }
-            .disp_industryName {
-                font-size: 24px;
+            .postJobStyle:hover {
+                box-shadow: 3px 6px 7px -4px  grey;
             }
-            
     </style>
     <asp:Table ID="Table1" runat="server" CssClass="content" >
         <asp:TableRow>
@@ -220,7 +247,7 @@
                 </div>
             </asp:TableCell> 
             <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
-                <div class="display-container">
+                <div class="display-container container-fluid">
                     <h1 class="title">Post a Job</h1>
                    
                         <asp:Label ID="Label1" runat="server" Text="Job Title " Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
@@ -231,38 +258,40 @@
                    
 
                         <asp:Label ID="Label3" runat="server" Text="Job Type " Style="font-size:18px;"></asp:Label><span style="color: red">*</span>
-                    <asp:Label ID="Label4" runat="server" Text="Specified course " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
+                    <asp:Label ID="Label4" runat="server" Text="Specified course " Style="font-size:20px; margin-left:42%;"></asp:Label><span style="color: red">*</span>
 
 
                            <div class="dropdown1">
                             <select runat="server" name="jobtype" id="jobtype" Style="border-radius: 10px;  min-width: 47%; min-height:35px; margin-bottom:2%; padding-left:20px;">
+                                <option value="0" selected disabled hidden>--Select--</option>
                                 <option value="fulltime">Full-time</option>
                                 <option value="internship">Internship</option>
                             </select>
                             <select runat="server" name="course" id="course" Style="border-radius: 10px;  min-width: 47%; min-height:35px; margin-bottom:2%; padding-left:20px;" >
-                                <option value="fulltime">Full-time</option>
-                                <option value="internship">Internship</option>
-                                <option value="fulltime">Full-time</option>
-                                <option value="internship">Internship</option>
-                                <option value="fulltime">Full-time</option>
-                                <option value="internship">Internship</option>
-                                <option value="fulltime">Full-time</option>
-                                <option value="internship">Internship</option>
+                                  <option  value="0" selected disabled hidden>--Select--</option>
+                                <option value="fulltime">BSIT</option>
+                                <option value="internship">BIT-CT</option>
+                                <option value="fulltime">BSIS</option>
+                              
                             </select>
                        </div>
                    
                     <asp:Label ID="Label5" runat="server" Text="Job Location " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="jobLoc" runat="server" CssClass="txtbox" Style="padding-left:20px;" Placeholder="e.g. M.J. Cuenco Ave, Cor R. Palma Street, 6000 Cebu" ></asp:TextBox>
+                     <asp:TextBox ID="jobLoc" runat="server" CssClass="txtbox" Placeholder="e.g. M.J. Cuenco Ave, Cor R. Palma Street, 6000 Cebu" ></asp:TextBox>
 
                      <asp:Label ID="Label6" runat="server" Text="Job Description " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="jobDescript" runat="server" CssClass="txtbox-description" Placeholder="job location" ></asp:TextBox>
+                     <asp:TextBox ID="jobDescript" runat="server" TextMode="MultiLine" CssClass="txtbox-description" Placeholder="Enter Job Description" ></asp:TextBox>
 
                     <asp:Label ID="Label7" runat="server" Text="Job Qualifications " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="jobQuali" runat="server" CssClass="txtbox" Placeholder="Enter job qualifications" ></asp:TextBox>
+                     <asp:TextBox ID="jobQuali" runat="server"  CssClass="txtbox-description" TextMode="MultiLine" Placeholder="Enter Job Qualifications" ></asp:TextBox>
 
                     <asp:Label ID="Label8" runat="server" Text="Instructions to apply " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="jobInstruct" runat="server" CssClass="txtbox" Style="height:70px;">job location</asp:TextBox>
-                     <asp:Button ID="PostJob" runat="server" Style="background-color:white; min-width:25%; min-height:35px; float:right; color:white; background-color:orange;  border-radius: 10px; border: 1.5px solid orange; " Text="Post" OnClick="PostJob_Click"/>
+                     <asp:TextBox ID="jobInstruct" runat="server" TextMode="MultiLine" CssClass="txtbox-instruction" Placeholder="How to apply?"></asp:TextBox>
+                     
+                    <asp:Label ID="Label9" runat="server" Text="Salary Range" Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
+                    <asp:TextBox ID="salary" runat="server" CssClass="txtbox" Placeholder="PHP XXX,XXX - PHP XXX,XXX"></asp:TextBox>
+
+                    <asp:Button ID="PostJob" runat="server" CssClass="postJobStyle"  Text="Post" OnClick="PostJob_Click"/>
             </div>
                     </asp:TableCell>
             </asp:TableRow>

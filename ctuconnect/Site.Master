@@ -22,7 +22,7 @@
         .navbar-custom{
             color: #FFF5F5;
             height:70px;
-            
+             text-decoration: none;
         }
 
         .navbar-nav > li{
@@ -31,20 +31,24 @@
             font-family: 'Arial Rounded MT';
             font-size: 20px;
             color:#FFF5F5;
+             text-decoration: none;
         }
 
         .navbar-nav > li a:hover{
             color:#F7941F;
+             text-decoration: none;
         }
 
         .nav-link{
             color:#FFF5F5;
+             text-decoration: none;
         }
 
         .navbar-brand{
             color: white;
             font-family: 'Arial Rounded MT';
             font-size: 30px;
+             text-decoration: none;
         }
 
         .background{
@@ -63,8 +67,12 @@
             font-size:10px;
             font-family: 'Arial Rounded MT';
         }
-
-        
+        ul a {
+             text-decoration: none;
+        }
+         ul li a {
+              text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -75,7 +83,7 @@
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
                 <asp:ScriptReference Name="MsAjaxBundle" />
-                <asp:ScriptReference Name="jquery" />
+                
                 <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
                 <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
                 <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />

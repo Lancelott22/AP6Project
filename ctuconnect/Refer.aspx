@@ -186,7 +186,7 @@
                 margin-bottom:2%;
                 padding-left:20px;
                 border: 1px solid gray;
-                justify-content: center; /* Add this property to include padding in the width calculation */
+                justify-content: center; 
                
     }
     .txtbox-id {
@@ -197,7 +197,7 @@
             margin-bottom:2%;
             padding-left:20px;
             border: 1px solid gray;
-            justify-content: center; /* Add this property to include padding in the width calculation */
+            justify-content: center; 
            
 }
     .dropdown1{
@@ -253,7 +253,7 @@
                     <img src="images/industrypic.png" />
                         <p >OJT Coordinator</p>
                             <hr class="horizontal-line" />
-                            <a  href="Coordinator.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
+                            <a  href="CoordinatorProfile.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
                             <a class="active" href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:12px; width:20px;"></i>Refer Student</a>
                             <a  href="CourseList.aspx"> <i class="fa fa-book" aria-hidden="true" style="padding-right:12px;"></i>Course List</a>
                             <a  href="Applicants.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
@@ -261,8 +261,6 @@
                             <a  href="ReferralLIst.aspx"><i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>Sign-out</a>
                 </div>
             </asp:TableCell>
-
-
             <asp:TableCell Style="padding:0px 5px 0px 40px">
                 <div class="display-container">
                      <h1 class="title">Referral</h1>
@@ -270,70 +268,31 @@
                             <asp:ListItem Text="Date" Value="ColumnName1"></asp:ListItem>
                             <asp:ListItem Text="Status" Value="ColumnName2"></asp:ListItem>
                         </asp:DropDownList></p>
-                        <asp:Button ID="addreferstudent" runat="server" Text="Add Refer Student" AutoPostBack="false" OnClick="addRefer_Click" style="float:right;"    />
+                            <asp:Button ID="addreferstudent" runat="server" Text="Add Refer Student" AutoPostBack="false" OnClick="addRefer_Click" style="float:right;"    />
                            <%-- <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p> --%>
-                            <asp:GridView ID="GridView1" runat="server" Style="color:black; " AutoGenerateColumns="false"  ShowHeaderWhenEmpty="true" CssClass="gridview-style"
+                            <asp:GridView ID="GridView1" runat="server" Style="color:black; " AutoGenerateColumns="false"  CssClass="gridview-style"
                                               AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" CellPadding="50" CellSpacing="50" 
-                                              Font-Bold="False" Font-Size="13px"  Height="100%" Width="100%" >  
+                                              Font-Bold="False" Font-Size="13px" Height="100%" Width="100%" ShowHeaderWhenEmpty="true" >  
                             <PagerStyle  HorizontalAlign="Center" />
                             <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
-                                <Columns >
+                                <EmptyDataTemplate>
+                                     <p>No data available</p>
+                                </EmptyDataTemplate>
+                            <Columns >
+                                        <asp:TemplateField HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
+                                            <ItemTemplate>
+                                                <%# Container.DataItemIndex + 1 %>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         <asp:BoundField DataField="lastName" HeaderText="Last Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                         <asp:BoundField DataField="firstName" HeaderText="First Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                         <asp:BoundField DataField="midInitials" HeaderText="Middle Initial" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                         <asp:BoundField DataField="industryName" HeaderText="Industry" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
                                         <asp:BoundField DataField="referredBy" HeaderText="Referred by" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
                                         
-                               </Columns>
-                    </asp:GridView>
+                            </Columns>
+                            </asp:GridView>
                 </div>
-
-
-               
-                
-               <%--<div class="display-container">
-                   <h1 class="title">Refer a Student</h1>
-
-                   
-              <div class="column">
-                   <asp:Label ID="Label1" runat="server" Text="Student ID" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                   <asp:TextBox ID="txtID_student" runat="server" CssClass="txtbox-id" AutoPostBack="true"  Placeholder="e.g. 1202200" ></asp:TextBox>
-                   <asp:Button runat="server" OnClick="findByID_Student" Text="Find" CssClass="button-find" />
-              </div>
-
-                    <asp:Label ID="Label8" runat="server" Text="First Name" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                    <asp:TextBox ID="txtFirstName_student" runat="server" CssClass="txtbox"  ></asp:TextBox>
-                    <asp:Label ID="Label9" runat="server" Text="Middle Initial" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                    <asp:TextBox ID="txtMiddleInitial_student" runat="server" CssClass="txtbox"  ></asp:TextBox>
-                    <asp:Label ID="Label3" runat="server" Text="Last Name" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                    <asp:TextBox ID="txtLastName_student" runat="server" CssClass="txtbox"  ></asp:TextBox>
-
-                    <asp:Label ID="Label6" runat="server" Text="Industry" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                     <div class="dropdown1">
-                         <select name="jobtype" id="jobtype" Style="border-radius: 10px;  min-width: 100%; min-height:35px; margin-bottom:2%; padding-left:20px; padding-right:20px;">
-                             <option value="100000000">Accenture.Inc</option>
-                             <option value="#">Concentrix</option>
-                             </select>
-                    </div>
-
-                    <asp:Label ID="Label7" runat="server" Text="Resume" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                   <asp:FileUpload ID="resumeUpload" runat="server" /> <br>
-
-                   <div class="column">
-                    <asp:Label ID="Label4" runat="server" Text="Referred by" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                    <asp:TextBox ID="txtID_coordinator" runat="server" CssClass="txtbox-id" Placeholder="Enter your ID" ></asp:TextBox>
-                       </div>
-                    <asp:Label ID="Label2" runat="server" Text="First Name" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                    <asp:TextBox ID="txtFirstName_coordinator" runat="server" CssClass="txtbox"  ></asp:TextBox>
-                    <asp:Label ID="Label10" runat="server" Text="Middle Initial" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                    <asp:TextBox ID="txtMiddleInitial_coordinator" runat="server" CssClass="txtbox"  ></asp:TextBox>
-                    <asp:Label ID="Label5" runat="server" Text="Last Name" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                    <asp:TextBox ID="txtLastName_coordinator" runat="server" CssClass="txtbox"  ></asp:TextBox>
-                   
-                   
-                  
-                   <asp:Button runat="server"  Text="Submit" CssClass="button-submit"  />
-               </div>--%>
             </asp:TableCell>
         </asp:TableRow>
     </asp:Table>
@@ -355,40 +314,66 @@
                                 </div>
 
                                       <asp:Label ID="Label8" runat="server" Text="First Name" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                      <asp:TextBox ID="txtFirstName_student" runat="server" CssClass="txtbox"  ></asp:TextBox>
+                                      <asp:TextBox ID="txtFirstName_student" runat="server" ReadOnly="true" CssClass="txtbox"  ></asp:TextBox>
                                       <asp:Label ID="Label9" runat="server" Text="Middle Initial" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                      <asp:TextBox ID="txtMiddleInitial_student" runat="server" CssClass="txtbox"  ></asp:TextBox>
+                                      <asp:TextBox ID="txtMiddleInitial_student" runat="server"  ReadOnly="true" CssClass="txtbox"  ></asp:TextBox>
                                       <asp:Label ID="Label3" runat="server" Text="Last Name" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                      <asp:TextBox ID="txtLastName_student" runat="server" CssClass="txtbox"  ></asp:TextBox>
+                                      <asp:TextBox ID="txtLastName_student" runat="server" ReadOnly="true" CssClass="txtbox"  ></asp:TextBox>
 
                                       <asp:Label ID="Label6" runat="server" Text="Industry" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                       <div class="dropdown1">
-                                           <select name="jobtype" id="jobtype" Style="border-radius: 10px;  min-width: 100%; min-height:35px; margin-bottom:2%; padding-left:20px; padding-right:20px;">
-                                               <option value="100000000">Accenture.Inc</option>
-                                               <option value="#">Concentrix</option>
-                                               </select>
-                                      </div>
+                                       <asp:DropDownList ID="dropdownIndustries" runat="server" CssClass="dropdown1"></asp:DropDownList>
 
                                       <asp:Label ID="Label7" runat="server" Text="Resume" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                     <asp:TextBox ID="TextBox1" runat="server" CssClass="txtbox"  ></asp:TextBox> <br>
+                                      <asp:Label ID="txtResumeFileName" runat="server" Text="" Style="font-size:14px;" ></asp:Label><br>
 
                                      <div class="column">
                                       <asp:Label ID="Label4" runat="server" Text="Referred by" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                      <asp:TextBox ID="txtID_coordinator" runat="server" CssClass="txtbox-id" Placeholder="Enter your ID" ></asp:TextBox>
+                                      <asp:TextBox ID="txtID_coordinator" runat="server" CssClass="txtbox-id" Placeholder="Enter your ID" ReadOnly="true" AutoPostBack="true"></asp:TextBox>
                                          </div>
                                       <asp:Label ID="Label2" runat="server" Text="First Name" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                      <asp:TextBox ID="txtFirstName_coordinator" runat="server" CssClass="txtbox"  ></asp:TextBox>
+                                      <asp:TextBox ID="txtFirstName_coordinator" runat="server" ReadOnly="true" CssClass="txtbox"  ></asp:TextBox>
                                       <asp:Label ID="Label10" runat="server" Text="Middle Initial" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                      <asp:TextBox ID="txtMiddleInitial_coordinator" runat="server" CssClass="txtbox"  ></asp:TextBox>
+                                      <asp:TextBox ID="txtMiddleInitial_coordinator" runat="server" ReadOnly="true" CssClass="txtbox"  ></asp:TextBox>
                                       <asp:Label ID="Label5" runat="server" Text="Last Name" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                                      <asp:TextBox ID="txtLastName_coordinator" runat="server" CssClass="txtbox"  ></asp:TextBox>
+                                      <asp:TextBox ID="txtLastName_coordinator" runat="server" ReadOnly="true" CssClass="txtbox"  ></asp:TextBox>
                       
              </div>
              <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                 <%--<asp:linkbutton id="submit"  class="buttonstyle" runat="server"  oncommand="submit_command" autopostback="false">submit</asp:linkbutton>--%>
+                 <asp:linkbutton id="submit"  class="buttonstyle" runat="server"  OnCLick="Submit_ButtonClick" autopostback="false">submit</asp:linkbutton>
              </div>
          </div>
      </div>
   </div>
+    
+   <%-- <div class="modal fade" id="SuccessPrompt" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="title"></h1>
+            </div>
+             <asp:Label ID="SuccesfulPrompt" runat="server" Text="Your referral succesfully added." Style="font-size:18px;" ></asp:Label>
+        </div>
+        <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+        </div>
+    </div>
+    </div>--%>
+    <div class="modal fade" id="SuccessPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                        
+                        <asp:Label ID="Label11" runat="server" Text="Success !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label12" runat="server" Text="Your referral succesfully added." Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button runat="server" type="button" class="btn btn-secondary" Text="Close" OnCLick="Close_SuccessPrompt" />
+                    </div>
+                </div>
+            </div>
+</div>
+
 </asp:Content>

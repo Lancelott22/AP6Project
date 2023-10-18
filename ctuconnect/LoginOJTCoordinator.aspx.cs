@@ -56,9 +56,10 @@ namespace ctuconnect
                     if (reader.Read())
                     {
                         getOJTCoordinatorInfo();
+
                     }
                     Session["Username"] = txtusername.Text;
-                    Response.Redirect("Home.aspx");
+                    Response.Redirect("CoordinatorProfile.aspx");
                     conDB2.Close();
                     reader.Close();
                 }  
@@ -88,7 +89,7 @@ namespace ctuconnect
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.Read())
                     {
-                        Session["ACC_ID"] = reader["coordinator_accID"];
+                        Session["Coor_ACC_ID"] = reader["coordinator_accID"];
                         Session["FNAME"] = reader["firstNanme"];
                         Session["MIDNAME"] = reader["midInitials"];
                         Session["LNAME"] = reader["lastName"];

@@ -19,8 +19,7 @@
             .profile-container, .sidemenu-container {
                 max-width: 50%;
                 max-height:auto;
-                
-                 padding:5px 5px 5px 5px;
+                padding:5px 5px 5px 5px;
             }
         }
         .profile-container img{
@@ -40,17 +39,14 @@
             width:260px;
             height:200px;
             background-color:white;
-            /*margin-top:22%;*/
             padding-top:4px;
             margin-bottom:10%;
             margin-left:4%;
             border-radius: 25px;
             border: 2px ;
             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
-            
         }
-       
-            .sidemenu-container a {
+        .sidemenu-container a {
                 position:static;
                 border-radius: 25px;
                 color: black;
@@ -60,46 +56,40 @@
                 margin: 10px 15px 5px 15px ;
                 padding: 0px 0px 0px 20px;
                 align-items:center;
-            }
-            .sidemenu-container a.active{
+         }
+        .sidemenu-container a.active{
                  background-color:#F6B665;
                 color:#606060;
-            }
-            .sidemenu-container a:hover{
+         }
+        .sidemenu-container a:hover{
                 background-color:#fcd49a;
                 color:#606060;
                 margin: 10px 15px 5px 15px ;
                 padding: 0px 0px 0px 20px;
-            }
-            .display-container{
+         }
+        .display-container{
                 background-color:white; 
                 width:1000px;
                 top:0;
                 bottom:0;
                 padding: 2% 2% 0% 2%;
                 overflow: auto;
-                /*background-color:white;*/
                 height:550px;
-                /*overflow: auto;
-                float:left;
-                margin-left:25%;
-                position:relative;
-                padding: 4% 0% 0% 6%;*/
-            }
-            }
-            @media (max-width: 790px) {
+                
+        }
+         @media (max-width: 790px) {
                 .display-container {
                     max-width: 50%;
                 }
             }
-            .display-container .title{
+         .display-container .title{
                 font-size:25px;
                 font-weight:500;
                 position:relative;
                 margin-bottom:3%;
                 padding-bottom:4px;
             }
-            .display-container .title:before{
+         .display-container .title:before{
                 content:'';
                 position:absolute;
                 height:2px;
@@ -108,85 +98,77 @@
                 background-color: #881A30;
 
             }
-             .content{
+         .content{
                  height:100%; 
                  width:97%; 
                  margin-left:2%; 
                  margin-right:2%;
                  padding: 0px 0px 0px 0px;
              }
-             .gridview-style{
+         .gridview-style{
                  margin-top:5%;
                  text-align:center;
              }
-             .gridview-style .header-style{
+         .gridview-style .header-style{
                  width:20px;
                  text-align:center;
                  align-items:center;
              }
-            .sort-dropdown{
+         .sort-dropdown{
                 border-radius: 12px;
                 width:100px;
                 padding-left:8px;
                 border-color:#c1beba;
             }
-            .gridview-container {
-        position: relative;
-        min-height: 1px;
-        height: auto;
-        width: 100%;
-    }
+         .gridview-container {
+                position: relative;
+                min-height: 1px;
+                height: auto;
+                width: 100%;
+            }
+         .gridview {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                display: none;
+            }
+   
+        .full-time:active::before{
+                    content:'';
+                    position:absolute;
+                    height:10px;
+                    width:40px;
+                    bottom:0%;
+                    background-color: #881A30;
 
-    .gridview {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        display: none;
-    }
-   /* .horizontal-line {
-        border: none;
-        border-top: 1px solid black;
-        width: 100%;
-        margin-top:1%;
-        margin-bottom:0%;
-    }*/
-    
-    .full-time:active::before{
-                content:'';
-                position:absolute;
-                height:10px;
-                width:40px;
-                bottom:0%;
-                background-color: #881A30;
+        }
+        .fa {
+                    width:20px;
+                    margin-right: 19px; 
+        }
+        .topnav {
+          overflow: hidden;
+        }
 
-    }
-    .fa {
-                width:20px;
-                margin-right: 19px; 
-    }
-    .topnav {
-      overflow: hidden;
-    }
+        .topnav .linkbutton {
+          float: left;
+          display: block;
+          color: black;
+          text-align: center;
+          padding: 2px 15px;
+          text-decoration: none;
+          font-size: 17px;
+        }
 
-    .topnav .linkbutton {
-      float: left;
-      display: block;
-      color: black;
-      text-align: center;
-      padding: 2px 15px;
-      text-decoration: none;
-      font-size: 17px;
-    }
+        .topnav .linkbutton:hover {
+          border-bottom: 2px solid black;
+        }
 
-    .topnav .linkbutton:hover {
-      border-bottom: 2px solid black;
-    }
-
-    .topnav .linkbutton.active {
-      border-bottom: 2px solid black;
-      color:#881A30;
-}
+        .topnav .linkbutton.active {
+          border-bottom: 2px solid black;
+          color:#881A30;
+         }
     </style>
     <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
@@ -199,61 +181,61 @@
             <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
                <div class="display-container">
                    <h1 class="title">Hired List</h1>
-                    <div class="col-lg-5 order-1 order-lg-2 topnav">
+                   <div class="col-lg-5 order-1 order-lg-2 topnav">
                        <asp:LinkButton ID="myLinkButton1"  runat="server" OnClick="btnSwitchGrid_Click1" CssClass="linkbutton" >Full Time</asp:LinkButton>
                        <asp:LinkButton ID="myLinkButton2" runat="server" OnClick="btnSwitchGrid_Click2" CssClass="linkbutton">Internship</asp:LinkButton>      
-                    </div>
-                    <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p> 
-                   <%--<hr class="horizontal-line" />--%>
+                   </div>
+                   <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p> 
+                
                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                         <ContentTemplate>
+                            <%--First Gridview--%>
                             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Style="text-align:center;" Height="100%" Width="100%"  AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" 
                                 CellPadding="50" CellSpacing="50" Font-Bold="False" Font-Size="13px" ShowHeaderWhenEmpty="true">
-                                 <PagerStyle  HorizontalAlign="Center" />
-                                <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
+                            <PagerStyle  HorizontalAlign="Center" />
+                            <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
                                 <EmptyDataTemplate>
                                     <p>No data available</p>
                                 </EmptyDataTemplate>
-                                <Columns>
-                                    <asp:TemplateField HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
-                                        <ItemTemplate>
-                                            <%# Container.DataItemIndex + 1 %>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                               <asp:BoundField DataField="LastName" HeaderText="Last Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
+                            <Columns>
+                                <asp:TemplateField HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
+                                    <ItemTemplate>
+                                        <%# Container.DataItemIndex + 1 %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="LastName" HeaderText="Last Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                 <asp:BoundField DataField="FirstName" HeaderText="First Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                 <asp:BoundField DataField="DateStarted" HeaderText="Date Started" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                                 <asp:BoundField DataField="Position" HeaderText="Position" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
+                                <asp:BoundField DataField="DateStarted" HeaderText="Date Started" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
+                                <asp:BoundField DataField="Position" HeaderText="Position" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                 <asp:BoundField DataField="ResumeFile" HeaderText="Resume" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                                    </Columns>
+                            </Columns>
                             </asp:GridView>
 
+                            <%--Second Gridview--%>
                             <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Visible="false" Style="text-align:center;" Height="100%" Width="100%"  AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" 
                                 CellPadding="50" CellSpacing="50" Font-Bold="False" Font-Size="13px" ShowHeaderWhenEmpty="true" OnRowDataBound="GridView2_RowDataBound">
                                 <PagerStyle  HorizontalAlign="Center" />
                                 <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
                                 <EmptyDataTemplate>
                                      <p>No data available</p>
-                                 </EmptyDataTemplate>
-                                <Columns>
+                                </EmptyDataTemplate>
+                             <Columns>
                                     <asp:TemplateField HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
                                         <ItemTemplate>
                                             <%# Container.DataItemIndex + 1 %>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:BoundField DataField="LastName" HeaderText="Last Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                   <asp:BoundField DataField="FirstName" HeaderText="First Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                   <asp:BoundField DataField="DateStarted" HeaderText="Date Started" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                   <asp:BoundField DataField="InternshipStatus" HeaderText="Status" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                   <asp:BoundField DataField="RenderedHours" HeaderText="Rendered hours" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
+                                    <asp:BoundField DataField="FirstName" HeaderText="First Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
+                                    <asp:BoundField DataField="DateStarted" HeaderText="Date Started" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
+                                    <asp:BoundField DataField="InternshipStatus" HeaderText="Status" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
+                                    <asp:BoundField DataField="RenderedHours" HeaderText="Rendered hours" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                     <asp:BoundField DataField="EvaluationRequest" HeaderText="Evaluation Request" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                    
                                </Columns>
                             </asp:GridView>
                              
                         </ContentTemplate>
                     </asp:UpdatePanel>
-                  
                 </div>
                 
 

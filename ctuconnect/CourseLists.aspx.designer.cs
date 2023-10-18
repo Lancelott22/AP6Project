@@ -11,25 +11,34 @@ namespace ctuconnect
 {
 
 
-    public partial class MyAccount
+    public partial class CourseLists
     {
 
         /// <summary>
-        /// disp_name control.
+        /// Table1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label disp_name;
+        protected global::System.Web.UI.WebControls.Table Table1;
 
         /// <summary>
-        /// disp_studentId control.
+        /// ddlSortBy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label disp_studentId;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSortBy;
+
+        /// <summary>
+        /// GridView1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView1;
     }
 }

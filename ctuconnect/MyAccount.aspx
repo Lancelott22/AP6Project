@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+   <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <style>
         
         .nav{
@@ -34,7 +34,11 @@
             
         }
 
-       
+        .container2{
+            padding-left:25em;
+            padding-right:2em;
+            padding-top:1em;
+        }
 
         .top {
           height: 200px;
@@ -69,6 +73,14 @@
             position:center;
         }
 
+        .btn-md{
+            border: 1px #881A30;
+            background-color: #881A30;
+            position:center;
+            width: 120px;
+            height:45px;
+        }
+
 
 
     </style>
@@ -85,7 +97,7 @@
                             <i class='bx bx-file-blank icon' ></i>
                             <span class="text nav-text">Resume</span>
                     </a>
-                    <a href="#application">
+                    <a href="MyJobApplication.aspx">
                             <i class='bx bx-layer icon' ></i>
                             <span class="text nav-text">Application</span>
                     </a>
@@ -110,7 +122,7 @@
                 <div class="bottom">
                     <center>
                     
-                        <asp:Image ID="profileImage1" CssClass="profile" Width="100" Height="100" runat="server" />
+                        <asp:Image ID="profileImage" CssClass="profile" Width="100" Height="100" runat="server" />
                     </center>
                     <div class="row">
                         <div class="col-sm-3">
@@ -148,15 +160,22 @@
                         </div>
                     </div>
                     <hr class="line"/>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            Employment Status:
+                        <div class="row">
+                            <div class="col-sm-3">
+                                Resume:
+                            </div>
+                            <div class="col-sm-9">
+                                <asp:Label ID="lblResume" runat="server" Text=""></asp:Label>
+                            </div>
                         </div>
-                        <div class="col-sm-9">
-                            <asp:Label ID="disp_employeeStatus" runat="server" Text=""></asp:Label>
-                        </div>
-                    </div>
                     <br /><br />
+                </div>
+            </div>
+            <div class="container2">
+                <div class="row">
+                    <div class="col-2 d-flex flex-column">
+                        <asp:Button ID="btnEdit" class="btn btn-primary btn-md" runat="server" Text="Edit" OnClick="btnEdit_Click"/>
+                    </div>
                 </div>
             </div>
         </div>

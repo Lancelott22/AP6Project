@@ -44,6 +44,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.3\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itextsharp.xmlworker.5.5.13.3\lib\itextsharp.xmlworker.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
@@ -123,7 +132,10 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="CoordinatorProfile.aspx" />
+    <Content Include="CourseLists.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="EditAccount.aspx" />
     <Content Include="EditResume.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -145,7 +157,6 @@
     <Content Include="IndustryHome.aspx" />
     <Content Include="JobPortal.aspx" />
     <Content Include="Login.aspx" />
-    <Content Include="Interns\MyAccount.aspx" />
     <Content Include="LoginIndustry.aspx" />
     <Content Include="LoginOJTCoordinator.aspx" />
     <Content Include="LoginStudent.aspx" />
@@ -252,12 +263,33 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CoordinatorProfile.aspx.cs">
+      <DependentUpon>CoordinatorProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CoordinatorProfile.aspx.designer.cs">
+      <DependentUpon>CoordinatorProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CourseLists.aspx.cs">
+      <DependentUpon>CourseLists.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CourseLists.aspx.designer.cs">
+      <DependentUpon>CourseLists.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditAccount.aspx.cs">
+      <DependentUpon>EditAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditAccount.aspx.designer.cs">
+      <DependentUpon>EditAccount.aspx</DependentUpon>
     </Compile>
     <Compile Include="EditResume.aspx.cs">
       <DependentUpon>EditResume.aspx</DependentUpon>
@@ -303,13 +335,6 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Interns\MyAccount.aspx.cs">
-      <DependentUpon>MyAccount.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Interns\MyAccount.aspx.designer.cs">
-      <DependentUpon>MyAccount.aspx</DependentUpon>
     </Compile>
     <Compile Include="LoginIndustry.aspx.cs">
       <DependentUpon>LoginIndustry.aspx</DependentUpon>
@@ -455,6 +480,7 @@
     <Folder Include="images\Resume\" />
     <Folder Include="images\StudentProfiles\" />
     <Folder Include="Industry\" />
+    <Folder Include="Interns\" />
     <Folder Include="OjtCoordinator\" />
   </ItemGroup>
   <ItemGroup>
