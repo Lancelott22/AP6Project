@@ -19,7 +19,11 @@ namespace ctuconnect
         string connDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {   
+            if(!IsPostBack && Session["Student_ACC_ID"] == null)
+            {
+                Response.Redirect("LoginStudent.aspx");
+            }
             int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
             if (!IsPostBack)
             {

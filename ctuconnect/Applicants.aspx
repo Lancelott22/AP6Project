@@ -209,7 +209,7 @@
                                      <Columns>
                                             <asp:BoundField DataField="applicantID" readonly = "true"  HeaderText="ID" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">                    
                                             </asp:BoundField>
-                                            <asp:BoundField DataField="type" readonly = "true"  HeaderText="Type" ItemStyle-HorizontalAlign="Center"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">                    
+                                            <asp:BoundField DataField="jobType" readonly = "true"  HeaderText="Type" ItemStyle-HorizontalAlign="Center"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">                    
                                             </asp:BoundField>
                                             <asp:BoundField DataField="applicantFname" readonly = "true" HeaderText="First Name" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" >
                                             </asp:BoundField>

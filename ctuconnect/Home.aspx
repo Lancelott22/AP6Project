@@ -111,7 +111,7 @@
               <p class="find"><b>Find your matching job and internship</b></p>
               <div class="d-flex">
                    <div class="icon-box1">
-                        Start your career here!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="Login.aspx" class="btn btn-primary btn-md"><i class='bi bi-arrow-right'></i></a>
+                        Start your career here!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="JobPortal.aspx" class="btn btn-primary btn-md"><i class='bi bi-arrow-right'></i></a>
                     </div>
               </div>
               

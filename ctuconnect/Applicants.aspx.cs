@@ -22,7 +22,6 @@ namespace ctuconnect
             if (!IsPostBack)
             {
                 this.BindGrid();
-
             }
 
 
@@ -101,7 +100,7 @@ namespace ctuconnect
                     using (SqlCommand command = connection.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
-                        command.CommandText = "SELECT type, student_accID, applicantFname, applicantLname, appliedPosition, jobID,APPLICANT.industry_ACCID, StudentType, INDUSTRY_ACCOUNT.industryName FROM APPLICANT " +
+                        command.CommandText = "SELECT jobType, student_accID, applicantFname, applicantLname, appliedPosition, jobID,APPLICANT.industry_ACCID, StudentType, INDUSTRY_ACCOUNT.industryName FROM APPLICANT " +
                             "JOIN INDUSTRY_ACCOUNT ON APPLICANT.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
                             "WHERE applicantID = @ApplicantID";
                         command.Parameters.AddWithValue("@ApplicantID", applicantID);
@@ -109,7 +108,7 @@ namespace ctuconnect
                         {
                             if (reader.Read())
                             {
-                                string jobType = reader["type"].ToString();
+                                string jobType = reader["jobType"].ToString();
                                 string student_accID = reader["student_accID"].ToString();
                                 int studentID = Convert.ToInt32(student_accID);
                                 string applicantfname = reader["applicantFname"].ToString();

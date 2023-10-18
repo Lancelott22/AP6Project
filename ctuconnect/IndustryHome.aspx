@@ -256,6 +256,8 @@
                         <asp:Label ID="Label2" runat="server" Text="Industry Name " Style="font-size:18px;"></asp:Label><span style="color: red">*</span>
                         <asp:TextBox ID="IndName" runat="server" CssClass="txtbox" Placeholder="e.g. Gaus Electonics"></asp:TextBox>
                    
+                        <asp:Label ID="Label5" runat="server" Text="Job Location " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
+                        <asp:TextBox ID="jobLoc" runat="server" CssClass="txtbox" Placeholder="e.g. M.J. Cuenco Ave, Cor R. Palma Street, 6000 Cebu" ></asp:TextBox>
 
                         <asp:Label ID="Label3" runat="server" Text="Job Type " Style="font-size:18px;"></asp:Label><span style="color: red">*</span>
                     <asp:Label ID="Label4" runat="server" Text="Specified course " Style="font-size:20px; margin-left:42%;"></asp:Label><span style="color: red">*</span>
@@ -269,16 +271,14 @@
                             </select>
                             <select runat="server" name="course" id="course" Style="border-radius: 10px;  min-width: 47%; min-height:35px; margin-bottom:2%; padding-left:20px;" >
                                   <option  value="0" selected disabled hidden>--Select--</option>
-                                <option value="fulltime">BSIT</option>
-                                <option value="internship">BIT-CT</option>
-                                <option value="fulltime">BSIS</option>
+                                <option value="BSIT">BSIT</option>
+                                <option value="BIT-CT">BIT-CT</option>
+                                <option value="BSIS">BSIS</option>
                               
                             </select>
                        </div>
                    
-                    <asp:Label ID="Label5" runat="server" Text="Job Location " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="jobLoc" runat="server" CssClass="txtbox" Placeholder="e.g. M.J. Cuenco Ave, Cor R. Palma Street, 6000 Cebu" ></asp:TextBox>
-
+                   
                      <asp:Label ID="Label6" runat="server" Text="Job Description " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
                      <asp:TextBox ID="jobDescript" runat="server" TextMode="MultiLine" CssClass="txtbox-description" Placeholder="Enter Job Description" ></asp:TextBox>
 

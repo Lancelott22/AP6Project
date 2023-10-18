@@ -7,10 +7,11 @@
     <style>
         .box {
             min-width: 250px;
-            height: 250px;
+            min-height: 260px;
+            height:auto;
             border: 1px solid #FFFFFF;
             border-radius: 5px;
-            padding: 5px;
+            padding: 10px;
             background: #FFFFFF;
             padding: 5px 5px;
             margin-left: 20px;
@@ -89,7 +90,7 @@
             }
         .buttonStyleSubmit {
             background-color: white;
-            width:20%;
+            width:33%;
             text-align: center;
             text-decoration: none;
             min-height: 35px;
@@ -97,7 +98,7 @@
             background-color: white;
             border-radius: 20px;
             border: 1.5px solid orange;
-        padding:5px;
+            padding:5px;
         }
 
             .buttonStyleSubmit:hover {
@@ -181,13 +182,13 @@
         <div class="row">
             <div class="col-3 d-flex flex-column align-items-center text-center">
                 <br />
-                <div class="box">
-                    <img src="images/defaultprofile.jpg" alt="Bootstrap" class="profile" height="90" width="90">
+                <div class="box"><br />
+                    <asp:Image ID="profileImage" CssClass="profile" Width="100px" Height="100px" runat="server" />
                     <br />
-                    <asp:Label ID="lblname" CssClass="name" runat="server" Text="Name of the Intern/Alumni"></asp:Label>
+                    <asp:Label ID="StudentName" CssClass="name" runat="server"></asp:Label>
                     <br />
-                    <asp:Label ID="lblacctid" CssClass="accountid" runat="server" Text="account id"></asp:Label>
-                    <hr style="height: 2px; border-width: 0; color: gray; background-color: gray">
+                    <asp:Label ID="StudentID" CssClass="accountid" runat="server"></asp:Label>
+                    <hr style="height: 2px; border-width: 0; margin-top:10px;color: gray; background-color: gray">
                     <a href="MyAccount.aspx" class="btn btn-primary btn-md">View Profile</a>
                 </div>
             </div>
@@ -198,7 +199,7 @@
             
               
                 <div class="jobs">
-                    <asp:DataList ID="JobHiring" runat="server" class="container-fluid"  >
+                    <asp:DataList ID="JobHiring" runat="server" class="container-fluid" OnItemDataBound="JobHiring_ItemDataBound" >
                         <ItemTemplate>
                             <div id="jobList" runat="server" class="row d-flex align-items-center jobBox">
                                 <div class="col-sm-2">
@@ -207,7 +208,7 @@
                                 </div>
                                 <div class="col-sm-7">
                                     <div class="row">
-                                        <asp:Label ID="PostID" runat="server" Visible="false" Text='<%#Eval("jobID")%>'></asp:Label>
+                                        <asp:Label ID="JobPostID" runat="server" Visible="false" Text='<%#Eval("jobID")%>'></asp:Label>
                                        <asp:Label ID="Industry_accID" runat="server" Visible="false" Text='<%#Eval("industry_accID")%>'></asp:Label>
                                         <label  runat="server" hidden="hidden"><%#Eval("jobType")%></label>
                                         <div class="align-items-start">                                         

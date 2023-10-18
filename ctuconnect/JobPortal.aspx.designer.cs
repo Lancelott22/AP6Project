@@ -15,22 +15,31 @@ namespace ctuconnect
     {
 
         /// <summary>
-        /// lblname control.
+        /// profileImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblname;
+        protected global::System.Web.UI.WebControls.Image profileImage;
 
         /// <summary>
-        /// lblacctid control.
+        /// StudentName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblacctid;
+        protected global::System.Web.UI.WebControls.Label StudentName;
+
+        /// <summary>
+        /// StudentID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label StudentID;
 
         /// <summary>
         /// txtsearchOrder control.

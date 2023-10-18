@@ -15,12 +15,16 @@ namespace ctuconnect
         string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack && Session["StudentEmail"] != null)
+            if (!IsPostBack && Session["Student_ACC_ID"] == null)
+            {
+                Response.Redirect("LoginStudent.aspx");
+            }
+            else if (!IsPostBack && Session["StudentEmail"] != null)
             {
                 int studentAccID = Convert.ToInt32(Session["STUDENT_ACC_ID"].ToString());
                 DisplayStudent(studentAccID);
             }
-
+           
         }
 
         private void DisplayStudent(int studentaccID)
@@ -40,7 +44,7 @@ namespace ctuconnect
                     LoadProfilePicture(reader["studentPicture"].ToString());
                     disp_course.Text = reader["course"].ToString();
                     string resume = reader["resumeFile"].ToString();
-                    disp_studentID.Text = reader["student_accID"].ToString();
+                    disp_studentID.Text = reader["studentId"].ToString();
 
                     if (!string.IsNullOrEmpty(resume))
                     {

@@ -10,7 +10,7 @@
             width:200px;
             margin:auto;
             margin-top:auto;
-            
+          
         }
 
         .nav a{
@@ -18,6 +18,7 @@
             font-family:'Arial Rounded MT';
             color:#000000;
             padding-left:3px;
+             text-decoration:none;
         }
 
         .nav a.active{
@@ -35,9 +36,7 @@
         }
 
         .container2{
-            padding-left:25em;
-            padding-right:2em;
-            padding-top:1em;
+           margin: 15px 0 0 0;
         }
 
         .top {
@@ -122,7 +121,7 @@
                 <div class="bottom">
                     <center>
                     
-                        <asp:Image ID="profileImage" CssClass="profile" Width="100" Height="100" runat="server" />
+                        <asp:Image ID="profileImage" CssClass="profile" Width="100px" Height="100px" runat="server" />
                     </center>
                     <div class="row">
                         <div class="col-sm-3">
@@ -170,14 +169,11 @@
                         </div>
                     <br /><br />
                 </div>
+                <div class="container2">                 
+                            <asp:Button ID="btnEdit" class="btn btn-primary btn-md" runat="server" Text="Edit" OnClick="btnEdit_Click" />
+                 </div>
             </div>
-            <div class="container2">
-                <div class="row">
-                    <div class="col-2 d-flex flex-column">
-                        <asp:Button ID="btnEdit" class="btn btn-primary btn-md" runat="server" Text="Edit" OnClick="btnEdit_Click"/>
-                    </div>
-                </div>
-            </div>
+           
         </div>
     </div>
     <br /><br /><br /><br /><br /><br /><br /><br />

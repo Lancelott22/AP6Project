@@ -68,13 +68,13 @@ namespace ctuconnect
                 string fileExtension = Path.GetExtension(filename).ToLower(); //to get the extension filename
                 int filezise = postedFile.ContentLength; //to get the filesize
 
-                string logpath = "C:\\Users\\Gebby\\source\\repos\\ctuconnect\\ctuconnect\\images\\COR"; //creating a drive to upload or save the image
+                string logpath = Server.MapPath("~/images/COR/"); //creating a drive to upload or save the image
 
                 string filepath = Path.Combine(logpath, filename);
                 string fname = txtfname.Text;
                 string midinitial = txtinitial.Text;
                 string lname = txtlname.Text;
-                string status = "student";
+                string status = "Intern";
                 string email = txtemail.Text;
                 int stuID = Convert.ToInt32(txtid.Text);  
                 int course = Convert.ToInt32(drpcourse.SelectedValue.ToString());
@@ -84,8 +84,8 @@ namespace ctuconnect
                 string fileExtension2 = Path.GetExtension(filename2).ToLower();
                 int filezise2 = postedFile2.ContentLength;
 
-                string logpath2 = "C:\\Users\\Gebby\\source\\repos\\ctuconnect\\ctuconnect\\images\\StudentProfiles";
-
+                string logpath2 = Server.MapPath("~/images/StudentProfiles/");
+    
                 string filepath2 = Path.Combine(logpath2, filename2);
 
             // Check if the email already exists in the database

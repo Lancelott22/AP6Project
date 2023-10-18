@@ -9,9 +9,7 @@
             padding:10px 10px 10px 10px;
             width:200px;
             margin:auto;
-            margin-top:20px;
-            position: absolute;
-            margin-left:70px;
+            margin-top:auto; 
             text-decoration:none;
         }
 
@@ -260,20 +258,21 @@
                     </div>
                     <br />
                     <br /><br />
+                    
                 </div>
                 <br />
-                <div class="container2">
-                    <div class="row">
-                        <div class="col-2 d-flex flex-column">
-                            <asp:Button ID="btnEdit" class="btn btn-primary btn-md" runat="server" Text="Edit" OnClick="btnEdit_Click"/>
-                        </div>
-                        
-                        <div class="col-2 d-flex flex-column">
-                            <asp:Button ID="btnDownload" class="btn btn-primary btn-md btn-download" runat="server" Text="Download" OnClick="btnDownload_Click"/>
-                        </div>
+              <div class="container2">
+    <div class="row">
+        <div class="col-2 d-flex flex-column">
+            <asp:Button ID="btnEdit" class="btn btn-primary btn-md" runat="server" Text="Edit" OnClick="btnEdit_Click" />
+        </div>
 
-                    </div>
-                </div>
+        <div class="col-2 d-flex flex-column">
+            <asp:Button ID="btnDownload" class="btn btn-primary btn-md btn-download" runat="server" Text="Download" OnClick="btnDownload_Click" />
+        </div>
+
+    </div>
+</div>
             </div>
         </div>
     </div>

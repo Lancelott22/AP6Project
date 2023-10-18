@@ -30,6 +30,8 @@ namespace ctuconnect
 
             IndName.Text = Session["INDUSTRYNAME"].ToString();
             IndName.Enabled = false;
+            jobLoc.Text = Session["LOCATION"].ToString();
+            jobLoc.Enabled = false;
         }
         protected void PostJob_Click(object sender, EventArgs e)
         {
@@ -78,10 +80,10 @@ namespace ctuconnect
                     {
                         Response.Write("<script>alert('Cannot post a job now! Please try again later.')</script>");
                     }
-                    conDB.Close();
+                   
                 }
-            
-            
+
+            conDB.Close();
         }
     }
 }

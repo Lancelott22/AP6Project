@@ -76,10 +76,10 @@
 
 
         .box {
-          min-height: 100%;
-          width:80%;
-          background-color: #ffffff;
-          padding-left:2em;
+            width: 90%;
+            min-height: 300px;
+            background-color: #ffffff;
+            padding-left: 2em;
             border: 1px solid #FFFFFF;
             padding: 10px;
             border-radius: 5px;

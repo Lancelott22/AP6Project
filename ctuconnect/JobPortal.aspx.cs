@@ -9,6 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Configuration;
 using System.Web.DynamicData;
+using System.Runtime.ConstrainedExecution;
 
 namespace ctuconnect
 {
@@ -27,13 +28,13 @@ namespace ctuconnect
             {
                 JobBind();
             }
-
+            DisplayStudentInfo();          
+            
         }
         void JobBind()
         {
             string studentCourse = Session["Student_COURSE"].ToString();
-            /*SqlCommand cmd = new SqlCommand("select * from HIRING WHERE jobCourse = @studCourse", conDB);
-            cmd.Parameters.AddWithValue("@studCourse", studentCourse);*/
+           
             SqlCommand cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE jobCourse = @studCourse", conDB);
             cmd.Parameters.AddWithValue("@studCourse", studentCourse);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -107,7 +108,7 @@ namespace ctuconnect
             {
                 alumni_accId = int.Parse(Session["Alumni_accID"].ToString());
             }
-            else if (Usertype == "student")
+            else if (Usertype == "Intern")
             {
                  student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
             }          
@@ -116,17 +117,21 @@ namespace ctuconnect
              string applicantLName = Session["LNAME"].ToString();
              string dateApplied = DateTime.Now.ToString("dd MMMM yyyy");
              string resume = Session["ResumeFile"].ToString();
-             int jobID = int.Parse(Job_ID.Text.ToString());
+            int jobID = int.Parse(Job_ID.Text.ToString());
             int industry_accId = int.Parse(IndustryID.Text.ToString());
 
             if (checkResume())
             {
-
+                if(isCurrentlyHired())
+                {
+                    Response.Write("<script>alert('You are currently hired in a company. You cannot apply for another job now. Contact your company if there is a problem.');</script>");
+                }else
+                {
 
                 conDB.Open();
                 if (Usertype == "Alumni")
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (type,alumni_accID,applicantFName, appliedPosition, applicantLName, industry_accID,dateApplied, resume, jobID  ) " +
+                    SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,applicantFName, appliedPosition, applicantLName, industry_accID,dateApplied, resume, jobID  ) " +
                         "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
 
                     cmd.Parameters.AddWithValue("@jobtype", jobtype);
@@ -138,12 +143,20 @@ namespace ctuconnect
                     cmd.Parameters.AddWithValue("@dateApplied", dateApplied);
                     cmd.Parameters.AddWithValue("@resume", resume);
                     cmd.Parameters.AddWithValue("@jobID", jobID);
-                    cmd.ExecuteNonQuery();
+                    int ctr = cmd.ExecuteNonQuery();
+                    if(ctr > 0)
+                    {
+                       
+                        Response.Write("<script>alert('You have successfully submitted your job application.');</script>");
+                    } else
+                    {
+                        Response.Write("<script>alert('Sorry! There is something wrong in applying the job. Please try again..');</script>");
+                    }
                 }
-                else if (Usertype == "student")
+                else if (Usertype == "Intern")
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (type,student_accID,applicantFName, applicantLName, appliedPosition, industry_accID,dateApplied, resume, jobID  ) " +
-                      "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accID,applicantFName, applicantLName, appliedPosition, industry_accID,dateApplied, resume, jobID, StudentType) " +
+                      "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@jobID, @studentType)", conDB);
 
                     cmd.Parameters.AddWithValue("@jobtype", jobtype);
                     cmd.Parameters.AddWithValue("@student_accId", student_accId);
@@ -154,14 +167,26 @@ namespace ctuconnect
                     cmd.Parameters.AddWithValue("@dateApplied", dateApplied);
                     cmd.Parameters.AddWithValue("@resume", resume);
                     cmd.Parameters.AddWithValue("@jobID", jobID);
-                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@studentType", Usertype);
+                    int ctr = cmd.ExecuteNonQuery();
+                    if (ctr > 0)
+                    {
+                       
+                            Response.Write("<script>alert('You have successfully submitted your job application.');</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script>alert('Sorry! There is something wrong in applying the job. Please try again..');</script>");
+                    }
                 }
                 conDB.Close();
-            }else
+                }
+            }
+            else
             {
                 Response.Write("<script>alert('Please upload or create resume first before applying job.');document.location='Resume.aspx'</script>");
             }
-           
+            JobBind();
         }
         bool checkResume() //check resume
         {
@@ -181,6 +206,7 @@ namespace ctuconnect
                 }
                 else
                 {
+                    reader.Close();
                     conDB.Close();
                     return true;
                 }
@@ -192,8 +218,7 @@ namespace ctuconnect
             return false;
         }
         bool checkJobApplied(int jobID) //check if already applied to selected job
-        {
-          
+        {          
             int selectedJobID = jobID;
             int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
             conDB.Open();
@@ -210,10 +235,10 @@ namespace ctuconnect
             return false;
         }
 
-        /*protected void JobHiring_ItemDataBound(object sender, DataListItemEventArgs e)
+        protected void JobHiring_ItemDataBound(object sender, DataListItemEventArgs e)
         {
-            Label PostID = e.Item.FindControl("PostID") as Label;
-            int JobId = int.Parse(PostID.Text);
+            Label jobPostID = e.Item.FindControl("JobPostID") as Label;
+            int JobId = int.Parse(jobPostID.Text);
             Button btn = e.Item.FindControl("ApplyJob") as Button;
 
             if (checkJobApplied(JobId) == true)
@@ -224,8 +249,46 @@ namespace ctuconnect
             {
                 btn.Text = "Apply";
             }
-            JobBind();
-        }*/
+        }
+        private void DisplayStudentInfo()
+        {
+            if (!string.IsNullOrEmpty(Session["PROFILE"].ToString()))
+            {
+                profileImage.ImageUrl = "~/images/StudentProfiles/" + Session["PROFILE"].ToString();
+            }
+            else
+            {
+                profileImage.ImageUrl = "~/images/StudentProfiles/defaultprofile.jpg";
+            }
 
+            StudentName.Text = Session["FNAME"].ToString() + " " + Session["LNAME"].ToString();
+            StudentID.Text = Session["STUDENT_ID"].ToString();
+        }
+        private bool isCurrentlyHired()
+        {
+            int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("Select workStatus from HIRED_LIST where student_accID = @student_accId", conDB);
+            cmd.Parameters.AddWithValue("@student_accId", student_accId);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (reader["workStatus"].ToString() != "Ended")
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return true;
+
+                }
+                else
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return false;
+                }
+            }
+            conDB.Close();
+            return false;
+        }
     }
 }  
