@@ -68,9 +68,10 @@ namespace ctuconnect
                 int filezise = postedFile.ContentLength; //to get the filesize
 
 
-                string logpath = "C:\\Users\\irish\\source\\repos\\ctuconnect\\ctuconnect\\images\\MOU"; //creating a drive to upload or save the image
+                string logpath = Server.MapPath("~/images/MOU/"); //creating a drive to upload or save the image
 
-               
+
+
 
                 string filepath = Path.Combine(logpath, filename);
                 string industryName = txtindustry.Text;
@@ -83,7 +84,7 @@ namespace ctuconnect
                 int filezise2 = postedFile2.ContentLength;
 
 
-                string logpath2 = "C:\\Users\\irish\\source\\repos\\ctuconnect\\ctuconnect\\images\\IndsutryProfile";
+                string logpath2 = Server.MapPath("~/images/IndustryProfile/");
 
 
                 string filepath2 = Path.Combine(logpath2, filename2);
