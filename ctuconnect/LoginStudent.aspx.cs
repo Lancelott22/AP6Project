@@ -17,7 +17,7 @@ namespace ctuconnect
         {
             if (!IsPostBack && Session["StudentEmail"] != null)
             {
-                Response.Redirect("MyAccount.aspx");
+                Response.Redirect("Home.aspx");
             }
             LoginErrorMessage.Visible = false;
 
@@ -70,7 +70,7 @@ namespace ctuconnect
                                     reader.Close();
                                 }
                                 Session["StudentEmail"] = txtemail.Text;
-                                Response.Redirect("MyAccount.aspx");// User is authenticated, you can redirect to another page
+                                Response.Redirect("Home.aspx");// User is authenticated, you can redirect to another page
                             }
                             else
                             {

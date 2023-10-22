@@ -16,8 +16,9 @@ namespace ctuconnect
         {
             if (!IsPostBack && Session["IndustryEmail"] != null)
             {
-                Response.Redirect("LoginIndustry.aspx");
+                Response.Redirect("IndustryHome.aspx");
             }
+
             LoginErrorMessage.Visible = false;
 
             string passWord = txtpwd.Text;

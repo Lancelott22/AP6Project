@@ -41,7 +41,7 @@
         }
         .sidemenu-container{
             width:253px;
-            height:200px;
+            height:240px;
             background-color:white;
             /*margin-top:22%;*/
             padding-top:4px;
@@ -304,6 +304,10 @@
                      <a href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
                      <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                      <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
+                     <asp:LinkButton runat="server" ID ="SignOut" OnClick="SignOut_Click" >
+                       <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        Sign-out
+                    </asp:LinkButton>
                </div>
             </asp:TableCell> 
        </asp:TableRow>
