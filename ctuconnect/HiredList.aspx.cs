@@ -133,7 +133,7 @@ namespace ctuconnect
                 TableCell cell = e.Row.Cells[4];
                 TableCell cell2 = e.Row.Cells[6];
 
-                if (InternshipStatus == "on internship")
+                if (InternshipStatus == "ongoing")
                 {
                     cell.ForeColor = System.Drawing.Color.Green;
                 }

@@ -88,7 +88,7 @@
                 <div class="col-sm-4 d-flex flex-column justify-content-center ">
                     Middle Initial*<br />
                     <asp:TextBox ID="txtinitial" CssClass="txtbox" runat="server" Width="200px" Height="30px"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" forecolor="#F7941F" ControlToValidate="txtinitial" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
+                    <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator2" forecolor="#F7941F" ControlToValidate="txtinitial" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>--%>
                 </div>
                 <!-- Last name -->
                 <div class="col-sm-4 d-flex flex-column justify-content-center">
@@ -155,7 +155,7 @@
                 <div class="col-sm-8 d-flex flex-column justify-content-center ">
                     Attach Profile Picture*<br />
                     <asp:FileUpload ID="profileUpload" runat="server" Width="300px"/>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator10" forecolor="#F7941F" ControlToValidate="profileUpload" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
+                    <asp:requiredfieldvalidator id="requiredfieldvalidator10" forecolor="#f7941f" controltovalidate="profileupload" runat="server" errormessage="this field is required!"></asp:requiredfieldvalidator>
                 </div>  
             </div>
             <br />

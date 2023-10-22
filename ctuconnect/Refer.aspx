@@ -289,7 +289,7 @@
                                         <asp:BoundField DataField="midInitials" HeaderText="Middle Initial" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                         <asp:BoundField DataField="industryName" HeaderText="Industry" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
                                         <asp:BoundField DataField="referredBy" HeaderText="Referred by" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                                        
+                                        <asp:BoundField DataField="dateReferred" HeaderText="Date" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
                             </Columns>
                             </asp:GridView>
                 </div>

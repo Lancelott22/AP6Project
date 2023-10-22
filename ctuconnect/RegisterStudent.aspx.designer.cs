@@ -42,15 +42,6 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.TextBox txtinitial;
 
         /// <summary>
-        /// RequiredFieldValidator2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
-
-        /// <summary>
         /// txtlname control.
         /// </summary>
         /// <remarks>
@@ -231,13 +222,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.FileUpload profileUpload;
 
         /// <summary>
-        /// RequiredFieldValidator10 control.
+        /// requiredfieldvalidator10 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator10;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator requiredfieldvalidator10;
 
         /// <summary>
         /// btn control.

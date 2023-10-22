@@ -33,7 +33,7 @@ namespace ctuconnect
             if (!IsPostBack)
             {
 
-                int studentaccID = Convert.ToInt32(Session["STUDENT_ACC_ID"].ToString());
+                int studentaccID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
                 if (studentaccID > 0)
                 {
                     DisplayResume(studentaccID);
@@ -148,7 +148,7 @@ namespace ctuconnect
 
         protected void btnDownload_Click(object sender, EventArgs e)
         {
-            int studentaccID = Convert.ToInt32(Session["ACC_ID"].ToString());
+            int studentaccID = Convert.ToInt32(Session["STUDENT_ACC_ID"].ToString());
 
             // Generate the resume content as a PDF.
             byte[] resumePDF = GenerateResumePDF(studentaccID);
