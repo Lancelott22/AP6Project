@@ -205,19 +205,28 @@
                 display:flex; 
                 position:relative;
                  border-radius: 10px;
+                 min-width:100%;
                 min-height:35px;
                 margin-bottom:2%;
+                 border: 1px solid gray;
                 justify-content: center;
+                padding-left:20px;
             }
-    .button-submit {
-        background-color: white;
-        min-width: 100%;
-        min-height: 35px;
-        color: orange;
-        border-radius: 10px;
-        border: 1px solid orange;
-        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    }
+    .buttonSubmit {
+            background-color: white;
+            width: 80px;
+            height: 35px;
+            color: orange;
+            border-radius: 10px;
+            border: 1px solid orange;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+     .buttonSubmit:hover {
+             background-color: #F6B665;
+             color: white;
+             border-color: orange;
+            }
     .button-find {
     background-color: white;
     width: 80px;
@@ -232,11 +241,7 @@
     color: white;
     border-color: orange;
 }
-    .button-submit:hover {
-        background-color: #F6B665;
-        color: white;
-        border-color: orange;
-    }
+    
     .fa {
                 width:20px;
                 margin-right: 19px; 
@@ -340,7 +345,7 @@
              </div>
              <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                 <asp:linkbutton id="submit"  class="buttonstyle" runat="server"  OnCLick="Submit_ButtonClick" autopostback="false">submit</asp:linkbutton>
+                 <asp:Button  class="buttonSubmit" runat="server" Text="Submit" OnCLick="Submit_ButtonClick" autopostback="false" />
              </div>
          </div>
      </div>
