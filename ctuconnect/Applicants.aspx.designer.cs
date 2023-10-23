@@ -60,6 +60,15 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label lblName;
 
         /// <summary>
+        /// lblAppliedPosition control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAppliedPosition;
+
+        /// <summary>
         /// lblDateApplied control.
         /// </summary>
         /// <remarks>
@@ -85,6 +94,15 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtInterviewDetails;
+
+        /// <summary>
+        /// txtInterviewDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtInterviewDate;
 
         /// <summary>
         /// drpInterviewStatus control.

@@ -29,6 +29,7 @@
             width:80%;
             margin-left:auto;
             margin-right:auto;
+
         }
         .profile-container p{
              display:block;
@@ -203,17 +204,21 @@
 
                                   
                                 <asp:GridView RowStyle-CssClass="GridViewRowStyle" ShowHeaderWhenEmpty="True" ID="GridView1" runat="server"
-                                    AutoGenerateColumns="False" CellPadding="50" Font-Bold="False" Font-Size="13px" Width="1015px" BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px"
+                                    AutoGenerateColumns="False" CellPadding="50" Font-Bold="False" Font-Size="13px" Width="1300px" BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px"
                                     CellSpacing="2" OnRowEditing="GridView1_RowEditing" OnRowCreated="GridView1_RowCreated">
                                     <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
                                      <Columns>
                                             <asp:BoundField DataField="applicantID" readonly = "true"  HeaderText="ID" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">                    
                                             </asp:BoundField>
-                                            <asp:BoundField DataField="jobType" readonly = "true"  HeaderText="Type" ItemStyle-HorizontalAlign="Center"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">                    
+                                            <asp:BoundField DataField="jobType" readonly = "true"  HeaderText="Job Type" ItemStyle-HorizontalAlign="Center"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">                    
+                                            </asp:BoundField>
+                                            <asp:BoundField DataField="student_accID" readonly = "true"  HeaderText="Student ID" ItemStyle-HorizontalAlign="Center"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">                    
                                             </asp:BoundField>
                                             <asp:BoundField DataField="applicantFname" readonly = "true" HeaderText="First Name" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" >
                                             </asp:BoundField>
                                             <asp:BoundField DataField="applicantLname" readonly = "true" HeaderText="Last Name" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
+                                            </asp:BoundField>
+                                            <asp:BoundField DataField="appliedPosition" readonly = "true"  HeaderText="Position" ItemStyle-HorizontalAlign="Center"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">                    
                                             </asp:BoundField>
                                             <asp:BoundField DataField="dateApplied" readonly = "true" HeaderText="Date" DataFormatString="{0:d}" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
                                             </asp:BoundField>
@@ -222,6 +227,8 @@
                                             <asp:BoundField DataField="resumeStatus" readonly = "true" HeaderText="Resume Status" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
                                             </asp:BoundField>
                                             <asp:BoundField DataField="interviewDetails" readonly = "true" HeaderText="Interview Details" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
+                                            </asp:BoundField>
+                                            <asp:BoundField DataField="interviewScheduledDate" readonly = "true" HeaderText="Interview Date" DataFormatString="{0:d}" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
                                             </asp:BoundField>
                                             <asp:BoundField DataField="interviewStatus" readonly = "true" HeaderText="Interview Status" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
                                             </asp:BoundField>
@@ -239,21 +246,26 @@
                                      
                                     
                                </asp:GridView>
-
+                                
                                 
 
                     <script>
                         // Show the modal and populate it with data when the "Edit" button is clicked
-                        function openEditModal(resumeStatus, interviewDetails, interviewStatus, applicantStatus) {                                                     
-                            document.getElementById('<%=drpResumeStatus.ClientID%>').value = resumeStatus;                     
+                        function openEditModal(resumeStatus, interviewDetails, interviewScheduledDate, interviewStatus, applicantStatus) {
+                            //console.log("Modal Opened");
+                            document.getElementById('<%=drpResumeStatus.ClientID%>').value = resumeStatus;
                             document.getElementById('<%=txtInterviewDetails.ClientID%>').value = interviewDetails;
+                            document.getElementById('<%=txtInterviewDate.ClientID%>').value = interviewScheduledDate;
                             document.getElementById('<%=drpInterviewStatus.ClientID%>').value = interviewStatus;
                             document.getElementById('<%=drpApplicantStatus.ClientID%>').value = applicantStatus;
                             // Additional fields can be populated similarly
                             document.getElementById('editModal').style.display = 'block';
                         }
 
-                        
+                        //Close the modal
+                        function closeEditModal() {
+                            document.getElementById('editModal').style.display = 'none';
+                        }
                     </script>
 
                                                                        
@@ -300,6 +312,15 @@
                                     <br />
                                     <div class="row applicant-details">
                                         <div class="col-3 d-flex flex-column">
+                                            Position:
+                                        </div>
+                                        <div class="col-9 d-flex flex-column">
+                                            <asp:Label ID="lblAppliedPosition" runat="server"></asp:Label>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row applicant-details">
+                                        <div class="col-3 d-flex flex-column">
                                             Date Applied:
                                         </div>
                                         <div class="col-9 d-flex flex-column">
@@ -318,14 +339,22 @@
                                             </asp:DropDownList>
                                         </div>
                                     </div>
-                                    
                                     <br />
                                     <div class="row applicant-details">
                                         <div class="col-3 d-flex flex-column">
                                             Interview Details:
                                         </div>
                                         <div class="col-9 d-flex flex-column">
-                                            <asp:TextBox ID="txtInterviewDetails" runat="server" CssClass="txtbox" Width="200px" Height="50px"></asp:TextBox>
+                                            <asp:TextBox ID="txtInterviewDetails" runat="server" CssClass="txtbox" TextMode="MultiLine" Width="200px" Height="50px"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row applicant-details">
+                                        <div class="col-3 d-flex flex-column">
+                                            Interview Date:
+                                        </div>
+                                        <div class="col-9 d-flex flex-column">
+                                            <asp:TextBox ID="txtInterviewDate" runat="server" TextMode="Date" CssClass="txtbox" Width="100px" Height="20px"></asp:TextBox>
                                         </div>
                                     </div>
                                     <br />

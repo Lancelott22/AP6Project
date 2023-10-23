@@ -87,31 +87,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
 
         /// <summary>
-        /// ddlDay control.
+        /// txtbdate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDay;
-
-        /// <summary>
-        /// ddlMonth control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlMonth;
-
-        /// <summary>
-        /// ddlYear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlYear;
+        protected global::System.Web.UI.WebControls.TextBox txtbdate;
 
         /// <summary>
         /// drpgender control.

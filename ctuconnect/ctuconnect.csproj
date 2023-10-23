@@ -168,7 +168,6 @@
     <Content Include="RegisterIndustry.aspx" />
     <Content Include="RegisterStudent.aspx" />
     <Content Include="Resume.aspx" />
-    <Content Include="ResumeProfile\100004_girl.jpg" />
     <Content Include="ResumeProfile\defaultprofile.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />

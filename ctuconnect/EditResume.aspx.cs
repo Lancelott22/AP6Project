@@ -49,25 +49,7 @@ namespace ctuconnect
                     rptCertificate.DataBind();
                 }
 
-                // Populate day dropdown list with values from 1 to 31
-                for (int day = 1; day <= 31; day++)
-                {
-                    ddlDay.Items.Add(new ListItem(day.ToString(), day.ToString()));
-                }
 
-                // Populate month dropdown list with month names
-                string[] monthNames = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-                for (int month = 1; month <= 12; month++)
-                {
-                    ddlMonth.Items.Add(new ListItem(monthNames[month - 1], month.ToString()));
-                }
-
-                // Populate year dropdown list with a range of years, e.g., from 1900 to the current year
-                int currentYear = DateTime.Now.Year;
-                for (int year = 1900; year <= currentYear; year++)
-                {
-                    ddlYear.Items.Add(new ListItem(year.ToString(), year.ToString()));
-                }
 
             }
 
@@ -83,7 +65,7 @@ namespace ctuconnect
 
                 fileUploadProfilePicture.SaveAs(filePath);
 
-                // Save the profile picture file path to the database (you need to implement this part)
+                // Save the profile picture file path to the database 
                 SaveProfilePicturePath(studentAcctID.ToString(), "~/ResumeProfile/" + studentAcctID + "_" + fileName);
 
                 LoadProfilePicture(studentAcctID); // Reload the profile picture after uploading
@@ -126,7 +108,7 @@ namespace ctuconnect
 
         private void LoadProfilePicture(int studentAcctID)
         {
-            // Retrieve the profile picture path from the database (you need to implement this part)
+
             string profilePicture = GetProfilePicturePath(studentAcctID);
 
             if (!string.IsNullOrEmpty(profilePicture))
@@ -151,37 +133,17 @@ namespace ctuconnect
             string address = txtAddress.Text;
             string jobLevel = drpjoblevel.Text;
 
-            string day = ddlDay.SelectedValue;
-            string month = ddlMonth.SelectedValue;
-            string year = ddlYear.SelectedValue;
+            DateTime birthdate = Convert.ToDateTime(txtbdate.Text);
 
             int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
 
-            try
-            {
-                // Parsing successful
-                int parsedDay = int.Parse(day);
-                int parsedMonth = int.Parse(month);
-                int parsedYear = int.Parse(year);
+            UpdateResume(studentAcctID, lname, fname, contactNumber, email, birthdate, gender, address, jobLevel);
 
-                // Check if the parsed values are valid
-                if (parsedMonth >= 1 && parsedMonth <= 12 && parsedDay >= 1 && parsedDay <= DateTime.DaysInMonth(parsedYear, parsedMonth))
-                {
-                    DateTime birthdate = new DateTime(parsedYear, parsedMonth, parsedDay);
-                    string bdate = birthdate.ToString("yyyy-MM-dd");
+            // Update resume information in the database
+            SaveEducation(studentAcctID, GetEducationTableFromRepeater());
+            SaveSkills(studentAcctID, GetSkillsTableFromRepeater());
+            SaveCertificate(studentAcctID, GetCertificateTableFromRepeater());
 
-                    UpdateResume(studentAcctID, lname, fname, contactNumber, email, bdate, gender, address, jobLevel);
-
-                    // Update resume information in the database
-                    SaveEducation(studentAcctID, GetEducationTableFromRepeater());
-                    SaveSkills(studentAcctID, GetSkillsTableFromRepeater());
-                    SaveCertificate(studentAcctID, GetCertificateTableFromRepeater());
-                }
-            }
-            catch
-            {
-
-            }
 
 
 
@@ -252,7 +214,7 @@ namespace ctuconnect
             DataTable dtEducation = new DataTable();
             dtEducation.Columns.Add("edDegree", typeof(string));
             dtEducation.Columns.Add("edNameOfSchool", typeof(string));
-            dtEducation.Columns.Add("edGraduationDate", typeof(int));
+            dtEducation.Columns.Add("edGraduationDate", typeof(string));
 
             foreach (RepeaterItem item in rptEducation.Items)
             {
@@ -260,11 +222,8 @@ namespace ctuconnect
                 TextBox txtSchool = (TextBox)item.FindControl("txtSchool");
                 TextBox txtGradDate = (TextBox)item.FindControl("txtGradDate");
 
-                int graduationDate;
-                if (int.TryParse(txtGradDate.Text, out graduationDate))
-                {
-                    dtEducation.Rows.Add(txtDegree.Text, txtSchool.Text, graduationDate);
-                }
+                dtEducation.Rows.Add(txtDegree.Text, txtSchool.Text, txtGradDate.Text);
+
             }
 
             return dtEducation;
@@ -306,7 +265,7 @@ namespace ctuconnect
             return dtCertificate;
         }
 
-        private void UpdateResume(int studentAcctID, string lname, string fname, string contactNumber, string email, string birthdate, string gender, string address, string jobLevel)
+        private void UpdateResume(int studentAcctID, string lname, string fname, string contactNumber, string email, DateTime birthdate, string gender, string address, string jobLevel)
         {
 
             using (var db = new SqlConnection(connDB))
@@ -339,7 +298,7 @@ namespace ctuconnect
             DataTable dtEducationBackground = new DataTable();
             dtEducationBackground.Columns.Add("edDegree", typeof(string));
             dtEducationBackground.Columns.Add("edNameOfSchool", typeof(string));
-            dtEducationBackground.Columns.Add("Year", typeof(int));
+            dtEducationBackground.Columns.Add("Year", typeof(string));
             return dtEducationBackground;
         }
 
@@ -377,14 +336,20 @@ namespace ctuconnect
                     txtfname.Text = reader["fname"].ToString();
                     txtContact.Text = reader["contactNumber"].ToString();
                     txtEmail.Text = reader["email"].ToString();
-                    DateTime bdate = Convert.ToDateTime(reader["birthdate"].ToString());
+
+                    object birthdateValue = reader["birthdate"];
+                    if (birthdateValue != DBNull.Value)
+                    {
+                        DateTime birthdate = Convert.ToDateTime(birthdateValue);
+                        txtbdate.Text = birthdate.ToString("yyyy-MM-dd");
+
+                    }
+
                     drpgender.Text = reader["gender"].ToString();
                     txtAddress.Text = reader["address"].ToString();
                     drpjoblevel.Text = reader["jobLevel"].ToString();
 
-                    ddlDay.Text = bdate.Day.ToString();
-                    ddlMonth.Text = bdate.Month.ToString();
-                    ddlYear.Text = bdate.Year.ToString();
+
                 }
 
                 reader.Close();
@@ -477,20 +442,20 @@ namespace ctuconnect
                     cmd.CommandText = "UPDATE Resume SET edDegree = NULL, edNameOfSchool = NULL, edGraduationDate = NULL WHERE student_accID = '" + studentAcctID + "' ";
                     var ctr = cmd.ExecuteNonQuery();
                     if (ctr > 0)
-                        Response.Write("<script>alert('Resume Updated!')</script>");
 
-                    // Insert updated education records
-                    foreach (DataRow row in dtEducation.Rows)
-                    {
-                        string insertQuery = "INSERT INTO Resume (student_accID, edDegree, edNameOfSchool, edGraduationDate)" +
-                                             "VALUES (@studentAcctID, @Degree, @School, @GradDate)";
-                        SqlCommand insertCmd = new SqlCommand(insertQuery, db);
-                        insertCmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
-                        insertCmd.Parameters.AddWithValue("@Degree", row["edDegree"].ToString());
-                        insertCmd.Parameters.AddWithValue("@School", row["edNameOfSchool"].ToString());
-                        insertCmd.Parameters.AddWithValue("@GradDate", Convert.ToInt32(row["edGraduationDate"]));
-                        insertCmd.ExecuteNonQuery();
-                    }
+
+                        // Insert updated education records
+                        foreach (DataRow row in dtEducation.Rows)
+                        {
+                            string insertQuery = "INSERT INTO Resume (student_accID, edDegree, edNameOfSchool, edGraduationDate)" +
+                                                 "VALUES (@studentAcctID, @Degree, @School, @GradDate)";
+                            SqlCommand insertCmd = new SqlCommand(insertQuery, db);
+                            insertCmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
+                            insertCmd.Parameters.AddWithValue("@Degree", row["edDegree"].ToString());
+                            insertCmd.Parameters.AddWithValue("@School", row["edNameOfSchool"].ToString());
+                            insertCmd.Parameters.AddWithValue("@GradDate", row["edGraduationDate"].ToString());
+                            insertCmd.ExecuteNonQuery();
+                        }
                 }
             }
 
@@ -510,18 +475,18 @@ namespace ctuconnect
                     cmd.CommandText = "UPDATE Resume SET skills = NULL WHERE student_accID = '" + studentAcctID + "' ";
                     var ctr = cmd.ExecuteNonQuery();
                     if (ctr > 0)
-                        Response.Write("<script>alert('Resume Updated!')</script>");
 
-                    // Insert updated skills records
-                    foreach (DataRow row in dtSkills.Rows)
-                    {
-                        string insertQuery = "INSERT INTO Resume (student_accID, skills)" +
-                                             "VALUES (@studentAcctID, @Skills)";
-                        SqlCommand insertCmd = new SqlCommand(insertQuery, db);
-                        insertCmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
-                        insertCmd.Parameters.AddWithValue("@Skills", row["skills"].ToString());
-                        insertCmd.ExecuteNonQuery();
-                    }
+
+                        // Insert updated skills records
+                        foreach (DataRow row in dtSkills.Rows)
+                        {
+                            string insertQuery = "INSERT INTO Resume (student_accID, skills)" +
+                                                 "VALUES (@studentAcctID, @Skills)";
+                            SqlCommand insertCmd = new SqlCommand(insertQuery, db);
+                            insertCmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
+                            insertCmd.Parameters.AddWithValue("@Skills", row["skills"].ToString());
+                            insertCmd.ExecuteNonQuery();
+                        }
                 }
             }
 
@@ -541,18 +506,18 @@ namespace ctuconnect
                     cmd.CommandText = "UPDATE Resume SET certificate = NULL WHERE student_accID = '" + studentAcctID + "' ";
                     var ctr = cmd.ExecuteNonQuery();
                     if (ctr > 0)
-                        Response.Write("<script>alert('Resume Updated!')</script>");
 
-                    // Insert updated certificate records
-                    foreach (DataRow row in dtCertificate.Rows)
-                    {
-                        string insertQuery = "INSERT INTO Resume (student_accID, certificate)" +
-                                             "VALUES (@studentAcctID, @Certificate)";
-                        SqlCommand insertCmd = new SqlCommand(insertQuery, db);
-                        insertCmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
-                        insertCmd.Parameters.AddWithValue("@Certificate", row["certificate"].ToString());
-                        insertCmd.ExecuteNonQuery();
-                    }
+
+                        // Insert updated certificate records
+                        foreach (DataRow row in dtCertificate.Rows)
+                        {
+                            string insertQuery = "INSERT INTO Resume (student_accID, certificate)" +
+                                                 "VALUES (@studentAcctID, @Certificate)";
+                            SqlCommand insertCmd = new SqlCommand(insertQuery, db);
+                            insertCmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
+                            insertCmd.Parameters.AddWithValue("@Certificate", row["certificate"].ToString());
+                            insertCmd.ExecuteNonQuery();
+                        }
                 }
             }
 
@@ -625,6 +590,14 @@ namespace ctuconnect
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Response.Redirect("Resume.aspx");
+        }
+
+        protected void clndrbdate_DayRender(object sender, DayRenderEventArgs e)
+        {
+            if (e.Day.Date > DateTime.Today)
+            {
+                e.Day.IsSelectable = false;
+            }
         }
     }
 }

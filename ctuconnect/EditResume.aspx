@@ -141,9 +141,7 @@
                         Birthdate
                     </div>
                     <div class="col-sm-9">
-                        <asp:DropDownList ID="ddlDay" runat="server"></asp:DropDownList>
-                        <asp:DropDownList ID="ddlMonth" runat="server"></asp:DropDownList>
-                        <asp:DropDownList ID="ddlYear" runat="server"></asp:DropDownList>
+                        <asp:TextBox ID="txtbdate" runat="server" TextMode="Date" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>
                     </div>
                 </div>
                 <br />
@@ -261,7 +259,7 @@
                 </div>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <div class="col-2 d-flex flex-column">
-                    <asp:Button ID="btnCancel" class="btn btn-primary btn-md btn-cancel" runat="server" Text="Cancel" OnClick="btnCancel_Click"/>
+                    <asp:Button ID="btnCancel" class="btn btn-primary btn-md btn-cancel" runat="server" Text="Back" OnClick="btnCancel_Click"/>
                 </div>
             </div>
         </div>
