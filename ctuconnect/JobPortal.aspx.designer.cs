@@ -177,6 +177,15 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label ApplicationInstruction;
 
         /// <summary>
+        /// DatePosted control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label DatePosted;
+
+        /// <summary>
         /// SubmitApply control.
         /// </summary>
         /// <remarks>

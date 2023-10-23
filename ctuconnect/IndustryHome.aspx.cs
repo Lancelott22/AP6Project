@@ -69,7 +69,7 @@ namespace ctuconnect
                     cmd.Parameters.AddWithValue("@jobQualifications", jobQualification);
                     cmd.Parameters.AddWithValue("@applicationInstruction", jobInstruction);
                     cmd.Parameters.AddWithValue("@salary", salaryRange);
-                    cmd.Parameters.AddWithValue("@jobPostedDate", DateTime.Now.ToString("yyyy/MM/dd"));
+                    cmd.Parameters.AddWithValue("@jobPostedDate", DateTime.Now);
                 var ctr = cmd.ExecuteNonQuery();
 
                     if (ctr > 0)
@@ -84,6 +84,15 @@ namespace ctuconnect
                 }
 
             conDB.Close();
+        }
+        protected void SignOut_Click(object sender, EventArgs e)
+        {
+
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+            Response.Redirect("LoginIndustry.aspx");
+
         }
     }
 }

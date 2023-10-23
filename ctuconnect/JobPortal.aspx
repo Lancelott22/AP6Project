@@ -90,7 +90,7 @@
             }
         .buttonStyleSubmit {
             background-color: white;
-            width:33%;
+            width:35%;
             text-align: center;
             text-decoration: none;
             min-height: 35px;
@@ -98,7 +98,7 @@
             background-color: white;
             border-radius: 20px;
             border: 1.5px solid orange;
-            padding:5px;
+            padding:9px;
         }
 
             .buttonStyleSubmit:hover {
@@ -109,7 +109,7 @@
             }
         .buttonStyleSubmitDisable {
             background-color: white;
-            width:20%;
+            width:25%;
             text-align: center;
             text-decoration: none;
             min-height: 35px;
@@ -117,7 +117,7 @@
             background-color: white;
             border-radius: 20px;
             border: 1.5px solid orange;
-        padding:5px;
+            padding:9px;
         }
         .buttonStyleSubmitDisable:hover {
             text-decoration: none;
@@ -175,6 +175,11 @@
             /* Handle on hover */
             .modal ::-webkit-scrollbar-thumb:hover {
                 background: #881A30;
+            }
+            .modal-footer {
+               text-align:unset;
+               justify-content:unset;
+                display:block;
             }
     </style>
 
@@ -294,6 +299,7 @@
                             <span><label>Job Course: </label>  <asp:Label ID="JobCourse" runat="server" /></span><br />
                            
                             <span id="salaryData" runat="server"><label>Salary: </label>  <asp:Label ID="SalaryRange" runat="server" /> </span><br />
+                          
                         </div>
                         <hr style="border:1px solid #000000;"/>
                         <div class="container-fluid row" >
@@ -309,10 +315,14 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <div style="float:left; margin-left:15px; font-size:13px;">
+                      <span><label>Date Posted: </label>  <asp:Label ID="DatePosted" runat="server" /></span><br />
+                    </div>
+                    <div style="float:right;">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                      
                     <asp:LinkButton ID="SubmitApply"  class="buttonStyleSubmit" runat="server"  OnCommand="SubmitApply_Command" AutoPostBack="false">Submit Application</asp:LinkButton>
-       
+                    </div>
                      </div>
             </div>
             

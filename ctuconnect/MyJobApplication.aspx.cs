@@ -229,5 +229,14 @@ namespace ctuconnect
             conDB.Close();
             return interviewDetail;
         }
+        protected void SignOut_Click(object sender, EventArgs e)
+        {
+
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+            Response.Redirect("LoginStudent.aspx");
+
+        }
     }
 }

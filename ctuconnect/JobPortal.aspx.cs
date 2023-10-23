@@ -59,7 +59,7 @@ namespace ctuconnect
                 SubmitApply.CssClass = "buttonStyleSubmit";
             }
                 conDB.Open();
-                SqlCommand cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID where jobID = @jobID", conDB);
+                SqlCommand cmd = new SqlCommand("select *, CONVERT(nvarchar,jobPostedDate, 1) as DatePosted from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID where jobID = @jobID", conDB);
                 cmd.Parameters.AddWithValue("@jobID", jobId);
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
@@ -75,7 +75,8 @@ namespace ctuconnect
                     JobQualification.Text = reader["jobQualifications"].ToString();
                     ApplicationInstruction.Text = reader["applicationInstruction"].ToString();
                     IndustryID.Text = reader["industry_accID"].ToString();
-                    
+                    DatePosted.Text = reader["DatePosted"].ToString();
+
                 if (reader["salaryRange"] == null || reader["salaryRange"].ToString() == string.Empty)
                 {                
                     salaryData.Visible = false;
@@ -268,12 +269,18 @@ namespace ctuconnect
         {
             int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("Select workStatus from HIRED_LIST where student_accID = @student_accId", conDB);
+            SqlCommand cmd = new SqlCommand("Select isHired from STUDENT_ACCOUNT where student_accID = @student_accId", conDB);
             cmd.Parameters.AddWithValue("@student_accId", student_accId);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
-                if (reader["workStatus"].ToString() != "Ended")
+                if (reader["isHired"].ToString() == null || reader["isHired"].ToString() == string.Empty)
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return false;
+                }          
+                else if (bool.Parse(reader["isHired"].ToString()) == true)
                 {
                     reader.Close();
                     conDB.Close();
