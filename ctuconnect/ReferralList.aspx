@@ -72,7 +72,7 @@
             }
             .display-container{
                 background-color:white; 
-                width:1000px;
+                width:1500px;
                 top:0;
                 bottom:0;
                 padding: 2% 2% 0% 2%;
@@ -85,12 +85,10 @@
                 position:relative;
                 padding: 4% 0% 0% 6%;*/
             }
-            }
-            @media (max-width: 790px) {
                 .display-container {
-                    max-width: 50%;
+                    max-width: 100%;
                 }
-            }
+            
             .display-container .title{
                 font-size:25px;
                 font-weight:500;
@@ -195,6 +193,7 @@
                                 <asp:BoundField DataField="LastName" HeaderText="Last Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                 <asp:BoundField DataField="FirstName" HeaderText="First Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                  <asp:BoundField DataField="referredBy" HeaderText="Referred by" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
+                                 <asp:BoundField DataField="endorsementLetter" HeaderText="Endorsement Letter" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
                                  <asp:BoundField DataField="dateReferred" HeaderText="Date Referred" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                  <asp:BoundField DataField="resumeFile" HeaderText="Resume" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
 
