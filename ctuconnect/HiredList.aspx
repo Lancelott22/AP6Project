@@ -69,7 +69,7 @@
          }
         .display-container{
                 background-color:white; 
-                width:1000px;
+                width:1500px;
                 top:0;
                 bottom:0;
                 padding: 2% 2% 0% 2%;

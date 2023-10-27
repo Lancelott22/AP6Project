@@ -159,6 +159,24 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label txtResumeFileName;
 
         /// <summary>
+        /// Label13 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label13;
+
+        /// <summary>
+        /// endorsementUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload endorsementUpload;
+
+        /// <summary>
         /// Label4 control.
         /// </summary>
         /// <remarks>

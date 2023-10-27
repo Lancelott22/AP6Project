@@ -198,14 +198,14 @@ namespace ctuconnect
             string appliedPosition = GridView1.Rows[rowIndex].Cells[5].Text;
             string dateApplied = GridView1.Rows[rowIndex].Cells[6].Text;
 
-            object interviewDateValue = GridView1.Rows[rowIndex].Cells[10].Text;
-            if (interviewDateValue != DBNull.Value)
-            {
-                DateTime interviewdate = Convert.ToDateTime(interviewDateValue);
-                string interviewScheduledDate = interviewdate.ToString("yyyy-MM-dd");
+            string interviewDateValue = GridView1.Rows[rowIndex].Cells[10].Text;
+            //if (interviewDateValue != DBNull.Value)
+            //{
+                //DateTime interviewdate = Convert.ToDateTime(interviewDateValue);
+                //string interviewScheduledDate = interviewdate.ToString("yyyy-MM-dd");
 
-                ClientScript.RegisterStartupScript(this.GetType(), "openEditModal", $"openEditModal('{resumeStatus}', '{interviewDetails}', '{interviewScheduledDate}', '{interviewStatus}', '{applicantStatus}');", true);
-            }
+                ClientScript.RegisterStartupScript(this.GetType(), "openEditModal", $"openEditModal('{resumeStatus}', '{interviewDetails}', '{interviewDateValue}', '{interviewStatus}', '{applicantStatus}');", true);
+            //}
 
             lblName.Text = applicantFname + " " + applicantLname;
             lblapplicantID.Text = id;

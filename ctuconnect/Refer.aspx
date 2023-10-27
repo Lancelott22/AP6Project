@@ -79,7 +79,7 @@
             }
             .display-container{
                 background-color:white; 
-                width:750px;
+                width:1500px;
                 top:0;
                 bottom:0;
                 padding: 2% 4% 4% 4%;
@@ -93,11 +93,9 @@
                 padding: 4% 0% 0% 6%;*/
             }
             
-            @media (max-width: 790px) {
                 .display-container {
-                    max-width: 50%;
+                    max-width: 100%;
                 }
-            }
            .display-container .title{
                 font-size:25px;
                 font-weight:500;
@@ -272,12 +270,13 @@
                         <p style="float:left;">Sort by <asp:DropDownList ID="ddlSortBy" runat="server" AutoPostBack="true"  CssClass="sort-dropdown">
                             <asp:ListItem Text="Date" Value="ColumnName1"></asp:ListItem>
                             <asp:ListItem Text="Status" Value="ColumnName2"></asp:ListItem>
-                        </asp:DropDownList></p>
+                        </asp:DropDownList>
+                        </p>
                             <asp:Button ID="addreferstudent" runat="server" Text="Add Refer Student" AutoPostBack="false" OnClick="addRefer_Click" style="float:right;"    />
                            <%-- <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p> --%>
-                            <asp:GridView ID="GridView1" runat="server" Style="color:black; " AutoGenerateColumns="false"  CssClass="gridview-style"
-                                              AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" CellPadding="50" CellSpacing="50" 
-                                              Font-Bold="False" Font-Size="13px" Height="100%" Width="100%" ShowHeaderWhenEmpty="true" >  
+                            <asp:GridView ID="GridView1" runat="server" RowStyle-CssClass="GridViewRowStyle" Style="color:black; " AutoGenerateColumns="false"  CssClass="gridview-style"
+                                AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" CellPadding="50" CellSpacing="50" 
+                                Font-Bold="False" Font-Size="13px" Height="100%" Width="100%" ShowHeaderWhenEmpty="true" >  
                             <PagerStyle  HorizontalAlign="Center" />
                             <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
                                 <EmptyDataTemplate>
@@ -289,12 +288,13 @@
                                                 <%# Container.DataItemIndex + 1 %>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:BoundField DataField="lastName" HeaderText="Last Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                        <asp:BoundField DataField="firstName" HeaderText="First Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                        <asp:BoundField DataField="midInitials" HeaderText="Middle Initial" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                        <asp:BoundField DataField="industryName" HeaderText="Industry" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                                        <asp:BoundField DataField="referredBy" HeaderText="Referred by" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                                        <asp:BoundField DataField="dateReferred" HeaderText="Date" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
+                                        <asp:BoundField DataField="lastName" HeaderText="Last Name" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
+                                        <asp:BoundField DataField="firstName" HeaderText="First Name" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
+                                        <asp:BoundField DataField="midInitials" HeaderText="Middle Initial" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
+                                        <asp:BoundField DataField="industryName" HeaderText="Industry" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
+                                        <asp:BoundField DataField="referredBy" HeaderText="Referred by" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
+                                        <asp:BoundField DataField="endorsementLetter" HeaderText="Endorsement Letter" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
+                                        <asp:BoundField DataField="dateReferred" HeaderText="Date" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
                             </Columns>
                             </asp:GridView>
                 </div>
@@ -308,7 +308,7 @@
      <div class="modal-dialog modal-dialog-centered" >
          <div class="modal-content">
              <div class="modal-header">
-                 <h1 class="title">Refer a Student</h1>
+                 <h2 class="title">Refer a Student</h2>
              </div>
                  <div class="modal-body">
                      
@@ -330,6 +330,9 @@
 
                                       <asp:Label ID="Label7" runat="server" Text="Resume" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
                                       <asp:Label ID="txtResumeFileName" runat="server" Text="" Style="font-size:14px;" ></asp:Label><br>
+                                        
+                                      <asp:Label ID="Label13" runat="server" Text="Endorsement Letter" Style="font-size:18px;" ></asp:Label>
+                                      <asp:FileUpload ID="endorsementUpload" runat="server" Width="300px" /><br />
 
                                      <div class="column">
                                       <asp:Label ID="Label4" runat="server" Text="Referred by" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
