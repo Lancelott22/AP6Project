@@ -33,31 +33,40 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.DataList MyApplication;
 
         /// <summary>
-        /// ResumeStatus control.
+        /// lblNoAppliedJob control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ResumeStatus;
+        protected global::System.Web.UI.WebControls.Label lblNoAppliedJob;
 
         /// <summary>
-        /// resumeStatusCheck control.
+        /// applicantStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label resumeStatusCheck;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl applicantStatus;
 
         /// <summary>
-        /// statusResume control.
+        /// applicationStatusCheck control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusResume;
+        protected global::System.Web.UI.WebControls.Label applicationStatusCheck;
+
+        /// <summary>
+        /// statusApplication control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusApplication;
 
         /// <summary>
         /// InterviewStatus control.
@@ -96,30 +105,30 @@ namespace ctuconnect
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusInterview;
 
         /// <summary>
-        /// applicantStatus control.
+        /// ResumeStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl applicantStatus;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ResumeStatus;
 
         /// <summary>
-        /// applicationStatusCheck control.
+        /// resumeStatusCheck control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label applicationStatusCheck;
+        protected global::System.Web.UI.WebControls.Label resumeStatusCheck;
 
         /// <summary>
-        /// statusApplication control.
+        /// statusResume control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusApplication;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusResume;
     }
 }
