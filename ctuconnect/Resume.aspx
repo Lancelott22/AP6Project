@@ -9,8 +9,9 @@
             padding:10px 10px 10px 10px;
             width:200px;
             margin:auto;
-            margin-top:auto; 
-            text-decoration:none;
+            margin-top:20px;
+            position: absolute;
+            margin-left:70px;
         }
 
         .nav a{
@@ -124,10 +125,10 @@
                             <span class="text nav-text">Help</span>
                     </a>
                     <hr style="height:2px;border-width:0;color:#881A30;background-color:#881A30">
-                    <a href="#signout">
-                            <i class='bx bx-log-out icon' ></i>
-                            <span class="text nav-text">Sign-out</span>
-                    </a>
+                    <asp:LinkButton runat="server" ID ="SignOut" OnClick="SignOut_Click" >
+                       <i class='bx bx-log-out icon' ></i>
+                        Sign-out
+                    </asp:LinkButton>
                 </div>
             </div>
             <div class="col-9 d-flex flex-column">

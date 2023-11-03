@@ -9,8 +9,9 @@
             padding:10px 10px 10px 10px;
             width:200px;
             margin:auto;
-            margin-top:auto;
-            text-decoration:none;
+            margin-top:20px;
+            position: absolute;
+            margin-left:70px;
         }
 
         .nav a{
