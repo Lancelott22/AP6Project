@@ -182,6 +182,7 @@ namespace ctuconnect
 
         private void LoadApplicants()
         {
+            
             int industryAccID = Convert.ToInt32(Session["INDUSTRY_ACC_ID"].ToString());
             using (var db = new SqlConnection(conDB))
             {
@@ -196,6 +197,8 @@ namespace ctuconnect
 
             rptApplicant.DataSource = dtApplicants;
             rptApplicant.DataBind();
+            
+
         }
 
 
@@ -209,8 +212,8 @@ namespace ctuconnect
                 UpdateResumeStatus(applicantID);
 
                 // Change the button text to "Reviewed"
-                Button button = (Button)sender;
-                button.Text = "Reviewed";
+                //Button button = (Button)sender;
+                //button.Text = "Reviewed";
 
 
                 // Retrieve and display the resume file

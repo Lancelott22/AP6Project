@@ -212,9 +212,11 @@
              }
 
              .searchbox {
-                min-width: 20%;
+                width: 400px;
                 border-radius: 5px;
                 padding: 5px;
+                height: 50px;
+
              }
 
              .btnApplicant {
@@ -435,7 +437,7 @@
                         function confirmStatusUpdate(dropdown) {
                             var selectedValue = dropdown.value;
                             var applicantID = dropdown.getAttribute('applicant-id');
-                            var confirmationMessage = "Are you sure you want to'" + selectedValue + "' the applicant: " + applicantID + "?";
+                            var confirmationMessage = "Are you sure you want to '" + selectedValue + "' the applicant?";
                             if (confirm(confirmationMessage)) {
                                 // If user clicks OK in the confirmation dialog, trigger the server-side postback
                                 __doPostBack(dropdown.id, ''); // This will cause a postback and trigger the server-side event
@@ -444,15 +446,6 @@
                                 dropdown.selectedIndex = 0;
                             }
                         }
-
-                        /*function disableDropdown(dropdownId, selectedStatus) {
-                            var dropdown = document.getElementById(dropdownId);
-                            dropdown.disabled = true;
-                            var selectedItem = Array.from(dropdown.options).find(option => option.value === selectedStatus);
-                            if (selectedItem) {
-                                dropdown.innerText = selectedItem.text;
-                            }
-                        }*/
 
                     </script>
                             
