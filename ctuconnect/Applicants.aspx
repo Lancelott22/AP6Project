@@ -16,6 +16,7 @@
             margin-left:2%;
             border-radius: 20px;
         }
+
         @media (max-width: 790px) {
             .profile-container, .sidemenu-container {
                 max-width: 50%;
@@ -24,6 +25,7 @@
                  padding:5px 5px 5px 5px;
             }
         }
+
         .profile-container img{
             display:block;
             width:80%;
@@ -359,7 +361,7 @@
                                 </div>
                             </div>
                             <Triggers>
-                        </ItemTemplate>      
+                        </ItemTemplate>                       
                     </asp:Repeater>
                 
                 </div>

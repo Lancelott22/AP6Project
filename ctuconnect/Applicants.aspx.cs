@@ -31,6 +31,7 @@ namespace ctuconnect
                 ChangeScheduleButtonText();
                 DropdownApplicant();
 
+
             }
             else
             {
@@ -57,16 +58,18 @@ namespace ctuconnect
                 if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
                 {
                     Button btnReview = (Button)item.FindControl("btnReview");
+                    Button btnSchedule = (Button)item.FindControl("btnSchedule");
                     Label lblresumeStatus = (Label)item.FindControl("lblresumeStatus");
+                    DropDownList drpApplicantStatus = (DropDownList)item.FindControl("drpApplicantStatus");
 
                     if (lblresumeStatus != null)
                     {
 
                         string resumeStatusText = lblresumeStatus.Text;
-
+                                                           
                         if (resumeStatusText == "Reviewed")
                         {
-                            btnReview.Text = "Reviewed";
+                            btnReview.Text = "Reviewed"; 
                             lblresumeStatus.BackColor = System.Drawing.Color.GreenYellow;
                             lblresumeStatus.Style["width"] = "85px";
                             lblresumeStatus.Style["padding-left"] = "0.5em";
@@ -75,11 +78,13 @@ namespace ctuconnect
                         }
                         else
                         {
-                            lblresumeStatus.BackColor = System.Drawing.Color.Yellow;
-                            lblresumeStatus.Style["width"] = "80px";
-                            lblresumeStatus.Style["padding-left"] = "0.5em";
-                            lblresumeStatus.Style["height"] = "20px";
+                            lblresumeStatus.BackColor = System.Drawing.Color.Yellow; 
+                            lblresumeStatus.Style["width"] = "80px"; 
+                            lblresumeStatus.Style["padding-left"] = "0.5em"; 
+                            lblresumeStatus.Style["height"] = "20px"; 
                             lblresumeStatus.Style["border-radius"] = "15px";
+                            btnSchedule.Visible = false;
+                            drpApplicantStatus.Visible = false;
                         }
                     }
 
@@ -96,6 +101,7 @@ namespace ctuconnect
 
                     Button btnSchedule = (Button)item.FindControl("btnSchedule");
                     Label lblinterviewStatus = (Label)item.FindControl("lblinterviewStatus");
+                    DropDownList drpApplicantStatus = (DropDownList)item.FindControl("drpApplicantStatus");
 
                     if (lblinterviewStatus != null)
                     {
@@ -104,7 +110,7 @@ namespace ctuconnect
 
                         if (interviewStatusText == "Scheduled")
                         {
-                            btnSchedule.Text = "Scheduled";
+                            btnSchedule.Text = "Reschedule";
                             lblinterviewStatus.BackColor = System.Drawing.Color.GreenYellow;
                             lblinterviewStatus.Style["width"] = "90px";
                             lblinterviewStatus.Style["padding-left"] = "0.5em";
@@ -118,6 +124,7 @@ namespace ctuconnect
                             lblinterviewStatus.Style["padding-left"] = "0.5em";
                             lblinterviewStatus.Style["height"] = "20px";
                             lblinterviewStatus.Style["border-radius"] = "15px";
+                            drpApplicantStatus.Visible = false;
                         }
                     }
 
@@ -141,11 +148,8 @@ namespace ctuconnect
 
                         if (applicantStatusText == "Approved")
                         {
-                            drpApplicantStatus.Text = "Done";
-                            drpApplicantStatus.Enabled = false;
-                            drpApplicantStatus.BackColor = ColorTranslator.FromHtml("#881a30");
-                            drpApplicantStatus.Style["color"] = "white";
-                            drpApplicantStatus.Attributes["style"] = "-webkit-appearance: none;";
+                           
+                            drpApplicantStatus.Visible = false; 
                             lblapplicantStatus.BackColor = System.Drawing.Color.GreenYellow;
                             lblapplicantStatus.Style["width"] = "90px";
                             lblapplicantStatus.Style["padding-left"] = "0.5em";
@@ -155,11 +159,7 @@ namespace ctuconnect
                         }
                         else if (applicantStatusText == "Rejected")
                         {
-                            drpApplicantStatus.Text = "Done";
-                            drpApplicantStatus.Enabled = false;
-                            drpApplicantStatus.BackColor = ColorTranslator.FromHtml("#881a30");
-                            drpApplicantStatus.Style["color"] = "white";
-                            drpApplicantStatus.Attributes["style"] = "-webkit-appearance: none;";
+                            drpApplicantStatus.Visible = false;
                             lblapplicantStatus.BackColor = System.Drawing.Color.Red;
                             lblapplicantStatus.Style["width"] = "80px";
                             lblapplicantStatus.Style["padding-left"] = "0.5em";
@@ -197,7 +197,6 @@ namespace ctuconnect
 
             rptApplicant.DataSource = dtApplicants;
             rptApplicant.DataBind();
-            
 
         }
 
@@ -232,7 +231,6 @@ namespace ctuconnect
             }
             ChangeReviewButtonText();
             ChangeScheduleButtonText();
-            DropdownApplicant();
         }
 
         private void UpdateResumeStatus(int applicantID)
@@ -479,12 +477,13 @@ namespace ctuconnect
             using (SqlConnection connection = new SqlConnection(conDB))
             {
                 string intershipStatus = "Ongoing";
+                string evaluationRequest = "no request";
                 connection.Open();
                 using (var dmd = connection.CreateCommand())
                 { //SQL Statement
                     dmd.CommandType = CommandType.Text;
-                    dmd.CommandText = "INSERT INTO HIRED_LIST (student_accID, firstName, lastName, jobID, workedAt, position,dateHired,  industry_accID, studentType, jobType, internshipStatus, resumeFile)  "
-                                    + " VALUES (@StudentAccID,@Firstname,@Lastname,@JobID,@workedAt, @position,@dateHired, @IndustryAccID,@StudentType,@JobType,@InternshipStatus, @ResumeFile)";
+                    dmd.CommandText = "INSERT INTO HIRED_LIST (student_accID, firstName, lastName, jobID, workedAt, position,dateHired,  industry_accID, studentType, jobType, internshipStatus, resumeFile, evaluationRequest)  "
+                                    + " VALUES (@StudentAccID,@Firstname,@Lastname,@JobID,@workedAt, @position,@dateHired, @IndustryAccID,@StudentType,@JobType,@InternshipStatus, @ResumeFile, @EvaluationRequest)";
 
                     dmd.Parameters.AddWithValue("@StudentAccID", studentID);
                     dmd.Parameters.AddWithValue("@Firstname", fname);
@@ -498,6 +497,7 @@ namespace ctuconnect
                     dmd.Parameters.AddWithValue("@JobType", jobType);
                     dmd.Parameters.AddWithValue("@InternshipStatus", intershipStatus);
                     dmd.Parameters.AddWithValue("@ResumeFile", resumefile);
+                    dmd.Parameters.AddWithValue("@EvaluationRequest", evaluationRequest);
 
                     var ctr = dmd.ExecuteNonQuery();
                     if (ctr > 0)
