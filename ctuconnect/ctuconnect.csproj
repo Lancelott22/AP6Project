@@ -159,6 +159,7 @@
     <Content Include="images\StudentProfiles\defaultprofile.jpg" />
     <Content Include="IndustryHome.aspx" />
     <Content Include="IndustryVerification.aspx" />
+    <Content Include="IndustryJobPosted.aspx" />
     <Content Include="JobPortal.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="LoginIndustry.aspx" />
@@ -202,6 +203,7 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="MyJobApplication.aspx" />
     <Content Include="Admin.Master" />
+    <Content Include="images\Resume\ryanResume.pdf.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -341,6 +343,13 @@
     </Compile>
     <Compile Include="IndustryVerification.aspx.designer.cs">
       <DependentUpon>IndustryVerification.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IndustryJobPosted.aspx.cs">
+      <DependentUpon>IndustryJobPosted.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IndustryJobPosted.aspx.designer.cs">
+      <DependentUpon>IndustryJobPosted.aspx</DependentUpon>
     </Compile>
     <Compile Include="JobPortal.aspx.cs">
       <DependentUpon>JobPortal.aspx</DependentUpon>
@@ -494,10 +503,10 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\COR\" />
+    <Folder Include="images\EndorsementLetter\" />
     <Folder Include="images\IndustryProfile\" />
     <Folder Include="images\MOU\" />
     <Folder Include="images\OJTCoordinatorProfile\" />
-    <Folder Include="images\Resume\" />
     <Folder Include="Industry\" />
     <Folder Include="Interns\" />
     <Folder Include="OjtCoordinator\" />
