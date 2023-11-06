@@ -78,12 +78,13 @@
         <br />
         <div class="container">
             <div class="col-12 d-flex flex-column">
+                <h3 style="text-align:center">Build Resume</h3> 
                 <div class="row">
                     <div class="col-sm-12">
                         <asp:Label ID="lblProfilePicture" runat="server" Text="Profile Picture:"></asp:Label>
                         <asp:FileUpload ID="fileUploadProfilePicture" runat="server" />
                         <br />
-                        <asp:Image ID="imgProfilePicture" runat="server" CssClass="profile-picture" />
+                        <asp:Image ID="imgProfilePicture" runat="server" CssClass="profile-picture" height="144px" Width="144px"/>
                         <br />
                         <asp:Button ID="btnUploadPicture" runat="server" Text="Upload" OnClick="btnUploadPicture_Click" />
                         <br />
