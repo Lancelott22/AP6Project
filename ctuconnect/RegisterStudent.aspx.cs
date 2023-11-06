@@ -56,12 +56,15 @@ namespace ctuconnect
         protected void btn_Click(object sender, EventArgs e)
         {
                 // Save input data to session before encountering an error
+
                 Session["savedFname"] = txtfname.Text;
                 Session["savedInitial"] = txtinitial.Text;
                 Session["savedLname"] = txtlname.Text;
                 Session["savedStudentID"] = txtid.Text;
                 Session["savedCourse"] = drpcourse.SelectedValue;
                 Session["savedEmail"] = txtemail.Text;
+
+            int dep_ID = 290001;
 
                 HttpPostedFile postedFile = corUpload.PostedFile; /// upload file
                 string filename = Path.GetFileName(postedFile.FileName); ///to check the filename
@@ -123,14 +126,15 @@ namespace ctuconnect
                                     {
                                         //SQL Statement
                                         cmd.CommandType = CommandType.Text;
-                                        cmd.CommandText = "INSERT INTO STUDENT_ACCOUNT (STUDENTID, FIRSTNAME, MIDINITIALS, LASTNAME, STUDENTSTATUS, COURSE_ID, STUDENTPICTURE, COR, EMAIL, PASSWORD, DATEREGISTERED )"
-                                            + "VALUES (@studentid, @fname, @midinitial, @lname, @studentstatus, @courseid, @studentpic, @cor, @email, @password, @date)";
+                                        cmd.CommandText = "INSERT INTO STUDENT_ACCOUNT (STUDENTID, FIRSTNAME, MIDINITIALS, LASTNAME, STUDENTSTATUS, DEPARTMENT_ID, COURSE_ID, STUDENTPICTURE, COR, EMAIL, PASSWORD, DATEREGISTERED )"
+                                            + "VALUES (@studentid, @fname, @midinitial, @lname, @studentstatus,@department_Id, @courseid, @studentpic, @cor, @email, @password, @date)";
 
                                         cmd.Parameters.AddWithValue("@studentid", stuID);
                                         cmd.Parameters.AddWithValue("@fname", fname);
                                         cmd.Parameters.AddWithValue("@midinitial", midinitial);
                                         cmd.Parameters.AddWithValue("@lname", lname);
                                         cmd.Parameters.AddWithValue("@studentstatus", status);
+                                        cmd.Parameters.AddWithValue("@department_Id", dep_ID);
                                         cmd.Parameters.AddWithValue("@courseid", course);
                                         cmd.Parameters.AddWithValue("@studentpic", filename2);
                                         cmd.Parameters.AddWithValue("@cor", filename);

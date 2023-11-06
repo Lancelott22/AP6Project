@@ -11,124 +11,106 @@ namespace ctuconnect
 {
 
 
-    public partial class WebForm1
+    public partial class Admin
     {
 
         /// <summary>
-        /// SignOut control.
+        /// head control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton SignOut;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
 
         /// <summary>
-        /// MyApplication control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataList MyApplication;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// lblNoAppliedJob control.
+        /// imgbtnbell control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNoAppliedJob;
+        protected global::System.Web.UI.WebControls.ImageButton imgbtnbell;
 
         /// <summary>
-        /// applicantStatus control.
+        /// lblUnreadCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl applicantStatus;
+        protected global::System.Web.UI.WebControls.Label lblUnreadCount;
 
         /// <summary>
-        /// applicationStatusCheck control.
+        /// lbln control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label applicationStatusCheck;
+        protected global::System.Web.UI.WebControls.Label lbln;
 
         /// <summary>
-        /// statusApplication control.
+        /// r2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusApplication;
+        protected global::System.Web.UI.WebControls.Repeater r2;
 
         /// <summary>
-        /// InterviewStatus control.
+        /// notification1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InterviewStatus;
+        protected global::System.Web.UI.WebControls.Label notification1;
 
         /// <summary>
-        /// StatusOrDetails control.
+        /// notification2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StatusOrDetails;
+        protected global::System.Web.UI.WebControls.Label notification2;
 
         /// <summary>
-        /// interviewStatusCheck control.
+        /// r1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label interviewStatusCheck;
+        protected global::System.Web.UI.WebControls.Repeater r1;
 
         /// <summary>
-        /// statusInterview control.
+        /// imgbtnaccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusInterview;
+        protected global::System.Web.UI.WebControls.ImageButton imgbtnaccount;
 
         /// <summary>
-        /// ResumeStatus control.
+        /// ContentPlaceHolder1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ResumeStatus;
-
-        /// <summary>
-        /// resumeStatusCheck control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label resumeStatusCheck;
-
-        /// <summary>
-        /// statusResume control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusResume;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
     }
 }

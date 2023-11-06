@@ -19,73 +19,44 @@ namespace ctuconnect
         {
             if (!IsPostBack)
             {
-                //// Create an empty DataTable
-                //DataTable dataTable = new DataTable();
-                //dataTable.Columns.Add("ID", typeof(int));
-                //dataTable.Columns.Add("LastName", typeof(string));
-                //dataTable.Columns.Add("FirstName", typeof(string));
-                //dataTable.Columns.Add("DateStarted", typeof(string));
-                //dataTable.Columns.Add("Position", typeof(string));
-                //dataTable.Columns.Add("Resume", typeof(string));
-
-
-                //dataTable.Rows.Add(1, "Paderna", "John Ryan", "07/13/2023", "Software Developer", "--");
-                //dataTable.Rows.Add(2, "Paderna", "John Ryan", "07/13/2023", "Software Developer", "--");
-                //dataTable.Rows.Add(3, "Paderna", "John Ryan", "07/13/2023", "Software Developer", "--");
-                //dataTable.Rows.Add(4, "Paderna", "John Ryan", "07/13/2023", "Software Developer", "--");
-
-                //DataTable dataTable2 = new DataTable();
-                //dataTable2.Columns.Add("ID", typeof(int));
-                //dataTable2.Columns.Add("LastName", typeof(string));
-                //dataTable2.Columns.Add("FirstName", typeof(string));
-                //dataTable2.Columns.Add("DateStarted", typeof(string));
-                //dataTable2.Columns.Add("InternshipStatus", typeof(string));
-                //dataTable2.Columns.Add("RenderedHours", typeof(string));
-                //dataTable2.Columns.Add("EvaluationRequest", typeof(string));
-
-                //dataTable2.Rows.Add(1, "Guardiario", "Kenth Davis", "07/13/2023", "on internship", "--", "--");
-                //dataTable2.Rows.Add(2, "Cruz", "Tiffany", "07/13/2023", "done", "120 hrs", "requested");
-
-
-                //GridView2.DataSource = dataTable2;
-                //GridView2.DataBind();
-
-                //GridView1.DataSource = dataTable;
-                //GridView1.DataBind();
-                BindGridView1();
-                BindGridView2();
+                
+                BindTable1();
+                BindTable2();
+                myLinkButton1.CssClass += " active";
+                dataRepeater1.Visible = true;
+                dataRepeater2.Visible = false;
             }
         }
-        void BindGridView1()
+        void BindTable1()
         {
-                    string query = "SELECT lastName, firstName, dateStarted, position, resumeFile FROM HIRED_LIST WHERE jobType = 'job'";
+                    string query = "SELECT lastName, firstName, dateStarted, position, resumeFile FROM HIRED_LIST WHERE jobType = 'job' ORDER BY id DESC";
                 SqlCommand cmd = new SqlCommand(query, conDB);
                         SqlDataAdapter da = new SqlDataAdapter(cmd);
                         DataSet ds = new DataSet();
                         da.Fill(ds);
 
                         // Bind the DataTable to the GridView
-                        GridView1.DataSource = ds;
-                        GridView1.DataBind();
+                        dataRepeater1.DataSource = ds;
+                        dataRepeater1.DataBind();
                     
 
 
                 }
            
         
-        void BindGridView2()
+        void BindTable2()
         {
              
             
-                string query = "SELECT lastName, firstName, dateStarted, internshipStatus, renderedHours, evaluationRequest FROM HIRED_LIST WHERE jobType = 'internship'";
+                string query = "SELECT lastName, firstName, CONVERT(VARCHAR(10), HIRED_LIST.dateHired, 120) AS dateHired, internshipStatus, renderedHours, evaluationRequest FROM HIRED_LIST WHERE jobType = 'internship' ORDER BY id DESC";
             SqlCommand cmd = new SqlCommand(query, conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 da.Fill(ds);
 
                 // Bind the DataTable to the GridView
-                GridView2.DataSource = ds;
-                    GridView2.DataBind();
+                dataRepeater2.DataSource = ds;
+            dataRepeater2.DataBind();
                 
         }
             
@@ -99,8 +70,8 @@ namespace ctuconnect
             // Apply styles for the clicked button
             myLinkButton1.CssClass += " active";
 
-            GridView1.Visible = true;
-            GridView2.Visible = false;
+            dataRepeater1.Visible = true;
+            dataRepeater2.Visible = false;
 
             UpdatePanel1.Update();
         }
@@ -119,12 +90,78 @@ namespace ctuconnect
 
             // Apply styles for the clicked button
             myLinkButton2.CssClass += " active";
-            GridView1.Visible = false;
-            GridView2.Visible = true;
+            dataRepeater1.Visible = false;
+            dataRepeater2.Visible = true;
 
             UpdatePanel1.Update();
+
         }
-        protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void Evaluate_BtnClick(object sender, EventArgs e)
+        {
+            // Find the button that triggered the event
+            Button EvaluationBtn = (Button)sender;
+
+            // Check if the button's text is "Requested"
+            if (EvaluationBtn.Text == "Requested")
+            {
+                // Redirect to another ASPX page
+                Response.Redirect("Home.aspx");
+            }
+        }
+        protected void ViewResume_Command(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "View")
+            {
+                /* Button btn = (Button)sender;
+                 int studentID = Convert.ToInt32(btn.Attributes["data-studentid"]);
+ */
+                string ResumeFileName = e.CommandArgument.ToString();
+                /*string endorsementLetterPath = Server.MapPath("~/images/EndorsementLetter" + endorsementLetterFileName);*/
+                // Change the button text to "Reviewed"
+                //Button button = (Button)sender;
+                //button.Text = "Reviewed";
+
+
+                // Retrieve and display the resume file
+                byte[] ResumeFileData = GetResumeFileData(ResumeFileName);
+
+
+                if (ResumeFileData != null)
+                {
+                    // Provide the file data for download in a new browser tab
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.ContentType = "application/pdf"; // Set the appropriate content type
+                    Response.AddHeader("content-disposition", "inline; filename=resume.pdf"); // Open in a new tab
+                    Response.BinaryWrite(ResumeFileData);
+                    Response.End();
+                }
+            }
+        }
+        private byte[] GetResumeFileData(string ResumeFileName)
+        {
+            using (conDB)
+            {
+                string query = "SELECT resumeFile FROM HIRED_LIST WHERE resumeFile = @ResumeFileName";
+                SqlCommand cmd = new SqlCommand(query, conDB);
+                cmd.Parameters.AddWithValue("@ResumeFileName", ResumeFileName);
+
+                conDB.Open();
+                object result = cmd.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    // Assuming that the result is a file path, read the file content
+                    string fileName = result.ToString();
+                    string filePath = "~/images/Resume/" + fileName; // Construct the path
+                    byte[] fileData = System.IO.File.ReadAllBytes(Server.MapPath(filePath));
+                    return fileData;
+                }
+
+                return null; // No file found
+            }
+        }
+        /*protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
@@ -150,6 +187,6 @@ namespace ctuconnect
                     cell2.ForeColor = System.Drawing.Color.Black;
                 }
             }
-        }
+        }*/
     }
 }

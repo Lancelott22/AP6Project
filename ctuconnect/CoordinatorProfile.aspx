@@ -77,10 +77,10 @@
             }
             .display-container{
                 background-color:white; 
-                width:1000px;
+                width:1500px;
                 top:0;
                 bottom:0;
-                padding: 2% 2% 0% 2%;
+                padding: 2%;
                 overflow: auto;
                 /*background-color:white;*/
                 height:550px;
@@ -90,12 +90,9 @@
                 position:relative;
                 padding: 4% 0% 0% 6%;*/
             }
-            }
-            @media (max-width: 790px) {
                 .display-container {
-                    max-width: 50%;
+                    max-width: 100%;
                 }
-            }
             .display-container .title{
                 font-size:25px;
                 font-weight:500;
@@ -175,7 +172,28 @@
                 background-color: #881A30;
 
     }
-    
+    th{
+       border-collapse: collapse;
+        border-color:white;
+        background-color:#f4f4fb;
+        padding:5px;
+
+    }
+    .datas{
+         padding:9px;
+          border: 8px solid;
+          border-color:white;
+         font-weight:bold;
+         color:black;
+    }
+
+    .table-list{
+         border-collapse: collapse;
+        font-size:13px; 
+        height:auto; 
+        width:100%;
+        color:dimgray;
+    }
     </style>
     <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
@@ -200,24 +218,62 @@
                         <asp:ListItem Text="Status" Value="ColumnName2"></asp:ListItem>
                     </asp:DropDownList></p>
                    <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
-                   <asp:GridView ID="GridView1" runat="server" Style="color:black; " AutoGenerateColumns="false"  ShowHeaderWhenEmpty="true" CssClass="gridview-style"
-                                      AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" CellPadding="50" CellSpacing="50" 
-                                      Font-Bold="False" Font-Size="13px"  Height="100%" Width="100%" >  
-                        <PagerStyle  HorizontalAlign="Center" />
-                        <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
+                   <%--<asp:gridview id="gridview1" runat="server" style="color:black; " autogeneratecolumns="false"  showheaderwhenempty="true" cssclass="gridview-style"
+                                      allowpaging="true"  backcolor="#ffffff" bordercolor="#c1beba" borderstyle="solid" borderwidth="1px" cellpadding="50" cellspacing="50" 
+                                      font-bold="false" font-size="13px"  height="100%" width="100%" >  
+                        <pagerstyle  horizontalalign="center" />
+                        <headerstyle font-bold="false"  backcolor="#d3d3d3" font-size="12px" forecolor="black" height="28px"  horizontalalign="center" verticalalign="middle"/>
                        
-                            <Columns >
-                               <asp:BoundField DataField="studentID" HeaderText="Student ID"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                <asp:BoundField DataField="lastName" HeaderText="Last Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                <asp:BoundField DataField="firstName" HeaderText="First Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                 <asp:BoundField DataField="course" HeaderText="Course" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" SortExpression="ColumnName1"/>
-                                <asp:BoundField DataField="workedAt" HeaderText="Worked At" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                                <asp:BoundField DataField="dateStarted" HeaderText="Date Started" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                 <asp:BoundField DataField="internshipStatus" HeaderText="Internship Status" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" SortExpression="ColumnName2"/>
+                            <columns >
+                               <asp:boundfield datafield="studentid" headertext="student id"  itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
+                                <asp:boundfield datafield="lastname" headertext="last name" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
+                                <asp:boundfield datafield="firstname" headertext="first name" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
+                                 <asp:boundfield datafield="course" headertext="course" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" sortexpression="columnname1"/>
+                                <asp:boundfield datafield="workedat" headertext="worked at" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" />
+                                <asp:boundfield datafield="datestarted" headertext="date started" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
+                                 <asp:boundfield datafield="internshipstatus" headertext="internship status" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" sortexpression="columnname2"/>
                                 
                            
-                                </Columns>
-                    </asp:GridView>
+                                </columns>
+                    </asp:gridview>--%>
+                               <table  class="table-list">
+                                    <tr>
+                                        <th>student id</th>
+                                        <th>last name</th>
+                                        <th>first name</th>
+                                        <th>middle initial</th>
+                                        <th>program enrolled</th>
+                                        <th>worked at</th>
+                                        <th>date started</th>
+                                        <th>hours needed</th>
+                                        <th>rendered hours</th>
+                                        <th>evaluation</th>
+                                        <th>status</th>
+                                    </tr>
+                                    <asp:Repeater ID="dataRepeater" runat="server">
+                                        <Itemtemplate>
+                                            <tr class="datas">
+                                                <td><%# Eval("studentId") %></td>
+                                                <td><%# Eval("lastname") %></td>
+                                                <td><%# Eval("firstname") %></td>
+                                                <td><%# Eval("midinitials") %></td>
+                                                <td><%# Eval("course") %></td>
+                                                <td><%# Eval("workedAt") %></td>
+                                                <td><%# Eval("dateStarted") %></td>
+                                                <td><%# Eval("hoursNeeded") %></td>
+                                                <td><%# Eval("renderedHours") %></td>
+                                                <td><%# Eval("evaluationRequest") %></td>
+                                                <%--<td>
+                                                    <asp:button id="evaluationBtn" runat="server" text="view evaluation"
+                                                    oncommand="reviewletter_command" commandname="review"  
+                                                    commandargument='<%# Eval("evaluationRequest") %>'/>
+                                                </td>--%>
+                                                <td><%# Eval("internshipStatus") %></td>
+                                            </tr>
+                                        </Itemtemplate>
+        
+                                    </asp:Repeater>
+                                </table>
                </div>
             </asp:TableCell>
         </asp:TableRow>

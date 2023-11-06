@@ -186,10 +186,12 @@
                 border: 1px solid #881A30; padding: 10px; margin: auto; margin-bottom: 10px; width: 100%; height: 100%;
                 box-shadow: 0px 0px 7px -3px  #bd0606;
                 border-radius: 7px;
+                padding-left:3em;
             }
 
             .status-area{
                 padding: 10px;
+                padding-left:3em;
             }
 
             .modal{
@@ -266,8 +268,7 @@
                         <asp:ListItem>Rejected</asp:ListItem>
                         </asp:DropDownList>
                     </p>
-                    
-                    <h3 id="Job_Title" runat="server" visible="false" style="float:left; padding:10px;"></h3>
+            
                     <!-- Repeater for Applicant -->
                     <asp:Repeater ID="rptApplicant" runat="server" OnItemDataBound="rptApplicant_ItemDataBound">
                         <ItemTemplate>
@@ -288,6 +289,7 @@
                                                 <asp:Label ID="lbllname" runat="server" Text='<%# Eval("applicantLname") %>'></asp:Label>
                                             </div>
                                         </div>
+                                        <br />
                                         <div class="row">
                                             <div class="col-3 d-flex flex-column">
                                                 Position:
@@ -296,6 +298,7 @@
                                                 <asp:Label ID="Lblposition" runat="server" Text='<%# Eval("appliedPosition") %>'></asp:Label>                                                
                                             </div>
                                         </div>
+                                        <br />
                                          <div class="row">
                                              <div class="col-3 d-flex flex-column">
                                                  Job Type:
@@ -304,6 +307,7 @@
                                                  <asp:Label ID="lbljobType" runat="server" Text='<%# Eval("jobType") %>'></asp:Label>                                                
                                              </div>
                                         </div>
+                                        <br />
                                         <div class="row">
                                             <div class="col-3 d-flex flex-column">
                                                 Date Applied:
@@ -373,7 +377,7 @@
             <asp:TableCell Style="vertical-align:top; ">
                 <div class="sidemenu-container">
                     <a  href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
-                     <a href="#"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
+                     <a href="IndustryJobPosted.aspx"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
                      <a class="active" href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
                      <a  href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                      <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>

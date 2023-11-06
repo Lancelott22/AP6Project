@@ -194,12 +194,45 @@
                                 <asp:BoundField DataField="FirstName" HeaderText="First Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                  <asp:BoundField DataField="referredBy" HeaderText="Referred by" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                  <asp:BoundField DataField="endorsementLetter" HeaderText="Endorsement Letter" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
+                                <asp:BoundField DataField="resumeFile" HeaderText="Resume" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
                                  <asp:BoundField DataField="dateReferred" HeaderText="Date Referred" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                 <asp:BoundField DataField="resumeFile" HeaderText="Resume" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
+                                <asp:BoundField DataField="ReferralStatus" HeaderText="Status" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
+                                 
 
                            
                                 </Columns>
                     </asp:GridView>
+                              <%-- <table  class="table-list">
+                                    <tr>
+                                        <th>Referral ID</th>
+                                        <th>Last Name</th>
+                                        <th>First Name</th>
+                                        <th>Referred by</th>
+                                        <th>Endorsement Letter</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    <asp:Repeater ID="dataRepeater" runat="server">
+                                        <ItemTemplate>
+                                            <tr class="datas">
+                                                <td><%# Container.ItemIndex + 1 %></td>
+                                                <td><%# Eval("lastName") %></td>
+                                                <td><%# Eval("firstName") %></td>
+                                                <td><%# Eval("midInitials") %></td>
+                                                <td><%# Eval("industryName") %></td>
+                                                <td><%# Eval("referredBy") %></td>
+                                                <td>
+                                                    <asp:Button ID="btnEndorsementLetterButton" runat="server" Text="View Endorsement Letter"
+                                                    OnCommand="ReviewLetter_Command" CommandName="Review"  
+                                                    CommandArgument='<%# Eval("endorsementLetter") %>'/>
+                                                </td>
+                                                <td><%# Eval("dateReferred") %></td>
+                                                <td class='<%# GetStatusCssClass(Eval("ReferralStatus").ToString()) %>' ><%# Eval("ReferralStatus") %></td>
+                                            </tr>
+                                        </ItemTemplate>
+        
+                                    </asp:Repeater>
+                                </table>--%>
                </div>
             </asp:TableCell>
         </asp:TableRow>

@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="ctuconnect.Site1"  %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="ctuconnect.Admin" %>
 
 <!DOCTYPE html>
 
@@ -20,7 +20,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
 
-    <style>
+        <style>
         .navbar-custom{
             color: #FFF5F5;
             height:70px;
@@ -78,6 +78,59 @@
         ul li a {
               text-decoration: none;
         }
+
+        .badge-pill{
+            background-color:red;
+            position: absolute;
+            top: -30px; /* Adjust this value as needed to fine-tune the badge's position */
+            right: -5px;
+            
+        }
+
+        .notifications-panel {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            height: 100%;
+            width: 300px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+        }
+
+        .panel-visible {
+            right: 0;
+        }
+
+
+        .panel-content {
+            padding: 20px;
+        }
+
+        .badge{
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            left: 24px;
+            padding: 0 5px;
+            font-size: 16px;
+            line-height: 22px;
+            min-height: 15px;
+            background: #EF476F;
+            color: #FFF;
+            border-radius: 11px;
+
+        }
+
+        .notification-button{
+            margin-top:5px;
+        }
+
+        .dropdown-menu{
+            min-width:600px;
+        }
+
+
     </style>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -114,31 +167,86 @@
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 navbar-right" >
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Home">Home</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Internship
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Home">Home</a></li>            
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/JobPortal">Job Portal</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/About">About</a></li>
+                        <li class="nav-item">
+                                <div class="position-relative">
+                                    <asp:ImageButton ID="imgbtnbell" runat="server" Height="40" Width="38" ImageUrl="images/notification_bell.png" CssClass="notification-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
+                                    <div class="badge">
+                                        <asp:Label ID="lblUnreadCount" runat="server"></asp:Label>
+                                    </div>
+                                    <div class="dropdown-menu" aria-labelledby="message" style="border-style:solid; border-width:1px">
+                                        <!--<div class="red">You have <asp:Label ID="lbln" runat="server"></asp:Label> Message </div>-->
+                                        <asp:Repeater ID="r2" runat="server">
+                                            <ItemTemplate>
+                                                <div class="notif-box"></div>
+                                                    
+                                                                    <span class="for-message media-body">
+                                                                        <%# Eval("title") %>
+                                                                            <p><%# Eval("description") %></p>
+                                                                    </span>
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:Repeater>
+                                    </div>
+                                    
+                                </div>
+                            
+                        </li>
+                        <!--
+                        <li>
+                            <div class="bell">
+                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                    id="message"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="images/notification_bell.png" Height="47" Width="45"/>
+
+                                        <span class="badge badge-danger badge-pill"><asp:Label ID="notification1" runat="server"></asp:Label></span>
+                                    
+                                </button>
+                                    
+
+                                <div class="dropdown-menu" aria-labelledby="message" style="border-style:solid; border-width:1px">
+                                    <p class="red">You have <asp:Label ID="notification2" runat="server"></asp:Label> Message </p>
+                                    <asp:Repeater ID="r1" runat="server">
+                                        <ItemTemplate>
+                                            
+                                                                <span class="for-message media-body">
+                                                                    <%# Eval("title") %>
+                                                                        <p><%# Eval("description") %></p>
+                                                                </span>
+                                                            
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </div>
+                            </div>
+                            
+                        </li>
+                        -->
                         <li class="nav-item"><asp:ImageButton ID="imgbtnaccount" runat="server" Height="47" Width="45" ImageUrl="images/account.png" /></li>
 
                     </ul>
                 </div>
             </div>
         </nav>
+
+        
+
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
+
+        
+
     </form>
     </div>
+
+
+
+
+
 </body>
      
 </html>

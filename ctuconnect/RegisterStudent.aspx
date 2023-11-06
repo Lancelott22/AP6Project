@@ -118,9 +118,8 @@
                 <div class="col-sm-4 d-flex flex-column justify-content-center">
                     Course*<br />
                     <asp:DropDownList ID="drpcourse" CssClass="txtbox" runat="server" Width="200px" Height="30px">
-                        <asp:ListItem Value="200002">BSIT</asp:ListItem>
-                        <asp:ListItem Value="200001">BSIS</asp:ListItem>
-                        <asp:ListItem Value="200000">BIT</asp:ListItem>
+                        <asp:ListItem Value="200008">BSIT</asp:ListItem>
+                        <asp:ListItem Value="200007">BIT</asp:ListItem>
                         
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator6" forecolor="#F7941F" ControlToValidate="drpcourse" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>

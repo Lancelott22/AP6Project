@@ -251,13 +251,13 @@
                     <h1 class="title">Post a Job</h1>
                    
                         <asp:Label ID="Label1" runat="server" Text="Job Title " Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                        <asp:TextBox ID="JobTitle" runat="server" CssClass="form-control txtbox" Placeholder="e.g. Financial Planning Assistant" ></asp:TextBox>
+                        <asp:TextBox ID="JobTitle" runat="server" CssClass="txtbox" Placeholder="e.g. Financial Planning Assistant" ></asp:TextBox>
                 
                         <asp:Label ID="Label2" runat="server" Text="Industry Name " Style="font-size:18px;"></asp:Label><span style="color: red">*</span>
-                        <asp:TextBox ID="IndName" runat="server" CssClass="form-control txtbox" Placeholder="e.g. Gaus Electonics"></asp:TextBox>
+                        <asp:TextBox ID="IndName" runat="server" CssClass="txtbox" Placeholder="e.g. Gaus Electonics"></asp:TextBox>
                    
                         <asp:Label ID="Label5" runat="server" Text="Job Location " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                        <asp:TextBox ID="jobLoc" runat="server" CssClass="form-control txtbox" Placeholder="e.g. M.J. Cuenco Ave, Cor R. Palma Street, 6000 Cebu" ></asp:TextBox>
+                        <asp:TextBox ID="jobLoc" runat="server" CssClass="txtbox" Placeholder="e.g. M.J. Cuenco Ave, Cor R. Palma Street, 6000 Cebu" ></asp:TextBox>
 
                         <asp:Label ID="Label3" runat="server" Text="Job Type " Style="font-size:18px;"></asp:Label><span style="color: red">*</span>
                         <asp:Label ID="Label4" runat="server" Text="Specified course " Style="font-size:20px; margin-left:42%;"></asp:Label><span style="color: red">*</span>
@@ -283,16 +283,16 @@
 
 
                     <asp:Label ID="Label6" runat="server" Text="Job Description " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="jobDescript" runat="server" TextMode="MultiLine" CssClass="form-control txtbox-description" Placeholder="Enter Job Description" ></asp:TextBox>
+                     <asp:TextBox ID="jobDescript" runat="server" TextMode="MultiLine" CssClass="txtbox-description" Placeholder="Enter Job Description" ></asp:TextBox>
 
                     <asp:Label ID="Label7" runat="server" Text="Job Qualifications " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="jobQuali" runat="server"  CssClass="form-control txtbox-description" TextMode="MultiLine" Placeholder="Enter Job Qualifications" ></asp:TextBox>
+                     <asp:TextBox ID="jobQuali" runat="server"  CssClass="txtbox-description" TextMode="MultiLine" Placeholder="Enter Job Qualifications" ></asp:TextBox>
 
                     <asp:Label ID="Label8" runat="server" Text="Instructions to apply " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="jobInstruct" runat="server" TextMode="MultiLine" CssClass="form-control txtbox-instruction" Placeholder="How to apply?"></asp:TextBox>
+                     <asp:TextBox ID="jobInstruct" runat="server" TextMode="MultiLine" CssClass="txtbox-instruction" Placeholder="How to apply?"></asp:TextBox>
                      
                     <asp:Label ID="Label9" runat="server" Text="Salary Range" Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                    <asp:TextBox ID="salary" runat="server" CssClass="form-control txtbox" Placeholder="PHP XXX,XXX - PHP XXX,XXX"></asp:TextBox>
+                    <asp:TextBox ID="salary" runat="server" CssClass="txtbox" Placeholder="PHP XXX,XXX - PHP XXX,XXX"></asp:TextBox>
 
                     <asp:Button ID="PostJob" runat="server" CssClass="postJobStyle"  Text="Post" OnClick="PostJob_Click"/>
             </div>
@@ -304,7 +304,7 @@
                 <div class="sidemenu-container">
                     <a href="IndustryDashboard.aspx"><i class='bx bxs-dashboard' aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
                     <a class="active" href="#"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
-                     <a href="IndustryJobPosted.aspx"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
+                     <a href="#"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
                      <a href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
                      <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                      <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
