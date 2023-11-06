@@ -268,7 +268,8 @@
                         <asp:ListItem>Rejected</asp:ListItem>
                         </asp:DropDownList>
                     </p>
-            
+                    
+                    <h3 id="Job_Title" runat="server" visible="false" style="float:left; padding:10px;"></h3>
                     <!-- Repeater for Applicant -->
                     <asp:Repeater ID="rptApplicant" runat="server" OnItemDataBound="rptApplicant_ItemDataBound">
                         <ItemTemplate>

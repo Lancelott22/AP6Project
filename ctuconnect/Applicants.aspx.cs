@@ -24,7 +24,17 @@ namespace ctuconnect
         {
             if (!IsPostBack && Session["IndustryEmail"] != null)
             {
-
+                if (!IsPostBack && Request.QueryString["jobid"] != null)
+                {
+                    filterByJob();
+                    Job_Title.InnerText = "All Applicants for " + Request.QueryString["jobtitle"].ToString() + " Position";
+                    Job_Title.Visible = true;
+                }
+                else
+                {
+                    this.LoadApplicants();
+                    Job_Title.Visible = false;
+                }
                 this.LoadApplicants();
                 currentApplicantID = -1;
                 ChangeReviewButtonText();
@@ -537,6 +547,28 @@ namespace ctuconnect
             if (e.Day.Date > DateTime.Today)
             {
                 e.Day.IsSelectable = false;
+            }
+        }
+
+        void filterByJob()
+        {
+            if (Request.QueryString["jobid"] != null)
+            {
+                int industryAccID = Convert.ToInt32(Session["INDUSTRY_ACC_ID"].ToString());
+                int jobId = int.Parse(Request.QueryString["jobid"].ToString());
+                using (var db = new SqlConnection(conDB))
+                {
+                    string query = "SELECT * FROM APPLICANT WHERE industry_accID = @industryAcctID and jobID = @jobId ORDER BY dateApplied DESC";
+                    SqlCommand cmd = new SqlCommand(query, db);
+                    cmd.Parameters.AddWithValue("@industryAcctID", industryAccID);
+                    cmd.Parameters.AddWithValue("@jobId", jobId);
+                    db.Open();
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(dtApplicants);
+                }
+
+                rptApplicant.DataSource = dtApplicants;
+                rptApplicant.DataBind();
             }
         }
 
