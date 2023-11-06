@@ -142,6 +142,7 @@
     <Content Include="HiredList.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="images\account.png" />
+    <Content Include="images\administratorpic.jpg" />
     <Content Include="images\calendar.jpg" />
     <Content Include="images\ctuconnectlogo.png" />
     <Content Include="images\ctulogo.png" />
@@ -152,10 +153,12 @@
     <Content Include="images\Logo.png" />
     <Content Include="images\logout.png" />
     <Content Include="images\man.png" />
+    <Content Include="images\notification_bell.png" />
     <Content Include="images\report.png" />
     <Content Include="images\schoolbg.png" />
     <Content Include="images\StudentProfiles\defaultprofile.jpg" />
     <Content Include="IndustryHome.aspx" />
+    <Content Include="IndustryVerification.aspx" />
     <Content Include="JobPortal.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="LoginIndustry.aspx" />
@@ -198,6 +201,7 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="MyJobApplication.aspx" />
+    <Content Include="Admin.Master" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -235,6 +239,13 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin.Master.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin.Master.designer.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
     <Compile Include="Applicants.aspx.cs">
       <DependentUpon>Applicants.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -323,6 +334,13 @@
     </Compile>
     <Compile Include="IndustryHome.aspx.designer.cs">
       <DependentUpon>IndustryHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IndustryVerification.aspx.cs">
+      <DependentUpon>IndustryVerification.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IndustryVerification.aspx.designer.cs">
+      <DependentUpon>IndustryVerification.aspx</DependentUpon>
     </Compile>
     <Compile Include="JobPortal.aspx.cs">
       <DependentUpon>JobPortal.aspx</DependentUpon>
