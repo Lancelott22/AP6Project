@@ -155,6 +155,7 @@
     <Content Include="images\report.png" />
     <Content Include="images\schoolbg.png" />
     <Content Include="images\StudentProfiles\defaultprofile.jpg" />
+    <Content Include="IndustryDashboard.aspx" />
     <Content Include="IndustryHome.aspx" />
     <Content Include="IndustryJobPosted.aspx" />
     <Content Include="JobPortal.aspx" />
@@ -318,6 +319,13 @@
     </Compile>
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IndustryDashboard.aspx.cs">
+      <DependentUpon>IndustryDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IndustryDashboard.aspx.designer.cs">
+      <DependentUpon>IndustryDashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="IndustryHome.aspx.cs">
       <DependentUpon>IndustryHome.aspx</DependentUpon>

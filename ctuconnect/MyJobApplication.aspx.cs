@@ -257,7 +257,7 @@ namespace ctuconnect
                  myApplicationList.Style.Add("background-color", "#f0e789");*/
             }
         }
-
+         
         protected void MyApplication_PagePropertiesChanged(object sender, EventArgs e)
         {
             myApplicationBind();

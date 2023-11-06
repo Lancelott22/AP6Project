@@ -1,8 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="IndustryHome.aspx.cs" Inherits="ctuconnect.IndustryHome" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="IndustryDashboard.aspx.cs" Inherits="ctuconnect.IndustryDashboard" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
+     
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
@@ -20,7 +20,7 @@
             padding: 10px;
             background-color:white;
             margin-left:4%;
-            margin-bottom:20px;
+            margin-bottom:20px; 
         }
         @media (max-width: 790px) {
             .profile-container, .sidemenu-container {
@@ -32,7 +32,8 @@
         }
         .profile-container img{
             display:block;
-             width:60%;
+            width:60%;
+
             margin-left:auto;
             margin-right:auto;
 
@@ -294,7 +295,7 @@
                     <asp:Label ID="Label9" runat="server" Text="Salary Range" Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
                     <asp:TextBox ID="salary" runat="server" CssClass="form-control txtbox" Placeholder="PHP XXX,XXX - PHP XXX,XXX"></asp:TextBox>
 
-                    <asp:Button ID="PostJob" runat="server" CssClass="postJobStyle"  Text="Post" OnClick="PostJob_Click"/>
+                    <asp:Button ID="PostJob" runat="server" CssClass="postJobStyle"  Text="Post" />
             </div>
                     </asp:TableCell>
             </asp:TableRow>
@@ -302,8 +303,8 @@
         <asp:TableRow>
             <asp:TableCell Style="vertical-align:top;" >
                 <div class="sidemenu-container">
-                    <a href="IndustryDashboard.aspx"><i class='bx bxs-dashboard' aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
-                    <a class="active" href="#"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
+                     <a class="active" href="#"><i class='bx bxs-dashboard' aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
+                    <a  href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
                      <a href="IndustryJobPosted.aspx"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
                      <a href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
                      <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
@@ -318,4 +319,3 @@
       
     </asp:Table>
 </asp:Content>
-

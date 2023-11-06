@@ -342,7 +342,7 @@
                                         <asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b>
                                 </p>
                             </center>
-                        </div>
+                        </div> 
                     </asp:TableCell>
                     <asp:TableCell RowSpan="2">
                         <div class="d-flex flex-column" style="margin-bottom: 30px;">

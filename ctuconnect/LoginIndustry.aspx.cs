@@ -16,7 +16,7 @@ namespace ctuconnect
         {
             if (!IsPostBack && Session["IndustryEmail"] != null)
             {
-                Response.Redirect("IndustryHome.aspx");
+                Response.Redirect("IndustryDashboard.aspx");
             }
 
             LoginErrorMessage.Visible = false;
@@ -72,7 +72,7 @@ namespace ctuconnect
                                     reader.Close();
                                 }
                                 Session["IndustryEmail"] = txtemail.Text;
-                                Response.Redirect("IndustryHome.aspx");// User is authenticated, you can redirect to another page
+                                Response.Redirect("IndustryDashboard.aspx");// User is authenticated, you can redirect to another page
                             }
                             else
                             {

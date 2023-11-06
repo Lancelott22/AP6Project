@@ -412,7 +412,7 @@
                             </div>
                         </div>
                     </div>
-
+                     
                     <div class="col-7 d-flex flex-column ">
                         <br />
                         <asp:TextBox ID="txtsearchOrder" CssClass="form-control searchbox" runat="server" placeholder="Search job title or keyword"></asp:TextBox>

@@ -21,7 +21,7 @@ namespace ctuconnect
             if (!IsPostBack && Session["IndustryEmail"] == null)
             {
                 Response.Redirect("LoginIndustry.aspx");
-
+                 
             }
             else
             {

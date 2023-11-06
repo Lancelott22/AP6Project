@@ -181,7 +181,7 @@ namespace ctuconnect
                         return;
                     }
                 }            
-
+                 
                     conDB.Open();
                     if (Usertype == "Alumni")
                     {

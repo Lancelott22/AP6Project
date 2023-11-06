@@ -30,7 +30,7 @@ namespace ctuconnect
                 industryImage1.ImageUrl = imagePath;
 
             }
-
+              
             IndName.Text = Session["INDUSTRYNAME"].ToString();
             IndName.Enabled = false;
             jobLoc.Text = Session["LOCATION"].ToString();
