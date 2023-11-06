@@ -169,6 +169,38 @@
           border-bottom: 2px solid black;
           color:#881A30;
          }
+        th{
+           border-collapse: collapse;
+            border-color:white;
+            background-color:#f4f4fb;
+            padding:5px;
+
+        }
+        .datas{
+             padding:5px;
+              border: 3px solid;
+              border-color:white;
+             font-weight:bold;
+             color:black;
+        }
+
+        .table-list{
+             border-collapse: collapse;
+            font-size:13px; 
+            height:auto; 
+            width:100%;
+            color:dimgray;
+        }
+        .evaluateButton{
+            background-color: #F9E9B7; 
+            color: #F3C129; 
+            margin-right:2px;
+            border-radius: 25px; 
+            padding: 1px 3px; 
+            text-align: center;
+            cursor: pointer;
+            border:none;
+        }
     </style>
     <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
@@ -188,9 +220,40 @@
                    <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p> 
                 
                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-                        <ContentTemplate>
+     <ContentTemplate>
                             <%--First Gridview--%>
-                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Style="text-align:center;" Height="100%" Width="100%"  AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" 
+                        <asp:Repeater ID="dataRepeater1" runat="server">
+                            <HeaderTemplate>
+                                <table  class="table-list">
+                                    <tr>
+                                        <th style="width: 50px;">No.</th>
+                                       <th style="width: 200px;">Last Name</th>
+                                       <th style="width: 200px;">First Name</th>
+                                       <th style="width: 200px;">Date Started</th>
+                                       <th style="width: 200px;">Position</th>
+                                       <th>Resume</th>
+                                    </tr>
+                                  </table>
+                            </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <table class="table-list">
+                                        <tr class="datas">
+                                            <td style="width: 50px;"><%# Container.ItemIndex + 1 %></td>
+                                           <td style="width: 150px;"><%# Eval("lastName") %></td>
+                                           <td style="width: 150px;"><%# Eval("firstName") %></td>
+                                           <td style="width: 150px;"><%# Eval("dateStarted") %></td>
+                                           <td style="width: 150px;"><%# Eval("position") %></td>
+                                            <td >
+                                                <asp:Button ID="ResumeButton"  runat="server" Text="View Resume"
+                                                OnCommand="ViewResume_Command" CommandName="View"  
+                                                CommandArgument='<%# Eval("resumeFile") %>'/>
+                                            </td>
+                                        </tr>
+                                            </table>
+                                    </ItemTemplate>
+                                </asp:Repeater>
+                           
+                            <%--<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Style="text-align:center;" Height="100%" Width="100%"  AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" 
                                 CellPadding="50" CellSpacing="50" Font-Bold="False" Font-Size="13px" ShowHeaderWhenEmpty="true">
                             <PagerStyle  HorizontalAlign="Center" />
                             <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
@@ -209,10 +272,44 @@
                                 <asp:BoundField DataField="Position" HeaderText="Position" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                 <asp:BoundField DataField="ResumeFile" HeaderText="Resume" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
                             </Columns>
-                            </asp:GridView>
-
+                            </asp:GridView>--%>
+                   
                             <%--Second Gridview--%>
-                            <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Visible="false" Style="text-align:center;" Height="100%" Width="100%"  AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" 
+                                   <asp:Repeater ID="dataRepeater2" runat="server">
+                                    <HeaderTemplate>
+                                        <table  class="table-list">
+                                            <tr>
+                                                <th style="width: 78px;">No.</th>
+                                                <th style="width: 230px;">Last Name</th>
+                                                <th style="width: 230px;">First Name</th>
+                                                <th style="width: 230px;">Date Hired</th>
+                                                <th style="width: 230px;">Internship Status</th>
+                                                <th style="width: 230px;">Rendered Hours</th>
+                                                <th style="width: 230px;">Evaluation</th>
+                                            </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                                <ItemTemplate>
+                                                     <table class="table-list">
+                                                    <tr class="datas">
+                                                        <td style="width: 78px;"><%# Container.ItemIndex + 1 %></td>
+                                                        <td style="width: 230px;"><%# Eval("lastName") %></td>
+                                                        <td style="width: 230px;"><%# Eval("firstName") %></td>
+                                                        <td style="width: 230px;"><%# Eval("dateHired") %></td>
+                                                        <td style="width: 230px;"><%# Eval("internshipStatus") %></td>
+                                                        <td style="width: 230px;"><%# Eval("renderedHours") %></td>
+                                                        <td >
+                                                            <asp:Button ID="EvaluationBtn" CssClass="evaluateButton" runat="server" Text='<%# Eval("evaluationRequest") %>'
+                                                            OnCLick="Evaluate_BtnClick"/>
+                                                        </td>
+                                                    </tr>
+                                                    </table>
+
+                                                </ItemTemplate>
+        
+                                            </asp:Repeater>
+                                      
+                            <%--<asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Visible="false" Style="text-align:center;" Height="100%" Width="100%"  AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" 
                                 CellPadding="50" CellSpacing="50" Font-Bold="False" Font-Size="13px" ShowHeaderWhenEmpty="true" OnRowDataBound="GridView2_RowDataBound">
                                 <PagerStyle  HorizontalAlign="Center" />
                                 <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
@@ -232,9 +329,8 @@
                                     <asp:BoundField DataField="RenderedHours" HeaderText="Rendered hours" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                     <asp:BoundField DataField="EvaluationRequest" HeaderText="Evaluation Request" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
                                </Columns>
-                            </asp:GridView>
-                             
-                        </ContentTemplate>
+                            </asp:GridView>--%>
+                       </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
                 

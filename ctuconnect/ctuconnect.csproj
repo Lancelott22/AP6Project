@@ -476,6 +476,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\COR\" />
+    <Folder Include="images\EndorsementLetter\" />
     <Folder Include="images\IndustryProfile\" />
     <Folder Include="images\MOU\" />
     <Folder Include="images\OJTCoordinatorProfile\" />

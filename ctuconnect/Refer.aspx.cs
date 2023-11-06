@@ -11,6 +11,8 @@ using System.Web.UI.WebControls;
 using System.Web.DynamicData;
 using System.Xml.Linq;
 using System.Drawing;
+using static System.Net.WebRequestMethods;
+using File = System.IO.File;
 
 namespace ctuconnect
 {
@@ -32,8 +34,9 @@ namespace ctuconnect
                 {
                     // Handle the case where the user is not logged in or doesn't have a coordinator_accID.
                 }*/
-             
-                BindGridView1();
+              
+
+                BindTable();
                 using (conDB)
                 {
                     conDB.Open();
@@ -53,15 +56,15 @@ namespace ctuconnect
             }
         }
 
-        void BindGridView1()
+        void BindTable()
         {
             int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
 
-            string query = "SELECT STUDENT_ACCOUNT.firstName, STUDENT_ACCOUNT.lastName, STUDENT_ACCOUNT.midInitials,  INDUSTRY_ACCOUNT.industryName,   COORDINATOR_ACCOUNT.firstName + ' ' + COORDINATOR_ACCOUNT.lastName AS referredBy , REFERRAL.endorsementLetter, REFERRAL.dateReferred " +
+            string query = "SELECT STUDENT_ACCOUNT.firstName, STUDENT_ACCOUNT.lastName, STUDENT_ACCOUNT.midInitials,  INDUSTRY_ACCOUNT.industryName,   COORDINATOR_ACCOUNT.firstName + ' ' + COORDINATOR_ACCOUNT.lastName AS referredBy , REFERRAL.endorsementLetter, CONVERT(VARCHAR(10), REFERRAL.dateReferred, 120) AS dateReferred, REFERRAL.ReferralStatus " +
             "FROM REFERRAL  JOIN STUDENT_ACCOUNT ON REFERRAL.student_accID = STUDENT_ACCOUNT.student_accID " +
             "JOIN INDUSTRY_ACCOUNT  ON REFERRAL.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
             "JOIN COORDINATOR_ACCOUNT ON REFERRAL.coordinator_accID = COORDINATOR_ACCOUNT.coordinator_accID " +
-            "WHERE REFERRAL.coordinator_accID = @CoordinatorID";
+            "WHERE REFERRAL.coordinator_accID = @CoordinatorID ORDER BY referralID DESC";
             SqlCommand cmd = new SqlCommand(query, conDB);
             cmd.Parameters.AddWithValue("@CoordinatorID", coordinatorID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -69,8 +72,9 @@ namespace ctuconnect
             da.Fill(ds);
 
             // Bind the DataTable to the GridView
-            GridView1.DataSource = ds;
-            GridView1.DataBind();
+            dataRepeater.DataSource = ds;
+            dataRepeater.DataBind();
+            
         }
         protected void addRefer_Click(object sender, EventArgs e)
         {
@@ -108,9 +112,9 @@ namespace ctuconnect
             using (conDB)
             {
                 conDB.Open();
-                string query = "SELECT firstName, midInitials, lastName, resumeFile FROM STUDENT_ACCOUNT WHERE student_accID = @student_accID";
+                string query = "SELECT firstName, midInitials, lastName, resumeFile FROM STUDENT_ACCOUNT WHERE studentId = @studentId";
                 SqlCommand command = new SqlCommand(query, conDB);
-                command.Parameters.AddWithValue("@student_accID", enteredID);
+                command.Parameters.AddWithValue("@studentId", enteredID);
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
@@ -121,6 +125,7 @@ namespace ctuconnect
                         txtMiddleInitial_student.Text = reader["midInitials"].ToString();
                         txtLastName_student.Text = reader["lastName"].ToString();
                         txtResumeFileName.Text = reader["resumeFile"].ToString();
+                        
                     }
                     else
                     {
@@ -142,36 +147,160 @@ namespace ctuconnect
         {
             string studentID = txtID_student.Text;
             string industryID = dropdownIndustries.SelectedValue;
-            
-            int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
+            string referralStatus = "Pending";
 
-            // Add the data to the Referral table in the database
+            HttpPostedFile postedFile = endorsementUpload.PostedFile;  /// upload file
+            string filename = Path.GetFileName(postedFile.FileName);///to check the filename 
+            int filesize = postedFile.ContentLength; //to get the filesize
+            string logpath = Server.MapPath("~/images/EndorsementLetter/"); //creating a drive to upload or save the file
+            string filepath = Path.Combine(logpath, filename);
+
+            postedFile.SaveAs(filepath);
+
+            int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
+            int studentAccountID = -1;
+
+           
+
+
             using (conDB)
             {
                 conDB.Open();
-                using (var cmd = conDB.CreateCommand())
+                string query = "SELECT student_accID FROM STUDENT_ACCOUNT WHERE studentID = @studentID";
+                SqlCommand command = new SqlCommand(query, conDB);
+                command.Parameters.AddWithValue("@studentId", studentID);
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    // SQL Statement to insert data into the Referral table
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "INSERT INTO REFERRAL (student_accID, industry_accID, coordinator_accID, dateReferred) " +
-                                      "VALUES (@studentID, @industryID, @coordinatorID, @dateReferred)";
-
-                    cmd.Parameters.AddWithValue("@studentID", studentID);
-                    cmd.Parameters.AddWithValue("@industryID", industryID);
-                    cmd.Parameters.AddWithValue("@coordinatorID", coordinatorID);
-                    cmd.Parameters.AddWithValue("@dateReferred", DateTime.Now.ToString("yyyy/MM/dd"));
-                    cmd.ExecuteNonQuery();
+                    if (reader.Read())
+                    {
+                        studentAccountID = reader.GetInt32(0); // Assuming student_accountID is an int
+                    }
                 }
-                ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('show');", true);
-                
+
+                // Add the data to the Referral table in the database
+                if (studentAccountID != -1)
+                {
+                    using (var cmd = conDB.CreateCommand())
+                    {
+                        // SQL Statement to insert data into the Referral table
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandText = "INSERT INTO REFERRAL (student_accID, industry_accID, coordinator_accID, endorsementLetter, dateReferred, ReferralStatus) " +
+                                          "VALUES (@student_accID, @industryID, @coordinatorID, @endorsementLetter, @dateReferred, @referralStatus)";
+
+                        cmd.Parameters.AddWithValue("@student_accID", studentAccountID);
+                        cmd.Parameters.AddWithValue("@industryID", industryID);
+                        cmd.Parameters.AddWithValue("@coordinatorID", coordinatorID);
+                        cmd.Parameters.AddWithValue("@endorsementLetter", filename);
+                        cmd.Parameters.AddWithValue("@dateReferred", SqlDbType.DateTime).Value = DateTime.Now;
+                        cmd.Parameters.AddWithValue("@referralStatus", referralStatus);
+                        cmd.ExecuteNonQuery();
+                    }
+                    ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('show');", true);
+
+                }
+
+
+                else
+                {
+                    // Handle the case where the studentID is not found
+                    // You can show an error message or take appropriate action here
+                }
             }
-           /* Response.Redirect("Refer.aspx");*/
-            /*
-            this.BindGridView1();*/
         }
+        /* protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+         {
+             if (e.Row.RowType == DataControlRowType.DataRow)
+             {
+                 string ReferralStatus = DataBinder.Eval(e.Row.DataItem, "ReferralStatus").ToString();
+                 int cell = GetStatusColumnIndex();
 
-        
+                 if (ReferralStatus == "Pending")
+                 {
+                     e.Row.Cells[cell].Text = $"<span style='background-color: yellow;'>{ReferralStatus}</span>";
+                 }
+             }
+         }
+         private int GetStatusColumnIndex()
+         {
+             for (int i = 0; i < GridView1.HeaderRow.Cells.Count; i++)
+             {
+                 if (GridView1.HeaderRow.Cells[i].Text == "ReferralStatus")
+                 {
+                     return i;
+                 }
+             }
+             return -1; // Return -1 if the column is not found.
+         }*/
 
+        protected string GetStatusCssClass(string status)
+        {
+            string cssClass = "default-status"; // Define a default CSS class
+
+            if (status == "Pending")
+            {
+                cssClass = "status-pending";
+            }
+            else if (status == "Approved")
+            {
+                cssClass = "status-approved";
+            }
+            // Add more conditions for other status values.
+
+            return cssClass;
+        }
+        protected void ReviewLetter_Command(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "Review")
+            {
+                /* Button btn = (Button)sender;
+                 int studentID = Convert.ToInt32(btn.Attributes["data-studentid"]);
+ */
+                string endorsementLetterFileName = e.CommandArgument.ToString();
+                /*string endorsementLetterPath = Server.MapPath("~/images/EndorsementLetter" + endorsementLetterFileName);*/
+                // Change the button text to "Reviewed"
+                //Button button = (Button)sender;
+                //button.Text = "Reviewed";
+
+
+                // Retrieve and display the resume file
+                 byte[] endorsementLetterFileData = GetEndorsementFileData(endorsementLetterFileName);
+
+
+                if (endorsementLetterFileData != null)
+                {
+                    // Provide the file data for download in a new browser tab
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.ContentType = "application/pdf"; // Set the appropriate content type
+                    Response.AddHeader("content-disposition", "inline; filename=endorsementLetter.pdf"); // Open in a new tab
+                    Response.BinaryWrite(endorsementLetterFileData);
+                    Response.End();
+                }
+            }
+        }
+        private byte[] GetEndorsementFileData(string endorsementLetterFileName)
+        {
+            using (conDB)
+            {
+                string query = "SELECT endorsementLetter FROM REFERRAL WHERE endorsementLetter = @endorsementLetterFileName";
+                SqlCommand cmd = new SqlCommand(query, conDB);
+                cmd.Parameters.AddWithValue("@endorsementLetterFileName", endorsementLetterFileName);
+
+                conDB.Open();
+                object result = cmd.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    // Assuming that the result is a file path, read the file content
+                    string fileName = result.ToString();
+                    string filePath = "~/images/EndorsementLetter/" + fileName; // Construct the path
+                    byte[] fileData = System.IO.File.ReadAllBytes(Server.MapPath(filePath));
+                    return fileData;
+                }
+
+                return null; // No file found
+            }
+        }
     }
 }
     

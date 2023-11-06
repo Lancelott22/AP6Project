@@ -82,7 +82,7 @@
                 width:1500px;
                 top:0;
                 bottom:0;
-                padding: 2% 4% 4% 4%;
+                padding: 2% ;
                 overflow: auto;
                 /*background-color:white;*/
                 height:550px;
@@ -248,6 +248,50 @@
         display: flex;
         column-gap: 5px;
     }
+    .status-pending {
+    background-color: #F9E9B7; 
+    color: #F3C129; 
+    margin-right:2px;
+    border-radius: 25px; 
+    padding: 1px 3px; 
+    text-align: center;
+    cursor: pointer;
+}
+        .status-approved {
+    background-color: #d3ffd3; 
+    color: #2c9a5d; 
+    margin-right:2px;
+    border-radius: 25px;
+    padding: 1px 3px; 
+    text-align: center;
+    cursor: pointer;
+}
+    .status-column{
+        padding:10px;
+    }
+    th{
+       border-collapse: collapse;
+        border-color:white;
+        background-color:#f4f4fb;
+        padding:5px;
+
+    }
+    .datas{
+         padding:9px;
+          border: 8px solid;
+          border-color:white;
+         font-weight:bold;
+         color:black;
+    }
+    
+    .table-list{
+         border-collapse: collapse;
+        font-size:13px; 
+        height:auto; 
+        width:100%;
+        color:dimgray;
+    }
+    
     </style>
     <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
@@ -274,29 +318,63 @@
                         </p>
                             <asp:Button ID="addreferstudent" runat="server" Text="Add Refer Student" AutoPostBack="false" OnClick="addRefer_Click" style="float:right;"    />
                            <%-- <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p> --%>
-                            <asp:GridView ID="GridView1" runat="server" RowStyle-CssClass="GridViewRowStyle" Style="color:black; " AutoGenerateColumns="false"  CssClass="gridview-style"
-                                AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" CellPadding="50" CellSpacing="50" 
-                                Font-Bold="False" Font-Size="13px" Height="100%" Width="100%" ShowHeaderWhenEmpty="true" >  
-                            <PagerStyle  HorizontalAlign="Center" />
-                            <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
-                                <EmptyDataTemplate>
-                                     <p>No data available</p>
-                                </EmptyDataTemplate>
-                            <Columns >
-                                        <asp:TemplateField HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
+                           <%-- <asp:gridview id="gridview1" runat="server" rowstyle-cssclass="gridviewrowstyle" style="color:black; " autogeneratecolumns="false"  cssclass="gridview-style"
+                                allowpaging="true"  backcolor="#ffffff" bordercolor="#c1beba" borderstyle="solid" borderwidth="1px" cellpadding="50" cellspacing="50" 
+                                font-bold="false" font-size="13px" height="100%" width="100%" showheaderwhenempty="true" onrowdatabound="gridview1_rowdatabound">  
+                            <pagerstyle  horizontalalign="center" />
+                            <headerstyle font-bold="false"  backcolor="#d3d3d3" font-size="12px" forecolor="black" height="28px"  horizontalalign="center" verticalalign="middle"/>
+                                <emptydatatemplate>
+                                     <p>no data available</p>
+                                </emptydatatemplate>
+                            <columns  >
+                                        <asp:templatefield headertext="no." itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px">
+                                            <itemtemplate>
+                                                <%# %>
+                                            </itemtemplate>
+                                        </asp:templatefield>
+                                        <asp:boundfield datafield="lastname" headertext="last name" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
+                                        <asp:boundfield datafield="firstname" headertext="first name" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
+                                        <asp:boundfield datafield="midinitials" headertext="middle initial" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
+                                        <asp:boundfield datafield="industryname" headertext="industry" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" />
+                                        <asp:boundfield datafield="referredby" headertext="referred by" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" />
+                                        <asp:boundfield datafield="endorsementletter" headertext="endorsement letter" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" />
+                                        <asp:boundfield datafield="datereferred" headertext="date" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" />
+                                        <asp:boundfield datafield="referralstatus" headertext="status" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"  itemstyle-cssclass="status-column" />
+                            </columns>
+                            </asp:gridview>--%>
+                                                <table  class="table-list">
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Last Name</th>
+                                            <th>First Name</th>
+                                            <th>Middle Initial</th>
+                                            <th>Industry</th>
+                                            <th>Referred by</th>
+                                            <th>Endorsement Letter</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        <asp:Repeater ID="dataRepeater" runat="server">
                                             <ItemTemplate>
-                                                <%# Container.DataItemIndex + 1 %>
+                                                <tr class="datas">
+                                                    <td><%# Container.ItemIndex + 1 %></td>
+                                                    <td><%# Eval("lastName") %></td>
+                                                    <td><%# Eval("firstName") %></td>
+                                                    <td><%# Eval("midInitials") %></td>
+                                                    <td><%# Eval("industryName") %></td>
+                                                    <td><%# Eval("referredBy") %></td>
+                                                    <td>
+                                                        <asp:Button ID="btnEndorsementLetterButton" runat="server" Text="View Endorsement Letter"
+                                                        OnCommand="ReviewLetter_Command" CommandName="Review"  
+                                                        CommandArgument='<%# Eval("endorsementLetter") %>'/>
+                                                    </td>
+                                                    <td><%# Eval("dateReferred") %></td>
+                                                    <td class='<%# GetStatusCssClass(Eval("ReferralStatus").ToString()) %>' ><%# Eval("ReferralStatus") %></td>
+                                                </tr>
                                             </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:BoundField DataField="lastName" HeaderText="Last Name" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                        <asp:BoundField DataField="firstName" HeaderText="First Name" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                        <asp:BoundField DataField="midInitials" HeaderText="Middle Initial" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                        <asp:BoundField DataField="industryName" HeaderText="Industry" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                                        <asp:BoundField DataField="referredBy" HeaderText="Referred by" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                                        <asp:BoundField DataField="endorsementLetter" HeaderText="Endorsement Letter" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                                        <asp:BoundField DataField="dateReferred" HeaderText="Date" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                            </Columns>
-                            </asp:GridView>
+                                            
+                                        </asp:Repeater>
+                                    </table>
                 </div>
             </asp:TableCell>
         </asp:TableRow>
