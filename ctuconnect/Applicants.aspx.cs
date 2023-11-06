@@ -140,6 +140,7 @@ namespace ctuconnect
                 {
                     DropDownList drpApplicantStatus = (DropDownList)item.FindControl("drpApplicantStatus");
                     Label lblapplicantStatus = (Label)item.FindControl("lblapplicantStatus");
+                    Button btnSchedule = (Button)item.FindControl("btnSchedule");
 
                     if (lblapplicantStatus != null)
                     {
@@ -148,7 +149,7 @@ namespace ctuconnect
 
                         if (applicantStatusText == "Approved")
                         {
-                           
+                            btnSchedule.Visible = false;
                             drpApplicantStatus.Visible = false; 
                             lblapplicantStatus.BackColor = System.Drawing.Color.GreenYellow;
                             lblapplicantStatus.Style["width"] = "90px";
@@ -159,6 +160,7 @@ namespace ctuconnect
                         }
                         else if (applicantStatusText == "Rejected")
                         {
+                            btnSchedule.Visible = false;
                             drpApplicantStatus.Visible = false;
                             lblapplicantStatus.BackColor = System.Drawing.Color.Red;
                             lblapplicantStatus.Style["width"] = "80px";
