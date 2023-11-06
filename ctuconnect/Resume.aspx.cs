@@ -17,6 +17,7 @@ using iTextSharp.text.html.simpleparser;
 using iTextSharp.tool.xml;
 using System.Drawing.Printing;
 using System.Xml.Linq;
+using System.Globalization;
 
 namespace ctuconnect
 {
@@ -33,7 +34,7 @@ namespace ctuconnect
             if (!IsPostBack)
             {
 
-                int studentaccID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
+                int studentaccID = Convert.ToInt32(Session["STUDENT_ACC_ID"].ToString());
                 if (studentaccID > 0)
                 {
                     DisplayResume(studentaccID);
@@ -62,13 +63,23 @@ namespace ctuconnect
                     lblContact.Text = reader["contactNumber"].ToString();
                     LoadProfilePicture(reader["picture"].ToString());
                     lblEmail.Text = reader["email"].ToString();
-                    DateTime bdate = Convert.ToDateTime(reader["birthdate"].ToString());
+                    //DateTime bdate = Convert.ToDateTime(reader["birthdate"].ToString());
                     lblGender.Text = reader["gender"].ToString();
                     lblAddress.Text = reader["address"].ToString();
                     lblJobLevel.Text = reader["jobLevel"].ToString();
 
-                    string formattedBdate = bdate.ToString("yyyy-MM-dd");
-                    lblBirthdate.Text = formattedBdate;
+                    if (reader["birthdate"] != DBNull.Value && !string.IsNullOrWhiteSpace(reader["birthdate"].ToString()))
+                    {
+                        DateTime bdate = Convert.ToDateTime(reader["birthdate"]);
+                        lblBirthdate.Text = bdate.ToString("MM/dd/yyyy");
+                    }
+                    else
+                    {
+                        lblBirthdate.Text = "N/A"; // or any default text you want to display for null or empty values
+                    }
+                    //lblBirthdate.Text = bdate.ToString("MM-dd-yyyy");
+                    //string formattedBdate = bdate.ToString("dd-MM-yyyy");
+                    //lblBirthdate.Text = formattedBdate;
                 }
                 reader.Close();
 
@@ -168,7 +179,8 @@ namespace ctuconnect
         {
             using (MemoryStream ms = new MemoryStream())
             {
-                Document document = new Document(PageSize.A4, 50, 50, 25, 25);
+                //Document document = new Document(PageSize.A4, 50, 50, 25, 25);
+                Document document = new Document(PageSize.LETTER, 50, 50, 25, 25);
                 PdfWriter writer = PdfWriter.GetInstance(document, ms);
                 document.Open();
 
@@ -398,6 +410,16 @@ namespace ctuconnect
         protected void btnEdit_Click(object sender, EventArgs e)
         {
             Response.Redirect("EditResume");
+        }
+
+        protected void SignOut_Click(object sender, EventArgs e)
+        {
+
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+            Response.Redirect("LoginStudent.aspx");
+
         }
     }
 }

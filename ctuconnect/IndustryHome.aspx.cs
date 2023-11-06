@@ -47,8 +47,25 @@ namespace ctuconnect
                     int industryAccID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
                     string jobTitle = JobTitle.Text;
                     string industryName = IndName.Text;
-                    string jobType = jobtype.Value.ToString();
-                    string jobCourse = course.Value.ToString();
+                    string jobType = "";
+                
+                         foreach (ListItem item in jobtype.Items)
+                         {
+                             if (item.Selected)
+                            {
+                            jobType += item.Value  + "," ;
+                            }
+                         }
+                    jobType = jobType.Remove(jobType.Length - 1, 1);
+                    string jobCourse = "";
+                    foreach (ListItem item in course.Items)
+                    {
+                        if (item.Selected)
+                        {
+                            jobCourse += item.Value + ",";
+                        }
+                    }
+                    jobCourse = jobCourse.Remove(jobCourse.Length - 1, 1);
                     string jobLocation = jobLoc.Text;
                     string jobDescription = jobDescript.Text;
                     string jobQualification = jobQuali.Text;

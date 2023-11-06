@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Configuration;
 using Antlr.Runtime;
+using System.Web.UI.HtmlControls;
 
 namespace ctuconnect
 {
@@ -31,13 +32,17 @@ namespace ctuconnect
         void myApplicationBind()
         {
             int studentAccID = int.Parse( Session["Student_ACC_ID"].ToString());
-            SqlCommand cmd = new SqlCommand("select * from APPLICANT JOIN INDUSTRY_ACCOUNT ON APPLICANT.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN HIRING ON APPLICANT.jobID = HIRING.jobID Where student_accID = @Student_accID", conDB);
+            SqlCommand cmd = new SqlCommand("select * from APPLICANT JOIN INDUSTRY_ACCOUNT ON APPLICANT.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN HIRING ON APPLICANT.jobID = HIRING.jobID Where student_accID = @Student_accID ORDER BY dateApplied DESC", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             da.Fill(ds);
             MyApplication.DataSource = ds;
             MyApplication.DataBind();
+            if (MyApplication.Items.Count == 0)
+            {
+                lblNoAppliedJob.Visible = true;
+            }
         }
         bool checkResumeStatus(int applicantID, int jobId)
         {
@@ -237,6 +242,22 @@ namespace ctuconnect
             Session.RemoveAll();
             Response.Redirect("LoginStudent.aspx");
 
+        }
+
+        protected void MyApplication_ItemDataBound(object sender, DataListItemEventArgs e)
+        {
+            HtmlGenericControl dateApplied = (HtmlGenericControl)e.Item.FindControl("DateApplied");
+            DateTime appliedDate = Convert.ToDateTime(dateApplied.InnerText);
+            DateTime currentDate = DateTime.Now;
+            TimeSpan timegap = currentDate - appliedDate;
+
+            if (timegap.Days < 1)
+            {
+                HtmlGenericControl Badge = (HtmlGenericControl)e.Item.FindControl("badge");
+                Badge.Visible = true;
+                /* HtmlGenericControl myApplicationList = (HtmlGenericControl)e.Item.FindControl("myApplicationList");
+                 myApplicationList.Style.Add("background-color", "#f0e789");*/
+            }
         }
     }
 }

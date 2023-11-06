@@ -9,8 +9,9 @@
             padding:10px 10px 10px 10px;
             width:200px;
             margin:auto;
-            margin-top:auto;
-            text-decoration:none;
+            margin-top:20px;
+            position: absolute;
+            margin-left:70px;
         }
 
         .nav a{
@@ -174,7 +175,7 @@
                  border: 1px solid #881A30; padding: 10px; margin: auto; margin-bottom: 10px; width: 100%; height: 100%;
                 box-shadow: 0px 0px 7px -3px  #bd0606;
                 border-radius: 7px;
-
+               position:relative;
             }
             .jobAppliedBox:hover {
                 box-shadow: 3px 7px 18px #bd0606;
@@ -208,6 +209,21 @@
             .modal ::-webkit-scrollbar-thumb:hover {
                 background: #881A30;
             }
+        .NewBadge {
+            border: solid 1px #15d455;
+            border-radius:5px;
+            height: 20px;
+            width: 30px;
+            background: #15d455;
+            padding: 2px;
+            color: #ffffff;
+            font-size: 10px;
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            box-shadow: 0px 0px 9px -1px #15d455;
+            text-align: center;
+        }
     </style>
     <div class="container-fluid">
         <div class="row">
@@ -246,16 +262,18 @@
                 <br />
                 <div class="container">
                     <div class="box">
-                        <asp:DataList ID="MyApplication" runat="server" class="container-fluid">
+                        <asp:DataList ID="MyApplication" runat="server" class="container-fluid" OnItemDataBound="MyApplication_ItemDataBound">
                             <ItemTemplate>
                                 <div id="myApplicationList" runat="server" class="row d-flex align-items-center jobAppliedBox">
-                                    <div class="col-sm-2">
+                                     <span runat="server" id="badge" class="NewBadge" visible="false">New</span>
+                                    <div class="col-sm-2" style="text-align:center">
                                         <img id="IndstryLogo" src='<%#String.Format("images/{0}", Eval("industryPicture"))%>' runat="server" alt="Logo" class="imgStyle" />
                                     </div>
-                                    <div class="col-sm-7">
-                                        <div class="row">
+                                    <div class="col-sm-8">
+                                        <div class="row" style="border-right: 1px solid #881A30;">
                                             <label id="ApplicantID" runat="server" hidden="hidden"><%#Eval("applicantID")%></label>
                                             <label id="JobID" runat="server" hidden="hidden"><%#Eval("jobID")%></label>
+                                            <label id="DateApplied" runat="server" hidden="hidden"><%#Eval("dateApplied")%></label>
                                             <label runat="server" hidden="hidden"><%#Eval("jobType")%></label>
                                             <div class="align-items-start">
                                                 <span>
@@ -286,8 +304,7 @@
 
                                         </div>
                                     </div>
-                                     <div class="col-1" style="border-right: 1px solid #881A30; height:100px;">
-                                </div>
+                                    
                                     <div class="col-sm-2 d-flex align-items-center">
                                         <div class="flex-fill">
                                             <asp:Button ID="ViewApplication" Text="View" class="buttonStyle" runat="server" CommandName='<%#Eval("jobID")%>' OnCommand="ViewApplication_Command" CommandArgument='<%#Eval("applicantID")%>' AutoPostBack="false" CausesValidation="false" />
@@ -297,6 +314,8 @@
                                 </div>
                             </ItemTemplate>
                         </asp:DataList>
+                       <h3 style="position:relative; top:100px;"><asp:Label Visible="false" CssClass="alert alert-light d-flex p-2 bd-highlight justify-content-sm-center" runat="server" ID="lblNoAppliedJob" Text="No Job Applied Yet!"></asp:Label></h3>
+
                     </div>
             </div>
         </div>
@@ -315,33 +334,32 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <ul class="applicationTimeline">
-                            <li id="ResumeStatus" runat="server">
+                            <li id="applicantStatus" runat="server">
                                 <i class='bx bxs-time'></i>
-                                <div  class="ContainerBox">
+                                <div class="ContainerBox">
                                     <div style="background: #881A30; color: white; padding: 10px; padding-left: 10px;">
-                                        <label>Resume Status</label>
-                                        <i class='bx bx-notepad' style="float:right; font-size: 20px;"></i>
+                                        <label>Application Status</label>
+                                        <i class='bx bx-envelope' style="float: right; font-size: 20px;"></i>
                                     </div>
                                     <div style="padding: 10px;">
                                         <br />
                                         <b><span>Status: </span></b>
-                                        <asp:Label ID="resumeStatusCheck" runat="server" Text="Waiting for your resume review status..."></asp:Label>
-
+                                        <asp:Label ID="applicationStatusCheck" runat="server" Text="Waiting for your application approval..."></asp:Label>
                                         <br />
                                         <br />
-                                        <span id="statusResume" visible="false" runat="server"></span>
+                                        <span id="statusApplication" visible="false" runat="server"></span>
                                         <br />
                                         <br />
                                     </div>
                                 </div>
                             </li>
                             <li id="InterviewStatus" runat="server">
-                                 <i class='bx bxs-time'></i>
-                                <div  class="ContainerBox">
+                                <i class='bx bxs-time'></i>
+                                <div class="ContainerBox">
                                     <div style="background: #881A30; color: white; padding: 10px; padding-left: 10px;">
                                         <label>Interview Status</label>
-                                        <i class='bx bx-calendar-check' style="float:right; font-size: 20px;"></i>
-                                        
+                                        <i class='bx bx-calendar-check' style="float: right; font-size: 20px;"></i>
+
                                     </div>
 
                                     <div style="padding: 10px;">
@@ -356,25 +374,27 @@
                                     </div>
                                 </div>
                             </li>
-                            <li id="applicantStatus" runat="server">
-                                    <i class='bx bxs-time'></i>
-                                <div  class="ContainerBox">
+                            <li id="ResumeStatus" runat="server">
+                                <i class='bx bxs-time'></i>
+                                <div class="ContainerBox">
                                     <div style="background: #881A30; color: white; padding: 10px; padding-left: 10px;">
-                                        <label>Application Status</label>
-                                        <i class='bx bx-envelope' style="float:right; font-size: 20px;"></i>
+                                        <label>Resume Status</label>
+                                        <i class='bx bx-notepad' style="float: right; font-size: 20px;"></i>
                                     </div>
                                     <div style="padding: 10px;">
                                         <br />
                                         <b><span>Status: </span></b>
-                                        <asp:Label ID="applicationStatusCheck" runat="server" Text="Waiting for your application approval..."></asp:Label>
+                                        <asp:Label ID="resumeStatusCheck" runat="server" Text="Waiting for your resume review status..."></asp:Label>
+
                                         <br />
                                         <br />
-                                        <span id="statusApplication" visible="false" runat="server"></span>
+                                        <span id="statusResume" visible="false" runat="server"></span>
                                         <br />
                                         <br />
                                     </div>
                                 </div>
                             </li>
+
                         </ul>
                     </div>
                 </div>

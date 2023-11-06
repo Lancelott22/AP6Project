@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using System.Web.Configuration;
 using System.Web.DynamicData;
 using System.Runtime.ConstrainedExecution;
+using System.Web.UI.HtmlControls;
 
 namespace ctuconnect
 {
@@ -34,18 +35,28 @@ namespace ctuconnect
         void JobBind()
         {
             string studentCourse = Session["Student_COURSE"].ToString();
-           
-            SqlCommand cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE jobCourse = @studCourse", conDB);
-            cmd.Parameters.AddWithValue("@studCourse", studentCourse);
+            string Usertype = Session["STATUSorTYPE"].ToString();
+            string jobtype = "";
+            if (Usertype == "Intern")
+            {
+                jobtype = "internship";
+            }
+            SqlCommand cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE jobCourse LIKE '%"+ studentCourse + "%' and jobType LIKE '%"+ jobtype + "%' ORDER BY jobPostedDate DESC", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             da.Fill(ds);
             JobHiring.DataSource = ds;
             JobHiring.DataBind();
-           
+            if(JobHiring.Items.Count == 0)
+            {
+                lblNoPost.Visible = true;
+            }
         }
         protected void ApplyJob_Command(object sender, CommandEventArgs e)
-        {           
+        {
+            string script = "$('#ApplyJobModal').modal('show')";
+            ClientScript.RegisterStartupScript(this.GetType(), "Popup", script, true);  
+            
             int jobId = int.Parse(e.CommandArgument.ToString());
             if (checkJobApplied(jobId) == true)
             {
@@ -92,8 +103,7 @@ namespace ctuconnect
                 }
                 reader.Close();
                 conDB.Close();
-                string script = "$('#ApplyJobModal').modal('show')";
-                ClientScript.RegisterStartupScript(this.GetType(), "Popup", script, true);
+               
 
             
         }
@@ -101,22 +111,24 @@ namespace ctuconnect
         protected void SubmitApply_Command(object sender, CommandEventArgs e) //submitApplication
         {
             int alumni_accId = -1;
-            int student_accId = -1; ;
+            int student_accId = -1; 
             
-             string Usertype = Session["STATUSorTYPE"].ToString();
-                string jobtype = JobType.Text.ToString();
+            string Usertype = Session["STATUSorTYPE"].ToString();
+            string jobtype = "";
             if(Usertype == "Alumni")
             {
                 alumni_accId = int.Parse(Session["Alumni_accID"].ToString());
+                jobtype = "";
             }
             else if (Usertype == "Intern")
             {
                  student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
+                jobtype = "internship";
             }          
              string position = JobTitle.Text.ToString();
              string applicantFName = Session["FNAME"].ToString();
              string applicantLName = Session["LNAME"].ToString();
-             string dateApplied = DateTime.Now.ToString("dd MMMM yyyy");
+             DateTime dateApplied = DateTime.Now;
              string resume = Session["ResumeFile"].ToString();
             int jobID = int.Parse(Job_ID.Text.ToString());
             int industry_accId = int.Parse(IndustryID.Text.ToString());
@@ -132,8 +144,8 @@ namespace ctuconnect
                 conDB.Open();
                 if (Usertype == "Alumni")
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,applicantFName, appliedPosition, applicantLName, industry_accID,dateApplied, resume, jobID  ) " +
-                        "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@jobID)", conDB);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,applicantFName, appliedPosition, applicantLName, industry_accID, dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType) " +
+                        "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID,@studentType)", conDB);
 
                     cmd.Parameters.AddWithValue("@jobtype", jobtype);
                     cmd.Parameters.AddWithValue("@student_accId", alumni_accId);
@@ -143,12 +155,16 @@ namespace ctuconnect
                     cmd.Parameters.AddWithValue("@industry_accId", industry_accId);
                     cmd.Parameters.AddWithValue("@dateApplied", dateApplied);
                     cmd.Parameters.AddWithValue("@resume", resume);
+                    cmd.Parameters.AddWithValue("@resumeStatus", "Pending");
+                    cmd.Parameters.AddWithValue("@interviewStatus", "Pending");
+                    cmd.Parameters.AddWithValue("@applicantStatus", "Pending");
                     cmd.Parameters.AddWithValue("@jobID", jobID);
-                    int ctr = cmd.ExecuteNonQuery();
+                        cmd.Parameters.AddWithValue("@studentType", Usertype);
+                        int ctr = cmd.ExecuteNonQuery();
                     if(ctr > 0)
                     {
                        
-                        Response.Write("<script>alert('You have successfully submitted your job application.');</script>");
+                        Response.Write("<script>alert('You have successfully submitted your job application.');document.location='MyJobApplication.aspx';</script>");
                     } else
                     {
                         Response.Write("<script>alert('Sorry! There is something wrong in applying the job. Please try again..');</script>");
@@ -156,8 +172,8 @@ namespace ctuconnect
                 }
                 else if (Usertype == "Intern")
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accID,applicantFName, applicantLName, appliedPosition, industry_accID,dateApplied, resume, jobID, StudentType) " +
-                      "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@jobID, @studentType)", conDB);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accID,applicantFName, applicantLName, appliedPosition, industry_accID,dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType) " +
+                      "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID, @studentType)", conDB);
 
                     cmd.Parameters.AddWithValue("@jobtype", jobtype);
                     cmd.Parameters.AddWithValue("@student_accId", student_accId);
@@ -167,13 +183,16 @@ namespace ctuconnect
                     cmd.Parameters.AddWithValue("@industry_accId", industry_accId);
                     cmd.Parameters.AddWithValue("@dateApplied", dateApplied);
                     cmd.Parameters.AddWithValue("@resume", resume);
+                    cmd.Parameters.AddWithValue("@resumeStatus", "Pending");
+                    cmd.Parameters.AddWithValue("@interviewStatus", "Pending");
+                    cmd.Parameters.AddWithValue("@applicantStatus", "Pending");
                     cmd.Parameters.AddWithValue("@jobID", jobID);
                     cmd.Parameters.AddWithValue("@studentType", Usertype);
                     int ctr = cmd.ExecuteNonQuery();
                     if (ctr > 0)
                     {
                        
-                            Response.Write("<script>alert('You have successfully submitted your job application.');</script>");
+                            Response.Write("<script>alert('You have successfully submitted your job application.');document.location='MyJobApplication.aspx';</script>");
                     }
                     else
                     {
@@ -210,11 +229,9 @@ namespace ctuconnect
                     reader.Close();
                     conDB.Close();
                     return true;
-                }
-               
+                }              
                
             }
-
            
             return false;
         }
@@ -249,6 +266,21 @@ namespace ctuconnect
             else if (checkJobApplied(JobId) == false)
             {
                 btn.Text = "Apply";
+            }
+
+            Label jobPostedDate = (Label)e.Item.FindControl("JobPostedDate");
+            ((Label)e.Item.FindControl("timeAgoMsg")).Text = postedDateTimeAgo(Convert.ToDateTime(jobPostedDate.Text));
+
+            DateTime postedDate = Convert.ToDateTime(jobPostedDate.Text);
+            DateTime currentDate = DateTime.Now;
+            TimeSpan timegap = currentDate - postedDate;
+
+            if (timegap.Days < 1)
+            {
+                HtmlGenericControl Badge = (HtmlGenericControl)e.Item.FindControl("badge");
+                Badge.Visible = true;
+               /* HtmlGenericControl JobList = (HtmlGenericControl)e.Item.FindControl("jobList");
+                JobList.Style.Add("background-color", "#f0e789");*/
             }
         }
         private void DisplayStudentInfo()
@@ -296,6 +328,58 @@ namespace ctuconnect
             }
             conDB.Close();
             return false;
+        }
+        private string postedDateTimeAgo(DateTime postDateTime) //check the time gap between posted date and current date
+        {
+            string timeAgoMsg = "";
+            DateTime currentDate = DateTime.Now;
+            TimeSpan timegap = currentDate - postDateTime;
+            if (timegap.Days >= (365*2))
+            {
+                timeAgoMsg = string.Concat((((timegap.Days) / 30) / 12), " years ago");
+            }
+            else if (timegap.Days >= 365)
+            {
+                timeAgoMsg = string.Concat((((timegap.Days) / 30) / 12), " year ago");
+            }
+            else if (timegap.Days >= (30*2))
+            {
+                timeAgoMsg = string.Concat("About ", ((timegap.Days) / 30), " months ago");
+            }
+            else if (timegap.Days >= 31)
+            {
+                timeAgoMsg = string.Concat("About ", ((timegap.Days) / 30), " month ago");
+            }      
+            else if (timegap.Days > 1)
+            {
+                timeAgoMsg = string.Concat(timegap.Days, " days ago");
+            }
+            else if (timegap.Days == 1)
+            {
+                timeAgoMsg = "Yesterday";
+            }
+            else if (timegap.Hours >= 2)
+            {
+                timeAgoMsg = string.Concat("About ", timegap.Hours, " hours ago");
+            }
+            else if (timegap.Hours >= 1)
+            {
+                timeAgoMsg = string.Concat("About ", timegap.Hours, " hour ago");
+            }
+            else if (timegap.Minutes > 1)
+            {
+                timeAgoMsg = string.Concat("About ", timegap.Minutes, " minutes ago");
+            }
+            else if (timegap.Minutes == 1)
+            {
+                timeAgoMsg = string.Concat("About ", timegap.Minutes, " minute ago");
+            }
+            else
+            {
+                timeAgoMsg = "Just Now";
+            }
+
+            return timeAgoMsg;
         }
     }
 }  

@@ -19,11 +19,7 @@ namespace ctuconnect
         string connDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
-        {   
-            if(!IsPostBack && Session["Student_ACC_ID"] == null)
-            {
-                Response.Redirect("LoginStudent.aspx");
-            }
+        {
             int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
             if (!IsPostBack)
             {
@@ -47,6 +43,9 @@ namespace ctuconnect
                         }
 
                     }
+
+                    LoadProfilePicture(studentAcctID);
+                    LoadResumeFile(studentAcctID);
                 }
             }
 
@@ -54,6 +53,7 @@ namespace ctuconnect
 
         protected void btnUploadPicture_Click(object sender, EventArgs e)
         {
+
             if (fileUploadProfilePicture.HasFile)
             {
                 int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
@@ -62,10 +62,11 @@ namespace ctuconnect
 
                 fileUploadProfilePicture.SaveAs(filePath);
 
-                // Save the profile picture file path to the database (you need to implement this part)
-                SaveProfilePicturePath(studentAcctID.ToString(),  studentAcctID + "_" + fileName);
+                // Save the profile picture file path to the database 
+                SaveProfilePicturePath(studentAcctID.ToString(), studentAcctID + "_" + fileName);
 
                 LoadProfilePicture(studentAcctID); // Reload the profile picture after uploading
+
             }
         }
 
@@ -119,19 +120,110 @@ namespace ctuconnect
             }
         }
 
+        private void LoadResumeFile(int studentAcctID)
+        {
+            // Retrieve the resume file path from the database
+            string resumeFilePath = GetResumeFilePath(studentAcctID);
+
+            if (!string.IsNullOrEmpty(resumeFilePath))
+            {
+
+                // Get only the file name from the resume file path
+                string resumeFileName = resumeFilePath;
+
+                // Display the file name in the label control
+                lblResumeFileName.Text = resumeFileName;
+            }
+            else
+            {
+                // Handle the case where no resume file is found
+                lblResumeFileName.Text = "No resume file found.";
+            }
+        }
+
+        private string GetResumeFilePath(int studentAcctID)
+        {
+            string resumeFilePath = string.Empty;
+            using (var db = new SqlConnection(connDB))
+            {
+                string query = "SELECT resumeFile FROM STUDENT_ACCOUNT WHERE student_accID = @studentAcctID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
+
+                db.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    resumeFilePath = reader["resumeFile"].ToString();
+                }
+                reader.Close();
+            }
+            return resumeFilePath;
+        }
+
+        /*
+        private void uploadResume()
+        {
+
+            if (resumeUpload.HasFile)
+            {
+                int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
+                string fileName = Path.GetFileName(resumeUpload.FileName);
+                string filePath = Server.MapPath("~/images/Resume/") + studentAcctID + "_" + fileName;
+
+                resumeUpload.SaveAs(filePath);
+
+                SaveResumeFilePath(studentAcctID.ToString(), studentAcctID + "_" + fileName);
+
+                LoadResumeFile(studentAcctID); // Reload the profile picture after uploading
+
+            }
+        }
+        */
+
+        private void SaveResumeFilePath(string studentAcctID, string resumeFile)
+        {
+            using (var db = new SqlConnection(connDB))
+            {
+                string query = "UPDATE STUDENT_ACCOUNT SET resumeFile = @ResumeFile WHERE student_accID = @studentAcctID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@ResumeFile", resumeFile);
+                cmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
+
+                db.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            HttpPostedFile postedFile = resumeUpload.PostedFile;  /// upload file
-            string filename = Path.GetFileName(postedFile.FileName);///to check the filename 
-            int filesize = postedFile.ContentLength; //to get the filesize
-            string logpath = "c:\\ResumeFiles"; //creating a drive to upload or save the image
-            string filepath = Path.Combine(logpath, filename);
+            int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
+            //HttpPostedFile postedFile = resumeUpload.PostedFile;  /// upload file
+            //string filename = Path.GetFileName(postedFile.FileName);///to check the filename 
+
+            //int filesize = postedFile.ContentLength; //to get the filesize
+            //string logpath = "~/images/Resume/"; //creating a drive to upload or save the image
+            //string filepath = Path.Combine(logpath, filename);
+
+            if (resumeUpload.HasFile)
+            {
+
+                string fileName = Path.GetFileName(resumeUpload.FileName);
+                string filePath = Server.MapPath("~/images/Resume/") + studentAcctID + "_" + fileName;
+
+                resumeUpload.SaveAs(filePath);
+
+                SaveResumeFilePath(studentAcctID.ToString(), studentAcctID + "_" + fileName);
+
+                LoadResumeFile(studentAcctID);
+
+            }
+
             var lastname = txtlname.Text;
             var firstname = txtfname.Text;
             var initials = txtinitials.Text;
             var status = drpStudentStatus.Text;
-
-            int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
 
             using (var db = new SqlConnection(connDB))
             {
@@ -140,7 +232,6 @@ namespace ctuconnect
                 {
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = "UPDATE STUDENT_ACCOUNT SET "
-                        + "resumeFile ='" + filename + "', "
                         + "lastName ='" + lastname + "', "
                         + "firstName ='" + firstname + "',"
                         + "midInitials ='" + initials + "',"
@@ -154,6 +245,7 @@ namespace ctuconnect
                 }
 
             }
+
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)

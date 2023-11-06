@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Xml.Linq;
 using System.Net.NetworkInformation;
+using System.Globalization;
 
 namespace ctuconnect
 {
@@ -49,8 +50,6 @@ namespace ctuconnect
                     rptCertificate.DataBind();
                 }
 
-
-
             }
 
         }
@@ -70,6 +69,7 @@ namespace ctuconnect
 
                 LoadProfilePicture(studentAcctID); // Reload the profile picture after uploading
             }
+
         }
 
         private void SaveProfilePicturePath(string studentAcctID, string profilePicture)
@@ -84,6 +84,7 @@ namespace ctuconnect
                 db.Open();
                 cmd.ExecuteNonQuery();
             }
+
         }
 
         private string GetProfilePicturePath(int studentAcctID)
@@ -104,6 +105,7 @@ namespace ctuconnect
                 reader.Close();
             }
             return profilePicture;
+
         }
 
         private void LoadProfilePicture(int studentAcctID)
@@ -120,10 +122,13 @@ namespace ctuconnect
                 // If no profile picture is found, display a default image (you can set a default image in the ImageUrl)
                 imgProfilePicture.ImageUrl = "~/ResumeProfile/defaultprofile.jpg";
             }
+
+
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
             string fname = txtfname.Text;
             string lname = txtlname.Text;
             string contactNumber = txtContact.Text;
@@ -133,9 +138,7 @@ namespace ctuconnect
             string address = txtAddress.Text;
             string jobLevel = drpjoblevel.Text;
 
-            DateTime birthdate = Convert.ToDateTime(txtbdate.Text);
-
-            int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
+            string birthdate = txtbdate.Text;         
 
             UpdateResume(studentAcctID, lname, fname, contactNumber, email, birthdate, gender, address, jobLevel);
 
@@ -265,7 +268,7 @@ namespace ctuconnect
             return dtCertificate;
         }
 
-        private void UpdateResume(int studentAcctID, string lname, string fname, string contactNumber, string email, DateTime birthdate, string gender, string address, string jobLevel)
+        private void UpdateResume(int studentAcctID, string lname, string fname, string contactNumber, string email, string birthdate, string gender, string address, string jobLevel)
         {
 
             using (var db = new SqlConnection(connDB))
@@ -273,6 +276,7 @@ namespace ctuconnect
                 db.Open();
                 using (var cmd = db.CreateCommand())
                 {
+
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = "UPDATE Resume SET "
                         + "lname = '" + lname + "',"

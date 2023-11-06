@@ -16,6 +16,7 @@
             margin-left:2%;
             border-radius: 20px;
         }
+
         @media (max-width: 790px) {
             .profile-container, .sidemenu-container {
                 max-width: 50%;
@@ -24,6 +25,7 @@
                  padding:5px 5px 5px 5px;
             }
         }
+
         .profile-container img{
             display:block;
             width:80%;
@@ -73,6 +75,7 @@
                 padding: 0px 0px 0px 20px;
             }
             .display-container{
+                font-size:16px;
                 background-color:white; 
                 width:1000px;
                 top:0;
@@ -80,7 +83,7 @@
                 padding: 2% 2% 0% 2%;
                 overflow: auto;
                 /*background-color:white;*/
-                height:550px;
+                min-height:200%;
                 /*overflow: auto;
                 float:left;
                 margin-left:25%;
@@ -89,8 +92,8 @@
             }
             
             .display-container {
-                    min-width: 100%;
-                }
+                min-width: 100%;
+            }
             
             .display-container .title{
                 font-size:25px;
@@ -179,7 +182,69 @@
                 padding-left:5em;
             }
 
-            
+            .applicantBox {
+                border: 1px solid #881A30; padding: 10px; margin: auto; margin-bottom: 10px; width: 100%; height: 100%;
+                box-shadow: 0px 0px 7px -3px  #bd0606;
+                border-radius: 7px;
+                padding-left:3em;
+            }
+
+            .status-area{
+                padding: 10px;
+                padding-left:3em;
+            }
+
+            .modal{
+                 width:600px;
+                 margin:auto;
+                 margin-top:100px;
+                
+                 
+             }
+             .modal-content{
+                 padding-left:2em;
+             }
+
+             .applicant-details{
+                 padding-left:2em;
+                 font-size:20px;
+             }
+
+             .txtbox{
+                border-radius: 3px;
+    
+             }
+
+             .searchbox {
+                width: 400px;
+                border-radius: 5px;
+                padding: 5px;
+                height: 50px;
+
+             }
+
+             .btnApplicant {
+                background-color: white;
+                color: orange;
+                border-radius: 15px;
+                border: 1.5px solid orange;
+                position:relative;
+             }
+
+             .btnApplicant:hover{
+                background: orange;
+                color: white;
+             }
+
+             .drpbox {
+                background-color: white;
+                color: #881a30;
+                border-radius: 15px;
+                border: 1.5px solid #881a30;
+                position:relative;
+             }
+
+             
 
 
              
@@ -195,88 +260,124 @@
             <asp:TableCell RowSpan="2" Style="padding:0px 10px 0px 25px; vertical-align:top;">
                 <div class="display-container">
                      <h1 class="title">Applicants List</h1>
-                    <p style="float:left;">Sort by <asp:DropDownList ID="ddlSortBy" runat="server" AutoPostBack="true"  CssClass="sort-dropdown" Height="">
-                        <asp:ListItem Text="Type" Value="ColumnName1"></asp:ListItem>
-                        <asp:ListItem Text="Date" Value="ColumnName2"></asp:ListItem>
-                        <asp:ListItem Text="Status" Value="ColumnName3"></asp:ListItem>
-                    </asp:DropDownList></p>
-                    <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p> 
-
-                                  
-                                <asp:GridView RowStyle-CssClass="GridViewRowStyle" ShowHeaderWhenEmpty="True" ID="GridView1" runat="server"
-                                    AutoGenerateColumns="False" CellPadding="50" Font-Bold="False" Font-Size="13px" Width="1300px" BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px"
-                                    CellSpacing="2" OnRowEditing="GridView1_RowEditing" OnRowCreated="GridView1_RowCreated">
-                                    <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
-                                     <Columns>
-                                            <asp:BoundField DataField="applicantID" readonly = "true"  HeaderText="ID" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">                    
-                                            </asp:BoundField>
-                                            <asp:BoundField DataField="jobType" readonly = "true"  HeaderText="Job Type" ItemStyle-HorizontalAlign="Center"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">                    
-                                            </asp:BoundField>
-                                            <asp:BoundField DataField="student_accID" readonly = "true"  HeaderText="Student ID" ItemStyle-HorizontalAlign="Center"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">                    
-                                            </asp:BoundField>
-                                            <asp:BoundField DataField="applicantFname" readonly = "true" HeaderText="First Name" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" >
-                                            </asp:BoundField>
-                                            <asp:BoundField DataField="applicantLname" readonly = "true" HeaderText="Last Name" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
-                                            </asp:BoundField>
-                                            <asp:BoundField DataField="appliedPosition" readonly = "true"  HeaderText="Position" ItemStyle-HorizontalAlign="Center"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">                    
-                                            </asp:BoundField>
-                                            <asp:BoundField DataField="dateApplied" readonly = "true" HeaderText="Date" DataFormatString="{0:d}" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
-                                            </asp:BoundField>
-                                            <asp:BoundField DataField="resume" readonly = "true" HeaderText="Resume" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
-                                            </asp:BoundField>
-                                            <asp:BoundField DataField="resumeStatus" readonly = "true" HeaderText="Resume Status" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
-                                            </asp:BoundField>
-                                            <asp:BoundField DataField="interviewDetails" readonly = "true" HeaderText="Interview Details" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
-                                            </asp:BoundField>
-                                            <asp:BoundField DataField="interviewScheduledDate" readonly = "true" HeaderText="Interview Date" DataFormatString="{0:d}" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
-                                            </asp:BoundField>
-                                            <asp:BoundField DataField="interviewStatus" readonly = "true" HeaderText="Interview Status" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
-                                            </asp:BoundField>
-                                            <asp:BoundField DataField="applicantStatus" readonly = "true" HeaderText="Applicant Status" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
-                                            </asp:BoundField>
-                                            <asp:BoundField DataField="StudentType" readonly = "true" HeaderText="Student Type" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
-                                            </asp:BoundField>
-                                         <asp:TemplateField>
-                                            <ItemTemplate>                                                  
-                                                <asp:Button ID="btnEdit" runat="server" Text="Edit" OnClick="EditRecord" CommandName="Edit"/>                                               
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                            
-                                     </Columns>
-                                     
-                                    
-                               </asp:GridView>
-                                
-                                
-
-                    <script>
-                        // Show the modal and populate it with data when the "Edit" button is clicked
-                        function openEditModal(resumeStatus, interviewDetails, interviewScheduledDate, interviewStatus, applicantStatus) {
-                            //console.log("Modal Opened");
-                            document.getElementById('<%=drpResumeStatus.ClientID%>').value = resumeStatus;
-                            document.getElementById('<%=txtInterviewDetails.ClientID%>').value = interviewDetails;
-                            document.getElementById('<%=txtInterviewDate.ClientID%>').value = interviewScheduledDate;
-                            document.getElementById('<%=drpInterviewStatus.ClientID%>').value = interviewStatus;
-                            document.getElementById('<%=drpApplicantStatus.ClientID%>').value = applicantStatus;
-                            // Additional fields can be populated similarly
-                            document.getElementById('editModal').style.display = 'block';
-                        }
-
-                        //Close the modal
-                        function closeEditModal() {
-                            document.getElementById('editModal').style.display = 'none';
-                        }
-                    </script>
-
-                                                                       
+                    <p style="float:left; padding:10px;">
+                        <asp:DropDownList ID="drpStatus" runat="server" CssClass="searchbox">
+                        <asp:ListItem>All</asp:ListItem>
+                        <asp:ListItem>Pending</asp:ListItem>
+                        <asp:ListItem>Approved</asp:ListItem>
+                        <asp:ListItem>Rejected</asp:ListItem>
+                        </asp:DropDownList>
+                    </p>
+            
+                    <!-- Repeater for Applicant -->
+                    <asp:Repeater ID="rptApplicant" runat="server" OnItemDataBound="rptApplicant_ItemDataBound">
+                        <ItemTemplate>
+                            <div class="container-fluid">
+                                <div class="row applicantBox">                                        
+                                    <div class="col-5 d-flex flex-column">
+                                        <div class="row">
+                                            <div class="col-12 d-flex flex-column">
+                                                <h4 Style="text-align:center; color:#881a30;"><b>Applicant Details</b></h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3 d-flex flex-column">
+                                                Applicant Name:
+                                            </div>
+                                            <div class="col-5">
+                                                <asp:Label ID="lblfname" runat="server" Text='<%# Eval("applicantFname") %>'></asp:Label>
+                                                <asp:Label ID="lbllname" runat="server" Text='<%# Eval("applicantLname") %>'></asp:Label>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-3 d-flex flex-column">
+                                                Position:
+                                            </div>
+                                            <div class="col-5">
+                                                <asp:Label ID="Lblposition" runat="server" Text='<%# Eval("appliedPosition") %>'></asp:Label>                                                
+                                            </div>
+                                        </div>
+                                        <br />
+                                         <div class="row">
+                                             <div class="col-3 d-flex flex-column">
+                                                 Job Type:
+                                             </div>
+                                             <div class="col-5">
+                                                 <asp:Label ID="lbljobType" runat="server" Text='<%# Eval("jobType") %>'></asp:Label>                                                
+                                             </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-3 d-flex flex-column">
+                                                Date Applied:
+                                            </div>
+                                            <div class="col-5">
+                                                <asp:Label ID="lbldateApplied" runat="server" Text='<%# Bind("dateApplied", "{0:d}") %>'></asp:Label>                                                
+                                            </div>
+                                        </div>                                                                                      
+                                    </div>
+                                    <div class="col-1" style="border-right: 1px solid #881A30; min-height:100px;">
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="row">
+                                            <div class="col-12 d-flex flex-column">
+                                                <h4 Style="text-align:center; color:#881a30;"><b>Status</b></h4>
+                                            </div>
+                                        </div>
+                                        <div class="row status-area">
+                                            <div class="col-3 d-flex flex-column">
+                                                Resume Status:
+                                            </div>
+                                            <div class="col-5 d-flex flex-column">
+                                                <asp:Label ID="lblresumeStatus" runat="server" Text='<%# Eval("resumeStatus") %>'></asp:Label>
+                                            </div>
+                                            <div class="col-4 d-flex flex-column">
+                                                <asp:Button ID="btnReview" runat="server" Text="Review" Width="110px" Height="30px" CssClass="btnApplicant" OnCommand="ReviewButton_Command" CommandName="Review" CommandArgument='<%# Eval("applicantID") %>' />
+                                            </div>
+                                        </div>
+                                        <div class="row status-area">
+                                            <div class="col-3 d-flex flex-column">
+                                                Interview Status:
+                                            </div>
+                                            <div class="col-5 d-flex flex-column">
+                                                <asp:Label ID="lblinterviewStatus" runat="server" Text='<%# Eval("interviewStatus") %>'></asp:Label>
+                                            </div>
+                                            <div class="col-4 d-flex flex-column">
+                                                <asp:Button ID="btnSchedule" runat="server" Text="Add Schedule" Width="110px" Height="30px" CssClass="btnApplicant" OnClick="btnSchedule_Click" CommandName="Add Schedule" CommandArgument='<%# Eval("applicantID") %>'/>
+                                            </div>
+                                        </div>
+                                        <div class="row status-area">
+                                            <div class="col-3 d-flex flex-column">
+                                                Applicant Status:
+                                            </div>
+                                            <div class="col-5 d-flex flex-column">
+                                                <asp:Label ID="lblapplicantStatus" runat="server" Text='<%# Eval("applicantStatus") %>'></asp:Label>
+                                            </div>
+                                            <div class="col-4 d-flex flex-column">
+                                                <asp:DropDownList ID="drpApplicantStatus" runat="server" CssClass="drpbox" Width="110px" Height="30px" onchange="confirmStatusUpdate(this);" AutoPostBack="false" OnSelectedIndexChanged="drpApplicantStatus_SelectedIndexChanged">
+                                                <asp:ListItem Enabled="true" Text= "STATUS" Value= "-1"></asp:ListItem>
+                                                <asp:ListItem>Approved</asp:ListItem>
+                                                <asp:ListItem>Rejected</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <Triggers>
+                        </ItemTemplate>                       
+                    </asp:Repeater>
+                
                 </div>
+
             </asp:TableCell>
         </asp:TableRow>
         <asp:TableRow>
             <asp:TableCell Style="vertical-align:top; ">
                 <div class="sidemenu-container">
                     <a  href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
-                     <a href="#"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
+                     <a href="IndustryJobPosted.aspx"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
                      <a class="active" href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
                      <a  href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                      <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
@@ -285,118 +386,74 @@
         </asp:TableRow>
     </asp:Table>
 
-                            <!-- Modal -->
-                            <div id="editModal" class="modal">
-                                <div class="modal-content">
-                                    <!--<span class="close" id="closeModal" onclick="closeEditModal()">&times;</span>-->
-                                    <br />
-                                    <h3 style="text-align:center">Applicant Details</h3> 
-                                    <br />
-                                    <div class="row applicant-details">
-                                        <div class="col-3 d-flex flex-column">
-                                            Applicant ID:
-                                        </div>
-                                        <div class="col-9 d-flex flex-column">
-                                            <asp:Label ID="lblapplicantID" runat="server"></asp:Label>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="row applicant-details">
-                                        <div class="col-3 d-flex flex-column">
-                                            Name:
-                                        </div>
-                                        <div class="col-9 d-flex flex-column">
-                                            <asp:Label ID="lblName" runat="server"></asp:Label>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="row applicant-details">
-                                        <div class="col-3 d-flex flex-column">
-                                            Position:
-                                        </div>
-                                        <div class="col-9 d-flex flex-column">
-                                            <asp:Label ID="lblAppliedPosition" runat="server"></asp:Label>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="row applicant-details">
-                                        <div class="col-3 d-flex flex-column">
-                                            Date Applied:
-                                        </div>
-                                        <div class="col-9 d-flex flex-column">
-                                            <asp:Label ID="lblDateApplied" runat="server"></asp:Label>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="row applicant-details">
-                                        <div class="col-3 d-flex flex-column">
-                                            Resume Status:
-                                        </div>
-                                        <div class="col-9 d-flex flex-column">
-                                            <asp:DropDownList ID="drpResumeStatus" runat="server" CssClass="txtbox" Width="100px" Height="20px">
-                                            <asp:ListItem>Pending</asp:ListItem>
-                                            <asp:ListItem>Reviewed</asp:ListItem>
-                                            </asp:DropDownList>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="row applicant-details">
-                                        <div class="col-3 d-flex flex-column">
-                                            Interview Details:
-                                        </div>
-                                        <div class="col-9 d-flex flex-column">
-                                            <asp:TextBox ID="txtInterviewDetails" runat="server" CssClass="txtbox" TextMode="MultiLine" Width="200px" Height="50px"></asp:TextBox>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="row applicant-details">
-                                        <div class="col-3 d-flex flex-column">
-                                            Interview Date:
-                                        </div>
-                                        <div class="col-9 d-flex flex-column">
-                                            <asp:TextBox ID="txtInterviewDate" runat="server" TextMode="Date" CssClass="txtbox" Width="100px" Height="20px"></asp:TextBox>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="row applicant-details">
-                                        <div class="col-3 d-flex flex-column">
-                                            Interview Status:
-                                        </div>
-                                        <div class="col-9 d-flex flex-column">
-                                            <asp:DropDownList ID="drpInterviewStatus" runat="server" CssClass="txtbox" Width="100px" Height="20px">
-                                            <asp:ListItem></asp:ListItem>
-                                            <asp:ListItem>Pending</asp:ListItem>
-                                            <asp:ListItem>Scheduled</asp:ListItem>
-                                            </asp:DropDownList>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="row applicant-details">
-                                        <div class="col-3 d-flex flex-column">
-                                            Applicant Status:
-                                        </div>
-                                        <div class="col-9 d-flex flex-column">
-                                            <asp:DropDownList ID="drpApplicantStatus" runat="server" CssClass="txtbox" Width="100px" Height="20px">
-                                            <asp:ListItem>Pending</asp:ListItem>
-                                            <asp:ListItem>Approved</asp:ListItem>
-                                            <asp:ListItem>Rejected</asp:ListItem>
-                                            </asp:DropDownList>
-                                        </div>
-                                    </div>
-                                    <br />                                                                                                        
-                                    <div class="row applicant-buttons">
-                                        <div class="col-4 d-flex flex-column">
-                                            <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="SaveRecord" CssClass="btn2" Height="28px" Width="100px"/>
-                                        </div>
-                                        <div class="col-2 d-flex flex-column">
-                
-                                        </div>
-                                        <div class="col-4 d-flex flex-column">
-                                            <asp:Button ID="btnClose" runat="server" Text="Close" OnClick="closeEditModal" CssClass="btn1" Height="28px" Width="100px"/>
-                                        </div>
-                                    </div>
-                                    <br /><br />
-        
+                    <!-- Modal dialog -->
+                    <div id="myModal" class="modal">
+                        <div class="modal-content">
+                            <!--<span class="close" onclick="closeModal()">&times;</span>-->
+                            <br />
+                            <h3 style="text-align:center">Interview Schedule</h3> 
+                            <br />
+                            <div class="row applicant-details">
+                                <div class="col-3 d-flex flex-column">
+                                    Interview Details:
+                                </div>
+                                <div class="col-9 d-flex flex-column">
+                                    <asp:TextBox ID="txtInterviewDetails" runat="server" CssClass="txtbox" TextMode="MultiLine" Width="400px" Height="100px"></asp:TextBox>
                                 </div>
                             </div>
+                            <br />
+                            <div class="row applicant-details">
+                                <div class="col-3 d-flex flex-column">
+                                    Interview Date:
+                                </div>
+                                <div class="col-9 d-flex flex-column">
+                                    <asp:TextBox ID="txtInterviewDate" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px"></asp:TextBox>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row applicant-buttons">
+                                <div class="col-4 d-flex flex-column">
+                                    <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="saveInterviewDetails" CssClass="btn2" Height="28px" Width="100px"/>
+                                </div>
+                                <div class="col-2 d-flex flex-column">
+                
+                                </div>
+                                <div class="col-4 d-flex flex-column">
+                                    <asp:Button ID="btnClose" runat="server" Text="Close" OnClick="closeEditModal" CssClass="btn1" Height="28px" Width="100px"/>
+                                </div>
+                            </div>
+                            <br /><br />
+
+                           
+                        </div>
+                    </div>
+                    
+                    <script>
+                        function openModal(interviewDetails, interviewDate) {
+                            document.getElementById("myModal").style.display = "block";
+                                 
+                            document.getElementById('<%=txtInterviewDetails.ClientID%>').value = interviewDetails;
+                            document.getElementById('<%=txtInterviewDate.ClientID%>').value = interviewDate;
+
+                        }
+
+                        function closeModal() {
+                            document.getElementById("myModal").style.display = "none";
+                        }
+
+                        function confirmStatusUpdate(dropdown) {
+                            var selectedValue = dropdown.value;
+                            var applicantID = dropdown.getAttribute('applicant-id');
+                            var confirmationMessage = "Are you sure you want to '" + selectedValue + "' the applicant?";
+                            if (confirm(confirmationMessage)) {
+                                // If user clicks OK in the confirmation dialog, trigger the server-side postback
+                                __doPostBack(dropdown.id, ''); // This will cause a postback and trigger the server-side event
+                            } else {
+                                // If user clicks Cancel, reset the dropdown to its initial value (optional)
+                                dropdown.selectedIndex = 0;
+                            }
+                        }
+
+                    </script>
+                            
 </asp:Content>

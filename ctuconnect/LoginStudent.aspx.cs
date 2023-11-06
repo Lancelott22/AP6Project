@@ -70,7 +70,7 @@ namespace ctuconnect
                                     reader.Close();
                                 }
                                 Session["StudentEmail"] = txtemail.Text;
-                                Response.Redirect("Home.aspx");// User is authenticated, you can redirect to another page
+                                Response.Redirect("JobPortal.aspx");// User is authenticated, you can redirect to another page
                             }
                             else
                             {

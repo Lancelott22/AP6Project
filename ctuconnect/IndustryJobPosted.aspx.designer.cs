@@ -11,8 +11,17 @@ namespace ctuconnect
 {
 
 
-    public partial class Applicants
+    public partial class IndustryJobPosted
     {
+
+        /// <summary>
+        /// UpdatePanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
         /// Table1 control.
@@ -24,57 +33,57 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Table Table1;
 
         /// <summary>
-        /// drpStatus control.
+        /// industryImage1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drpStatus;
+        protected global::System.Web.UI.WebControls.Image industryImage1;
 
         /// <summary>
-        /// rptApplicant control.
+        /// disp_industryName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptApplicant;
+        protected global::System.Web.UI.WebControls.Label disp_industryName;
 
         /// <summary>
-        /// txtInterviewDetails control.
+        /// disp_accID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtInterviewDetails;
+        protected global::System.Web.UI.WebControls.Label disp_accID;
 
         /// <summary>
-        /// txtInterviewDate control.
+        /// IndustryJobPostedList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtInterviewDate;
+        protected global::System.Web.UI.WebControls.ListView IndustryJobPostedList;
 
         /// <summary>
-        /// btnSave control.
+        /// ListViewPager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSave;
+        protected global::System.Web.UI.WebControls.DataPager ListViewPager;
 
         /// <summary>
-        /// btnClose control.
+        /// SignOut control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnClose;
+        protected global::System.Web.UI.WebControls.LinkButton SignOut;
     }
 }
