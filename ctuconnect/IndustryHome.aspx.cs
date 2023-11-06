@@ -7,6 +7,9 @@ using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using Org.BouncyCastle.Asn1.Ocsp;
+using Microsoft.Ajax.Utilities;
+
 namespace ctuconnect
 {
     public partial class IndustryHome : System.Web.UI.Page
@@ -32,17 +35,120 @@ namespace ctuconnect
             IndName.Enabled = false;
             jobLoc.Text = Session["LOCATION"].ToString();
             jobLoc.Enabled = false;
+            if(!IsPostBack)
+            {
+                fillJobDetails();
+            }
+        }
+        void fillJobDetails()
+        {
+            if (Request.QueryString["jobid"] != null)
+            {
+                int jobId = int.Parse(Request.QueryString["jobid"].ToString());
+                conDB.Open();
+                SqlCommand cmd = new SqlCommand("select * from HIRING where jobID = @jobID", conDB);
+                cmd.Parameters.AddWithValue("@jobID", jobId);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    JobTitle.Text = reader["jobTitle"].ToString();
+                    string jobTypes = reader["jobType"].ToString();
+                    string[] jobTypeValues = jobTypes.Split(',');
+
+                    foreach (ListItem item in jobtype.Items)
+                    {
+                        if (jobTypeValues.Contains(item.Value))
+                        {
+                            item.Selected = true;
+                        }
+                    }
+                    string jobcourse = reader["jobCourse"].ToString();
+                    string[] courseValues = jobcourse.Split(',');
+
+                    foreach (ListItem item in course.Items)
+                    {
+                        if (courseValues.Contains(item.Value))
+                        {
+                            item.Selected = true;
+                        }
+                    }
+
+                    jobDescript.Text = reader["jobDescription"].ToString();
+                    jobQuali.Text = reader["jobQualifications"].ToString();
+                    jobInstruct.Text = reader["applicationInstruction"].ToString();
+                    salary.Text = reader["salaryRange"].ToString();
+                    PostJob.Text = "Update Post";
+                }
+                reader.Close();
+                conDB.Close();
+            }
         }
         protected void PostJob_Click(object sender, EventArgs e)
         {
-            
-                if (string.IsNullOrEmpty(JobTitle.Text) || string.IsNullOrEmpty(IndName.Text) || jobtype.Value.Equals("0") || course.Value.Equals("0") || string.IsNullOrEmpty(jobLoc.Text) || string.IsNullOrEmpty(jobDescript.Text) || string.IsNullOrEmpty(jobQuali.Text)) 
+                
+               if (string.IsNullOrEmpty(JobTitle.Text) || string.IsNullOrEmpty(IndName.Text) || jobtype.Value.Equals("") || course.Value.Equals("") || string.IsNullOrEmpty(jobLoc.Text) || string.IsNullOrEmpty(jobDescript.Text) || string.IsNullOrEmpty(jobQuali.Text)) 
                 {
 
                     Response.Write("<script>alert('Please input the required field.')</script>");
 
 
-                } else
+                } 
+                else if(Request.QueryString["jobid"] != null)
+                {
+                    int jobId = int.Parse(Request.QueryString["jobid"].ToString());
+                    string jobTitle = JobTitle.Text;
+                    string industryName = IndName.Text;
+                    string jobType = "";
+                
+                         foreach (ListItem item in jobtype.Items)
+                         {
+                             if (item.Selected)
+                            {
+                                jobType += item.Value  + "," ;
+                            }
+                         }
+                    jobType = jobType.Remove(jobType.Length - 1, 1);
+                    string jobCourse = "";
+                    foreach (ListItem item in course.Items)
+                    {
+                        if (item.Selected)
+                        {
+                            jobCourse += item.Value + ",";
+                        }
+                    }
+                    jobCourse = jobCourse.Remove(jobCourse.Length - 1, 1);
+                    string jobLocation = jobLoc.Text;
+                    string jobDescription = jobDescript.Text;
+                    string jobQualification = jobQuali.Text;
+                    string jobInstruction = jobInstruct.Text;
+                    string salaryRange = salary.Text;
+                    conDB.Open();
+                SqlCommand cmd = new SqlCommand("UPDATE HIRING SET jobTitle=@jobTitle, industryName=@industryName, " +
+                    "jobType=@jobType, jobCourse=@jobCourse, jobLocation=@jobLocation, jobDescription=@jobDescription, jobQualifications=@jobQualifications, " +
+                    "applicationInstruction=@applicationInstruction,salaryRange=@salary WHERE jobID = @jobId",conDB);
+                    cmd.Parameters.AddWithValue("@jobTitle", jobTitle);
+                    cmd.Parameters.AddWithValue("@industryName", industryName);
+                    cmd.Parameters.AddWithValue("@jobType", jobType);
+                    cmd.Parameters.AddWithValue("@jobCourse", jobCourse);
+                    cmd.Parameters.AddWithValue("@jobLocation", jobLocation);
+                    cmd.Parameters.AddWithValue("@jobDescription", jobDescription);
+                    cmd.Parameters.AddWithValue("@jobQualifications", jobQualification);
+                    cmd.Parameters.AddWithValue("@applicationInstruction", jobInstruction);
+                    cmd.Parameters.AddWithValue("@salary", salaryRange);
+                    cmd.Parameters.AddWithValue("@jobId", jobId);
+                    var ctr = cmd.ExecuteNonQuery();
+
+                    if (ctr > 0)
+                    {
+                        
+                        Response.Write("<script>alert('The job has been updated successfully.');document.location='IndustryHome.aspx';</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script>alert('Cannot update a job now! Please try again later.')</script>");
+                    }
+                }
+                else
                 {
                     int industryAccID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
                     string jobTitle = JobTitle.Text;
@@ -91,7 +197,8 @@ namespace ctuconnect
 
                     if (ctr > 0)
                     {
-                        Response.Write("<script>alert('The job has been posted successfully.')</script>");
+                        
+                        Response.Write("<script>alert('The job has been posted successfully.');document.location='IndustryHome.aspx';</script>");
                     }
                     else
                     {
@@ -111,5 +218,16 @@ namespace ctuconnect
             Response.Redirect("LoginIndustry.aspx");
 
         }
+       /* void Clear()
+        {
+            JobTitle.Text = string.Empty;
+            jobtype.Value = "";
+            course.Value = "";
+            jobDescript.Text = string.Empty;
+            jobQuali.Text = string.Empty;
+            jobInstruct.Text = string.Empty;
+            salary.Text = string.Empty;
+
+        }*/
     }
 }

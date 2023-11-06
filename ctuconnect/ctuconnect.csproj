@@ -156,6 +156,7 @@
     <Content Include="images\schoolbg.png" />
     <Content Include="images\StudentProfiles\defaultprofile.jpg" />
     <Content Include="IndustryHome.aspx" />
+    <Content Include="IndustryJobPosted.aspx" />
     <Content Include="JobPortal.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="LoginIndustry.aspx" />
@@ -324,6 +325,13 @@
     <Compile Include="IndustryHome.aspx.designer.cs">
       <DependentUpon>IndustryHome.aspx</DependentUpon>
     </Compile>
+    <Compile Include="IndustryJobPosted.aspx.cs">
+      <DependentUpon>IndustryJobPosted.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IndustryJobPosted.aspx.designer.cs">
+      <DependentUpon>IndustryJobPosted.aspx</DependentUpon>
+    </Compile>
     <Compile Include="JobPortal.aspx.cs">
       <DependentUpon>JobPortal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -476,6 +484,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\COR\" />
+    <Folder Include="images\EndorsementLetter\" />
     <Folder Include="images\IndustryProfile\" />
     <Folder Include="images\MOU\" />
     <Folder Include="images\OJTCoordinatorProfile\" />

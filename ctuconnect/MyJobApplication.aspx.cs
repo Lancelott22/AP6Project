@@ -27,7 +27,6 @@ namespace ctuconnect
             {
                 myApplicationBind();
             }
-
         }
         void myApplicationBind()
         {
@@ -35,13 +34,13 @@ namespace ctuconnect
             SqlCommand cmd = new SqlCommand("select * from APPLICANT JOIN INDUSTRY_ACCOUNT ON APPLICANT.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN HIRING ON APPLICANT.jobID = HIRING.jobID Where student_accID = @Student_accID ORDER BY dateApplied DESC", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataSet ds = new DataSet();
+            DataTable ds = new DataTable();
             da.Fill(ds);
             MyApplication.DataSource = ds;
             MyApplication.DataBind();
             if (MyApplication.Items.Count == 0)
             {
-                lblNoAppliedJob.Visible = true;
+                ListViewPager.Visible = false;
             }
         }
         bool checkResumeStatus(int applicantID, int jobId)
@@ -193,9 +192,8 @@ namespace ctuconnect
             {
                 applicantStatus.Visible = false;
             }
-            string script = "$('#ViewApplication').modal('show')";
-            ClientScript.RegisterStartupScript(this.GetType(), "Popup", script, true);
-            
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "View", "viewApplication();", true);
+
         }
         string getApplicantStatus(int applicantID, int jobId)
         {
@@ -244,7 +242,7 @@ namespace ctuconnect
 
         }
 
-        protected void MyApplication_ItemDataBound(object sender, DataListItemEventArgs e)
+        protected void MyApplication_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
             HtmlGenericControl dateApplied = (HtmlGenericControl)e.Item.FindControl("DateApplied");
             DateTime appliedDate = Convert.ToDateTime(dateApplied.InnerText);
@@ -258,6 +256,11 @@ namespace ctuconnect
                 /* HtmlGenericControl myApplicationList = (HtmlGenericControl)e.Item.FindControl("myApplicationList");
                  myApplicationList.Style.Add("background-color", "#f0e789");*/
             }
+        }
+
+        protected void MyApplication_PagePropertiesChanged(object sender, EventArgs e)
+        {
+            myApplicationBind();
         }
     }
 }
