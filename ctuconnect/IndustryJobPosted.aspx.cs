@@ -87,7 +87,7 @@ namespace ctuconnect
 
         protected void ViewApplicants_Command(object sender, CommandEventArgs e)
         {
-            Response.Redirect("Applicants.aspx?jobid=" + e.CommandArgument.ToString());
+            Response.Redirect("Applicants.aspx?jobid=" + e.CommandArgument.ToString() + "&jobtitle=" + e.CommandName.ToString());
         }
 
         protected void UpdateJob_Command(object sender, CommandEventArgs e)

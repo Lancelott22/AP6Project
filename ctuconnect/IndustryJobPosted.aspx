@@ -392,7 +392,7 @@
                                             </div>
                                             <div class="col-sm-2" style="position: relative; text-align: center; vertical-align: middle; margin: 0px;">
                                                 <div class="row"  style="margin-bottom:10px;">
-                                                    <asp:Button ID="ViewApplicants" Text="View Applicants" class="buttonStyle" runat="server" CommandName="View" OnCommand="ViewApplicants_Command" CommandArgument='<%#Eval("jobID")%>' AutoPostBack="false" CausesValidation="false" />                                        
+                                                    <asp:Button ID="ViewApplicants" Text="View Applicants" class="buttonStyle" runat="server" CommandName='<%#Eval("jobTitle")%>' OnCommand="ViewApplicants_Command" CommandArgument='<%#Eval("jobID")%>' AutoPostBack="false" CausesValidation="false" />                                        
                                                 </div>
                                                 
                                                 <div class="row">
