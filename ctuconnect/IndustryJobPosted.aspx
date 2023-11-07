@@ -421,6 +421,7 @@
                 <asp:TableRow>
                     <asp:TableCell Style="vertical-align: top;">
                         <div class="sidemenu-container">
+                             <a  href="IndustryDashboard.aspx"><i class='bx bxs-dashboard' aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
                             <a href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
                             <a class="active" href="#"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
                             <a href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>

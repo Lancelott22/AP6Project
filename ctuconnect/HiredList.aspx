@@ -300,7 +300,7 @@
                                                         <td style="width: 230px;"><%# Eval("renderedHours") %></td>
                                                         <td >
                                                             <asp:Button ID="EvaluationBtn" CssClass="evaluateButton" runat="server" Text='<%# Eval("evaluationRequest") %>'
-                                                            OnCLick="Evaluate_BtnClick"/>
+                                                            CommandName="<%#Eval("applicantFname")%>'" OnCommand="Evaluate_ButtonClick" CommandArgument='<%#Eval("student_accID")%>' AutoPostBack="false" CausesValidation="false"/>
                                                         </td>
                                                     </tr>
                                                     </table>

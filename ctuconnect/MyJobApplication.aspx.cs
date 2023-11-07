@@ -17,7 +17,7 @@ namespace ctuconnect
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+
             if (!IsPostBack && Session["StudentEmail"] == null)
             {
                 Response.Redirect("LoginStudent.aspx");
@@ -30,7 +30,7 @@ namespace ctuconnect
         }
         void myApplicationBind()
         {
-            int studentAccID = int.Parse( Session["Student_ACC_ID"].ToString());
+            int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString());
             SqlCommand cmd = new SqlCommand("select * from APPLICANT JOIN INDUSTRY_ACCOUNT ON APPLICANT.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN HIRING ON APPLICANT.jobID = HIRING.jobID Where student_accID = @Student_accID ORDER BY dateApplied DESC", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -60,7 +60,7 @@ namespace ctuconnect
                     conDB.Close();
                     return true;
                 }
-                else if(resumeStatus == "Pending")
+                else if (resumeStatus == "Pending")
                 {
                     conDB.Close();
                     return false;
@@ -86,7 +86,7 @@ namespace ctuconnect
                     conDB.Close();
                     return true;
                 }
-                else if(interviewStatus == "Pending")
+                else if (interviewStatus == "Pending")
                 {
                     conDB.Close();
                     return false;
@@ -112,7 +112,7 @@ namespace ctuconnect
                     conDB.Close();
                     return true;
                 }
-                else if(applicantStatus == "Pending")
+                else if (applicantStatus == "Pending")
                 {
                     conDB.Close();
                     return false;
@@ -122,7 +122,8 @@ namespace ctuconnect
             return false;
         }
         protected void ViewApplication_Command(object sender, CommandEventArgs e)
-        { int jobId = int.Parse(e.CommandName.ToString());
+        {
+            int jobId = int.Parse(e.CommandName.ToString());
             int applicantID = int.Parse(e.CommandArgument.ToString());
             if (checkResumeStatus(applicantID, jobId) == true)
             {
@@ -133,7 +134,7 @@ namespace ctuconnect
                 InterviewStatus.Visible = true;
                 if (checkInterviewStatus(applicantID, jobId) == true)
                 {
-                    StatusOrDetails.InnerText =  "Interview Details: ";
+                    StatusOrDetails.InnerText = "Interview Details: ";
                     statusInterview.InnerText = "Scheduled";
                     interviewStatusCheck.Text = showInterviewDetails(applicantID, jobId);
                     statusInterview.Visible = true;
@@ -159,24 +160,25 @@ namespace ctuconnect
             }
             if ((checkInterviewStatus(applicantID, jobId) == true && checkResumeStatus(applicantID, jobId) == true))
 
-            {  
+            {
                 applicantStatus.Visible = true;
-               if(checkApplicantStatus(applicantID, jobId) == true)
+                if (checkApplicantStatus(applicantID, jobId) == true)
                 {
-                    if(getApplicantStatus(applicantID, jobId) == "Approved")
+                    if (getApplicantStatus(applicantID, jobId) == "Approved")
                     {
                         statusApplication.InnerText = "Approved";
                         applicationStatusCheck.Text = "Congratulations! Your application has been approved.";
                         statusApplication.Visible = true;
                         statusApplication.Attributes.Add("class", "statusStyle");
-                    } else if(getApplicantStatus(applicantID, jobId) == "Rejected")
+                    }
+                    else if (getApplicantStatus(applicantID, jobId) == "Rejected")
                     {
                         statusApplication.InnerText = "Rejected";
                         applicationStatusCheck.Text = "Sorry! Your application has been rejected.";
                         statusApplication.Visible = true;
                         statusApplication.Attributes.Add("class", "statusStyleReject");
                     }
-                   
+
                 }
                 else
                 {
@@ -186,7 +188,7 @@ namespace ctuconnect
                     statusApplication.InnerText = "Pending";
                     statusApplication.Attributes.Add("class", "statusStylePending");
 
-                }  
+                }
             }
             else
             {
@@ -206,9 +208,9 @@ namespace ctuconnect
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
-                string applicantStatus = reader["applicantStatus"].ToString(); 
-                    conDB.Close();
-                    return applicantStatus;               
+                string applicantStatus = reader["applicantStatus"].ToString();
+                conDB.Close();
+                return applicantStatus;
             }
             conDB.Close();
             return "";
@@ -257,7 +259,7 @@ namespace ctuconnect
                  myApplicationList.Style.Add("background-color", "#f0e789");*/
             }
         }
-         
+
         protected void MyApplication_PagePropertiesChanged(object sender, EventArgs e)
         {
             myApplicationBind();

@@ -168,13 +168,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label Label13;
 
         /// <summary>
-        /// endorsementUpload control.
+        /// referralUpload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload endorsementUpload;
+        protected global::System.Web.UI.WebControls.FileUpload referralUpload;
 
         /// <summary>
         /// Label4 control.

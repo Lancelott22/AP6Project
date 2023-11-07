@@ -243,11 +243,7 @@
                 border: 1.5px solid #881a30;
                 position:relative;
              }
-
-             
-
-
-             
+           
     </style>
     <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
@@ -268,7 +264,8 @@
                         <asp:ListItem>Rejected</asp:ListItem>
                         </asp:DropDownList>
                     </p>
-            
+                    
+                    <h3 id="Job_Title" runat="server" visible="false" style="float:left; padding:10px;"></h3>
                     <!-- Repeater for Applicant -->
                     <asp:Repeater ID="rptApplicant" runat="server" OnItemDataBound="rptApplicant_ItemDataBound">
                         <ItemTemplate>
@@ -376,11 +373,16 @@
         <asp:TableRow>
             <asp:TableCell Style="vertical-align:top; ">
                 <div class="sidemenu-container">
-                    <a  href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
-                     <a href="IndustryJobPosted.aspx"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
-                     <a class="active" href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
-                     <a  href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
-                     <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
+                      <a  href="IndustryDashboard.aspx"><i class='bx bxs-dashboard' aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
+                    <a href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
+                    <a href="IndustryJobPosted.aspx"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
+                    <a  class="active" href="#"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
+                    <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
+                    <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
+                    <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
+<i class="fa fa-sign-out" aria-hidden="true"></i>
+ Sign-out
+                    </asp:LinkButton>
                 </div>
             </asp:TableCell>
         </asp:TableRow>
@@ -431,7 +433,7 @@
                     <script>
                         function openModal(interviewDetails, interviewDate) {
                             document.getElementById("myModal").style.display = "block";
-                                 
+
                             document.getElementById('<%=txtInterviewDetails.ClientID%>').value = interviewDetails;
                             document.getElementById('<%=txtInterviewDate.ClientID%>').value = interviewDate;
 

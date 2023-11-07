@@ -20,7 +20,7 @@
                 padding-left: 3px;
                 text-decoration: none;
             }
-             
+
                 .nav a.active {
                     background-color: rgb(255, 194, 102);
                     border-radius: 10px;
@@ -433,8 +433,8 @@
         </ContentTemplate>
     </asp:UpdatePanel>
      <script type="text/javascript">
-     function viewApplication() {
-         $('#ViewApplication').modal('show');
-     }
+         function viewApplication() {
+             $('#ViewApplication').modal('show');
+         }
      </script>
 </asp:Content>
