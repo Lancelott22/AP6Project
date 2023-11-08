@@ -30,16 +30,12 @@ namespace ctuconnect
                     Job_Title.InnerText = "All Applicants for " + Request.QueryString["jobtitle"].ToString() + " Position";
                     Job_Title.Visible = true;
                 }
-                else if (!IsPostBack && Request.QueryString["student_accID"] != null)
-                {
-                    filterByStudent();
-                }
                 else
                 {
                     this.LoadApplicants();
                     Job_Title.Visible = false;
                 }
-                
+                this.LoadApplicants();
                 currentApplicantID = -1;
                 ChangeReviewButtonText();
                 ChangeScheduleButtonText();
@@ -80,10 +76,10 @@ namespace ctuconnect
                     {
 
                         string resumeStatusText = lblresumeStatus.Text;
-
+                                                           
                         if (resumeStatusText == "Reviewed")
                         {
-                            btnReview.Text = "Reviewed";
+                            btnReview.Text = "Reviewed"; 
                             lblresumeStatus.BackColor = System.Drawing.Color.GreenYellow;
                             lblresumeStatus.Style["width"] = "85px";
                             lblresumeStatus.Style["padding-left"] = "0.5em";
@@ -92,10 +88,10 @@ namespace ctuconnect
                         }
                         else
                         {
-                            lblresumeStatus.BackColor = System.Drawing.Color.Yellow;
-                            lblresumeStatus.Style["width"] = "80px";
-                            lblresumeStatus.Style["padding-left"] = "0.5em";
-                            lblresumeStatus.Style["height"] = "20px";
+                            lblresumeStatus.BackColor = System.Drawing.Color.Yellow; 
+                            lblresumeStatus.Style["width"] = "80px"; 
+                            lblresumeStatus.Style["padding-left"] = "0.5em"; 
+                            lblresumeStatus.Style["height"] = "20px"; 
                             lblresumeStatus.Style["border-radius"] = "15px";
                             btnSchedule.Visible = false;
                             drpApplicantStatus.Visible = false;
@@ -164,7 +160,7 @@ namespace ctuconnect
                         if (applicantStatusText == "Approved")
                         {
                             btnSchedule.Visible = false;
-                            drpApplicantStatus.Visible = false;
+                            drpApplicantStatus.Visible = false; 
                             lblapplicantStatus.BackColor = System.Drawing.Color.GreenYellow;
                             lblapplicantStatus.Style["width"] = "90px";
                             lblapplicantStatus.Style["padding-left"] = "0.5em";
@@ -198,7 +194,7 @@ namespace ctuconnect
 
         private void LoadApplicants()
         {
-
+            
             int industryAccID = Convert.ToInt32(Session["INDUSTRY_ACC_ID"].ToString());
             using (var db = new SqlConnection(conDB))
             {
@@ -574,36 +570,6 @@ namespace ctuconnect
                 rptApplicant.DataSource = dtApplicants;
                 rptApplicant.DataBind();
             }
-        }
-        void filterByStudent()
-        {
-            if (Request.QueryString["student_accID"] != null)
-            {
-                int industryAccID = Convert.ToInt32(Session["INDUSTRY_ACC_ID"].ToString());
-                int studentId = int.Parse(Request.QueryString["student_accID"].ToString());
-                using (var db = new SqlConnection(conDB))
-                {
-                    string query = "SELECT * FROM APPLICANT WHERE industry_accID = @industryAcctID and student_accID = @studentId ORDER BY dateApplied DESC";
-                    SqlCommand cmd = new SqlCommand(query, db);
-                    cmd.Parameters.AddWithValue("@studentID", studentId);
-                    cmd.Parameters.AddWithValue("@industryAcctID", industryAccID);
-                    db.Open();
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                    adapter.Fill(dtApplicants);
-                }
-
-                rptApplicant.DataSource = dtApplicants;
-                rptApplicant.DataBind();
-            }
-        }
-        protected void SignOut_Click(object sender, EventArgs e)
-        {
-
-            Session.Abandon();
-            Session.Clear();
-            Session.RemoveAll();
-            Response.Redirect("LoginIndustry.aspx");
-
         }
 
     }
