@@ -517,8 +517,8 @@
     <Folder Include="images\IndustryProfile\" />
     <Folder Include="images\MOU\" />
     <Folder Include="images\OJTCoordinatorProfile\" />
-    <Folder Include="images\StudentProfiles\" />
     <Folder Include="images\ReferralLetter\" />
+    <Folder Include="images\StudentProfiles\" />
     <Folder Include="Industry\" />
     <Folder Include="Interns\" />
     <Folder Include="OjtCoordinator\" />
