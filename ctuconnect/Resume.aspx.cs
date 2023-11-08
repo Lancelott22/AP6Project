@@ -31,6 +31,11 @@ namespace ctuconnect
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack && Session["StudentEmail"] == null)
+            {
+                Response.Redirect("LoginStudent.aspx");
+
+            }
             if (!IsPostBack)
             {
 

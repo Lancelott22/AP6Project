@@ -417,6 +417,7 @@
                         <br />
                         <asp:TextBox ID="txtsearchOrder" CssClass="form-control searchbox" runat="server" placeholder="Search job title or keyword"></asp:TextBox>
                         <br />
+                        <label id="totalJob" runat="server" ></label>
                         <div class="jobs">
 
 

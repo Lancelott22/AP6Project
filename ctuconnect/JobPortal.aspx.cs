@@ -36,6 +36,7 @@ namespace ctuconnect
             else if (!IsPostBack)
             {
                 JobBind();
+                TotalJob();
             }
             DisplayStudentInfo();
         }
@@ -523,6 +524,26 @@ namespace ctuconnect
             (JobHiring.FindControl("ListViewPager") as DataPager).SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
             listPager.SetPageProperties(listPager.PageSize, listPager.TotalRowCount, false);*/
             JobBind();
+        }
+        void TotalJob()
+        {
+            string studentCourse = Session["Student_COURSE"].ToString();
+            string Usertype = Session["STATUSorTYPE"].ToString();
+            string jobtype = "";
+            if (Usertype == "Intern")
+            {
+                jobtype = "internship";
+            }
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%'", conDB);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+               
+                    totalJob.InnerText = "Total " + reader["TotalJob"].ToString() + " jobs found";
+            }
+            reader.Close();
+            conDB.Close();
         }
     }
 }

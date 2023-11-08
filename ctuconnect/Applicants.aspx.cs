@@ -50,7 +50,7 @@ namespace ctuconnect
                 DropdownApplicant();
 
 
-            }
+            }           
             else
             {
                 // It's a postback, check if currentApplicantID exists in ViewState
