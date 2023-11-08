@@ -21,8 +21,6 @@ namespace ctuconnect
             if (!IsPostBack)
             {
                 lblUnreadCount.Text = UnreadNotificationCount().ToString();
-                notification1.Text = UnreadNotificationCount().ToString();
-                notification2.Text = UnreadNotificationCount().ToString();
                 this.LoadNotification();
             }
 
@@ -33,7 +31,7 @@ namespace ctuconnect
 
             using (var db = new SqlConnection(conDB))
             {
-                string query = "SELECT * FROM NOTIFICATION";
+                string query = "SELECT * FROM NOTIFICATION JOIN INDUSTRY_ACCOUNT ON NOTIFICATION.INDUSTRY_ACCID = INDUSTRY_ACCOUNT.INDUSTRY_ACCID";
                 SqlCommand cmd = new SqlCommand(query, db);
 
                 db.Open();
