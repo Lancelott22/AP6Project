@@ -350,7 +350,7 @@
                                             <th>Middle Initial</th>
                                             <th>Industry</th>
                                             <th>Referred by</th>
-                                            <th>Endorsement Letter</th>
+                                            <th>Referral Letter</th>
                                             <th>Date</th>
                                             <th>Status</th>
                                         </tr>
@@ -364,9 +364,9 @@
                                                     <td><%# Eval("industryName") %></td>
                                                     <td><%# Eval("referredBy") %></td>
                                                     <td>
-                                                        <asp:Button ID="btnEndorsementLetterButton" runat="server" Text="View Endorsement Letter"
+                                                        <asp:Button ID="btnEndorsementLetterButton" runat="server" Text="View Referral Letter"
                                                         OnCommand="ReviewLetter_Command" CommandName="Review"  
-                                                        CommandArgument='<%# Eval("endorsementLetter") %>'/>
+                                                        CommandArgument='<%# Eval("referralLetter") %>'/>
                                                     </td>
                                                     <td><%# Eval("dateReferred") %></td>
                                                     <td class='<%# GetStatusCssClass(Eval("ReferralStatus").ToString()) %>' ><%# Eval("ReferralStatus") %></td>
@@ -382,7 +382,7 @@
 
 
      <%--Modal--%>
- <div class="modal fade" id="AddReferralModal" tabindex="-1" role="dialog" >
+ <div class="modal" id="AddReferralModal" tabindex="-1" role="dialog" >
      <div class="modal-dialog modal-dialog-centered" >
          <div class="modal-content">
              <div class="modal-header">
@@ -409,8 +409,8 @@
                                       <asp:Label ID="Label7" runat="server" Text="Resume" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
                                       <asp:Label ID="txtResumeFileName" runat="server" Text="" Style="font-size:14px;" ></asp:Label><br>
                                         
-                                      <asp:Label ID="Label13" runat="server" Text="Endorsement Letter" Style="font-size:18px;" ></asp:Label>
-                                      <asp:FileUpload ID="endorsementUpload" runat="server" Width="300px" /><br />
+                                      <asp:Label ID="Label13" runat="server" Text="Referral Letter" Style="font-size:18px;" ></asp:Label>
+                                      <asp:FileUpload ID="referralUpload" runat="server" Width="300px" /><br />
 
                                      <div class="column">
                                       <asp:Label ID="Label4" runat="server" Text="Referred by" Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 

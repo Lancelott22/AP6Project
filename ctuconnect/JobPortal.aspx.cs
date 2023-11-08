@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Web; 
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Configuration;
@@ -36,7 +36,7 @@ namespace ctuconnect
             else if (!IsPostBack)
             {
                 JobBind();
-            }         
+            }
             DisplayStudentInfo();
         }
         void JobBind()
@@ -69,57 +69,58 @@ namespace ctuconnect
             int jobId = int.Parse(e.CommandArgument.ToString());
             if (checkResume())
             {
-                if (isCurrentlyHired())
+              /*  if (isCurrentlyHired())
                 {
                     ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertError", "alert('You are currently hired in a company. You cannot apply for another job now. Contact your company if there is a problem.');", true);
                     //Response.Write("<script>alert('You are currently hired in a company. You cannot apply for another job now. Contact your company if there is a problem.');</script>");
                 }
                 else
-                {
+                {*/
                     if (checkJobApplied(jobId) == true)
-            {
-                SubmitApply.Enabled = true;
-                SubmitApply.Text = "Go to My Application";
-                SubmitApply.CommandName = "Applied";
-                SubmitApply.CssClass = "buttonStyleSubmit";
-                CancelorClose.InnerText = "Close";
-                CancelorClose.Attributes["class"] = "btn btn-secondary";
-                JobApply.Visible = false;
-                AlreadyApplied.Visible = true;
-            } else
-            {
-                SubmitApply.Enabled = true;
-                SubmitApply.Text = "Submit Application";
-                SubmitApply.CommandName = "";
-                SubmitApply.CssClass = "buttonStyleSubmit";
-                CancelorClose.InnerText = "Cancel";
-                CancelorClose.Attributes["class"] = "btn btn-danger";
-                JobApply.Visible = true;
-                AlreadyApplied.Visible = false;
-            }
+                    {
+                        SubmitApply.Enabled = true;
+                        SubmitApply.Text = "Go to My Application";
+                        SubmitApply.CommandName = "Applied";
+                        SubmitApply.CssClass = "buttonStyleSubmit";
+                        CancelorClose.InnerText = "Close";
+                        CancelorClose.Attributes["class"] = "btn btn-secondary";
+                        JobApply.Visible = false;
+                        AlreadyApplied.Visible = true;
+                    }
+                    else
+                    {
+                        SubmitApply.Enabled = true;
+                        SubmitApply.Text = "Submit Application";
+                        SubmitApply.CommandName = "";
+                        SubmitApply.CssClass = "buttonStyleSubmit";
+                        CancelorClose.InnerText = "Cancel";
+                        CancelorClose.Attributes["class"] = "btn btn-danger";
+                        JobApply.Visible = true;
+                        AlreadyApplied.Visible = false;
+                    }
                     ApplyForJob.Value = e.CommandName.ToString();
                     Name.Value = Session["FNAME"].ToString() + " " + Session["LNAME"].ToString();
                     Resume.Value = Session["ResumeFile"].ToString();
                     applyJobId.Text = jobId.ToString();
                     applyIndustryId.Text = getApplyIndustryId(jobId).ToString();
-                    if(Session["STATUSorTYPE"].ToString() == "Intern")
+                    if (Session["STATUSorTYPE"].ToString() == "Intern")
                     {
                         job_Type.SelectedIndex = 1;
                         job_Type.Disabled = true;
                     }
-                    if(Session["STATUSorTYPE"].ToString() == "Alumni")
+                    if (Session["STATUSorTYPE"].ToString() == "Alumni")
                     {
                         Endorsement_LetterBox.Attributes.Add("style", "display:none");
                     }
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showModalFunction();", true);
-                }
-               
+                //}
+
             }
             else
             {
                 ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertResume", "alert('Please upload or create resume first before applying job.');document.location='Resume.aspx';", true);
             }
-           
+
         }
         private int getApplyIndustryId(int jobId)
         {
@@ -149,7 +150,7 @@ namespace ctuconnect
                 alumni_accId = int.Parse(Session["Alumni_accID"].ToString());
                 if (job_Type.Value != "" || job_Type.Value != string.Empty)
                 {
-                    jobtype = job_Type.Value;                 
+                    jobtype = job_Type.Value;
                 }
                 else
                 {
@@ -157,12 +158,12 @@ namespace ctuconnect
                     ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Popup1", "$('.modal-backdrop').removeClass('modal-backdrop');", true);
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showModalFunction();", true);
                     return;
-                }            
+                }
             }
             else if (Usertype == "Intern")
             {
-                student_accId = int.Parse(Session["Student_ACC_ID"].ToString());                
-                jobtype = job_Type.Value;                          
+                student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
+                jobtype = job_Type.Value;
             }
             string position = ApplyForJob.Value.ToString();
             string applicantFName = Session["FNAME"].ToString();
@@ -172,78 +173,78 @@ namespace ctuconnect
             int jobID = int.Parse(applyJobId.Text.ToString());
             int industry_accId = int.Parse(applyIndustryId.Text.ToString());
             string endorsementLetterFile = "";
-         
-                if (EndorsementLetter.HasFile != false)
+
+            if (EndorsementLetter.HasFile != false)
+            {
+                endorsementLetterFile = getUploadEndorsementLetter();
+                if (endorsementLetterFile == null)
                 {
-                    endorsementLetterFile = getUploadEndorsementLetter();
-                    if (endorsementLetterFile == null)
-                    {
-                        return;
-                    }
-                }            
-                 
-                    conDB.Open();
-                    if (Usertype == "Alumni")
-                    {
-                        SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,applicantFName, appliedPosition, applicantLName, industry_accID, dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType) " +
-                            "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID,@studentType)", conDB);
+                    return;
+                }
+            }
 
-                        cmd.Parameters.AddWithValue("@jobtype", jobtype);
-                        cmd.Parameters.AddWithValue("@student_accId", alumni_accId);
-                        cmd.Parameters.AddWithValue("@applicantFName", applicantFName);
-                        cmd.Parameters.AddWithValue("@applicantLName", applicantLName);
-                        cmd.Parameters.AddWithValue("@appliedPosition", position);
-                        cmd.Parameters.AddWithValue("@industry_accId", industry_accId);
-                        cmd.Parameters.AddWithValue("@dateApplied", dateApplied);
-                        cmd.Parameters.AddWithValue("@resume", resume);
-                        cmd.Parameters.AddWithValue("@resumeStatus", "Pending");
-                        cmd.Parameters.AddWithValue("@interviewStatus", "Pending");
-                        cmd.Parameters.AddWithValue("@applicantStatus", "Pending");
-                        cmd.Parameters.AddWithValue("@jobID", jobID);
-                        cmd.Parameters.AddWithValue("@studentType", Usertype);
-                        int ctr = cmd.ExecuteNonQuery();
-                        if (ctr > 0)
-                        {
+            conDB.Open();
+            if (Usertype == "Alumni")
+            {
+                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,applicantFName, appliedPosition, applicantLName, industry_accID, dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType) " +
+                    "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID,@studentType)", conDB);
 
-                            ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('You have successfully submitted your job application.');document.location='MyJobApplication.aspx';", true);
-                        }
-                        else
-                        {
-                            ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertError", "alert('Sorry! There is something wrong in applying the job. Please try again..');", true);
-                        }
-                    }
-                    else if (Usertype == "Intern")
-                    {
-                        SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accID,applicantFName, applicantLName, appliedPosition, industry_accID,dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, EndorsementLetter) " +
-                          "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID, @studentType,@endorsementLetter)", conDB);
+                cmd.Parameters.AddWithValue("@jobtype", jobtype);
+                cmd.Parameters.AddWithValue("@student_accId", alumni_accId);
+                cmd.Parameters.AddWithValue("@applicantFName", applicantFName);
+                cmd.Parameters.AddWithValue("@applicantLName", applicantLName);
+                cmd.Parameters.AddWithValue("@appliedPosition", position);
+                cmd.Parameters.AddWithValue("@industry_accId", industry_accId);
+                cmd.Parameters.AddWithValue("@dateApplied", dateApplied);
+                cmd.Parameters.AddWithValue("@resume", resume);
+                cmd.Parameters.AddWithValue("@resumeStatus", "Pending");
+                cmd.Parameters.AddWithValue("@interviewStatus", "Pending");
+                cmd.Parameters.AddWithValue("@applicantStatus", "Pending");
+                cmd.Parameters.AddWithValue("@jobID", jobID);
+                cmd.Parameters.AddWithValue("@studentType", Usertype);
+                int ctr = cmd.ExecuteNonQuery();
+                if (ctr > 0)
+                {
 
-                        cmd.Parameters.AddWithValue("@jobtype", jobtype);
-                        cmd.Parameters.AddWithValue("@student_accId", student_accId);
-                        cmd.Parameters.AddWithValue("@applicantFName", applicantFName);
-                        cmd.Parameters.AddWithValue("@applicantLName", applicantLName);
-                        cmd.Parameters.AddWithValue("@appliedPosition", position);
-                        cmd.Parameters.AddWithValue("@industry_accId", industry_accId);
-                        cmd.Parameters.AddWithValue("@dateApplied", dateApplied);
-                        cmd.Parameters.AddWithValue("@resume", resume);
-                        cmd.Parameters.AddWithValue("@resumeStatus", "Pending");
-                        cmd.Parameters.AddWithValue("@interviewStatus", "Pending");
-                        cmd.Parameters.AddWithValue("@applicantStatus", "Pending");
-                        cmd.Parameters.AddWithValue("@jobID", jobID);
-                        cmd.Parameters.AddWithValue("@studentType", Usertype);
-                        cmd.Parameters.AddWithValue("@endorsementLetter", endorsementLetterFile);
-                        int ctr = cmd.ExecuteNonQuery();
-                        if (ctr > 0)
-                        {
-                            ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('You have successfully submitted your job application.');document.location='MyJobApplication.aspx';", true);                          
-                        }
-                        else
-                        {
-                            ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertError", "alert('Sorry! There is something wrong in applying the job. Please try again..');", true);                         
-                        }
-                    }
-                    conDB.Close();
-               
-            
+                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('You have successfully submitted your job application.');document.location='MyJobApplication.aspx';", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertError", "alert('Sorry! There is something wrong in applying the job. Please try again..');", true);
+                }
+            }
+            else if (Usertype == "Intern")
+            {
+                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accID,applicantFName, applicantLName, appliedPosition, industry_accID,dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, EndorsementLetter) " +
+                  "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID, @studentType,@endorsementLetter)", conDB);
+
+                cmd.Parameters.AddWithValue("@jobtype", jobtype);
+                cmd.Parameters.AddWithValue("@student_accId", student_accId);
+                cmd.Parameters.AddWithValue("@applicantFName", applicantFName);
+                cmd.Parameters.AddWithValue("@applicantLName", applicantLName);
+                cmd.Parameters.AddWithValue("@appliedPosition", position);
+                cmd.Parameters.AddWithValue("@industry_accId", industry_accId);
+                cmd.Parameters.AddWithValue("@dateApplied", dateApplied);
+                cmd.Parameters.AddWithValue("@resume", resume);
+                cmd.Parameters.AddWithValue("@resumeStatus", "Pending");
+                cmd.Parameters.AddWithValue("@interviewStatus", "Pending");
+                cmd.Parameters.AddWithValue("@applicantStatus", "Pending");
+                cmd.Parameters.AddWithValue("@jobID", jobID);
+                cmd.Parameters.AddWithValue("@studentType", Usertype);
+                cmd.Parameters.AddWithValue("@endorsementLetter", endorsementLetterFile);
+                int ctr = cmd.ExecuteNonQuery();
+                if (ctr > 0)
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('You have successfully submitted your job application.');document.location='MyJobApplication.aspx';", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertError", "alert('Sorry! There is something wrong in applying the job. Please try again..');", true);
+                }
+            }
+            conDB.Close();
+
+
             JobBind();
         }
         private string getUploadEndorsementLetter()
@@ -268,7 +269,7 @@ namespace ctuconnect
                 {
                     endorsementLetterFile.SaveAs(filepath); //save the file in the folder or drive
                 }
-               
+
             }
             else
             {
@@ -325,7 +326,7 @@ namespace ctuconnect
             conDB.Close();
             return false;
         }
-    
+
         protected void JobHiring_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
             Label jobPostID = e.Item.FindControl("JobPostID") as Label;
@@ -352,10 +353,10 @@ namespace ctuconnect
             {
                 HtmlGenericControl Badge = (HtmlGenericControl)e.Item.FindControl("badge");
                 Badge.Visible = true;
-               /* HtmlGenericControl JobList = (HtmlGenericControl)e.Item.FindControl("jobList");
-                JobList.Style.Add("background-color", "#f0e789");*/
+                /* HtmlGenericControl JobList = (HtmlGenericControl)e.Item.FindControl("jobList");
+                 JobList.Style.Add("background-color", "#f0e789");*/
             }
-         
+
         }
         private void DisplayStudentInfo()
         {
@@ -385,7 +386,7 @@ namespace ctuconnect
                     reader.Close();
                     conDB.Close();
                     return false;
-                }          
+                }
                 else if (bool.Parse(reader["isHired"].ToString()) == true)
                 {
                     reader.Close();
@@ -408,7 +409,7 @@ namespace ctuconnect
             string timeAgoMsg = "";
             DateTime currentDate = DateTime.Now;
             TimeSpan timegap = currentDate - postDateTime;
-            if (timegap.Days >= (365*2))
+            if (timegap.Days >= (365 * 2))
             {
                 timeAgoMsg = string.Concat((((timegap.Days) / 30) / 12), " years ago");
             }
@@ -416,14 +417,14 @@ namespace ctuconnect
             {
                 timeAgoMsg = string.Concat((((timegap.Days) / 30) / 12), " year ago");
             }
-            else if (timegap.Days >= (30*2))
+            else if (timegap.Days >= (30 * 2))
             {
                 timeAgoMsg = string.Concat("About ", ((timegap.Days) / 30), " months ago");
             }
             else if (timegap.Days >= 31)
             {
                 timeAgoMsg = string.Concat("About ", ((timegap.Days) / 30), " month ago");
-            }      
+            }
             else if (timegap.Days > 1)
             {
                 timeAgoMsg = string.Concat(timegap.Days, " days ago");
@@ -457,8 +458,8 @@ namespace ctuconnect
         }
 
         protected void JobDetails_Command(object sender, CommandEventArgs e)
-        {          
-            System.Threading.Thread.Sleep(700);  
+        {
+            System.Threading.Thread.Sleep(700);
             int jobId = int.Parse(e.CommandArgument.ToString());
             conDB.Open();
             SqlCommand cmd = new SqlCommand("select *, CONVERT(nvarchar,jobPostedDate, 1) as DatePosted from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID where jobID = @jobID", conDB);
@@ -503,7 +504,7 @@ namespace ctuconnect
 
             ListViewItem currentItem = (sender as Button).NamingContainer as ListViewItem;
             foreach (ListViewItem item in JobHiring.Items)
-            {           
+            {
                 HtmlGenericControl JobBox = item.FindControl("jobList") as HtmlGenericControl;
                 if (currentItem.DataItemIndex == item.DataItemIndex)
                 {
@@ -518,10 +519,10 @@ namespace ctuconnect
 
         protected void JobHiring_PagePropertiesChanged(object sender, EventArgs e)
         {
-           /* DataPager listPager = JobHiring.FindControl("ListViewPager") as DataPager;
-           (JobHiring.FindControl("ListViewPager") as DataPager).SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
-           listPager.SetPageProperties(listPager.PageSize, listPager.TotalRowCount, false);*/
+            /* DataPager listPager = JobHiring.FindControl("ListViewPager") as DataPager;
+            (JobHiring.FindControl("ListViewPager") as DataPager).SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
+            listPager.SetPageProperties(listPager.PageSize, listPager.TotalRowCount, false);*/
             JobBind();
         }
     }
-}  
+}

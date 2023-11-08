@@ -15,6 +15,15 @@ namespace ctuconnect
     {
 
         /// <summary>
+        /// UpdatePanel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+
+        /// <summary>
         /// SignOut control.
         /// </summary>
         /// <remarks>
@@ -30,16 +39,16 @@ namespace ctuconnect
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataList MyApplication;
+        protected global::System.Web.UI.WebControls.ListView MyApplication;
 
         /// <summary>
-        /// lblNoAppliedJob control.
+        /// ListViewPager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNoAppliedJob;
+        protected global::System.Web.UI.WebControls.DataPager ListViewPager;
 
         /// <summary>
         /// applicantStatus control.

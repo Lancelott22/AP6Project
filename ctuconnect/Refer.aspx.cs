@@ -60,7 +60,7 @@ namespace ctuconnect
         {
             int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
 
-            string query = "SELECT STUDENT_ACCOUNT.firstName, STUDENT_ACCOUNT.lastName, STUDENT_ACCOUNT.midInitials,  INDUSTRY_ACCOUNT.industryName,   COORDINATOR_ACCOUNT.firstName + ' ' + COORDINATOR_ACCOUNT.lastName AS referredBy , REFERRAL.endorsementLetter, CONVERT(VARCHAR(10), REFERRAL.dateReferred, 120) AS dateReferred, REFERRAL.ReferralStatus " +
+            string query = "SELECT STUDENT_ACCOUNT.firstName, STUDENT_ACCOUNT.lastName, STUDENT_ACCOUNT.midInitials,  INDUSTRY_ACCOUNT.industryName,   COORDINATOR_ACCOUNT.firstName + ' ' + COORDINATOR_ACCOUNT.lastName AS referredBy , REFERRAL.referralLetter, CONVERT(VARCHAR(10), REFERRAL.dateReferred, 120) AS dateReferred, REFERRAL.ReferralStatus " +
             "FROM REFERRAL  JOIN STUDENT_ACCOUNT ON REFERRAL.student_accID = STUDENT_ACCOUNT.student_accID " +
             "JOIN INDUSTRY_ACCOUNT  ON REFERRAL.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
             "JOIN COORDINATOR_ACCOUNT ON REFERRAL.coordinator_accID = COORDINATOR_ACCOUNT.coordinator_accID " +
@@ -149,10 +149,10 @@ namespace ctuconnect
             string industryID = dropdownIndustries.SelectedValue;
             string referralStatus = "Pending";
 
-            HttpPostedFile postedFile = endorsementUpload.PostedFile;  /// upload file
+            HttpPostedFile postedFile = referralUpload.PostedFile;  /// upload file
             string filename = Path.GetFileName(postedFile.FileName);///to check the filename 
             int filesize = postedFile.ContentLength; //to get the filesize
-            string logpath = Server.MapPath("~/images/EndorsementLetter/"); //creating a drive to upload or save the file
+            string logpath = Server.MapPath("~/images/ReferralLetter/"); //creating a drive to upload or save the file
             string filepath = Path.Combine(logpath, filename);
 
             postedFile.SaveAs(filepath);
@@ -184,13 +184,13 @@ namespace ctuconnect
                     {
                         // SQL Statement to insert data into the Referral table
                         cmd.CommandType = CommandType.Text;
-                        cmd.CommandText = "INSERT INTO REFERRAL (student_accID, industry_accID, coordinator_accID, endorsementLetter, dateReferred, ReferralStatus) " +
-                                          "VALUES (@student_accID, @industryID, @coordinatorID, @endorsementLetter, @dateReferred, @referralStatus)";
+                        cmd.CommandText = "INSERT INTO REFERRAL (student_accID, industry_accID, coordinator_accID, referralLetter, dateReferred, ReferralStatus) " +
+                                          "VALUES (@student_accID, @industryID, @coordinatorID, @referralLetter, @dateReferred, @referralStatus)";
 
                         cmd.Parameters.AddWithValue("@student_accID", studentAccountID);
                         cmd.Parameters.AddWithValue("@industryID", industryID);
                         cmd.Parameters.AddWithValue("@coordinatorID", coordinatorID);
-                        cmd.Parameters.AddWithValue("@endorsementLetter", filename);
+                        cmd.Parameters.AddWithValue("@referralLetter", filename);
                         cmd.Parameters.AddWithValue("@dateReferred", SqlDbType.DateTime).Value = DateTime.Now;
                         cmd.Parameters.AddWithValue("@referralStatus", referralStatus);
                         cmd.ExecuteNonQuery();
@@ -255,7 +255,7 @@ namespace ctuconnect
                 /* Button btn = (Button)sender;
                  int studentID = Convert.ToInt32(btn.Attributes["data-studentid"]);
  */
-                string endorsementLetterFileName = e.CommandArgument.ToString();
+                string referralLetterFileName = e.CommandArgument.ToString();
                 /*string endorsementLetterPath = Server.MapPath("~/images/EndorsementLetter" + endorsementLetterFileName);*/
                 // Change the button text to "Reviewed"
                 //Button button = (Button)sender;
@@ -263,28 +263,28 @@ namespace ctuconnect
 
 
                 // Retrieve and display the resume file
-                 byte[] endorsementLetterFileData = GetEndorsementFileData(endorsementLetterFileName);
+                 byte[] referralLetterFileData = GetEndorsementFileData(referralLetterFileName);
 
 
-                if (endorsementLetterFileData != null)
+                if (referralLetterFileData != null)
                 {
                     // Provide the file data for download in a new browser tab
                     Response.Clear();
                     Response.Buffer = true;
                     Response.ContentType = "application/pdf"; // Set the appropriate content type
-                    Response.AddHeader("content-disposition", "inline; filename=endorsementLetter.pdf"); // Open in a new tab
-                    Response.BinaryWrite(endorsementLetterFileData);
+                    Response.AddHeader("content-disposition", "inline; filename=referralLetter.pdf"); // Open in a new tab
+                    Response.BinaryWrite(referralLetterFileData);
                     Response.End();
                 }
             }
         }
-        private byte[] GetEndorsementFileData(string endorsementLetterFileName)
+        private byte[] GetEndorsementFileData(string referralLetterFileName)
         {
             using (conDB)
             {
-                string query = "SELECT endorsementLetter FROM REFERRAL WHERE endorsementLetter = @endorsementLetterFileName";
+                string query = "SELECT referralLetter FROM REFERRAL WHERE referralLetter = @referralLetterFileName";
                 SqlCommand cmd = new SqlCommand(query, conDB);
-                cmd.Parameters.AddWithValue("@endorsementLetterFileName", endorsementLetterFileName);
+                cmd.Parameters.AddWithValue("@referralLetterFileName", referralLetterFileName);
 
                 conDB.Open();
                 object result = cmd.ExecuteScalar();
@@ -293,7 +293,7 @@ namespace ctuconnect
                 {
                     // Assuming that the result is a file path, read the file content
                     string fileName = result.ToString();
-                    string filePath = "~/images/EndorsementLetter/" + fileName; // Construct the path
+                    string filePath = "~/images/ReferralLetter/" + fileName; // Construct the path
                     byte[] fileData = System.IO.File.ReadAllBytes(Server.MapPath(filePath));
                     return fileData;
                 }

@@ -20,7 +20,7 @@
                 padding-left: 3px;
                 text-decoration: none;
             }
-             
+
                 .nav a.active {
                     background-color: rgb(255, 194, 102);
                     border-radius: 10px;
@@ -275,7 +275,7 @@
                                         <div id="myApplicationList" runat="server" class="row d-flex align-items-center jobAppliedBox">
                                             <span runat="server" id="badge" class="NewBadge" visible="false">New</span>
                                             <div class="col-sm-2" style="text-align: center">
-                                                <img id="IndstryLogo" src='<%#String.Format("images/{0}", Eval("industryPicture"))%>' runat="server" alt="Logo" class="imgStyle" />
+                                                <img id="IndstryLogo" src='<%#String.Format("images/IndustryProfile/{0}", Eval("industryPicture"))%>' runat="server" alt="Logo" class="imgStyle" />
                                             </div>
                                             <div class="col-sm-8">
                                                 <div class="row" style="border-right: 1px solid #881A30;">
@@ -433,8 +433,8 @@
         </ContentTemplate>
     </asp:UpdatePanel>
      <script type="text/javascript">
-     function viewApplication() {
-         $('#ViewApplication').modal('show');
-     }
+         function viewApplication() {
+             $('#ViewApplication').modal('show');
+         }
      </script>
 </asp:Content>

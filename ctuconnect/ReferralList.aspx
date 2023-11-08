@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
@@ -36,8 +36,8 @@
             margin-top:7%;
         }
         .sidemenu-container{
-            width:260px;
-            height:200px;
+            width:253px;
+            height:280px;
             background-color:white;
             /*margin-top:22%;*/
             padding-top:4px;
@@ -162,88 +162,113 @@
                 width:20px;
                 margin-right: 19px; 
     }
+        .status-pending {
+    background-color: #F9E9B7; 
+    color: #F3C129; 
+    margin-right:2px;
+    border-radius: 25px; 
+    padding: 1px 3px; 
+    text-align: center;
+    cursor: pointer;
+}
+        .status-approved {
+    background-color: #d3ffd3; 
+    color: #2c9a5d; 
+    margin-right:2px;
+    border-radius: 25px;
+    padding: 1px 3px; 
+    text-align: center;
+    cursor: pointer;
+}
+    .status-column{
+        padding:10px;
+    }
+    th{
+       border-collapse: collapse;
+        border-color:white;
+        background-color:#f4f4fb;
+        padding:5px;
+
+    }
+    .datas{
+         padding:9px;
+          border: 8px solid;
+          border-color:white;
+         font-weight:bold;
+         color:black;
+    }
+    
+    .table-list{
+         border-collapse: collapse;
+        font-size:13px; 
+        height:auto; 
+        width:100%;
+        color:dimgray;
+    }
     </style>
      <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
             <asp:TableCell Style="vertical-align:top; height:200px; ">
                 <div class="profile-container">
-                <img src="images/industrypic.png" />
-                <p >Industry Name</p>
+                <asp:Image ID="industryImage1" runat="server" />
+                    <center><b><asp:Label ID="disp_industryName" CssClass="disp_industryName"  runat="server" Text=""></asp:Label></b></center>
+                    <center><p style="font-size: 14px;">Account ID: <b><asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b></p></center>
                 </div>
             </asp:TableCell>
             <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
                <div class="display-container">
                    <h1 class="title">Referral List</h1>
                    <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
-                   <asp:GridView ID="GridView1" runat="server" Style="color:black; " AutoGenerateColumns="false"  ShowHeaderWhenEmpty="true" CssClass="gridview-style"
-                                      AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" CellPadding="50" CellSpacing="50" 
-                                      Font-Bold="False" Font-Size="13px"  Height="100%" Width="100%" >  
-                        <PagerStyle  HorizontalAlign="Center" />
-                        <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
-                       <EmptyDataTemplate>
-                             <p>No data available</p>
-                        </EmptyDataTemplate>
-                            <Columns >
-                                 <asp:TemplateField HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
-                                     <ItemTemplate>
-                                         <%# Container.DataItemIndex + 1 %>
-                                     </ItemTemplate>
-                                 </asp:TemplateField>
-                               <asp:BoundField DataField="ReferralID" HeaderText="Referral ID"  ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                <asp:BoundField DataField="LastName" HeaderText="Last Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                <asp:BoundField DataField="FirstName" HeaderText="First Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                 <asp:BoundField DataField="referredBy" HeaderText="Referred by" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                 <asp:BoundField DataField="endorsementLetter" HeaderText="Endorsement Letter" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                                <asp:BoundField DataField="resumeFile" HeaderText="Resume" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                                 <asp:BoundField DataField="dateReferred" HeaderText="Date Referred" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                <asp:BoundField DataField="ReferralStatus" HeaderText="Status" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                                 
-
-                           
-                                </Columns>
-                    </asp:GridView>
-                              <%-- <table  class="table-list">
+                   
+                               <table  class="table-list">
                                     <tr>
-                                        <th>Referral ID</th>
+                                        <th>referral id</th>
                                         <th>Last Name</th>
                                         <th>First Name</th>
                                         <th>Referred by</th>
-                                        <th>Endorsement Letter</th>
+                                        <th>Referral letter</th>
                                         <th>Date</th>
                                         <th>Status</th>
+                                        <th></th>
                                     </tr>
                                     <asp:Repeater ID="dataRepeater" runat="server">
-                                        <ItemTemplate>
+                                        <Itemtemplate>
                                             <tr class="datas">
-                                                <td><%# Container.ItemIndex + 1 %></td>
+                                                <td><%# Eval("referralID") %></td>
                                                 <td><%# Eval("lastName") %></td>
                                                 <td><%# Eval("firstName") %></td>
-                                                <td><%# Eval("midInitials") %></td>
-                                                <td><%# Eval("industryName") %></td>
                                                 <td><%# Eval("referredBy") %></td>
                                                 <td>
-                                                    <asp:Button ID="btnEndorsementLetterButton" runat="server" Text="View Endorsement Letter"
+                                                    <asp:Button ID="btnreferralLetterButton" runat="server" Text="View Referral Letter" OnCommand="btnreferralLetterButton_Command"
+                                                        CommandName="Review" CommandArgument='<%# Eval("referralLetter") %>'/>
+                                                    <%--<asp:Button ID="btnEndorsementLetterButton" runat="server" Text="View Referral Letter"
                                                     OnCommand="ReviewLetter_Command" CommandName="Review"  
-                                                    CommandArgument='<%# Eval("endorsementLetter") %>'/>
+                                                    CommandArgument='<%# Eval("referralLetter") %>'/>--%>
                                                 </td>
-                                                <td><%# Eval("dateReferred") %></td>
+                                                <td><%# Eval("datereferred") %></td>
                                                 <td class='<%# GetStatusCssClass(Eval("ReferralStatus").ToString()) %>' ><%# Eval("ReferralStatus") %></td>
+                                                <td><asp:Button ID="ViewApplicants" Text="View Applicant"  runat="server"  OnCommand="ViewApplicant_Command" CommandArgument='<%#Eval("student_accID")%>' /> </td>
                                             </tr>
-                                        </ItemTemplate>
+                                        </Itemtemplate>
         
                                     </asp:Repeater>
-                                </table>--%>
+                                </table>
                </div>
             </asp:TableCell>
         </asp:TableRow>
           <asp:TableRow>
             <asp:TableCell Style=" vertical-align:top;">
                 <div class="sidemenu-container">
+                    <a  href="IndustryDashboard.aspx"><i class='bx bxs-dashboard' aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
                      <a  href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
-                     <a href="#"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
+                    <a href="IndustryJobPosted.aspx"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
                      <a href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
                      <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                      <a class="active" href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
+                     <asp:LinkButton runat="server" ID ="SignOut" OnClick="SignOut_Click" >
+   <i class="fa fa-sign-out" aria-hidden="true"></i>
+    Sign-out
+</asp:LinkButton>
                </div>
             </asp:TableCell>
         </asp:TableRow>
