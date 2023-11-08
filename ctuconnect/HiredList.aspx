@@ -36,9 +36,10 @@
             margin-top:7%;
         }
         .sidemenu-container{
-            width:260px;
-            height:200px;
+           width:253px;
+            height:280px;
             background-color:white;
+            /*margin-top:22%;*/
             padding-top:4px;
             margin-bottom:10%;
             margin-left:4%;
@@ -300,7 +301,7 @@
                                                         <td style="width: 230px;"><%# Eval("renderedHours") %></td>
                                                         <td >
                                                             <asp:Button ID="EvaluationBtn" CssClass="evaluateButton" runat="server" Text='<%# Eval("evaluationRequest") %>'
-                                                            CommandName="<%#Eval("applicantFname")%>'" OnCommand="Evaluate_ButtonClick" CommandArgument='<%#Eval("student_accID")%>' AutoPostBack="false" CausesValidation="false"/>
+                                                            OnCLick="Evaluate_BtnClick"/>
                                                         </td>
                                                     </tr>
                                                     </table>
@@ -340,11 +341,16 @@
         <asp:TableRow>
             <asp:TableCell Style="vertical-align:top;">
                 <div class="sidemenu-container">
+                    <a  href="IndustryDashboard.aspx"><i class='bx bxs-dashboard' aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
                    <a  href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
-                     <a href="#"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
+                     <a href="IndustryJobPosted.aspx"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
                      <a href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
                      <a class="active" href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                      <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
+                     <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                     Sign-out
+                    </asp:LinkButton>
                </div>
             </asp:TableCell>
         </asp:TableRow>

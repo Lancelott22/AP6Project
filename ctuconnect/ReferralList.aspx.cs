@@ -15,16 +15,23 @@ namespace ctuconnect
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (!IsPostBack && Session["IndustryEmail"] == null)
             {
-               /* if (Session["USRNAME"] != null)
-                {
-                    BindGridView1();
-                }
-                else if (Session["IndustryEmail"] != null) {*/
-                    BindGridView2();
-                
+                Response.Redirect("LoginIndustry.aspx");
+
+
             }
+            else if (!IsPostBack)
+            {
+                BindGridView2();
+                disp_industryName.Text = Session["INDUSTRYNAME"].ToString();
+                disp_accID.Text = Session["INDUSTRY_ACC_ID"].ToString();
+
+                string imagePath = "~/images/IndustryProfile/" + Session["INDUSTRYPIC"].ToString();
+                industryImage1.ImageUrl = imagePath;
+
+            }
+
         }
         /*void BindGridView1()
         {
@@ -45,7 +52,7 @@ namespace ctuconnect
         void BindGridView2()
         {
             int industryID = Convert.ToInt32(Session["INDUSTRY_ACC_ID"]);
-            string query = "SELECT REFERRAL.referralID, STUDENT_ACCOUNT.lastName, STUDENT_ACCOUNT.firstName, COORDINATOR_ACCOUNT.firstName + ' ' + COORDINATOR_ACCOUNT.lastName AS referredBy, REFERRAL.referralLetter, REFERRAL.dateReferred, STUDENT_ACCOUNT.resumeFile " +
+            string query = "SELECT REFERRAL.referralID, STUDENT_ACCOUNT.lastName, STUDENT_ACCOUNT.firstName, COORDINATOR_ACCOUNT.firstName + ' ' + COORDINATOR_ACCOUNT.lastName AS referredBy, REFERRAL.referralLetter, REFERRAL.dateReferred, STUDENT_ACCOUNT.resumeFile, REFERRAL.ReferralStatus, REFERRAL.student_accID " +
                 "FROM REFERRAL JOIN STUDENT_ACCOUNT ON REFERRAL.student_accID = STUDENT_ACCOUNT.student_accID " +
                 "JOIN INDUSTRY_ACCOUNT  ON REFERRAL.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
                 "JOIN COORDINATOR_ACCOUNT ON REFERRAL.coordinator_accID = COORDINATOR_ACCOUNT.coordinator_accID " +
@@ -61,22 +68,22 @@ namespace ctuconnect
             dataRepeater.DataBind();
 
         }
-        protected void ReviewLetter_Command(object sender, CommandEventArgs e)
+        /*protected void ReviewLetter_Command(object sender, CommandEventArgs e)
         {
             if (e.CommandName == "Review")
             {
-                /* Button btn = (Button)sender;
+                *//* Button btn = (Button)sender;
                  int studentID = Convert.ToInt32(btn.Attributes["data-studentid"]);
- */
+ *//*
                 string referralLetterFileName = e.CommandArgument.ToString();
-                /*string endorsementLetterPath = Server.MapPath("~/images/EndorsementLetter" + endorsementLetterFileName);*/
+                *//*string endorsementLetterPath = Server.MapPath("~/images/EndorsementLetter" + endorsementLetterFileName);*//*
                 // Change the button text to "Reviewed"
                 //Button button = (Button)sender;
                 //button.Text = "Reviewed";
 
 
                 // Retrieve and display the resume file
-                byte[] referralLetterFileData = GetEndorsementFileData(referralLetterFileName);
+                byte[] referralLetterFileData = GetReferralFileData(referralLetterFileName);
 
 
                 if (referralLetterFileData != null)
@@ -90,8 +97,8 @@ namespace ctuconnect
                     Response.End();
                 }
             }
-        }
-        private byte[] GetEndorsementFileData(string referralLetterFileName)
+        }*/
+        private byte[] GetReferralFileData(string referralLetterFileName)
         {
             using (conDB)
             {
@@ -132,7 +139,47 @@ namespace ctuconnect
         }
         protected void ViewApplicant_Command(object sender, CommandEventArgs e)
         {
-            Response.Redirect("Applicants.aspx?student_accID=" + e.CommandArgument.ToString() + "&applicantFname=" + e.CommandName.ToString());
+            Response.Redirect("Applicants.aspx?student_accID=" + e.CommandArgument.ToString());
+        }
+        protected void SignOut_Click(object sender, EventArgs e)
+        {
+
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+            Response.Redirect("LoginIndustry.aspx");
+
+        }
+
+        protected void btnreferralLetterButton_Command(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "Review")
+            {
+                /* Button btn = (Button)sender;
+                 int studentID = Convert.ToInt32(btn.Attributes["data-studentid"]);
+ */
+                string referralLetterFileName = e.CommandArgument.ToString();
+                /*string endorsementLetterPath = Server.MapPath("~/images/EndorsementLetter" + endorsementLetterFileName);*/
+                // Change the button text to "Reviewed"
+                //Button button = (Button)sender;
+                //button.Text = "Reviewed";
+
+
+                // Retrieve and display the resume file
+                byte[] referralLetterFileData = GetReferralFileData(referralLetterFileName);
+
+
+                if (referralLetterFileData != null)
+                {
+                    // Provide the file data for download in a new browser tab
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.ContentType = "application/pdf"; // Set the appropriate content type
+                    Response.AddHeader("content-disposition", "inline; filename=referralLetter.pdf"); // Open in a new tab
+                    Response.BinaryWrite(referralLetterFileData);
+                    Response.End();
+                }
+            }
         }
     }
 }

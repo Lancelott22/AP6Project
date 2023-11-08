@@ -30,6 +30,10 @@ namespace ctuconnect
                     Job_Title.InnerText = "All Applicants for " + Request.QueryString["jobtitle"].ToString() + " Position";
                     Job_Title.Visible = true;
                 }
+                else if (!IsPostBack && Request.QueryString["student_accID"] != null)
+                {
+                    filterByStudent();
+                }
                 else
                 {
                     this.LoadApplicants();
@@ -562,6 +566,27 @@ namespace ctuconnect
                     SqlCommand cmd = new SqlCommand(query, db);
                     cmd.Parameters.AddWithValue("@industryAcctID", industryAccID);
                     cmd.Parameters.AddWithValue("@jobId", jobId);
+                    db.Open();
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(dtApplicants);
+                }
+
+                rptApplicant.DataSource = dtApplicants;
+                rptApplicant.DataBind();
+            }
+        }
+        void filterByStudent()
+        {
+            if (Request.QueryString["student_accID"] != null)
+            {
+                int industryAccID = Convert.ToInt32(Session["INDUSTRY_ACC_ID"].ToString());
+                int studentId = int.Parse(Request.QueryString["student_accID"].ToString());
+                using (var db = new SqlConnection(conDB))
+                {
+                    string query = "SELECT * FROM APPLICANT WHERE industry_accID = @industryAcctID and student_accID = @studentId ORDER BY dateApplied DESC";
+                    SqlCommand cmd = new SqlCommand(query, db);
+                    cmd.Parameters.AddWithValue("@studentID", studentId);
+                    cmd.Parameters.AddWithValue("@industryAcctID", industryAccID);
                     db.Open();
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     adapter.Fill(dtApplicants);

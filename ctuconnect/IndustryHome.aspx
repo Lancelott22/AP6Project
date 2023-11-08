@@ -46,7 +46,7 @@
         }
         .sidemenu-container{
             width:253px;
-            height:240px;
+            height:280px;
             background-color:white;
             /*margin-top:22%;*/
             padding-top:4px;

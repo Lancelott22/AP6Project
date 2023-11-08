@@ -290,7 +290,7 @@ namespace ctuconnect
                         + "WHERE student_accID = '" + studentAcctID + "'";
                     var ctr = cmd.ExecuteNonQuery();
                     if (ctr > 0)
-                        Response.Write("<script>alert('Resume Updated!')</script>");
+                        Response.Write("<script>alert('Resume Updated!');document.location='Resume.aspx'</script>");
 
 
                 }

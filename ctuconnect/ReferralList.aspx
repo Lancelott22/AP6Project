@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
@@ -36,8 +36,8 @@
             margin-top:7%;
         }
         .sidemenu-container{
-            width:260px;
-            height:200px;
+            width:253px;
+            height:280px;
             background-color:white;
             /*margin-top:22%;*/
             padding-top:4px;
@@ -210,8 +210,9 @@
         <asp:TableRow>
             <asp:TableCell Style="vertical-align:top; height:200px; ">
                 <div class="profile-container">
-                <img src="images/industrypic.png" />
-                <p >Industry Name</p>
+                <asp:Image ID="industryImage1" runat="server" />
+                    <center><b><asp:Label ID="disp_industryName" CssClass="disp_industryName"  runat="server" Text=""></asp:Label></b></center>
+                    <center><p style="font-size: 14px;">Account ID: <b><asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b></p></center>
                 </div>
             </asp:TableCell>
             <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
@@ -238,13 +239,15 @@
                                                 <td><%# Eval("firstName") %></td>
                                                 <td><%# Eval("referredBy") %></td>
                                                 <td>
-                                                    <asp:Button ID="btnEndorsementLetterButton" runat="server" Text="View Referral Letter"
+                                                    <asp:Button ID="btnreferralLetterButton" runat="server" Text="View Referral Letter" OnCommand="btnreferralLetterButton_Command"
+                                                        CommandName="Review" CommandArgument='<%# Eval("referralLetter") %>'/>
+                                                    <%--<asp:Button ID="btnEndorsementLetterButton" runat="server" Text="View Referral Letter"
                                                     OnCommand="ReviewLetter_Command" CommandName="Review"  
-                                                    CommandArgument='<%# Eval("referralLetter") %>'/>
+                                                    CommandArgument='<%# Eval("referralLetter") %>'/>--%>
                                                 </td>
                                                 <td><%# Eval("datereferred") %></td>
                                                 <td class='<%# GetStatusCssClass(Eval("ReferralStatus").ToString()) %>' ><%# Eval("ReferralStatus") %></td>
-                                                <td><asp:Button ID="ViewApplicants" Text="View Applicant"  runat="server" CommandName="<%#Eval("applicantFname")%>'" OnCommand="ViewApplicant_Command" CommandArgument='<%#Eval("student_accID")%>' AutoPostBack="false" CausesValidation="false" /> </td>
+                                                <td><asp:Button ID="ViewApplicants" Text="View Applicant"  runat="server"  OnCommand="ViewApplicant_Command" CommandArgument='<%#Eval("student_accID")%>' /> </td>
                                             </tr>
                                         </Itemtemplate>
         
@@ -256,11 +259,16 @@
           <asp:TableRow>
             <asp:TableCell Style=" vertical-align:top;">
                 <div class="sidemenu-container">
+                    <a  href="IndustryDashboard.aspx"><i class='bx bxs-dashboard' aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
                      <a  href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
-                     <a href="#"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
+                    <a href="IndustryJobPosted.aspx"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
                      <a href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
                      <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                      <a class="active" href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
+                     <asp:LinkButton runat="server" ID ="SignOut" OnClick="SignOut_Click" >
+   <i class="fa fa-sign-out" aria-hidden="true"></i>
+    Sign-out
+</asp:LinkButton>
                </div>
             </asp:TableCell>
         </asp:TableRow>

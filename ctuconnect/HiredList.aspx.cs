@@ -96,18 +96,17 @@ namespace ctuconnect
             UpdatePanel1.Update();
 
         }
-        protected void Evaluate_ButtonClick(object sender, EventArgs e)
+        protected void Evaluate_BtnClick(object sender, EventArgs e)
         {
             // Find the button that triggered the event
-            /*Button EvaluationBtn = (Button)sender;
+            Button EvaluationBtn = (Button)sender;
 
             // Check if the button's text is "Requested"
             if (EvaluationBtn.Text == "Requested")
             {
                 // Redirect to another ASPX page
                 Response.Redirect("Home.aspx");
-            }*/
-            Response.Redirect("Applicants.aspx?student_accID=" + e.CommandArgument.ToString() + "&applicantFname=" + e.CommandName.ToString());
+            }
         }
         protected void ViewResume_Command(object sender, CommandEventArgs e)
         {
@@ -161,6 +160,15 @@ namespace ctuconnect
 
                 return null; // No file found
             }
+        }
+        protected void SignOut_Click(object sender, EventArgs e)
+        {
+
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+            Response.Redirect("LoginIndustry.aspx");
+
         }
         /*protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
         {

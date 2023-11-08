@@ -9,11 +9,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
     <style>
-       
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
-        *{
+      
+       /* *{
             font-family: 'Poppins', sans-serif;
-        }
+        }*/
         .profile-container{
             max-width:260px;
             height:auto;
@@ -248,55 +247,9 @@
                 </div>
             </asp:TableCell> 
             <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
-                <div class="display-container container-fluid">
-                    <h1 class="title">Post a Job</h1>
-                   
-                        <asp:Label ID="Label1" runat="server" Text="Job Title " Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 
-                        <asp:TextBox ID="JobTitle" runat="server" CssClass="form-control txtbox" Placeholder="e.g. Financial Planning Assistant" ></asp:TextBox>
                 
-                        <asp:Label ID="Label2" runat="server" Text="Industry Name " Style="font-size:18px;"></asp:Label><span style="color: red">*</span>
-                        <asp:TextBox ID="IndName" runat="server" CssClass="form-control txtbox" Placeholder="e.g. Gaus Electonics"></asp:TextBox>
+                    
                    
-                        <asp:Label ID="Label5" runat="server" Text="Job Location " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                        <asp:TextBox ID="jobLoc" runat="server" CssClass="form-control txtbox" Placeholder="e.g. M.J. Cuenco Ave, Cor R. Palma Street, 6000 Cebu" ></asp:TextBox>
-
-                        <asp:Label ID="Label3" runat="server" Text="Job Type " Style="font-size:18px;"></asp:Label><span style="color: red">*</span>
-                        <asp:Label ID="Label4" runat="server" Text="Specified course " Style="font-size:20px; margin-left:42%;"></asp:Label><span style="color: red">*</span>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <select runat="server" title="Select Job Type" class="selectpicker form-control" multiple="true" name="jobtype" id="jobtype">
-                                    <option value="fulltime">Full-time</option>
-                                    <option value="internship">Internship</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <select runat="server" title="Choose Job Course" class="selectpicker form-control" multiple="true" name="course" id="course">
-                                    <option value="BSIT">BSIT</option>
-                                    <option value="BIT-CT">BIT-CT</option>
-                                    <option value="BSIS">BSIS</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <asp:Label ID="Label6" runat="server" Text="Job Description " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="jobDescript" runat="server" TextMode="MultiLine" CssClass="form-control txtbox-description" Placeholder="Enter Job Description" ></asp:TextBox>
-
-                    <asp:Label ID="Label7" runat="server" Text="Job Qualifications " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="jobQuali" runat="server"  CssClass="form-control txtbox-description" TextMode="MultiLine" Placeholder="Enter Job Qualifications" ></asp:TextBox>
-
-                    <asp:Label ID="Label8" runat="server" Text="Instructions to apply " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                     <asp:TextBox ID="jobInstruct" runat="server" TextMode="MultiLine" CssClass="form-control txtbox-instruction" Placeholder="How to apply?"></asp:TextBox>
-                     
-                    <asp:Label ID="Label9" runat="server" Text="Salary Range" Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                    <asp:TextBox ID="salary" runat="server" CssClass="form-control txtbox" Placeholder="PHP XXX,XXX - PHP XXX,XXX"></asp:TextBox>
-
-                    <asp:Button ID="PostJob" runat="server" CssClass="postJobStyle"  Text="Post" />
-            </div>
                     </asp:TableCell>
             </asp:TableRow>
 

@@ -382,7 +382,7 @@
 
 
      <%--Modal--%>
- <div class="modal fade" id="AddReferralModal" tabindex="-1" role="dialog" >
+ <div class="modal" id="AddReferralModal" tabindex="-1" role="dialog" >
      <div class="modal-dialog modal-dialog-centered" >
          <div class="modal-content">
              <div class="modal-header">

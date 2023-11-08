@@ -17,7 +17,9 @@
         * {
             font-family: 'Poppins', sans-serif;
         }
+        a{
 
+        }
         .profile-container {
             max-width: 260px;
             height: auto;
@@ -50,7 +52,7 @@
 
         .sidemenu-container {
             width: 253px;
-            height: 240px;
+            height: 280px;
             background-color: white;
             /*margin-top:22%;*/
             padding-top: 4px;

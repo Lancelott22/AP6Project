@@ -40,8 +40,8 @@
             margin-top:7%;
         }
         .sidemenu-container{
-            width:200px;
-            height:200px;
+            width:253px;
+            height:280px;
             background-color:white;
             /*margin-top:22%;*/
             padding-top:4px;
@@ -253,6 +253,7 @@
                 <p >Industry Name</p>
                 </div>
             </asp:TableCell>
+          
             <asp:TableCell RowSpan="2" Style="padding:0px 10px 0px 25px; vertical-align:top;">
                 <div class="display-container">
                      <h1 class="title">Applicants List</h1>
@@ -266,6 +267,8 @@
                     </p>
                     
                     <h3 id="Job_Title" runat="server" visible="false" style="float:left; padding:10px;"></h3>
+                    <%--<asp:UpdatePanel runat="server">
+                        <ContentTemplate>--%>
                     <!-- Repeater for Applicant -->
                     <asp:Repeater ID="rptApplicant" runat="server" OnItemDataBound="rptApplicant_ItemDataBound">
                         <ItemTemplate>
@@ -365,7 +368,11 @@
                             <Triggers>
                         </ItemTemplate>                       
                     </asp:Repeater>
-                
+                            <%--</ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="btnReview" EventName="Command"/>
+                        </Triggers>
+                </asp:UpdatePanel>--%>
                 </div>
 
             </asp:TableCell>
