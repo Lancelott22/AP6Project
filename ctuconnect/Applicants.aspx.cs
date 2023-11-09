@@ -531,6 +531,44 @@ namespace ctuconnect
                     }
                 }
             }
+           if( searchStudentID(studentID) == true)
+            {
+                using (var db = new SqlConnection(conDB))
+                {
+                    db.Open();
+                    using (var cmd = db.CreateCommand())
+                    {
+
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandText = "UPDATE REFERRAL SET ReferralStatus = 'Approved' WHERE student_accID = '" + studentID + "' ";
+                        var ctr = cmd.ExecuteNonQuery();
+                        //if (ctr > 0)
+
+                    }
+                }
+            }
+        }
+
+        private bool searchStudentID(int studentAcctID)
+        {
+
+            using (var db = new SqlConnection(conDB))
+            {
+                db.Open();
+                using (var cmd = db.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "select COUNT(referralID) as referStudent from REFERRAL WHERE student_accID = '" + studentAcctID + "'";
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+
+                        return true;
+                    }
+                    reader.Close();
+                }
+            }
+            return false;
         }
 
         private void editStudentAccount(int studentAcctID)

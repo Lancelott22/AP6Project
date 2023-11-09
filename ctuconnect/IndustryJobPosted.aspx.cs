@@ -42,7 +42,7 @@ namespace ctuconnect
             int industryAccID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
             SqlCommand cmd = new SqlCommand("SELECT HIRING.*, CONVERT(nvarchar,jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
                 " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
-                " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE HIRING.industry_accID = 600000 ORDER BY jobPostedDate DESC;", conDB);
+                " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE HIRING.industry_accID = '"+ industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);
             cmd.Parameters.AddWithValue("@Industry_accID", industryAccID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();

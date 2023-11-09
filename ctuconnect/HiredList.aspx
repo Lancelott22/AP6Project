@@ -174,7 +174,7 @@
            border-collapse: collapse;
             border-color:white;
             background-color:#f4f4fb;
-            padding:5px;
+            padding:4px;
 
         }
         .datas{
@@ -281,24 +281,26 @@
                                         <table  class="table-list">
                                             <tr>
                                                 <th style="width: 78px;">No.</th>
-                                                <th style="width: 230px;">Last Name</th>
-                                                <th style="width: 230px;">First Name</th>
-                                                <th style="width: 230px;">Date Hired</th>
-                                                <th style="width: 230px;">Internship Status</th>
-                                                <th style="width: 230px;">Rendered Hours</th>
-                                                <th style="width: 230px;">Evaluation</th>
+                                                <th style="width: 200px;">Last Name</th>
+                                                <th style="width: 200px;">First Name</th>
+                                                <th style="width: 200px;">Position</th>
+                                                <th style="width: 200px;">Date Hired</th>
+                                                <th style="width: 200px;">Internship Status</th>
+                                                <th style="width: 200px;">Rendered Hours</th>
+                                                <th style="width: 200px;">Evaluation</th>
                                             </tr>
                                             </table>
                                         </HeaderTemplate>
                                                 <ItemTemplate>
                                                      <table class="table-list">
                                                     <tr class="datas">
-                                                        <td style="width: 78px;"><%# Container.ItemIndex + 1 %></td>
-                                                        <td style="width: 230px;"><%# Eval("lastName") %></td>
-                                                        <td style="width: 230px;"><%# Eval("firstName") %></td>
-                                                        <td style="width: 230px;"><%# Eval("dateHired") %></td>
-                                                        <td style="width: 230px;"><%# Eval("internshipStatus") %></td>
-                                                        <td style="width: 230px;"><%# Eval("renderedHours") %></td>
+                                                        <td style="width: 70px;"><%# Container.ItemIndex + 1 %></td>
+                                                        <td style="width: 200px;"><%# Eval("lastName") %></td>
+                                                        <td style="width: 200px;"><%# Eval("firstName") %></td>
+                                                        <td style="width: 200px;"><%# Eval("position") %></td>
+                                                        <td style="width: 200px;"><%# Eval("dateHired") %></td>
+                                                        <td style="width: 200px;"><%# Eval("internshipStatus") %></td>
+                                                        <td style="width: 200px;"><%# Eval("renderedHours") %></td>
                                                         <td >
                                                             <asp:Button ID="EvaluationBtn" CssClass="evaluateButton" runat="server" Text='<%# Eval("evaluationRequest") %>'
                                                             OnCLick="Evaluate_BtnClick"/>

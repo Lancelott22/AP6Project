@@ -205,8 +205,6 @@
     <Content Include="Admin.Master" />
     <Content Include="images\resume\100000_Bagahansol_COR.pdf" />
     <Content Include="images\resume\Jade_resume.pdf" />
-    <Content Include="images\resume\resume\100000_Bagahansol_COR.pdf" />
-    <Content Include="images\resume\resume\Jade_resume.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

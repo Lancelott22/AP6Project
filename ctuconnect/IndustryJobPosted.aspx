@@ -270,7 +270,8 @@
             height: contain;
             box-shadow: 0px 0px 7px -3px #bd0606;
             border-radius: 7px;
-            position: relative;
+            position:relative;
+            
         }
 
             .jobPostedBox:hover {
@@ -347,7 +348,7 @@
                         </div> 
                     </asp:TableCell>
                     <asp:TableCell RowSpan="2">
-                        <div class="d-flex flex-column" style="margin-bottom: 30px; ">                           
+                        <div class="d-flex flex-column" style="margin-bottom: 30px;">                           
                             <div class="JobPostedListbox" style="padding: 30px;">
                                  <h3 class="title">My Job Posted</h3><br />
                                 <asp:ListView ID="IndustryJobPostedList" runat="server" class="container-fluid" OnItemDataBound="IndustryJobPostedList_ItemDataBound" OnPagePropertiesChanged="IndustryJobPostedList_PagePropertiesChanged">

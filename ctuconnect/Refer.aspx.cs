@@ -23,6 +23,10 @@ namespace ctuconnect
         
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack && Session["Username"] == null)
+            {
+                Response.Redirect("LoginOJTCoordinator.aspx");
+            }
             if (!IsPostBack)
             {
                 /*if (Session["Coor_ACC_ID"] != null)
@@ -232,15 +236,15 @@ namespace ctuconnect
              return -1; // Return -1 if the column is not found.
          }*/
 
-        protected string GetStatusCssClass(string status)
+        protected string GetStatusCssClass(string ReferralStatus)
         {
             string cssClass = "default-status"; // Define a default CSS class
 
-            if (status == "Pending")
+            if (ReferralStatus == "Pending")
             {
                 cssClass = "status-pending";
             }
-            else if (status == "Approved")
+            else if (ReferralStatus == "Approved")
             {
                 cssClass = "status-approved";
             }

@@ -390,7 +390,7 @@
                                             <div style="padding: 10px;">
                                                 <br />
                                                 <b><span id="StatusOrDetails" runat="server">Status: </span></b>
-                                                <asp:Label ID="interviewStatusCheck" runat="server" Text="Waiting for your interview schedule..."></asp:Label>
+                                                <asp:Label ID="interviewStatusCheck" runat="server" Text="Waiting for your interview schedule..."></asp:Label>                                            
                                                 <br />
                                                 <br />
                                                 <span id="statusInterview" visible="false" runat="server"></span>

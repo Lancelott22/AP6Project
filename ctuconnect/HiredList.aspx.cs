@@ -17,6 +17,12 @@ namespace ctuconnect
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack && Session["IndustryEmail"] == null)
+            {
+                Response.Redirect("LoginIndustry.aspx");
+
+
+            }
             if (!IsPostBack)
             {
                 
@@ -48,7 +54,7 @@ namespace ctuconnect
         {
              
             
-                string query = "SELECT lastName, firstName, CONVERT(VARCHAR(10), HIRED_LIST.dateHired, 120) AS dateHired, internshipStatus, renderedHours, evaluationRequest FROM HIRED_LIST WHERE jobType = 'internship' ORDER BY id DESC";
+                string query = "SELECT lastName, firstName, position, CONVERT(VARCHAR(10), HIRED_LIST.dateHired, 120) AS dateHired, internshipStatus, renderedHours, evaluationRequest FROM HIRED_LIST WHERE jobType = 'internship' ORDER BY id DESC";
             SqlCommand cmd = new SqlCommand(query, conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
