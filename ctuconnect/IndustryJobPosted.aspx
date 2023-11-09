@@ -347,8 +347,9 @@
                         </div> 
                     </asp:TableCell>
                     <asp:TableCell RowSpan="2">
-                        <div class="d-flex flex-column" style="margin-bottom: 30px;">
-                            <div class="JobPostedListbox">
+                        <div class="d-flex flex-column" style="margin-bottom: 30px; ">                           
+                            <div class="JobPostedListbox" style="padding: 30px;">
+                                 <h3 class="title">My Job Posted</h3><br />
                                 <asp:ListView ID="IndustryJobPostedList" runat="server" class="container-fluid" OnItemDataBound="IndustryJobPostedList_ItemDataBound" OnPagePropertiesChanged="IndustryJobPostedList_PagePropertiesChanged">
                                     <ItemTemplate>
                                         <div id="myJobPosted" runat="server" class="row d-flex align-items-center jobPostedBox">

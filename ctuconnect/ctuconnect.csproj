@@ -156,7 +156,6 @@
     <Content Include="images\notification_bell.png" />
     <Content Include="images\report.png" />
     <Content Include="images\schoolbg.png" />
-    <Content Include="images\StudentProfiles\defaultprofile.jpg" />
     <Content Include="IndustryDashboard.aspx" />
     <Content Include="IndustryHome.aspx" />
     <Content Include="IndustryVerification.aspx" />
@@ -519,6 +518,7 @@
     <Folder Include="images\MOU\" />
     <Folder Include="images\OJTCoordinatorProfile\" />
     <Folder Include="images\ReferralLetter\" />
+    <Folder Include="images\StudentProfiles\" />
     <Folder Include="Industry\" />
     <Folder Include="Interns\" />
     <Folder Include="OjtCoordinator\" />
