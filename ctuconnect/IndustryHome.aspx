@@ -13,10 +13,9 @@
     <style>
        
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
-        *{
-            font-family: 'Poppins', sans-serif;
-        }
+        
         .profile-container{
+            font-family: 'Poppins', sans-serif;
             max-width:260px;
             height:auto;
             padding: 10px;
@@ -45,6 +44,7 @@
             margin-top:7%;
         }
         .sidemenu-container{
+            font-family: 'Poppins', sans-serif;
             width:253px;
             height:280px;
             background-color:white;
