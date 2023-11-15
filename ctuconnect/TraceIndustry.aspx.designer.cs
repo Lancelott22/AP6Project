@@ -33,6 +33,24 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Button SearchIndustry;
 
         /// <summary>
+        /// Address control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Address;
+
+        /// <summary>
+        /// IndustryAdress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button IndustryAdress;
+
+        /// <summary>
         /// IndustryListView control.
         /// </summary>
         /// <remarks>

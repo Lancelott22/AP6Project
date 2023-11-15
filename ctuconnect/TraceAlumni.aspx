@@ -58,23 +58,29 @@
             </div>
             <div class="col-sm-2">
                 <div class="form-group">
-                    <select runat="server" title="Choose Job Course" class="selectpicker form-control" name="course" id="course">
-                        <option value="0" selected>Select Course</option>
-                    </select>
+                    <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="department" AutoPostBack="true" OnSelectedIndexChanged="department_SelectedIndexChanged">
+                    </asp:DropDownList>
                 </div>
             </div>
             <div class="col-sm-2">
                 <div class="form-group">
-                    <select runat="server" title="Choose Job Course" class="selectpicker form-control" name="industry" id="industry">
-                        <option value="0" selected>Select industry</option>
-                    </select>
+                    <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="course" AutoPostBack="true" OnSelectedIndexChanged="course_SelectedIndexChanged">
+                    </asp:DropDownList>
                 </div>
             </div>
             <div class="col-sm-2">
                 <div class="form-group">
-                    <select runat="server" title="Choose Job Course" class="selectpicker form-control" name="position" id="position">
-                        <option value="0" selected>Select position</option>
-                    </select>
+                    <div class="form-group">
+                        <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="industry" AutoPostBack="true" OnSelectedIndexChanged="industry_SelectedIndexChanged">
+                        </asp:DropDownList>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="position" AutoPostBack="true" OnSelectedIndexChanged="position_SelectedIndexChanged">
+                    </asp:DropDownList>
+
                 </div>
             </div>
         </div>

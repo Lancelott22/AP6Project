@@ -47,13 +47,24 @@
     <h2 class="opacity-75">Industry List</h2>
     <div class="container m-auto my-5 w-100 h-100 d-flex flex-column py-3">
         <div class="row">
-            <div class="input-group mb-3">
-                <asp:TextBox ID="IndustryName" runat="server" class="form-control" Placeholder="Search Industry Name"></asp:TextBox>
-                <div class="input-group-append">
-                    <asp:Button class="btn btn-primary" runat="server" ID="SearchIndustry" OnClick="SearchIndustry_Click" Text="Search" />
+            <div class="col-sm-4">
+                <div class="input-group mb-3">
+                    <asp:TextBox ID="IndustryName" runat="server" class="form-control" Placeholder="Search Industry Name"></asp:TextBox>
+                    <div class="input-group-append">
+                        <asp:Button class="btn btn-primary" runat="server" ID="SearchIndustry" OnClick="SearchIndustry_Click" Text="Search" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="input-group mb-3">
+                    <asp:TextBox ID="Address" runat="server" class="form-control" Placeholder="Search Address"></asp:TextBox>
+                    <div class="input-group-append">
+                        <asp:Button class="btn btn-primary" runat="server" ID="IndustryAdress" OnClick="IndustryAdress_Click" Text="Search" />
+                    </div>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <asp:ListView ID="IndustryListView" runat="server">
                 <LayoutTemplate>
