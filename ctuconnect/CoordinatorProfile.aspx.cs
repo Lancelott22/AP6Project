@@ -54,8 +54,14 @@ namespace ctuconnect
                 dataRepeater.DataBind();
 
             }
-
-
-
+        protected void SignOut_Click(object sender, EventArgs e)
+        {
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+            Response.Redirect("LoginOJTCoordinator.aspx");
         }
+
+
+    }
     }
