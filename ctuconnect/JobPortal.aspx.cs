@@ -38,10 +38,21 @@ namespace ctuconnect
                 JobBind();
                 TotalJob();
             }
+            if(checkResume())
+            {
+                resumeIcon.Attributes.Add("title", "Resume Uploaded");
+                resumeIcon.Attributes.Add("class", "fa fa-address-card-o m-1 text-success");
+            }
+            else
+            {
+                resumeIcon.Attributes.Add("title", "No Resume");
+                resumeIcon.Attributes.Add("class", "fa fa-address-card-o m-1 text-danger");
+            }
             DisplayStudentInfo();
         }
         void JobBind()
         {
+            int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
             string studentCourse = Session["Student_COURSE"].ToString();
             string Usertype = Session["STATUSorTYPE"].ToString();
             string jobtype = "";
@@ -49,7 +60,9 @@ namespace ctuconnect
             {
                 jobtype = "internship";
             }
-            SqlCommand cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' ORDER BY jobPostedDate DESC", conDB);
+            SqlCommand cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' " +
+                "and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) ORDER BY jobPostedDate DESC", conDB);
+            cmd.Parameters.AddWithValue("@studentAccID", student_accId);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
@@ -278,7 +291,6 @@ namespace ctuconnect
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showModalFunction();", true);
                 return null;
             }
-
             return filename;
         }
 
@@ -336,13 +348,13 @@ namespace ctuconnect
 
             if (checkJobApplied(JobId) == true)
             {
-                btn.Text = "Applied";
+                btn.Text = "Applied";              
             }
             else if (checkJobApplied(JobId) == false)
             {
                 btn.Text = "Apply";
             }
-
+            
             Label jobPostedDate = (Label)e.Item.FindControl("JobPostedDate");
             ((Label)e.Item.FindControl("timeAgoMsg")).Text = postedDateTimeAgo(Convert.ToDateTime(jobPostedDate.Text));
 
@@ -357,7 +369,6 @@ namespace ctuconnect
                 /* HtmlGenericControl JobList = (HtmlGenericControl)e.Item.FindControl("jobList");
                  JobList.Style.Add("background-color", "#f0e789");*/
             }
-
         }
         private void DisplayStudentInfo()
         {
@@ -472,11 +483,11 @@ namespace ctuconnect
                 IndstryLogo.Src = "~/images/IndustryProfile/" + reader["industryPicture"].ToString();
                 IndustryName.Text = reader["industryName"].ToString();
                 JobTitle.Text = reader["jobTitle"].ToString();
-                JobDescription.Text = reader["jobDescription"].ToString();
+                JobDescription.Text = HttpUtility.HtmlDecode(reader["jobDescription"].ToString());
                 JobType.Text = reader["jobType"].ToString();
                 JobLocation.Text = reader["jobLocation"].ToString();
                 JobCourse.Text = reader["jobCourse"].ToString();
-                JobQualification.Text = reader["jobQualifications"].ToString();
+                JobQualification.Text = HttpUtility.HtmlDecode(reader["jobQualifications"].ToString());
                 ApplicationInstruction.Text = reader["applicationInstruction"].ToString();
                 IndustryID.Text = reader["industry_accID"].ToString();
                 DatePosted.Text = reader["DatePosted"].ToString();
@@ -527,6 +538,7 @@ namespace ctuconnect
         }
         void TotalJob()
         {
+            int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
             string studentCourse = Session["Student_COURSE"].ToString();
             string Usertype = Session["STATUSorTYPE"].ToString();
             string jobtype = "";
@@ -535,7 +547,9 @@ namespace ctuconnect
                 jobtype = "internship";
             }
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%'", conDB);
+            SqlCommand cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' " +
+                "and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID)", conDB);
+            cmd.Parameters.AddWithValue("@studentAccID", student_accId);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {

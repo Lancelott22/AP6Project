@@ -132,6 +132,8 @@ namespace ctuconnect
                 statusResume.Attributes.Add("class", "statusStyle");
                 statusResume.InnerText = "Reviewed";
                 InterviewStatus.Visible = true;
+                dateReviewed.Visible = true;
+                dateReviewed.InnerText = getResumeDate(applicantID, jobId);
                 if (checkInterviewStatus(applicantID, jobId) == true)
                 {
                     StatusOrDetails.InnerText = "Interview Details: ";
@@ -139,6 +141,8 @@ namespace ctuconnect
                     interviewStatusCheck.Text = showInterviewDetails(applicantID, jobId);
                     statusInterview.Visible = true;
                     statusInterview.Attributes.Add("class", "statusStyle");
+                    dateScheduled.Visible = true;
+                    interviewDate.Visible = true;
                 }
                 else
                 {
@@ -147,6 +151,8 @@ namespace ctuconnect
                     statusInterview.InnerText = "Pending";
                     statusInterview.Attributes.Add("class", "statusStylePending");
                     StatusOrDetails.InnerText = "Status: ";
+                    dateScheduled.Visible = false;
+                    interviewDate.Visible = false;
                 }
             }
             else
@@ -156,7 +162,7 @@ namespace ctuconnect
                 statusResume.Attributes.Add("class", "statusStylePending");
                 resumeStatusCheck.Text = "Waiting for your resume review status...";
                 InterviewStatus.Visible = false;
-
+                dateReviewed.Visible = false;
             }
             if ((checkInterviewStatus(applicantID, jobId) == true && checkResumeStatus(applicantID, jobId) == true))
 
@@ -170,6 +176,9 @@ namespace ctuconnect
                         applicationStatusCheck.Text = "Congratulations! Your application has been approved.";
                         statusApplication.Visible = true;
                         statusApplication.Attributes.Add("class", "statusStyle");
+                        requirementDetails.Visible = true;
+                        dateStarted.Visible = true;
+                        dateApproved.Visible = true;
                     }
                     else if (getApplicantStatus(applicantID, jobId) == "Rejected")
                     {
@@ -177,12 +186,15 @@ namespace ctuconnect
                         applicationStatusCheck.Text = "Sorry! Your application has been rejected.";
                         statusApplication.Visible = true;
                         statusApplication.Attributes.Add("class", "statusStyleReject");
+                        dateApproved.Visible = true;
                     }
 
                 }
                 else
                 {
-
+                    requirementDetails.Visible = false;
+                    dateStarted.Visible = false;
+                    dateApproved.Visible = false;
                     applicationStatusCheck.Text = "Waiting for your application approval...";
                     statusApplication.Visible = true;
                     statusApplication.InnerText = "Pending";
@@ -201,7 +213,7 @@ namespace ctuconnect
         {
             int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString()); //int.Parse(Sessios["student_accID"].ToString());
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select applicantStatus from APPLICANT Where student_accID = @Student_accID and applicantID = @applicantId and jobID = @jobId", conDB);
+            SqlCommand cmd = new SqlCommand("select applicantStatus,  CONVERT(nvarchar,applicationApprovalDate, 1) as applicationApprovalDate,CONVERT(nvarchar,dateStarted, 1) as dateStarted,requirements from APPLICANT Where student_accID = @Student_accID and applicantID = @applicantId and jobID = @jobId", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
             cmd.Parameters.AddWithValue("@applicantId", applicantID);
             cmd.Parameters.AddWithValue("@jobId", jobId);
@@ -209,8 +221,29 @@ namespace ctuconnect
             if (reader.Read())
             {
                 string applicantStatus = reader["applicantStatus"].ToString();
+                dateApproved.InnerText = reader["applicationApprovalDate"].ToString();
+                requirementDetails.Text = "<br /><b>Details: </b><br />" + reader["requirements"].ToString();
+                dateStarted.Text = "<br /><b>Work Start Date: </b>" + reader["dateStarted"].ToString();
                 conDB.Close();
                 return applicantStatus;
+            }
+            conDB.Close();
+            return "";
+        }
+        string getResumeDate(int applicantID, int jobId)
+        {
+            int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString()); //int.Parse(Sessios["student_accID"].ToString());
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select CONVERT(nvarchar,resumeReviewedDate, 1) as resumeReviewedDate  from APPLICANT Where student_accID = @Student_accID and applicantID = @applicantId and jobID = @jobId", conDB);
+            cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
+            cmd.Parameters.AddWithValue("@applicantId", applicantID);
+            cmd.Parameters.AddWithValue("@jobId", jobId);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                string dateReviewed = reader["resumeReviewedDate"].ToString();               
+                conDB.Close();
+                return dateReviewed;
             }
             conDB.Close();
             return "";
@@ -220,7 +253,7 @@ namespace ctuconnect
             string interviewDetail = "";
             int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString()); //int.Parse(Sessios["student_accID"].ToString());
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select interviewDetails from APPLICANT Where student_accID = @Student_accID and applicantID = @applicantId and jobID = @jobId", conDB);
+            SqlCommand cmd = new SqlCommand("select interviewDetails,  CONVERT(nvarchar,interviewScheduledDate, 1) as interviewScheduledDate , CONVERT(nvarchar,interviewDate, 1)  as interviewDate from APPLICANT Where student_accID = @Student_accID and applicantID = @applicantId and jobID = @jobId", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
             cmd.Parameters.AddWithValue("@applicantId", applicantID);
             cmd.Parameters.AddWithValue("@jobId", jobId);
@@ -228,6 +261,8 @@ namespace ctuconnect
             if (reader.Read())
             {
                 interviewDetail = reader["interviewDetails"].ToString();
+                interviewDate.Text = "<br /><b>Interview Date: </b>" + reader["interviewDate"].ToString();
+                dateScheduled.InnerText = reader["interviewScheduledDate"].ToString();
                 conDB.Close();
                 return interviewDetail;
             }

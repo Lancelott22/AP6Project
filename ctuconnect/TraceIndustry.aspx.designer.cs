@@ -11,43 +11,52 @@ namespace ctuconnect
 {
 
 
-    public partial class TracerDashboard
+    public partial class TraceIndustry
     {
 
         /// <summary>
-        /// totalAlumni control.
+        /// IndustryName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalAlumni;
+        protected global::System.Web.UI.WebControls.TextBox IndustryName;
 
         /// <summary>
-        /// totalIntern control.
+        /// SearchIndustry control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalIntern;
+        protected global::System.Web.UI.WebControls.Button SearchIndustry;
 
         /// <summary>
-        /// totalIndustry control.
+        /// Address control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalIndustry;
+        protected global::System.Web.UI.WebControls.TextBox Address;
 
         /// <summary>
-        /// totalJobPosted control.
+        /// IndustryAdress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalJobPosted;
+        protected global::System.Web.UI.WebControls.Button IndustryAdress;
+
+        /// <summary>
+        /// IndustryListView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListView IndustryListView;
     }
 }

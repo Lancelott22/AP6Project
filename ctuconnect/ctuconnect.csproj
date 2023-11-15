@@ -242,6 +242,7 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
     <Content Include="TraceAlumni.aspx" />
+    <Content Include="TraceIndustry.aspx" />
     <Content Include="TracerDashboard.aspx" />
     <Content Include="TraceStudent.aspx" />
     <Content Include="ViewSwitcher.ascx" />
@@ -542,6 +543,13 @@
     </Compile>
     <Compile Include="TraceAlumni.aspx.designer.cs">
       <DependentUpon>TraceAlumni.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TraceIndustry.aspx.cs">
+      <DependentUpon>TraceIndustry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TraceIndustry.aspx.designer.cs">
+      <DependentUpon>TraceIndustry.aspx</DependentUpon>
     </Compile>
     <Compile Include="TracerDashboard.aspx.cs">
       <DependentUpon>TracerDashboard.aspx</DependentUpon>

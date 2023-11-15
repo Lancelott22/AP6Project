@@ -213,6 +213,15 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.TextBox salary;
 
         /// <summary>
+        /// checkActivateJob control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox checkActivateJob;
+
+        /// <summary>
         /// PostJob control.
         /// </summary>
         /// <remarks>
