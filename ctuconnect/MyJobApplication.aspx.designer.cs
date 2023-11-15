@@ -69,6 +69,24 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label applicationStatusCheck;
 
         /// <summary>
+        /// requirementDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal requirementDetails;
+
+        /// <summary>
+        /// dateStarted control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal dateStarted;
+
+        /// <summary>
         /// statusApplication control.
         /// </summary>
         /// <remarks>
@@ -76,6 +94,15 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusApplication;
+
+        /// <summary>
+        /// dateApproved control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dateApproved;
 
         /// <summary>
         /// InterviewStatus control.
@@ -105,6 +132,15 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label interviewStatusCheck;
 
         /// <summary>
+        /// interviewDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal interviewDate;
+
+        /// <summary>
         /// statusInterview control.
         /// </summary>
         /// <remarks>
@@ -112,6 +148,15 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusInterview;
+
+        /// <summary>
+        /// dateScheduled control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dateScheduled;
 
         /// <summary>
         /// ResumeStatus control.
@@ -139,5 +184,14 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusResume;
+
+        /// <summary>
+        /// dateReviewed control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dateReviewed;
     }
 }

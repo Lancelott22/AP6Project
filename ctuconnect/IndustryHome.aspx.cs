@@ -9,6 +9,8 @@ using System.Web.UI.WebControls;
 using System.Data;
 using Org.BouncyCastle.Asn1.Ocsp;
 using Microsoft.Ajax.Utilities;
+using iTextSharp.tool.xml.html;
+using iTextSharp.text.html;
 
 namespace ctuconnect
 {
@@ -40,6 +42,7 @@ namespace ctuconnect
             {
                 fillJobDetails();
             }
+        
         }
         void fillJobDetails()
         {
@@ -74,11 +77,19 @@ namespace ctuconnect
                         }
                     }
 
-                    jobDescript.Text = reader["jobDescription"].ToString();
-                    jobQuali.Text = reader["jobQualifications"].ToString();
+                    jobDescript.Text = HttpUtility.HtmlDecode(reader["jobDescription"].ToString());
+                    jobQuali.Text = HttpUtility.HtmlDecode(reader["jobQualifications"].ToString());
                     jobInstruct.Text = reader["applicationInstruction"].ToString();
                     salary.Text = reader["salaryRange"].ToString();
                     PostJob.Text = "Update Post";
+                    if (bool.Parse(reader["isActive"].ToString()) == true)
+                    {
+                        checkActivateJob.Checked = true;
+                    }
+                    else
+                    {
+                        checkActivateJob.Checked = false;
+                    }
                 }
                 reader.Close();
                 conDB.Close();
@@ -89,10 +100,7 @@ namespace ctuconnect
 
             if (string.IsNullOrEmpty(JobTitle.Text) || string.IsNullOrEmpty(IndName.Text) || jobtype.Value.Equals("") || course.Value.Equals("") || string.IsNullOrEmpty(jobLoc.Text) || string.IsNullOrEmpty(jobDescript.Text) || string.IsNullOrEmpty(jobQuali.Text))
             {
-
-                Response.Write("<script>alert('Please input the required field.')</script>");
-
-
+                Response.Write("<script>alert('Please fill up the required field.')</script>");
             }
             else if (Request.QueryString["jobid"] != null)
             {
@@ -119,14 +127,15 @@ namespace ctuconnect
                 }
                 jobCourse = jobCourse.Remove(jobCourse.Length - 1, 1);
                 string jobLocation = jobLoc.Text;
-                string jobDescription = jobDescript.Text;
-                string jobQualification = jobQuali.Text;
+                string jobDescription = HttpUtility.HtmlEncode(jobDescript.Text);
+                string jobQualification = HttpUtility.HtmlEncode(jobQuali.Text);
                 string jobInstruction = jobInstruct.Text;
                 string salaryRange = salary.Text;
+                bool isActiveJob = checkActivateJob.Checked;
                 conDB.Open();
                 SqlCommand cmd = new SqlCommand("UPDATE HIRING SET jobTitle=@jobTitle, industryName=@industryName, " +
                     "jobType=@jobType, jobCourse=@jobCourse, jobLocation=@jobLocation, jobDescription=@jobDescription, jobQualifications=@jobQualifications, " +
-                    "applicationInstruction=@applicationInstruction,salaryRange=@salary WHERE jobID = @jobId", conDB);
+                    "applicationInstruction=@applicationInstruction,salaryRange=@salary,isActive = @isActive WHERE jobID = @jobId", conDB);
                 cmd.Parameters.AddWithValue("@jobTitle", jobTitle);
                 cmd.Parameters.AddWithValue("@industryName", industryName);
                 cmd.Parameters.AddWithValue("@jobType", jobType);
@@ -136,13 +145,15 @@ namespace ctuconnect
                 cmd.Parameters.AddWithValue("@jobQualifications", jobQualification);
                 cmd.Parameters.AddWithValue("@applicationInstruction", jobInstruction);
                 cmd.Parameters.AddWithValue("@salary", salaryRange);
+                cmd.Parameters.AddWithValue("@isActive", isActiveJob);
                 cmd.Parameters.AddWithValue("@jobId", jobId);
+               
                 var ctr = cmd.ExecuteNonQuery();
 
                 if (ctr > 0)
                 {
 
-                    Response.Write("<script>alert('The job has been updated successfully.');document.location='IndustryHome.aspx';</script>");
+                    Response.Write("<script>alert('The job has been updated successfully.');document.location='IndustryJobPosted.aspx';</script>");
                 }
                 else
                 {
@@ -174,15 +185,16 @@ namespace ctuconnect
                 }
                 jobCourse = jobCourse.Remove(jobCourse.Length - 1, 1);
                 string jobLocation = jobLoc.Text;
-                string jobDescription = jobDescript.Text;
-                string jobQualification = jobQuali.Text;
+                string jobDescription = HttpUtility.HtmlEncode(jobDescript.Text);
+                string jobQualification = HttpUtility.HtmlEncode(jobQuali.Text);
                 string jobInstruction = jobInstruct.Text;
                 string salaryRange = salary.Text;
+                bool isActiveJob = checkActivateJob.Checked;
                 conDB.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO HIRING( industry_accID, jobTitle, industryName, " +
-                    "jobType, jobCourse, jobLocation, jobDescription, jobQualifications, applicationInstruction,salaryRange,jobPostedDate)" +
+                    "jobType, jobCourse, jobLocation, jobDescription, jobQualifications, applicationInstruction,salaryRange,isActive,jobPostedDate)" +
                     "VALUES(@industry_accID, @jobTitle, @industryName,@jobType,@jobCourse,@jobLocation,@jobDescription," +
-                    "@jobQualifications,@applicationInstruction, @salary,@jobPostedDate)", conDB);
+                    "@jobQualifications,@applicationInstruction, @salary,@isActive,@jobPostedDate)", conDB);
                 cmd.Parameters.AddWithValue("@industry_accID", industryAccID);
                 cmd.Parameters.AddWithValue("@jobTitle", jobTitle);
                 cmd.Parameters.AddWithValue("@industryName", industryName);
@@ -193,13 +205,14 @@ namespace ctuconnect
                 cmd.Parameters.AddWithValue("@jobQualifications", jobQualification);
                 cmd.Parameters.AddWithValue("@applicationInstruction", jobInstruction);
                 cmd.Parameters.AddWithValue("@salary", salaryRange);
+                cmd.Parameters.AddWithValue("@isActive", isActiveJob);
                 cmd.Parameters.AddWithValue("@jobPostedDate", DateTime.Now);
                 var ctr = cmd.ExecuteNonQuery();
 
                 if (ctr > 0)
                 {
 
-                    Response.Write("<script>alert('The job has been posted successfully.');document.location='IndustryHome.aspx';</script>");
+                    Response.Write("<script>alert('The job has been posted successfully.');document.location='IndustryJobPosted.aspx';</script>");
                 }
                 else
                 {
