@@ -38,5 +38,24 @@ namespace ctuconnect
                 /*ListViewPager.Visible = false;*/
             }
         }
+        void SearchByIndustryName(string industryName)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT INDUSTRY_ACCOUNT.*,COALESCE(HIRING_COUNT.TotalJob, 0) as totalJobPosted, COALESCE(HIRED_LIST.TotalHired, 0) as TotalEmployee " +
+                "FROM INDUSTRY_ACCOUNT LEFT JOIN (SELECT industry_accID, COUNT(jobID) as TotalJob FROM HIRING WHERE isActive = 1 GROUP BY industry_accID) HIRING_COUNT " +
+                "ON INDUSTRY_ACCOUNT.industry_accID = HIRING_COUNT.industry_accID LEFT JOIN (SELECT industry_accID, COUNT(id) as TotalHired FROM HIRED_LIST " +
+                "WHERE internshipStatus = 'Ongoing' or workStatus = 'Ongoing' GROUP BY industry_accID) HIRED_LIST " +
+                "ON INDUSTRY_ACCOUNT.industry_accID = HIRED_LIST.industry_accID WHERE industryName LIKE '%" + industryName + "%'", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            IndustryListView.DataSource = ds;
+            IndustryListView.DataBind();
+        }
+
+        protected void SearchIndustry_Click(object sender, EventArgs e)
+        {
+            string industryName = IndustryName.Text; 
+            SearchByIndustryName(industryName);
+        }
     }
 }

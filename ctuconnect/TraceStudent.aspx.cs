@@ -33,5 +33,20 @@ namespace ctuconnect
               /*  ListViewPager.Visible = false;*/
             }
         }
+        void SearchByStudentNameOrID(string student)
+        {
+            SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE STUDENT_ACCOUNT.firstName LIKE '%" + student + "%' " +
+                "or STUDENT_ACCOUNT.lastName LIKE '%" + student + "%' or STUDENT_ACCOUNT.studentId = '" + student + "' ", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            InternListView.DataSource = ds;
+            InternListView.DataBind();
+        }
+        protected void SearchStudent_Click(object sender, EventArgs e)
+        {
+            string student = StudentNameOrID.Text;
+            SearchByStudentNameOrID(student);
+        }
     }
 }

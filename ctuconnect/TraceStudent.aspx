@@ -46,17 +46,47 @@
     </style>
     <h2 class="opacity-75">Intern List</h2>
     <div class="container m-auto my-5 w-100 h-100 d-flex flex-column py-3">
-        <div class="row"></div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="input-group mb-3">
+                    <asp:TextBox ID="StudentNameOrID" runat="server" class="form-control" Placeholder="Lastname or Firstname or StudentID"></asp:TextBox>
+                    <div class="input-group-append">
+                        <asp:Button class="btn btn-primary" runat="server" ID="SearchStudent" OnClick="SearchStudent_Click" Text="Search" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <select runat="server" title="Choose Job Course" class="selectpicker form-control" name="course" id="course">
+                        <option value="0" selected>Select Course</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <select runat="server" title="Choose Job Course" class="selectpicker form-control" name="industry" id="industry">
+                        <option value="0" selected>Select industry</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <select runat="server" title="Choose Job Course" class="selectpicker form-control" name="position" id="position">
+                        <option value="0" selected>Select position</option>
+                    </select>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <asp:ListView ID="InternListView" runat="server">
                 <LayoutTemplate>
-                    <table style="font-size:18px; line-height:30px;">
-                        <tr style="background-color: #336699; color: White; padding:10px;">
+                    <table style="font-size: 18px; line-height: 30px;">
+                        <tr style="background-color: #336699; color: White; padding: 10px;">
                             <th>Student ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Course</th>
-                            <th>Industry Name</th>                           
+                            <th>Industry Name</th>
                             <th>Position</th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -67,7 +97,7 @@
                     </table>
                 </LayoutTemplate>
                 <ItemTemplate>
-                    <tr style="border-bottom:solid 1px #336699">
+                    <tr style="border-bottom: solid 1px #336699">
                         <td><%#Eval("studentId")%></td>
                         <td><%#Eval("firstName")%></td>
                         <td><%#Eval("lastName")%></td>
@@ -75,7 +105,8 @@
                         <td><%#Eval("workedAt")%></td>
                         <td><%#Eval("position")%></td>
                         <td><%#Eval("internshipStatus")%></td>
-                         <td><asp:LinkButton ID="viewProfile" runat="server">View Profile</asp:LinkButton></td>
+                        <td>
+                            <asp:LinkButton ID="viewProfile" runat="server">View Profile</asp:LinkButton></td>
                     </tr>
                 </ItemTemplate>
             </asp:ListView>

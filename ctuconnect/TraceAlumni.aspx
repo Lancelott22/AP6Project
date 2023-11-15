@@ -47,7 +47,37 @@
 
     <h2 class="opacity-75">Intern List</h2>
     <div class="container m-auto my-5 w-100 h-100 d-flex flex-column py-3">
-        <div class="row"></div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="input-group mb-3">
+                    <asp:TextBox ID="AlumniNameOrID" runat="server" class="form-control" Placeholder="Lastname or Firstname or StudentID"></asp:TextBox>
+                    <div class="input-group-append">
+                        <asp:Button class="btn btn-primary" runat="server" ID="SearchAlumni" OnClick="SearchAlumni_Click" Text="Search" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <select runat="server" title="Choose Job Course" class="selectpicker form-control" name="course" id="course">
+                        <option value="0" selected>Select Course</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <select runat="server" title="Choose Job Course" class="selectpicker form-control" name="industry" id="industry">
+                        <option value="0" selected>Select industry</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <select runat="server" title="Choose Job Course" class="selectpicker form-control" name="position" id="position">
+                        <option value="0" selected>Select position</option>
+                    </select>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <asp:ListView ID="AlumniListView" runat="server">
                 <LayoutTemplate>
