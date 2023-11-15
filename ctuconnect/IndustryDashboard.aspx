@@ -10,10 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
     <style>
-        /* *{
-            font-family: 'Poppins', sans-serif;
-        }*/
         .profile-container {
+            font-family: 'Poppins', sans-serif;
             max-width: 260px;
             height: auto;
             padding: 10px;
@@ -48,6 +46,7 @@ background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%)
         }
 
         .sidemenu-container {
+            font-family: 'Poppins', sans-serif;
             width: 253px;
             height: 280px;
             background-color: white;
@@ -85,6 +84,7 @@ background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%)
                 }
 
         .display-container {
+            font-family: 'Poppins', sans-serif;
             width: 1000px;
             top: 0;
             bottom: 0;
