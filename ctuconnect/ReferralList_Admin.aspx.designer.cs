@@ -11,7 +11,7 @@ namespace ctuconnect
 {
 
 
-    public partial class IndustryVerification
+    public partial class ReferralList_Admin
     {
 
         /// <summary>
@@ -24,12 +24,12 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
 
         /// <summary>
-        /// ddlSortBy control.
+        /// dataRepeater control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSortBy;
+        protected global::System.Web.UI.WebControls.Repeater dataRepeater;
     }
 }

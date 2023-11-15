@@ -11,17 +11,17 @@ namespace ctuconnect
 {
 
 
-    public partial class IndustryVerification
+    public partial class Blacklist
     {
 
         /// <summary>
-        /// LinkButton1 control.
+        /// Table1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
+        protected global::System.Web.UI.WebControls.Table Table1;
 
         /// <summary>
         /// ddlSortBy control.
@@ -31,5 +31,14 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSortBy;
+
+        /// <summary>
+        /// dataRepeater control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater dataRepeater;
     }
 }
