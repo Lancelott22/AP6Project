@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.Configuration;
+using Antlr.Runtime.Tree;
 
 namespace ctuconnect
 {
@@ -35,7 +36,8 @@ namespace ctuconnect
         }
         void BindAlumniList()
         {
-            SqlCommand cmd = new SqlCommand("select * from ALUMNI_ACCOUNT JOIN HIRED_LIST ON ALUMNI_ACCOUNT.alumni_accID = HIRED_LIST.alumni_accID JOIN PROGRAM ON ALUMNI_ACCOUNT.course_ID = PROGRAM.course_ID", conDB);
+            SqlCommand cmd = new SqlCommand("select * from ALUMNI_ACCOUNT JOIN HIRED_LIST ON ALUMNI_ACCOUNT.alumni_accID = HIRED_LIST.alumni_accID JOIN PROGRAM ON " +
+                "ALUMNI_ACCOUNT.course_ID = PROGRAM.course_ID", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
@@ -48,7 +50,8 @@ namespace ctuconnect
         }
         void SearchByAlumniNameorID(string alumni)
         {
-            SqlCommand cmd = new SqlCommand("select * from ALUMNI_ACCOUNT JOIN HIRED_LIST ON ALUMNI_ACCOUNT.alumni_accID = HIRED_LIST.alumni_accID JOIN PROGRAM ON ALUMNI_ACCOUNT.course_ID = PROGRAM.course_ID WHERE ALUMNI_ACCOUNT.firstName LIKE '%" + alumni + "%' " +
+            SqlCommand cmd = new SqlCommand("select * from ALUMNI_ACCOUNT JOIN HIRED_LIST ON ALUMNI_ACCOUNT.alumni_accID = HIRED_LIST.alumni_accID JOIN PROGRAM ON " +
+                "ALUMNI_ACCOUNT.course_ID = PROGRAM.course_ID WHERE ALUMNI_ACCOUNT.firstName LIKE '%" + alumni + "%' " +
                 "or ALUMNI_ACCOUNT.lastName LIKE '%" + alumni + "%' or CAST(ALUMNI_ACCOUNT.studentId as varchar) = '" + alumni + "'", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
@@ -88,7 +91,8 @@ namespace ctuconnect
         }
         void ShowByCourse()
         {
-            SqlCommand cmd = new SqlCommand("select * from ALUMNI_ACCOUNT JOIN HIRED_LIST ON ALUMNI_ACCOUNT.alumni_accID = HIRED_LIST.alumni_accID JOIN PROGRAM ON ALUMNI_ACCOUNT.course_ID = PROGRAM.course_ID WHERE ALUMNI_ACCOUNT.course_ID = '" + course.SelectedValue + "'", conDB);
+            SqlCommand cmd = new SqlCommand("select * from ALUMNI_ACCOUNT JOIN HIRED_LIST ON ALUMNI_ACCOUNT.alumni_accID = HIRED_LIST.alumni_accID JOIN PROGRAM ON " +
+                "ALUMNI_ACCOUNT.course_ID = PROGRAM.course_ID WHERE ALUMNI_ACCOUNT.course_ID = '" + course.SelectedValue + "'", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
@@ -115,7 +119,8 @@ namespace ctuconnect
         }
         void ShowByIndustry()
         {
-            SqlCommand cmd = new SqlCommand("select * from ALUMNI_ACCOUNT JOIN HIRED_LIST ON ALUMNI_ACCOUNT.alumni_accID = HIRED_LIST.alumni_accID JOIN PROGRAM ON ALUMNI_ACCOUNT.course_ID = PROGRAM.course_ID WHERE HIRED_LIST.industry_accID = '" + industry.SelectedValue + "'", conDB);
+            SqlCommand cmd = new SqlCommand("select * from ALUMNI_ACCOUNT JOIN HIRED_LIST ON ALUMNI_ACCOUNT.alumni_accID = HIRED_LIST.alumni_accID JOIN PROGRAM ON " +
+                "ALUMNI_ACCOUNT.course_ID = PROGRAM.course_ID WHERE HIRED_LIST.industry_accID = '" + industry.SelectedValue + "'", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
@@ -140,12 +145,44 @@ namespace ctuconnect
 
         protected void position_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SqlCommand cmd = new SqlCommand("select * from ALUMNI_ACCOUNT JOIN HIRED_LIST ON ALUMNI_ACCOUNT.alumni_accID = HIRED_LIST.alumni_accID JOIN PROGRAM ON ALUMNI_ACCOUNT.course_ID = PROGRAM.course_ID WHERE HIRED_LIST.jobID = '" + position.SelectedValue + "'", conDB);
+            SqlCommand cmd = new SqlCommand("select * from ALUMNI_ACCOUNT JOIN HIRED_LIST ON ALUMNI_ACCOUNT.alumni_accID = HIRED_LIST.alumni_accID JOIN PROGRAM ON " +
+                "ALUMNI_ACCOUNT.course_ID = PROGRAM.course_ID WHERE HIRED_LIST.jobID = '" + position.SelectedValue + "'", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
             AlumniListView.DataSource = ds;
             AlumniListView.DataBind();
+        }
+
+        void getDetails(int hired_ID)
+        {
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select * from HIRED_LIST JOIN ALUMNI_ACCOUNT ON HIRED_LIST.alumni_accID = ALUMNI_ACCOUNT.alumni_accID JOIN INDUSTRY_ACCOUNT " +
+                "ON HIRED_LIST.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN PROGRAM ON ALUMNI_ACCOUNT.course_ID = PROGRAM.course_ID WHERE HIRED_LIST.id = @hired_id", conDB);
+            cmd.Parameters.AddWithValue("@hired_id", hired_ID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                studentPic.Src = "~/images/StudentProfiles/" + reader["alumniPicture"].ToString();
+                Name.InnerText = reader["firstName"].ToString() + " " + reader["lastName"].ToString();
+                StudCourse.InnerText = reader["course"].ToString();
+                Email.InnerText = reader["email"].ToString();
+                Address.InnerText = reader["address"].ToString();
+                CNumber.InnerText = reader["contactNumber"].ToString();
+                industryLogo.Src = "~/images/IndustryProfile/" + reader["industryPicture"].ToString();
+                JobPosition.InnerText = reader["position"].ToString();
+                jobType.InnerText = reader["jobType"].ToString();
+                IndustryName.InnerText = reader["workedAt"].ToString();
+                IndustryAddress.InnerText = reader["location"].ToString();
+                WorkStatus.InnerText = reader["workStatus"].ToString();
+            }
+        }
+        protected void viewProfile_Command(object sender, CommandEventArgs e)
+        {
+           
+            int hired_ID = int.Parse(e.CommandArgument.ToString());
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAlumni();", true);
+            getDetails(hired_ID);
         }
     }
 }

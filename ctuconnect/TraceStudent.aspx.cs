@@ -146,5 +146,36 @@ namespace ctuconnect
             InternListView.DataSource = ds;
             InternListView.DataBind();
         }
+
+        void getDetails(int hired_ID)
+        {
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select * from HIRED_LIST JOIN STUDENT_ACCOUNT ON HIRED_LIST.student_accID = STUDENT_ACCOUNT.student_accID JOIN INDUSTRY_ACCOUNT " +
+                "ON HIRED_LIST.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE HIRED_LIST.id = @hired_id", conDB);
+            cmd.Parameters.AddWithValue("@hired_id", hired_ID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                studentPic.Src = "~/images/StudentProfiles/" + reader["studentPicture"].ToString();
+                Name.InnerText = reader["firstName"].ToString() + " " + reader["lastName"].ToString();
+                StudCourse.InnerText = reader["course"].ToString();
+                Email.InnerText = reader["email"].ToString();
+                Address.InnerText = reader["address"].ToString();
+                CNumber.InnerText = reader["contactNumber"].ToString();
+                industryLogo.Src = "~/images/IndustryProfile/" + reader["industryPicture"].ToString();
+                JobPosition.InnerText = reader["position"].ToString();
+                jobType.InnerText = reader["jobType"].ToString();
+                IndustryName.InnerText = reader["workedAt"].ToString();
+                IndustryAddress.InnerText = reader["location"].ToString();
+                InternshipStatus.InnerText = reader["internshipStatus"].ToString();
+            }
+        }
+        protected void viewProfile_Command(object sender, CommandEventArgs e)
+        {
+
+            int hired_ID = int.Parse(e.CommandArgument.ToString());
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showIntern();", true);
+            getDetails(hired_ID);
+        }
     }
 }

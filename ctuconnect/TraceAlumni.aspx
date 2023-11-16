@@ -113,10 +113,90 @@
                         <td><%#Eval("position")%></td>
                         <td><%#Eval("workStatus")%></td>
                         <td>
-                            <asp:LinkButton ID="viewProfile" runat="server">View Profile</asp:LinkButton></td>
+                            <asp:LinkButton ID="viewProfile" runat="server" OnCommand="viewProfile_Command" CommandArgument='<%#Eval("id")%>'>View Details</asp:LinkButton></td>
                     </tr>
                 </ItemTemplate>
             </asp:ListView>
         </div>
     </div>
+
+    <div class="modal" id="showAlumniProfile" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Alumni Profile</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid p-0">
+                        <div class="row p-4 py-3" style="font-size: 15px;">
+                            <h4>Personal Details</h4>
+                            <div class="col-4">
+                                <img id="studentPic" runat="server" alt="studentPic" style="height: 130px; width: 130px; border: 1px solid #747574;" />
+
+                            </div>
+                            <div class="col">
+                                <div>
+                                    <label>Name: </label>
+                                    <span id="Name" runat="server"></span>
+                                </div>
+                                <div>
+                                    <label>Course: </label>
+                                    <span id="StudCourse" runat="server"></span>
+                                </div>
+                                <div>
+                                    <label>Email: </label>
+                                    <span id="Email" runat="server"></span>
+                                </div>
+                                <div>
+                                    <label>Address: </label>
+                                    <span id="Address" runat="server"></span>
+                                </div>
+                                <div>
+                                    <label>Contact Number: </label>
+                                    <span id="CNumber" runat="server"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="margin: 10px 0 10px 0; border: 1px solid #a1a1a1;" />
+                        <div class="row p-4 py-3" style="font-size: 15px;">
+                            <h4>Job Details</h4>
+                            <div class="col-4">
+                                <img id="industryLogo" runat="server" alt="industryLogo" style="height: 130px; width: 130px; border: 1px solid #747574;" />
+                            </div>
+                            <div class="col">
+                                <div>
+                                    <label>Job Position: </label>
+                                    <span id="JobPosition" runat="server"></span>
+                                </div>
+                                <div>
+                                    <label>Job Type: </label>
+                                    <span id="jobType" runat="server"></span>
+                                </div>
+                                <div>
+                                    <label>Industry Name: </label>
+                                    <span id="IndustryName" runat="server"></span>
+                                </div>
+                                <div>
+                                    <label>Address: </label>
+                                    <span id="IndustryAddress" runat="server"></span>
+                                </div>
+                                <div>
+                                    <label>Work Status: </label>
+                                    <span id="WorkStatus" runat="server"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function showAlumni() {
+            $('#showAlumniProfile').modal('show');
+        }
+    </script>
 </asp:Content>

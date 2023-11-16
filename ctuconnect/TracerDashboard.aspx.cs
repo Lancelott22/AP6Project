@@ -61,7 +61,7 @@ namespace ctuconnect
         void getTotalJob()
         {
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select COUNT(jobID) as TotalJobPosted from HIRING WHERE isActive = 1", conDB);
+            SqlCommand cmd = new SqlCommand("select COUNT(jobID) as TotalJobPosted from HIRING", conDB);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {

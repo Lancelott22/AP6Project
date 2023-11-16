@@ -97,7 +97,6 @@ namespace ctuconnect
         }
         protected void PostJob_Click(object sender, EventArgs e)
         {
-
             if (string.IsNullOrEmpty(JobTitle.Text) || string.IsNullOrEmpty(IndName.Text) || jobtype.Value.Equals("") || course.Value.Equals("") || string.IsNullOrEmpty(jobLoc.Text) || string.IsNullOrEmpty(jobDescript.Text) || string.IsNullOrEmpty(jobQuali.Text))
             {
                 Response.Write("<script>alert('Please fill up the required field.')</script>");
@@ -211,7 +210,7 @@ namespace ctuconnect
 
                 if (ctr > 0)
                 {
-
+                  /*  jobPostNotify(industryAccID);*/
                     Response.Write("<script>alert('The job has been posted successfully.');document.location='IndustryJobPosted.aspx';</script>");
                 }
                 else
@@ -232,16 +231,38 @@ namespace ctuconnect
             Response.Redirect("LoginIndustry.aspx");
 
         }
-        /* void Clear()
-         {
-             JobTitle.Text = string.Empty;
-             jobtype.Value = "";
-             course.Value = "";
-             jobDescript.Text = string.Empty;
-             jobQuali.Text = string.Empty;
-             jobInstruct.Text = string.Empty;
-             salary.Text = string.Empty;
+       /* void jobPostNotify(int industryAccID)
+        {
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("INSERT INTO NOTIFICATION(industry_accID, type, title, description, dateCreated, isRead, isRemove)" +
+                   "VALUES()", conDB);
+            cmd.Parameters.AddWithValue("@jobPostedDate", DateTime.Now);
+            cmd.Parameters.AddWithValue("@jobPostedDate", DateTime.Now);
+            cmd.Parameters.AddWithValue("@jobPostedDate", DateTime.Now);
+            cmd.Parameters.AddWithValue("@jobPostedDate", DateTime.Now);
+            var ctr = cmd.ExecuteNonQuery();
 
-         }*/
+            if (ctr > 0)
+            {
+                jobPostNotify(industryAccID);
+                Response.Write("<script>alert('The job has been posted successfully.');document.location='IndustryJobPosted.aspx';</script>");
+            }
+            else
+            {
+                Response.Write("<script>alert('Cannot post a job now! Please try again later.')</script>");
+            }
+            conDB.Close();
+        }*/
+    /* void Clear()
+     {
+         JobTitle.Text = string.Empty;
+         jobtype.Value = "";
+         course.Value = "";
+         jobDescript.Text = string.Empty;
+         jobQuali.Text = string.Empty;
+         jobInstruct.Text = string.Empty;
+         salary.Text = string.Empty;
+
+     }*/
     }
 }
