@@ -11,6 +11,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
         
         .profile-container{
+            font-family: 'Poppins', sans-serif;
             max-width:260px;
             max-height:630px;
             background-color:white;
@@ -43,6 +44,7 @@
             margin-top:7%;
         }
         .sidemenu-container{
+            font-family: 'Poppins', sans-serif;
             width:260px;
             height:200px;
             background-color:white;
@@ -64,7 +66,7 @@
                 font-size: 19px;
                 display: block;
                 margin: 2px 15px 5px 15px ;
-                padding: 0px 0px 0px 30px;
+                padding: 0px 0px 0px 8px;
             }
             a.active{
                  background-color:#F6B665;
@@ -74,10 +76,11 @@
                 background-color:#fcd49a;
                 color:#606060;
                 margin: 2px 15px 5px 15px ;
-                padding: 0px 0px 0px 30px;
+                padding: 0px 0px 0px 8px;
                 text-decoration: none;
             }
             .display-container{
+                font-family: 'Poppins', sans-serif;
                 background-color:white; 
                 width:1500px;
                 top:0;
@@ -301,12 +304,17 @@
                         <p >OJT Coordinator</p>
                             <hr class="horizontal-line" />
                             <a  href="CoordinatorProfile.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
+                            <a  href="ListOfAlumni"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Alumni</a>
+                            <a  href="PartneredIndustries.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Partnered Industry</a>
                             <a class="active" href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:12px; width:20px;"></i>Refer Student</a>
                             <a  href="CourseList.aspx"> <i class="fa fa-book" aria-hidden="true" style="padding-right:12px;"></i>Course List</a>
+                            <a href="Blacklist.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Blacklist Industry</a>
                             <a  href="Applicants.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
                             <hr class="second" />
-                            <a  href="ReferralLIst.aspx"><i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>Sign-out</a>
-                </div>
+                     <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
+                       <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        Sign-out
+                    </asp:LinkButton>                </div>
             </asp:TableCell>
             <asp:TableCell Style="padding:0px 5px 0px 40px">
                 <div class="display-container">

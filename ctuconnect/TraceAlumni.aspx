@@ -45,7 +45,7 @@
         }*/
     </style>
 
-    <h2 class="opacity-75">Intern List</h2>
+    <h2 class="opacity-75">Alumni List</h2>
     <div class="container m-auto my-5 w-100 h-100 d-flex flex-column py-3">
         <div class="row">
             <div class="col-sm-4">

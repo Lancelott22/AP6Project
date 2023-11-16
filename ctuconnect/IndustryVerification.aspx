@@ -49,12 +49,11 @@
         }
                 
         .nav{
-            padding:10px 10px 10px 10px;
+            padding:10px 10px 0px 10px;
             width:300px;
-            margin:auto;
-            margin-top:20px;
+            margin-top:5px;
             position: absolute;
-            margin-left:70px;
+            margin-left:10px;
         }
 
         .nav a{
@@ -66,7 +65,7 @@
             font-size: 19px;
             display: block;
             margin: 2px 15px 5px 15px ;
-            padding: 0px 0px 0px 30px;
+            padding: 0px 0px 0px 8px;
         }
 
         .nav a.active{
@@ -86,7 +85,8 @@
         .container {
             min-height: 550px;
             background-color: #FFFFFF;
-            width:90%;
+            max-width:100%;
+            width:1550px;
             border: 2px;
             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
             padding-top:2em;
@@ -106,28 +106,42 @@
                         <p >Admin</p>
                         <hr class="horizontal-line" />
                         <a href="#">
-                            <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
+                            <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             Dashboard
                         </a>
-                        <a class="active" href="#myaccount">
-                            <i class="fa fa-users" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
+                        <a href="#myaccount">
+                            <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             Create Partnership
                         </a>
-                        <a href="#">
-                            <i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
+                        <a class="active" href="#myaccount">
+                            <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                            Industry Verification
+                        </a>
+                        <a href="ReferralList_Admin.aspx">
+                            <i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             Referred Student
                         </a>
-                        <a href="#">
-                            <i class="fa fa-industry" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
+                        <hr class="horizontal-line" />
+                        <a href="ListOfIndustries_Alumni.aspx">
+                            <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             List of Industry
                         </a>
                         <a href="#">
-                            <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
+                            <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                            List of Interns
+                        </a>
+                        <a href="ListOfAlumni_Admin.apsx">
+                            <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                            List of Alumni
+                        </a>
+                        <hr class="horizontal-line" />
+                        <a href="#">
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             Dispute
                         </a>
-                        <a href="#">
-                            <i class="fa fa-ban" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                            Block List
+                        <a href="Blacklist_Admin.aspx">
+                            <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                            Blacklist
                         </a>
                         <hr class="second" />
                         <asp:LinkButton runat="server" ID ="LinkButton1">
@@ -141,7 +155,12 @@
             <div class="col-9 d-flex flex-column">
                 <br />
                 <div class="container">
-
+                    <h1 class="title">List of Interns</h1>
+                     <p style="float:left;">Sort by <asp:DropDownList ID="ddlSortBy" runat="server" AutoPostBack="true"  CssClass="sort-dropdown">
+                         <asp:ListItem Text="Course" Value="ColumnName1"></asp:ListItem>
+                         <asp:ListItem Text="Status" Value="ColumnName2"></asp:ListItem>
+                     </asp:DropDownList> for BSIT , BIT-CT</p>
+                    <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
                 </div>
             </div>    
        

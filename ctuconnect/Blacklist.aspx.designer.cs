@@ -11,7 +11,7 @@ namespace ctuconnect
 {
 
 
-    public partial class CoordinatorProfile
+    public partial class Blacklist
     {
 
         /// <summary>
