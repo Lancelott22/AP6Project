@@ -5,94 +5,130 @@
 <html>
 <head runat="server">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title><%: Page.Title %>CTU CONNECT TRACER</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
+    <link href="~/images/ctuconnectlogo.png" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <style>
         body {
-          margin: 0;
-          font-family: "Lato", sans-serif;
-}
+            margin: 0;
+            font-family: "Lato", sans-serif;
+        }
 
         .sidebar {
-          margin: 0;
-          padding: 0;
-          width: 300px;
-          background-color: #881A30;
-          position: fixed;
-          height: 100%;
-          overflow: auto;
+            margin: 0;
+            padding: 0;
+            width: 300px;
+            background-color: #881A30;
+            position: fixed;
+            height: 100%;
+            overflow-x: hidden;
+            z-index: 1;
+            top: 0;
+            left: 0;
         }
 
-        .sidebar a {
-          display: block;
-          color: white;
-          padding: 16px;
-          text-decoration: none;
-          font-size: 28px;
-        }
- 
-        .sidebar a.active {
-          background-color: #04AA6D;
-          color: white;
-        }
+            .sidebar a {
+                display: block;
+                color: white;
+                padding: 16px;
+                text-decoration: none;
+                font-size: 28px;
+            }
 
-        .sidebar a:hover:not(.active) {
-          background-color: rgb(235,139,25);
-          color: white;
-        }
+                .sidebar a.active {
+                    background-color: #04AA6D;
+                    color: white;
+                }
 
-        div.content {
-          margin-left: 300px;
-          padding: 1px 16px;
-          height: 1000px;
-        }
+                .sidebar a:hover:not(.active) {
+                    background-color: rgb(235,139,25);
+                    color: white;
+                }
+
 
         @media screen and (max-width: 700px) {
-          .sidebar {
-            width: 100%;
-            height: auto;
-            position: relative;
-          }
-          .sidebar a {float: left;}
-          div.content {margin-left: 0;}
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+                .sidebar a {
+                    float: left;
+                }
+
+            div.content {
+                margin-left: 0;
+            }
         }
 
         @media screen and (max-width: 400px) {
-          .sidebar a {
-            text-align: center;
-            float: none;
-          }
+            .sidebar a {
+                text-align: center;
+                float: none;
+            }
         }
 
-        
+        .content-main {
+            height: 100vh;
+            padding: 30px;
+            margin-left: 300px;
+        }
     </style>
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
-        </div>
+    <form id="form1" runat="server" class="content-main">
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
     </form>
-  <div class="sidebar">
-      
-  
-      
-  <table cellpadding="0" cellspacing="0" height="1%" style="padding:5px; margin-top:10px;">
-      <tr>
-          <td rowspan="2"><img id="logo" src="images/Logo.png" alt="Bootstrap" width="58" height="59"></td>
-          <td align="bottom" style="color:white; font-size:36px;">  CTU Connect</td>
-      </tr>
-      <tr>
-          <td align="top" style="color:white; font-size:9px;">Internship and job searching platform</td>
-      </tr>
-  </table><br /><br />
-  <a class="active" href="TracerDashboard.aspx"><img src="images/dashwhite.png" width="24" height="24"/> &nbsp; Dashboard</a>
-  <a href="TraceAlumni.aspx"><img src="images/report.png" width="24" height="24"/> &nbsp;Trace Alumni</a>
-  <a href="TraceStudent.aspx"><img src="images/report.png" width="24" height="24"/> &nbsp;Trace Interns</a>
-  <a href="#about"><img src="images/logout.png" width="24" height="24"/> &nbsp;Logout</a>
-</div>
+    <div class="sidebar">
+
+
+
+        <table cellpadding="0" cellspacing="0" height="1%" style="padding: 5px; margin-top: 10px;">
+            <tr>
+                <td rowspan="2">
+                    <img id="logo" src="images/Logo.png" alt="Bootstrap" width="58" height="59"></td>
+                <td align="bottom" style="color: white; font-size: 36px;">CTU Connect</td>
+            </tr>
+            <tr>
+                <td align="top" style="color: white; font-size: 9px;">Internship and job searching platform</td>
+            </tr>
+        </table>
+        <br />
+        <br />
+        <a id="dashboard" runat="server" href="TracerDashboard.aspx">
+            <img src="images/dashwhite.png" width="24" height="24" />
+            &nbsp; Dashboard</a>
+        <a id="traceAlumni" runat="server" href="TraceAlumni.aspx">
+            <img src="images/report.png" width="24" height="24" />
+            &nbsp;Trace Alumni</a>
+        <a id="traceStudent" runat="server" href="TraceStudent.aspx">
+            <img src="images/report.png" width="24" height="24" />
+            &nbsp;Trace Interns</a>
+        <a id="traceIndustry" runat="server" href="TraceIndustry.aspx">
+            <img src="images/report.png" width="24" height="24" />
+            &nbsp;Trace Industry</a>
+        <a href="#" id="back" runat="server">
+            <img src="images/logout.png" width="24" height="24" />
+            &nbsp;Back</a>
+    </div>
 
 
 </body>

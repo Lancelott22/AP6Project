@@ -305,6 +305,13 @@ namespace ctuconnect
                 return null; // No file found
             }
         }
+        protected void SignOut_Click(object sender, EventArgs e)
+        {
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+            Response.Redirect("LoginOJTCoordinator.aspx");
+        }
     }
 }
     

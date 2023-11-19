@@ -11,43 +11,34 @@ namespace ctuconnect
 {
 
 
-    public partial class TracerDashboard
+    public partial class PartneredIndustries
     {
 
         /// <summary>
-        /// totalAlumni control.
+        /// Table1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalAlumni;
+        protected global::System.Web.UI.WebControls.Table Table1;
 
         /// <summary>
-        /// totalIntern control.
+        /// SignOut control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalIntern;
+        protected global::System.Web.UI.WebControls.LinkButton SignOut;
 
         /// <summary>
-        /// totalIndustry control.
+        /// dataRepeater control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalIndustry;
-
-        /// <summary>
-        /// totalJobPosted control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalJobPosted;
+        protected global::System.Web.UI.WebControls.Repeater dataRepeater;
     }
 }

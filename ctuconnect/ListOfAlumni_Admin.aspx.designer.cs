@@ -11,178 +11,133 @@ namespace ctuconnect
 {
 
 
-    public partial class TraceStudent
+    public partial class ListOfAlumni_Admin
     {
 
         /// <summary>
-        /// StudentNameOrID control.
+        /// LinkButton1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox StudentNameOrID;
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
 
         /// <summary>
-        /// SearchStudent control.
+        /// myLinkButton1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SearchStudent;
+        protected global::System.Web.UI.WebControls.LinkButton myLinkButton1;
 
         /// <summary>
-        /// department control.
+        /// myLinkButton2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList department;
+        protected global::System.Web.UI.WebControls.LinkButton myLinkButton2;
 
         /// <summary>
-        /// course control.
+        /// myLinkButton3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList course;
+        protected global::System.Web.UI.WebControls.LinkButton myLinkButton3;
 
         /// <summary>
-        /// industry control.
+        /// myLinkButton4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList industry;
+        protected global::System.Web.UI.WebControls.LinkButton myLinkButton4;
 
         /// <summary>
-        /// position control.
+        /// myLinkButton5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList position;
+        protected global::System.Web.UI.WebControls.LinkButton myLinkButton5;
 
         /// <summary>
-        /// InternListView control.
+        /// myLinkButton6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView InternListView;
+        protected global::System.Web.UI.WebControls.LinkButton myLinkButton6;
 
         /// <summary>
-        /// studentPic control.
+        /// UpdatePanel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage studentPic;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// Name control.
+        /// dataRepeater1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Name;
+        protected global::System.Web.UI.WebControls.Repeater dataRepeater1;
 
         /// <summary>
-        /// StudCourse control.
+        /// dataRepeater2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StudCourse;
+        protected global::System.Web.UI.WebControls.Repeater dataRepeater2;
 
         /// <summary>
-        /// Email control.
+        /// dataRepeater3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Email;
+        protected global::System.Web.UI.WebControls.Repeater dataRepeater3;
 
         /// <summary>
-        /// Address control.
+        /// dataRepeater4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Address;
+        protected global::System.Web.UI.WebControls.Repeater dataRepeater4;
 
         /// <summary>
-        /// CNumber control.
+        /// dataRepeater5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CNumber;
+        protected global::System.Web.UI.WebControls.Repeater dataRepeater5;
 
         /// <summary>
-        /// industryLogo control.
+        /// dataRepeater6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage industryLogo;
-
-        /// <summary>
-        /// JobPosition control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl JobPosition;
-
-        /// <summary>
-        /// jobType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl jobType;
-
-        /// <summary>
-        /// IndustryName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndustryName;
-
-        /// <summary>
-        /// IndustryAddress control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndustryAddress;
-
-        /// <summary>
-        /// InternshipStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InternshipStatus;
+        protected global::System.Web.UI.WebControls.Repeater dataRepeater6;
     }
 }

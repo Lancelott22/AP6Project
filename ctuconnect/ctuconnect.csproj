@@ -116,6 +116,8 @@
     <Content Include="AdminProfile.aspx" />
     <Content Include="Applicants.aspx" />
     <Content Include="ApplyJob.aspx" />
+    <Content Include="Blacklist.aspx" />
+    <Content Include="Blacklist_Admin.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -167,14 +169,20 @@
     <Content Include="IndustryVerification.aspx" />
     <Content Include="IndustryJobPosted.aspx" />
     <Content Include="JobPortal.aspx" />
+    <Content Include="ListOfAlumni.aspx" />
+    <Content Include="ListOfAlumni_Admin.aspx" />
+    <Content Include="ListOfIndustries_Alumni.aspx" />
+    <Content Include="ListOfInterns_Alumni.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="LoginIndustry.aspx" />
     <Content Include="LoginOJTCoordinator.aspx" />
     <Content Include="LoginStudent.aspx" />
     <Content Include="MyAccount.aspx" />
     <Content Include="NoticePage.aspx" />
+    <Content Include="PartneredIndustries.aspx" />
     <Content Include="Refer.aspx" />
     <Content Include="ReferralList.aspx" />
+    <Content Include="ReferralList_Admin.aspx" />
     <Content Include="RegisterIndustry.aspx" />
     <Content Include="RegisterStudent.aspx" />
     <Content Include="Resume.aspx" />
@@ -242,6 +250,7 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
     <Content Include="TraceAlumni.aspx" />
+    <Content Include="TraceIndustry.aspx" />
     <Content Include="TracerDashboard.aspx" />
     <Content Include="TraceStudent.aspx" />
     <Content Include="ViewSwitcher.ascx" />
@@ -294,6 +303,20 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Blacklist.aspx.cs">
+      <DependentUpon>Blacklist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Blacklist.aspx.designer.cs">
+      <DependentUpon>Blacklist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Blacklist_Admin.aspx.cs">
+      <DependentUpon>Blacklist_Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Blacklist_Admin.aspx.designer.cs">
+      <DependentUpon>Blacklist_Admin.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -402,6 +425,34 @@
     <Compile Include="JobPortal.aspx.designer.cs">
       <DependentUpon>JobPortal.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ListOfAlumni.aspx.cs">
+      <DependentUpon>ListOfAlumni.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListOfAlumni.aspx.designer.cs">
+      <DependentUpon>ListOfAlumni.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListOfAlumni_Admin.aspx.cs">
+      <DependentUpon>ListOfAlumni_Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListOfAlumni_Admin.aspx.designer.cs">
+      <DependentUpon>ListOfAlumni_Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListOfIndustries_Alumni.aspx.cs">
+      <DependentUpon>ListOfIndustries_Alumni.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListOfIndustries_Alumni.aspx.designer.cs">
+      <DependentUpon>ListOfIndustries_Alumni.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListOfInterns_Alumni.aspx.cs">
+      <DependentUpon>ListOfInterns_Alumni.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListOfInterns_Alumni.aspx.designer.cs">
+      <DependentUpon>ListOfInterns_Alumni.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -451,6 +502,13 @@
     <Compile Include="OJTCoordinator.Master.designer.cs">
       <DependentUpon>OJTCoordinator.Master</DependentUpon>
     </Compile>
+    <Compile Include="PartneredIndustries.aspx.cs">
+      <DependentUpon>PartneredIndustries.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PartneredIndustries.aspx.designer.cs">
+      <DependentUpon>PartneredIndustries.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Refer.aspx.cs">
       <DependentUpon>Refer.aspx</DependentUpon>
@@ -465,6 +523,13 @@
     </Compile>
     <Compile Include="ReferralList.aspx.designer.cs">
       <DependentUpon>ReferralList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReferralList_Admin.aspx.cs">
+      <DependentUpon>ReferralList_Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReferralList_Admin.aspx.designer.cs">
+      <DependentUpon>ReferralList_Admin.aspx</DependentUpon>
     </Compile>
     <Compile Include="RegisterIndustry.aspx.cs">
       <DependentUpon>RegisterIndustry.aspx</DependentUpon>
@@ -528,6 +593,13 @@
     </Compile>
     <Compile Include="TraceAlumni.aspx.designer.cs">
       <DependentUpon>TraceAlumni.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TraceIndustry.aspx.cs">
+      <DependentUpon>TraceIndustry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TraceIndustry.aspx.designer.cs">
+      <DependentUpon>TraceIndustry.aspx</DependentUpon>
     </Compile>
     <Compile Include="TracerDashboard.aspx.cs">
       <DependentUpon>TracerDashboard.aspx</DependentUpon>

@@ -6,10 +6,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
-        *{
-            font-family: 'Poppins', sans-serif;
-        }
+        
         .profile-container{
+            font-family: 'Poppins', sans-serif;
             max-width:260px;
             max-height:300px;
             background-color:white;
@@ -36,6 +35,7 @@
             margin-top:7%;
         }
         .sidemenu-container{
+            font-family: 'Poppins', sans-serif;
            width:253px;
             height:280px;
             background-color:white;
@@ -69,6 +69,7 @@
                 padding: 0px 0px 0px 20px;
          }
         .display-container{
+                font-family: 'Poppins', sans-serif;
                 background-color:white; 
                 width:1500px;
                 top:0;

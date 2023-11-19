@@ -11,187 +11,151 @@ namespace ctuconnect
 {
 
 
-    public partial class WebForm1
+    public partial class TraceIndustry
     {
 
         /// <summary>
-        /// UpdatePanel2 control.
+        /// IndustryName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+        protected global::System.Web.UI.WebControls.TextBox IndustryName;
 
         /// <summary>
-        /// SignOut control.
+        /// SearchIndustry control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton SignOut;
+        protected global::System.Web.UI.WebControls.Button SearchIndustry;
 
         /// <summary>
-        /// MyApplication control.
+        /// Address control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView MyApplication;
+        protected global::System.Web.UI.WebControls.TextBox Address;
 
         /// <summary>
-        /// ListViewPager control.
+        /// IndustryAdress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataPager ListViewPager;
+        protected global::System.Web.UI.WebControls.Button IndustryAdress;
 
         /// <summary>
-        /// applicantStatus control.
+        /// showIndustryList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl applicantStatus;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl showIndustryList;
 
         /// <summary>
-        /// applicationStatusCheck control.
+        /// IndustryListView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label applicationStatusCheck;
+        protected global::System.Web.UI.WebControls.ListView IndustryListView;
 
         /// <summary>
-        /// requirementDetails control.
+        /// showJobPosted control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal requirementDetails;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl showJobPosted;
 
         /// <summary>
-        /// dateStarted control.
+        /// JobPostListView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal dateStarted;
+        protected global::System.Web.UI.WebControls.ListView JobPostListView;
 
         /// <summary>
-        /// statusApplication control.
+        /// IndustryLogo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusApplication;
+        protected global::System.Web.UI.HtmlControls.HtmlImage IndustryLogo;
 
         /// <summary>
-        /// dateApproved control.
+        /// Industry_Name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dateApproved;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Industry_Name;
 
         /// <summary>
-        /// InterviewStatus control.
+        /// IndustryEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InterviewStatus;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndustryEmail;
 
         /// <summary>
-        /// StatusOrDetails control.
+        /// Location control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StatusOrDetails;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Location;
 
         /// <summary>
-        /// interviewStatusCheck control.
+        /// ContactName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label interviewStatusCheck;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ContactName;
 
         /// <summary>
-        /// interviewDate control.
+        /// jobPosition control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal interviewDate;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl jobPosition;
 
         /// <summary>
-        /// statusInterview control.
+        /// contactEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusInterview;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl contactEmail;
 
         /// <summary>
-        /// dateScheduled control.
+        /// contactNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dateScheduled;
-
-        /// <summary>
-        /// ResumeStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ResumeStatus;
-
-        /// <summary>
-        /// resumeStatusCheck control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label resumeStatusCheck;
-
-        /// <summary>
-        /// statusResume control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusResume;
-
-        /// <summary>
-        /// dateReviewed control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dateReviewed;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl contactNumber;
     }
 }

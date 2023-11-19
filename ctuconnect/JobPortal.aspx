@@ -3,6 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
         .box {
             min-width: 250px;
@@ -318,6 +320,8 @@
                                 <asp:Image ID="profileImage" CssClass="profile" Width="100px" Height="100px" runat="server" />
                                 <br />
                                 <asp:Label ID="StudentName" CssClass="name" runat="server"></asp:Label>
+                                <span><i class="fa fa-address-card-o m-1" id="resumeIcon" runat="server" aria-hidden="true" data-toggle="tooltip" data-placement="auto"></i></span>
+
                                 <br />
                                 <asp:Label ID="StudentID" CssClass="accountid" runat="server"></asp:Label>
                                 <hr style="height: 2px; border-width: 0; margin-top: 10px; color: gray; background-color: gray">
@@ -361,8 +365,8 @@
                                         </div>
                                     </div>
                                     <div class="detailsBody">
-                                        <div style="padding: 15px; padding-top: 20px; line-height: 30px;">
-                                            <div class="container-fluid row">
+                                        <div style="padding: 15px; padding-top: 20px;">
+                                            <div class="container-fluid row lh-lg">
                                                 <h3><b>Job Details</b></h3>
                                                 <br />
                                                 <span>
@@ -370,14 +374,11 @@
                                                     <asp:Label ID="JobType" runat="server" />
                                                     <br />
                                                 </span>
-
                                                 <span>
                                                     <label>Job Course: </label>
                                                     <asp:Label ID="JobCourse" runat="server" />
                                                     <br />
                                                 </span>
-
-
                                                 <span id="salaryData" runat="server">
                                                     <label>Salary: </label>
                                                     <asp:Label ID="SalaryRange" runat="server" />
@@ -386,15 +387,15 @@
                                             </div>
                                             <hr style="border: 1px solid #000000;" />
                                             <div class="container-fluid row">
-                                                <label>Job Description</label><br />
-                                                <asp:Label ID="JobDescription" runat="server" Style="margin-bottom: 5px;" /><br />
+                                                  <h4><label>Job Description</label></h4>
+                                              <asp:Label ID="JobDescription" runat="server" Style="margin-bottom: 10px;" /><br />
 
-                                                <label>Job Qualification </label>
-                                                <asp:Label ID="JobQualification" runat="server" Style="margin-bottom: 5px;" /><br />
+                                               <h4><label>Job Qualification </label></h4>
+                                                <asp:Label ID="JobQualification" runat="server" Style="margin-bottom: 10px;" /><br />
 
-                                                <label>Application Instruction </label>
-                                                <br />
-                                                <asp:Label ID="ApplicationInstruction" runat="server" Style="margin-bottom: 5px;" />
+                                                <h4><label>Application Instruction </label></h4>
+                                                
+                                                <asp:Label ID="ApplicationInstruction" runat="server" Style="margin-bottom:5px;" />
                                             </div>
                                         </div>
 

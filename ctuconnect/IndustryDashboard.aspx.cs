@@ -34,12 +34,10 @@ namespace ctuconnect
         }
         protected void SignOut_Click(object sender, EventArgs e)
         {
-
             Session.Abandon();
             Session.Clear();
             Session.RemoveAll();
             Response.Redirect("LoginIndustry.aspx");
-
         }
         void getTotalHired()
         {   
