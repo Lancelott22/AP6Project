@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Resume.aspx.cs" Inherits="ctuconnect.Resume" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Student.Master" AutoEventWireup="true" CodeBehind="Resume.aspx.cs" Inherits="ctuconnect.Resume" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -94,6 +94,16 @@
 
         .resume-section{
             padding-left:7em;
+        }
+
+        .empty-message{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            font-size:18px;
+            font-weight:bold;
+            opacity:0.4;
         }
 
 
@@ -217,6 +227,11 @@
                                     </div>
                                 </ItemTemplate>
                             </asp:Repeater>
+                            <% if (rptSkills.Items.Count == 0) { %>
+                                <div class="empty-message">
+                                    <p>You Haven't Added Any Skill</p>
+                                </div>
+                            <% } %>
                         </div>
                     </div>
                     <hr class="line"/>
@@ -239,6 +254,11 @@
                                     </div>
                                 </ItemTemplate>
                             </asp:Repeater>
+                            <% if (rptEducation.Items.Count == 0) { %>
+                                <div class="empty-message">
+                                    <p>You Haven't Added Any Education</p>
+                                </div>
+                            <% } %>
                         </div>
                     </div>
                     <hr class="line"/>
@@ -255,6 +275,11 @@
                                     </div>
                                 </ItemTemplate>
                             </asp:Repeater>
+                            <% if (rptCertificates.Items.Count == 0) { %>
+                                <div class="empty-message">
+                                    <p>You Haven't Added Any Certificates</p>
+                                </div>
+                            <% } %>
                         </div>
                     </div>
                     <br />

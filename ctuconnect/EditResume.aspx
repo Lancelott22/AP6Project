@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="EditResume.aspx.cs" Inherits="ctuconnect.EditResume" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Student.Master" AutoEventWireup="true" CodeBehind="EditResume.aspx.cs" Inherits="ctuconnect.EditResume" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -190,6 +190,8 @@
                 <br />
                 <div class="row">
                     <div class="col-sm-12">
+                    <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
                         <div id="skillsContainer" runat="server">
                             <asp:Repeater ID="rptSkills" runat="server" OnItemCommand="rptSkills_ItemCommand">
                                 <ItemTemplate>
@@ -200,6 +202,11 @@
                             </asp:Repeater>
                         </div>
                         <asp:Button ID="btnAddSkills" runat="server" Text="Add Skill" OnClick="btnAddSkills_Click" CssClass="btn2" Height="28px"/>
+                    </ContentTemplate>
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="btnAddSkills" EventName="Click" />
+                    </Triggers>
+                    </asp:UpdatePanel>
                     </div>
                 </div>
                 <br />
@@ -211,6 +218,8 @@
                 <br />
                 <div class="row">
                     <div class="col-sm-12">
+                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
                         <div id="educationContainer" runat="server">
                             <asp:Repeater ID="rptEducation" runat="server" OnItemCommand="rptEducation_ItemCommand">
                                 <ItemTemplate>
@@ -225,6 +234,11 @@
                             </asp:Repeater>
                         </div>
                         <asp:Button ID="btnAddEducation" runat="server" Text="Add Education" OnClick="btnAddEducation_Click" CssClass="btn2" Height="28px"/>
+                    </ContentTemplate>
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="btnAddEducation" EventName="Click" />
+                    </Triggers>
+                    </asp:UpdatePanel>
                     </div>
                 </div>
                 <br />
@@ -236,6 +250,8 @@
                 <br />
                 <div class="row">
                     <div class="col-sm-12">
+                    <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
                         <div id="certificatesContainer" runat="server">
                             <asp:Repeater ID="rptCertificate" runat="server" OnItemCommand="rptCertificate_ItemCommand">
                                 <ItemTemplate>
@@ -246,6 +262,11 @@
                             </asp:Repeater>
                         </div>
                         <asp:Button ID="btnAddCertificates" runat="server" Text="Add Certificate" OnClick="btnAddCertificates_Click" CssClass="btn2" Height="28px" />
+                    </ContentTemplate>
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="btnAddCertificates" EventName="Click" />
+                    </Triggers>
+                    </asp:UpdatePanel>
                     </div>
                 </div>
                 <br />
@@ -288,4 +309,5 @@
             }
         }
     </script>
+    
 </asp:Content>

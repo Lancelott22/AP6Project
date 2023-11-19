@@ -46,10 +46,52 @@ namespace ctuconnect
 
                 }
 
-
+                if (!ResumeExists(studentaccID))
+                {
+                    // Perform the insertion
+                    InsertResumeRecord(studentaccID);
+                }
 
             }
 
+        }
+
+        private bool ResumeExists(int studentAcctID)
+        {
+            
+            using (var db = new SqlConnection(conDB))
+            {
+                string query = "SELECT COUNT(*) FROM RESUME WHERE student_accID = @studentAccID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@studentAccID", studentAcctID);
+
+                db.Open();
+
+                int count = (int)cmd.ExecuteScalar();
+
+                return count > 0;
+
+            }
+
+        }
+
+        private void InsertResumeRecord(int studentAcctID)
+        {
+
+            using (var db = new SqlConnection(conDB))
+            {
+                db.Open();
+                string query = "INSERT INTO RESUME (student_accID) VALUES (@studentAccID)";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@studentAccID", studentAcctID);
+
+                var ctr = cmd.ExecuteNonQuery();
+                if (ctr > 0)
+                {
+                    
+                }
+
+            }
         }
 
         private void DisplayResume(int studentaccID)

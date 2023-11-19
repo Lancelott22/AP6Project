@@ -27,12 +27,6 @@ namespace ctuconnect
             if (!IsPostBack)
             {
 
-                rptEducation.DataSource = GetEmptyEducationTable();
-                rptEducation.DataBind();
-                rptSkills.DataSource = GetEmptySkillsTable();
-                rptSkills.DataBind();
-                rptCertificate.DataSource = GetEmptyCertificateTable();
-                rptCertificate.DataBind();
                 int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
                 if (studentAcctID > 0)
                 {
@@ -143,15 +137,14 @@ namespace ctuconnect
 
             string birthdate = txtbdate.Text;         
 
+            
             UpdateResume(studentAcctID, lname, fname, contactNumber, email, birthdate, gender, address, jobLevel);
 
             // Update resume information in the database
             SaveEducation(studentAcctID, GetEducationTableFromRepeater());
             SaveSkills(studentAcctID, GetSkillsTableFromRepeater());
             SaveCertificate(studentAcctID, GetCertificateTableFromRepeater());
-
-
-
+                 
 
         }
 
