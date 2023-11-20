@@ -83,13 +83,15 @@
             width:300px;
         }
 
-        .txtfeed{
+        .txtsuggestion{
            background-color: #F0EBEB;
            border: 1px solid grey;
            border-radius: 5px;
            min-width:100%;
            min-height:200px;
-
+           padding-top:2px;
+           padding:20px;
+           line-height: 60px;
         }
 
         .btnSend{
@@ -159,20 +161,43 @@
         <div class="container px-4 px-lg-5 h-100">
                 <div class="row gx-4 gx-lg-5 h-100">
                     <div class="col-lg-12 align-self-end">
-                    <h1>Share us your feedback!</h1>    
+                    <h1>Share us your Suggestions!</h1>   
+                        <p style="text-indent: 60px;">We value your insights and ideas! Your suggestions are crucial to us as we strive to improve and enhance our services. Whether you have 
+                            thoughts on how we can make things even better or ideas for new features, we want to hear from you. Help us shape the future by sharing 
+                            your suggestions — because together, we can create an even more exceptional experience for you! 🚀</p>
+                        <p style="float:right;">--Team Admin</p>
                     </div>       
                 </div>
                 <div class="row gx-4 gx-lg-5 h-100">
                     <div class="col-lg-12 align-self-end">
-                        <asp:TextBox ID="txtfeedback" runat="server" CssClass="txtfeed"></asp:TextBox>
+                        <asp:TextBox ID="txtsuggestion" runat="server" CssClass="txtsuggestion"></asp:TextBox>
                     </div>       
                 </div>
                 <br />
                 <div class="row gx-4 gx-lg-5 h-100">
                     <div class="col-lg-12 align-self-end">
-                        <p><asp:Button ID="btn" class="btnSend" runat="server" Text="Send"/></p>
+                        <p><asp:Button ID="btn" class="btnSend" runat="server" Text="Send" OnClick="Submit_Suggestions"/></p>
                     </div>       
                 </div>
             </div>
     </section>
+
+    <%--SuccesPromptModal--%>
+        <div class="modal fade" id="SuccessPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                        <br />
+                        <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
+                        <asp:Label ID="Label11" runat="server" Text="Submitted !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label12" runat="server" Text="Your suggestion was succesfully submitted." Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button runat="server" type="button" class="btn btn-secondary" Text="Close" OnCLick="Close_SuccessPrompt" />
+                    </div>
+                </div>
+            </div>
+</div>
 </asp:Content>

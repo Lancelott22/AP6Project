@@ -350,7 +350,7 @@
                                                 <asp:Label ID="lblEndorsement" runat="server" Visible="false" Text='<%# Eval("endorsementLetter") %>'></asp:Label>  
                                             </div>
                                             <div class="col-5">
-                                                <asp:Button ID="btnEndorsement" runat="server" Text="View Endorsement Letter" Width="200px" Height="30px" CssClass="btnEndorsement" OnCommand="EndorsementButton_Command" CommandName="Endorsement" CommandArgument='<%# Eval("applicantID") %>' />
+                                                <asp:Button ID="btnEndorsement" runat="server" Text="View Endorsement Letter" Width="210px" Height="30px" CssClass="btnEndorsement" OnCommand="EndorsementButton_Command" CommandName="Endorsement" CommandArgument='<%# Eval("applicantID") %>' />
                                                 <asp:Label ID="lblendorsementStatus" runat="server" Visible="false" Text="N/A"></asp:Label>
                                             </div>                                          
                                         </div> 
@@ -420,7 +420,7 @@
                     <a class="active" href="#"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
                     <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                     <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
-                    <a href="#"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
+                    <a href="IndustryProfile.aspx"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
                     <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                      Sign-out

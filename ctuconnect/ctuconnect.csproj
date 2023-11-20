@@ -149,6 +149,7 @@
     <Content Include="images\account.png" />
     <Content Include="images\administratorpic.jpg" />
     <Content Include="images\calendar.jpg" />
+    <Content Include="images\check-mark.png" />
     <Content Include="images\ctuconnectlogo.png" />
     <Content Include="images\ctulogo.png" />
     <Content Include="images\dashwhite.png" />

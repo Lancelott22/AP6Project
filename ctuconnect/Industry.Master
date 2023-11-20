@@ -356,8 +356,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1 navbar-right" >
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Home">Home</a></li>            
+                    <ul class="navbar-nav flex-grow-1 navbar-right" >           
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/JobPortal">Job Portal</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/About">About</a></li>
                         <li class="nav-item">

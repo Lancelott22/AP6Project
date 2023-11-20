@@ -1,181 +1,321 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Web;
-using System.Web.Configuration;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
+    using System.Drawing;
+    using System.Linq;
+    using System.Reflection.Emit;
+    using System.Web;
+    using System.Web.Configuration;
+    using System.Web.UI;
+    using System.Web.UI.WebControls;
 
-namespace ctuconnect
-{
-    public partial class HiredList : System.Web.UI.Page
+    namespace ctuconnect
     {
-        SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
-        protected void Page_Load(object sender, EventArgs e)
+        public partial class HiredList : System.Web.UI.Page
         {
-            if (!IsPostBack && Session["IndustryEmail"] == null)
+            SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            private int currentStudentID;
+
+            protected void Page_Load(object sender, EventArgs e)
             {
-                Response.Redirect("LoginIndustry.aspx");
-
-
-            }
-            if (!IsPostBack)
-            {
-                
-                BindTable1();
-                BindTable2();
-                myLinkButton1.CssClass += " active";
-                dataRepeater1.Visible = true;
-                dataRepeater2.Visible = false;
-            }
-        }
-        void BindTable1()
-        {
-                    string query = "SELECT lastName, firstName, dateStarted, position, resumeFile FROM HIRED_LIST WHERE jobType = 'job' ORDER BY id DESC";
-                SqlCommand cmd = new SqlCommand(query, conDB);
-                        SqlDataAdapter da = new SqlDataAdapter(cmd);
-                        DataSet ds = new DataSet();
-                        da.Fill(ds);
-
-                        // Bind the DataTable to the GridView
-                        dataRepeater1.DataSource = ds;
-                        dataRepeater1.DataBind();
+                if (!IsPostBack && Session["IndustryEmail"] == null)
+                {
+                    Response.Redirect("LoginIndustry.aspx");
                     
 
+                }
+                if (!IsPostBack)
+                {
+
+                    BindTable1();
+                    BindTable2();
+                    myLinkButton1.CssClass += " active";
+                    dataRepeater1.Visible = true;
+                    dataRepeater2.Visible = false;
+
+                disp_industryName.Text = Session["INDUSTRYNAME"].ToString();
+                disp_accID.Text = Session["INDUSTRY_ACC_ID"].ToString();
+
+                string imagePath = "~/images/IndustryProfile/" + Session["INDUSTRYPIC"].ToString();
+                industryImage1.ImageUrl = imagePath;
+            }
+
+
+                else
+                {
+                    // It's a postback, check if currentApplicantID exists in ViewState
+                    if (ViewState["CurrentStudentID"] != null)
+                    {
+                        currentStudentID = (int)ViewState["CurrentStudentID"];
+                    }
+                    else
+                    {
+                        // If it doesn't exist in ViewState, set a default value
+                        currentStudentID = -1; // Set to a default value or -1
+                    }
 
                 }
-           
-        
-        void BindTable2()
-        {
-             
-            
-                string query = "SELECT lastName, firstName, position, CONVERT(VARCHAR(10), HIRED_LIST.dateHired, 120) AS dateHired, internshipStatus, renderedHours, evaluationRequest FROM HIRED_LIST WHERE jobType = 'internship' ORDER BY id DESC";
-            SqlCommand cmd = new SqlCommand(query, conDB);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            }
+            void BindTable1()
+            {
+                string query = "SELECT lastName, firstName, dateStarted, position, resumeFile FROM HIRED_LIST WHERE jobType = 'job' ORDER BY id DESC";
+                SqlCommand cmd = new SqlCommand(query, conDB);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+
+                // Bind the DataTable to the GridView
+                dataRepeater1.DataSource = ds;
+                dataRepeater1.DataBind();
+
+
+
+            }
+
+
+            void BindTable2()
+            {
+
+
+                string query = "SELECT student_accID,lastName, firstName, position, CONVERT(VARCHAR(10), HIRED_LIST.dateHired, 120) AS dateHired, CONVERT(VARCHAR(10), HIRED_LIST.dateStarted, 120) AS dateStarted, CONVERT(VARCHAR(10), HIRED_LIST.dateEnded, 120) AS dateEnded, internshipStatus, renderedHours, evaluationRequest FROM HIRED_LIST WHERE jobType = 'internship' ORDER BY id DESC";
+                SqlCommand cmd = new SqlCommand(query, conDB);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 da.Fill(ds);
 
                 // Bind the DataTable to the GridView
                 dataRepeater2.DataSource = ds;
-            dataRepeater2.DataBind();
-                
-        }
-            
-        
+                dataRepeater2.DataBind();
 
-        protected void btnSwitchGrid_Click1(object sender, EventArgs e)
-        {
-            myLinkButton1.CssClass = "linkbutton";
-            myLinkButton2.CssClass = "linkbutton";
-
-            // Apply styles for the clicked button
-            myLinkButton1.CssClass += " active";
-
-            dataRepeater1.Visible = true;
-            dataRepeater2.Visible = false;
-
-            UpdatePanel1.Update();
-        }
-        protected void btnSwitchGrid_Click2(object sender, EventArgs e)
-        {
-            //DataTable dataTable = new DataTable();
-            //dataTable.Columns.Add("ID", typeof(int));
-            //dataTable.Columns.Add("Name", typeof(string));
-            //dataTable.Rows.Add(01783, "Robert");
-            //dataTable.Rows.Add(0178903, "RYan");
-
-            //GridView2.DataSource = dataTable;
-            //GridView2.DataBind();
-            myLinkButton1.CssClass = "linkbutton";
-            myLinkButton2.CssClass = "linkbutton";
-
-            // Apply styles for the clicked button
-            myLinkButton2.CssClass += " active";
-            dataRepeater1.Visible = false;
-            dataRepeater2.Visible = true;
-
-            UpdatePanel1.Update();
-
-        }
-        protected void Evaluate_BtnClick(object sender, EventArgs e)
-        {
-            // Find the button that triggered the event
-            Button EvaluationBtn = (Button)sender;
-
-            // Check if the button's text is "Requested"
-            if (EvaluationBtn.Text == "Requested")
-            {
-                // Redirect to another ASPX page
-                Response.Redirect("Home.aspx");
             }
-        }
-        protected void ViewResume_Command(object sender, CommandEventArgs e)
-        {
-            if (e.CommandName == "View")
+
+
+
+            protected void btnSwitchGrid_Click1(object sender, EventArgs e)
             {
-                /* Button btn = (Button)sender;
-                 int studentID = Convert.ToInt32(btn.Attributes["data-studentid"]);
- */
-                string ResumeFileName = e.CommandArgument.ToString();
-                /*string endorsementLetterPath = Server.MapPath("~/images/EndorsementLetter" + endorsementLetterFileName);*/
-                // Change the button text to "Reviewed"
-                //Button button = (Button)sender;
-                //button.Text = "Reviewed";
+                myLinkButton1.CssClass = "linkbutton";
+                myLinkButton2.CssClass = "linkbutton";
 
+                // Apply styles for the clicked button
+                myLinkButton1.CssClass += " active";
 
-                // Retrieve and display the resume file
-                byte[] ResumeFileData = GetResumeFileData(ResumeFileName);
+                dataRepeater1.Visible = true;
+                dataRepeater2.Visible = false;
 
+                UpdatePanel1.Update();
+            }
+            protected void btnSwitchGrid_Click2(object sender, EventArgs e)
+            {
+                //DataTable dataTable = new DataTable();
+                //dataTable.Columns.Add("ID", typeof(int));
+                //dataTable.Columns.Add("Name", typeof(string));
+                //dataTable.Rows.Add(01783, "Robert");
+                //dataTable.Rows.Add(0178903, "RYan");
 
-                if (ResumeFileData != null)
+                //GridView2.DataSource = dataTable;
+                //GridView2.DataBind();
+                myLinkButton1.CssClass = "linkbutton";
+                myLinkButton2.CssClass = "linkbutton";
+
+                // Apply styles for the clicked button
+                myLinkButton2.CssClass += " active";
+                dataRepeater1.Visible = false;
+                dataRepeater2.Visible = true;
+
+                UpdatePanel1.Update();
+
+            }
+            protected void Evaluate_BtnClick(object sender, EventArgs e)
+            {
+                // Find the button that triggered the event
+                Button EvaluationBtn = (Button)sender;
+
+                // Check if the button's text is "Requested"
+                if (EvaluationBtn.Text == "Requested")
                 {
-                    // Provide the file data for download in a new browser tab
-                    Response.Clear();
-                    Response.Buffer = true;
-                    Response.ContentType = "application/pdf"; // Set the appropriate content type
-                    Response.AddHeader("content-disposition", "inline; filename=resume.pdf"); // Open in a new tab
-                    Response.BinaryWrite(ResumeFileData);
-                    Response.End();
+                    // Redirect to another ASPX page
+                    Response.Redirect("Home.aspx");
                 }
             }
-        }
-        private byte[] GetResumeFileData(string ResumeFileName)
-        {
-            using (conDB)
+            protected void ViewResume_Command(object sender, CommandEventArgs e)
             {
-                string query = "SELECT resumeFile FROM HIRED_LIST WHERE resumeFile = @ResumeFileName";
-                SqlCommand cmd = new SqlCommand(query, conDB);
-                cmd.Parameters.AddWithValue("@ResumeFileName", ResumeFileName);
-
-                conDB.Open();
-                object result = cmd.ExecuteScalar();
-
-                if (result != null && result != DBNull.Value)
+                if (e.CommandName == "View")
                 {
-                    // Assuming that the result is a file path, read the file content
-                    string fileName = result.ToString();
-                    string filePath = "~/images/Resume/" + fileName; // Construct the path
-                    byte[] fileData = System.IO.File.ReadAllBytes(Server.MapPath(filePath));
-                    return fileData;
+                    /* Button btn = (Button)sender;
+                     int studentID = Convert.ToInt32(btn.Attributes["data-studentid"]);
+     */
+                    string ResumeFileName = e.CommandArgument.ToString();
+                    /*string endorsementLetterPath = Server.MapPath("~/images/EndorsementLetter" + endorsementLetterFileName);*/
+                    // Change the button text to "Reviewed"
+                    //Button button = (Button)sender;
+                    //button.Text = "Reviewed";
+
+
+                    // Retrieve and display the resume file
+                    byte[] ResumeFileData = GetResumeFileData(ResumeFileName);
+
+
+                    if (ResumeFileData != null)
+                    {
+                        // Provide the file data for download in a new browser tab
+                        Response.Clear();
+                        Response.Buffer = true;
+                        Response.ContentType = "application/pdf"; // Set the appropriate content type
+                        Response.AddHeader("content-disposition", "inline; filename=resume.pdf"); // Open in a new tab
+                        Response.BinaryWrite(ResumeFileData);
+                        Response.End();
+                    }
+                }
+            }
+            private byte[] GetResumeFileData(string ResumeFileName)
+            {
+                using (conDB)
+                {
+                    string query = "SELECT resumeFile FROM HIRED_LIST WHERE resumeFile = @ResumeFileName";
+                    SqlCommand cmd = new SqlCommand(query, conDB);
+                    cmd.Parameters.AddWithValue("@ResumeFileName", ResumeFileName);
+
+                    conDB.Open();
+                    object result = cmd.ExecuteScalar();
+
+                    if (result != null && result != DBNull.Value)
+                    {
+                        // Assuming that the result is a file path, read the file content
+                        string fileName = result.ToString();
+                        string filePath = "~/images/Resume/" + fileName; // Construct the path
+                        byte[] fileData = System.IO.File.ReadAllBytes(Server.MapPath(filePath));
+                        return fileData;
+                    }
+
+                    return null; // No file found
+                }
+            }
+            protected void SignOut_Click(object sender, EventArgs e)
+            {
+
+                Session.Abandon();
+                Session.Clear();
+                Session.RemoveAll();
+                Response.Redirect("LoginIndustry.aspx");
+
+            }
+            protected void SaveDatesDetails(object sender, EventArgs e)
+            {
+
+                int studentAccID = currentStudentID;
+                string datestarted = txtDateStarted.Text;
+                string dateended = txtDateEnded.Text;
+
+                using (conDB)
+                {
+                    conDB.Open();
+                    using (var cmd = conDB.CreateCommand())
+                    {
+                        string sql = "UPDATE HIRED_LIST SET dateStarted = datestarted, dateEnded = @dateended WHERE student_AccID = @studentAccID";
+                        cmd.CommandText = sql;
+                        cmd.Parameters.AddWithValue("@studentAccID", studentAccID);
+                        cmd.Parameters.AddWithValue("@datestarted", datestarted);
+                        cmd.Parameters.AddWithValue("@dateended", dateended);
+
+                        cmd.ExecuteNonQuery();
+
+                    }
+
                 }
 
-                return null; // No file found
+            }
+            protected void editRow_Click(object sender, EventArgs e)
+            {
+                Button btnSchedule = (Button)sender;
+                int currentStudentID = Convert.ToInt32(btnSchedule.CommandArgument);
+
+                string StartedDate = GetDateStartedFromDatabase(currentStudentID);
+                /* string EndedDate = GetDateEndedFromDatabase(currentStudentID);*/
+
+
+                // Store currentApplicantID in ViewState
+                ViewState["CurrentStudentID"] = currentStudentID;
+
+
+                // Open the modal dialog and populate it with existing values
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openModal('{StartedDate}');", true);
+
+            }
+            private string GetDateStartedFromDatabase(int student_accID)
+            {
+                DateTime dateStarted = DateTime.MinValue;
+                string formattedDateStarted = string.Empty;
+
+                using (conDB)
+                {
+                    conDB.Open();
+
+                    string query = "SELECT dateStarted FROM HIRED_LIST WHERE student_accID = @studentID";
+
+                    using (var command = new SqlCommand(query, conDB))
+                    {
+                        command.Parameters.AddWithValue("@studentID", student_accID);
+
+                        using (var reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // Check if the database field is not null
+                                if (!reader.IsDBNull(0))
+                                {
+                                    dateStarted = reader.GetDateTime(0);
+                                    formattedDateStarted = dateStarted.ToString("yyyy-MM-dd");
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return formattedDateStarted;
+            }
+            protected void closeEditModal(object sender, EventArgs e)
+            {
+
+                ClientScript.RegisterStartupScript(this.GetType(), "closeModal", "closeEditModal();", true);
             }
         }
-        protected void SignOut_Click(object sender, EventArgs e)
-        {
+    }
+            /*private string GetDateEndedFromDatabase(int student_accID)
+            {
+                DateTime dateEnded = DateTime.MinValue;
+                string formattedDateEnded = string.Empty;
 
-            Session.Abandon();
-            Session.Clear();
-            Session.RemoveAll();
-            Response.Redirect("LoginIndustry.aspx");
+                using (conDB)
+                {
+                    conDB.Open();
 
-        }
+                    string query = "SELECT dateEnded FROM HIRED_LIST WHERE student_accID = @studentID";
+
+                    using (var command = new SqlCommand(query, conDB))
+                    {
+                        command.Parameters.AddWithValue("@studentID", student_accID);
+
+                        using (var reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // Check if the database field is not null
+                                if (!reader.IsDBNull(0))
+                            
+                                    dateEnded = reader.GetDateTime(0);
+                                    formattedDateEnded = dateEnded.ToString("yyyy-MM-dd");
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return formattedDateEnded;
+            }
+    
+
+        }*/
         /*protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -203,5 +343,3 @@ namespace ctuconnect
                 }
             }
         }*/
-    }
-}
