@@ -458,7 +458,8 @@
                 <div class="modal-content rounded-0">
                     <div class="modal-body p-4 px-5">
                     <div class="main-content text-center">
-                        
+                         <br />
+                        <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
                         <asp:Label ID="Label11" runat="server" Text="Success !" Style="font-size:25px;" ></asp:Label><br />
                         <asp:Label ID="Label12" runat="server" Text="Your referral succesfully added." Style="font-size:18px;" ></asp:Label>
                     </div>

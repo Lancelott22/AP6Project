@@ -4,6 +4,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
         
@@ -179,12 +181,14 @@
 
         }
         .datas{
-             padding:5px;
-              border: 3px solid;
+             padding:4px;
+              border: 5px solid;
               border-color:white;
              font-weight:bold;
              color:black;
+             align-items:center;
         }
+
 
         .table-list{
              border-collapse: collapse;
@@ -203,6 +207,26 @@
             cursor: pointer;
             border:none;
         }
+        .ellipsis {
+        cursor: pointer;
+        position: absolute;
+        transform: translateY(-50%);
+        font-size: 28px; /* Adjust font size as needed */
+        color: gray; /* Adjust color as needed */
+    }
+        .highlighted-row {
+            background-color: whitesmoke; /* Adjust background color as needed */
+        }
+        .modal{
+     width:600px;
+     margin:auto;
+     margin-top:100px;
+    
+     
+ }
+ .modal-content{
+     padding-left:2em;
+ }
     </style>
     <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
@@ -239,13 +263,13 @@
                             </HeaderTemplate>
                                     <ItemTemplate>
                                         <table class="table-list">
-                                        <tr class="datas">
-                                            <td style="width: 50px;"><%# Container.ItemIndex + 1 %></td>
-                                           <td style="width: 150px;"><%# Eval("lastName") %></td>
-                                           <td style="width: 150px;"><%# Eval("firstName") %></td>
-                                           <td style="width: 150px;"><%# Eval("dateStarted") %></td>
-                                           <td style="width: 150px;"><%# Eval("position") %></td>
-                                            <td >
+                                        <tr>
+                                            <td class="datas" style="width: 50px;"><%# Container.ItemIndex + 1 %></td>
+                                           <td class="datas" style="width: 150px;"><%# Eval("lastName") %></td>
+                                           <td class="datas" style="width: 150px;"><%# Eval("firstName") %></td>
+                                           <td class="datas" style="width: 150px;"><%# Eval("dateStarted") %></td>
+                                           <td class="datas" style="width: 150px;"><%# Eval("position") %></td>
+                                            <td class="datas">
                                                 <asp:Button ID="ResumeButton"  runat="server" Text="View Resume"
                                                 OnCommand="ViewResume_Command" CommandName="View"  
                                                 CommandArgument='<%# Eval("resumeFile") %>'/>
@@ -285,30 +309,39 @@
                                                 <th style="width: 200px;">Last Name</th>
                                                 <th style="width: 200px;">First Name</th>
                                                 <th style="width: 200px;">Position</th>
-                                                <th style="width: 200px;">Date Hired</th>
+                                                <th style="width: 200px;">Hired</th>
+                                                <th style="width: 200px;">Started</th>
+                                                <th style="width: 200px;">Ended</th>
                                                 <th style="width: 200px;">Internship Status</th>
                                                 <th style="width: 200px;">Rendered Hours</th>
                                                 <th style="width: 200px;">Evaluation</th>
+                                                <th style="width: 5px;"></th>
                                             </tr>
                                             </table>
                                         </HeaderTemplate>
                                                 <ItemTemplate>
-                                                     <table class="table-list">
-                                                    <tr class="datas">
-                                                        <td style="width: 70px;"><%# Container.ItemIndex + 1 %></td>
-                                                        <td style="width: 200px;"><%# Eval("lastName") %></td>
-                                                        <td style="width: 200px;"><%# Eval("firstName") %></td>
-                                                        <td style="width: 200px;"><%# Eval("position") %></td>
-                                                        <td style="width: 200px;"><%# Eval("dateHired") %></td>
-                                                        <td style="width: 200px;"><%# Eval("internshipStatus") %></td>
-                                                        <td style="width: 200px;"><%# Eval("renderedHours") %></td>
-                                                        <td >
+                                                     <table class="table-list" >
+                                                    <tr class="datas" >
+                                                       <td  style="width: 70px;"><%# Container.ItemIndex + 1 %></td>
+                                                        <td style="width: 155px;"><%# Eval("lastName") %></td>
+                                                        <td style="width: 150px;"><%# Eval("firstName") %></td>
+                                                        <td  style="width: 150px;"><%# Eval("position") %></td>
+                                                        <td  style="width: 150px;"><%# Eval("dateHired") %></td>
+                                                        <td  style="width: 150px;"><%# Eval("dateStarted") %></td>
+                                                        <td  style="width: 150px;"><%# Eval("dateEnded") %></td>
+                                                        <td  style="width: 150px;"><%# Eval("internshipStatus") %></td>
+                                                        <td  style="width: 150px;"><%# Eval("renderedHours") %></td>
+                                                        <td style="width: 110px;">
                                                             <asp:Button ID="EvaluationBtn" CssClass="evaluateButton" runat="server" Text='<%# Eval("evaluationRequest") %>'
                                                             OnCLick="Evaluate_BtnClick"/>
                                                         </td>
+                                                        <td style="width: 50px;" >
+                                                            <asp:Button ID="LinkButton1" runat="server" Text="&#8230;" class="ellipsis" OnClick="editRow_Click" CommandArgument='<%# Eval("student_accID") %>' />
+                                                           
+                                                        </td>
                                                     </tr>
                                                     </table>
-
+                                                     
                                                 </ItemTemplate>
         
                                             </asp:Repeater>
@@ -358,5 +391,72 @@
             </asp:TableCell>
         </asp:TableRow>
     </asp:Table>
+    <div id="myModal" class="modal">
+    <div class="modal-content">
+        <!--<span class="close" onclick="closeModal()">&times;</span>-->
+        <br />
+        <h3 style="text-align:center">Interview Schedule</h3> 
+        <br />
+        <div class="row applicant-details">
+            <div class="col-3 d-flex flex-column">
+                Date Started
+            </div>
+            <div class="col-9 d-flex flex-column">
+                <asp:TextBox ID="txtDateStarted" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px"></asp:TextBox>
+            </div>
+        </div>
+        <br />
+        <div class="row applicant-details">
+            <div class="col-3 d-flex flex-column">
+                Date Ended
+            </div>
+            <div class="col-9 d-flex flex-column">
+                <asp:TextBox ID="txtDateEnded" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px"></asp:TextBox>
+            </div>
+        </div>
+        <br />
+        <div class="row applicant-buttons">
+            <div class="col-4 d-flex flex-column">
+                <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="SaveDatesDetails" CssClass="btn2" Height="28px" Width="100px"/>
+            </div>
+            <div class="col-2 d-flex flex-column">
+                
+            </div>
+            <div class="col-4 d-flex flex-column">
+                <asp:Button ID="btnClose" runat="server" Text="Close" OnClick="closeEditModal" CssClass="btn1" Height="28px" Width="100px"/>
+            </div>
+        </div>
+        <br /><br />
+
+       
+    </div>
+</div>
+    <script>
+        //function highlightRow(row) {
+        //    // Remove the 'highlighted-row' class from all rows
+        //    var rows = document.querySelectorAll('.datas');
+        //    rows.forEach(function (r) {
+        //        r.classList.remove('highlighted-row');
+        //    });
+
+        //    // Add the 'highlighted-row' class to the clicked row
+        //    row.classList.add('highlighted-row');
+        //}
+        function openModal(StartedDate) {
+            var modal = document.getElementById("myModal");
+
+            var txtDateStarted = document.getElementById('<%=txtDateStarted.ClientID%>');
+            if (modal && txtDateStarted) {
+                modal.style.display = "";
+                txtDateStarted.value = StartedDate;
+            } else {
+                console.error("Modal or TextBox not found.");
+            }
+        }
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+    </script>
   
 </asp:Content>
