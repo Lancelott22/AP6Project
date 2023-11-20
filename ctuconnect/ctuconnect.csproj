@@ -114,6 +114,7 @@
     <Content Include="About.aspx" />
     <Content Include="AdminDashboard.aspx" />
     <Content Include="AdminProfile.aspx" />
+    <Content Include="Admin_JobPosted.aspx" />
     <Content Include="Applicants.aspx" />
     <Content Include="ApplyJob.aspx" />
     <Content Include="Blacklist.aspx" />
@@ -279,6 +280,13 @@
     </Compile>
     <Compile Include="AdminProfile.aspx.designer.cs">
       <DependentUpon>AdminProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin_JobPosted.aspx.cs">
+      <DependentUpon>Admin_JobPosted.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin_JobPosted.aspx.designer.cs">
+      <DependentUpon>Admin_JobPosted.aspx</DependentUpon>
     </Compile>
     <Compile Include="Applicants.aspx.cs">
       <DependentUpon>Applicants.aspx</DependentUpon>
