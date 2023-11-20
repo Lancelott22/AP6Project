@@ -420,7 +420,7 @@
                     <a class="active" href="#"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
                     <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                     <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
-                    <a href="#"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
+                    <a href="IndustryProfile.aspx"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
                     <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                      Sign-out

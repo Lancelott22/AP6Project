@@ -188,8 +188,8 @@ namespace ctuconnect
                     {
                         // SQL Statement to insert data into the Referral table
                         cmd.CommandType = CommandType.Text;
-                        cmd.CommandText = "INSERT INTO REFERRAL (student_accID, industry_accID, coordinator_accID, referralLetter, dateReferred, ReferralStatus) " +
-                                          "VALUES (@student_accID, @industryID, @coordinatorID, @referralLetter, @dateReferred, @referralStatus)";
+                        cmd.CommandText = "INSERT INTO REFERRAL (student_accID, industry_accID, coordinator_accID, referralLetter, dateReferred, ReferralStatus, isRead, isRemove ) " +
+                                          "VALUES (@student_accID, @industryID, @coordinatorID, @referralLetter, @dateReferred, @referralStatus, @isRead, @isRemove)";
 
                         cmd.Parameters.AddWithValue("@student_accID", studentAccountID);
                         cmd.Parameters.AddWithValue("@industryID", industryID);
@@ -197,6 +197,8 @@ namespace ctuconnect
                         cmd.Parameters.AddWithValue("@referralLetter", filename);
                         cmd.Parameters.AddWithValue("@dateReferred", SqlDbType.DateTime).Value = DateTime.Now;
                         cmd.Parameters.AddWithValue("@referralStatus", referralStatus);
+                        cmd.Parameters.AddWithValue("@isRead", 0);
+                        cmd.Parameters.AddWithValue("@isRemove", 0);
                         cmd.ExecuteNonQuery();
                     }
                     ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('show');", true);
