@@ -156,8 +156,7 @@ namespace ctuconnect
                         Response.Write("<script>alert('The file extension of the uploaded file is not acceptable')</script>"); //error message after checking the file extensions
                     }
 
-            insertResume();
-
+            
         }
 
         private bool IsEmailAlreadyRegistered(string email)
@@ -192,39 +191,6 @@ namespace ctuconnect
             }
         }
 
-        private void insertResume()
-        {
-            SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
-            using (conDB)
-            {
-                conDB.Open();
-                using (var cmd = conDB.CreateCommand())
-                {
-
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT student_accID FROM STUDENT_ACCOUNT WHERE student_accID = (SELECT MAX(student_accID) FROM STUDENT_ACCOUNT)";
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        int studentAccID = Convert.ToInt32(reader["student_accID"].ToString());
-
-                        cmd.CommandType = CommandType.Text;
-                        cmd.CommandText = "INSERT INTO RESUME (student_accID) "
-                                            + " VALUES (@studentAccID)";
-                        cmd.Parameters.AddWithValue("@studentAccID", studentAccID);
-
-                        reader.Close();
-                        var ctr = cmd.ExecuteNonQuery();
-                        if (ctr > 0)
-                        {
-
-                        }
-
-                    }
-
-                }
-            }
-        }
 
     }
 }

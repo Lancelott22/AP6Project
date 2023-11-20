@@ -11,7 +11,7 @@ namespace ctuconnect
 {
 
 
-    public partial class Admin
+    public partial class OJTCoordinator
     {
 
         /// <summary>
@@ -51,31 +51,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label lblUnreadCount;
 
         /// <summary>
-        /// rptjobposted control.
+        /// rptregisteredstudent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptjobposted;
-
-        /// <summary>
-        /// rptnewregistered control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptnewregistered;
-
-        /// <summary>
-        /// rptsuggestions control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptsuggestions;
+        protected global::System.Web.UI.WebControls.Repeater rptregisteredstudent;
 
         /// <summary>
         /// UpdatePanel1 control.
@@ -112,6 +94,15 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblname;
+
+        /// <summary>
+        /// lbldepartmentName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbldepartmentName;
 
         /// <summary>
         /// SignOut control.

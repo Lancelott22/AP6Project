@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="ctuconnect.Admin" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Industry.master.cs" Inherits="ctuconnect.Industry" %>
 
 <!DOCTYPE html>
 
@@ -18,7 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 
         <style>
         .navbar-custom{
@@ -226,7 +226,7 @@
             right: 2%;
             width: 320px; 
             max-height:0px;
-            overflow:hidden;
+            overflow: hidden;
             transition: max-height 0.5s;
             background:#fff;
             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
@@ -318,8 +318,8 @@
             height: 50px;
             font-size:12px;
             padding-top:2em;
+            padding-bottom:2em;
         }
-
 
     </style>
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -358,105 +358,77 @@
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 navbar-right" >
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Home">Home</a></li>            
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Admin_JobPosted">Job Portal</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/JobPortal">Job Portal</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/About">About</a></li>
                         <li class="nav-item">
                                 <div class="position-relative">
                                     <asp:ImageButton ID="imgbtnbell" runat="server" Height="40" Width="38" ImageUrl="images/notification_bell.png" CssClass="notification-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
                                         <asp:Label ID="lblUnreadCount" runat="server" CssClass="badge"></asp:Label> 
                                     <div class="dropdown-menu" aria-labelledby="message" style="border-style:solid; border-width:1px">
-                                        
-                                        <asp:Repeater ID="rptjobposted" runat="server" >
-                                            <HeaderTemplate>
-                                                <div id="headerTemplateContainer" runat="server" class="red">
-                                                    <asp:Label ID="lblnotiflabel" runat="server" Text="Hiring Notifications"></asp:Label>
-                                                </div>
-                                            </HeaderTemplate>
-                                            <ItemTemplate>         
-                                                <div class='<%# Eval("isRead").ToString().ToLower() == "false" ? "notification-item read" : "notification-item unread" %>'">
-                                                    <div class="row">
-                                                        <div class="col-10 notification-details">
-                                                            <asp:LinkButton runat="server" class="notification-link" CommandName="MarkAsRead" CommandArgument='<%# Eval("notificationID") %>' OnCommand="readNotification_ItemCommand">           
-                                                                <div class="notification-content">
-                                                                    <p class="notification-message"><%# Eval("industryName") %> posted a job hiring</p>
-                                                                    <p class="notification-date"><%# Eval("dateCreated") %></p>
-                                                                </div>
-                                                            </asp:LinkButton>
-                                                        </div>
-                                                        <div class="col-2 notification-remove">
-                                                                <br />
-                                                                <asp:LinkButton runat="server" CssClass="notification-close-btn" CommandName="MarkAsRemove" CommandArgument='<%# Eval("notificationID") %>' OnCommand="removeNotification_ItemCommand">×</asp:LinkButton>
-                                                                <br />
-                                                        </div>
+                                        <asp:Repeater ID="rptapplicants" runat="server" >
+                                        <HeaderTemplate>
+                                            <div id="headerTemplateContainer" runat="server" class="red">
+                                                <asp:Label ID="lblapplicantslabel" runat="server" Text="Applicants"></asp:Label>
+                                            </div>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>         
+                                            <div class='<%# Eval("isRead").ToString().ToLower() == "false" ? "notification-item read" : "notification-item unread" %>'">
+                                                <div class="row">
+                                                    <div class="col-10 notification-details">
+                                                        <asp:LinkButton runat="server" class="notification-link" CommandName="MarkAsRead" CommandArgument='<%# Eval("applicantID") %>' OnCommand="readApplicants_ItemCommand">           
+                                                            <div class="notification-content">
+                                                                <p class="notification-message">New Applicant: <%# Eval("applicantFName") %> <%# Eval("applicantLName") %> </p>
+                                                                <p class="notification-date"><%# Eval("dateApplied") %></p>
+                                                                
+                                                            </div>
+                                                        </asp:LinkButton>
+                                                    </div>
+                                                    <div class="col-2 notification-remove">
+                                                            <br />
+                                                            <asp:LinkButton runat="server" CssClass="notification-close-btn" CommandName="MarkAsRemove" CommandArgument='<%# Eval("applicantID") %>' OnCommand="removeApplicants_ItemCommand">×</asp:LinkButton>
+                                                            <br />
                                                     </div>
                                                 </div>
-                                            </ItemTemplate>
-                                        </asp:Repeater>
-                                        <% if (rptjobposted.Items.Count == 0 && rptnewregistered.Items.Count == 0 && rptsuggestions.Items.Count == 0) { %>
+                                            </div>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                        <% if (rptapplicants.Items.Count == 0 && rptreferred.Items.Count == 0) { %>
                                             <div class="empty-message">
                                                 <p>No notifications available at this time</p>
                                             </div>
                                         <% } %>
-                                        <br />
-                                        <asp:Repeater ID="rptnewregistered" runat="server" >
-                                            <HeaderTemplate>
-                                                <div id="headerTemplateContainer2" runat="server" class="red1">
-                                                    <asp:Label ID="lblregisteredlabel" runat="server" Text="New Registered"></asp:Label>
-                                                </div>
-                                            </HeaderTemplate>
-                                            <ItemTemplate>         
-                                                <div class='<%# Eval("isRead").ToString().ToLower() == "false" ? "notification-item read" : "notification-item unread" %>'">
-                                                    <div class="row">
-                                                        <div class="col-10 notification-details">
-                                                            <asp:LinkButton runat="server" class="notification-link" CommandName="MarkAsRegisteredRead" CommandArgument='<%# Eval("industry_accID") %>' OnCommand="readRegistered_ItemCommand">           
-                                                                <div class="notification-content">
-                                                                    <p class="notification-message">New Industry Registration: <%# Eval("industryName") %></p>
-                                                                    <p class="notification-date"><%# Eval("dateRegistered") %></p>
-                                                                </div>
-                                                            </asp:LinkButton>
-                                                        </div>
-                                                        <div class="col-2 notification-remove">
-                                                                <br />
-                                                                <asp:LinkButton runat="server" CssClass="notification-close-btn" CommandName="MarkAsRegisteredRemove" CommandArgument='<%# Eval("industry_accID") %>' OnCommand="removeRegistered_ItemCommand">×</asp:LinkButton>
-                                                                <br />
-                                                        </div>
+                                    <asp:Repeater ID="rptreferred" runat="server" >
+                                        <HeaderTemplate>
+                                            <div id="headerTemplateContainer2" runat="server" class="red1">
+                                                <asp:Label ID="lblregisteredlabel" runat="server" Text="New Referred"></asp:Label>
+                                            </div>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>         
+                                            <div class='<%# Eval("isRead").ToString().ToLower() == "false" ? "notification-item read" : "notification-item unread" %>'">
+                                                <div class="row">
+                                                    <div class="col-10 notification-details">
+                                                        <asp:LinkButton runat="server" class="notification-link" CommandName="MarkAsReferredRead" CommandArgument='<%# Eval("referralID") %>' OnCommand="readReferred_ItemCommand">           
+                                                            <div class="notification-content">
+                                                                <p class="notification-message">New Referred Student: <%# Eval("student_accID") %></p>
+                                                                <p class="notification-date"><%# Eval("dateReferred") %></p>
+                                                            </div>
+                                                        </asp:LinkButton>
+                                                    </div>
+                                                    <div class="col-2 notification-remove">
+                                                            <br />
+                                                            <asp:LinkButton runat="server" CssClass="notification-close-btn" CommandName="MarkAsReferredRemove" CommandArgument='<%# Eval("referralID") %>' OnCommand="removeReferred_ItemCommand">×</asp:LinkButton>
+                                                            <br />
                                                     </div>
                                                 </div>
-                                            </ItemTemplate>
-                                        </asp:Repeater>
-                                        <asp:Repeater ID="rptsuggestions" runat="server" >
-                                            <HeaderTemplate>
-                                                <div id="headerTemplateContainer3" runat="server" class="red1">
-                                                    <asp:Label ID="lblsuggestionslabel" runat="server" Text="Suggestions:"></asp:Label>
-                                                </div>
-                                            </HeaderTemplate>
-                                            <ItemTemplate>         
-                                                <div class='<%# Eval("isRead").ToString().ToLower() == "false" ? "notification-item read" : "notification-item unread" %>'">
-                                                    <div class="row">
-                                                        <div class="col-10 notification-details">
-                                                            <asp:LinkButton runat="server" class="notification-link" CommandName="MarkAsSuggestionRead" CommandArgument='<%# Eval("suggestionID") %>' OnCommand="readSuggestion_ItemCommand">           
-                                                                <div class="notification-content">
-                                                                    <p class="notification-message">New Suggestion: <%# Eval("suggestionID") %></p>
-                                                                    <p class="notification-date"><%# Eval("dateCreated") %></p>
-                                                                </div>
-                                                            </asp:LinkButton>
-                                                        </div>
-                                                        <div class="col-2 notification-remove">
-                                                                <br />
-                                                                <asp:LinkButton runat="server" CssClass="notification-close-btn" CommandName="MarkAsSuggestionRemove" CommandArgument='<%# Eval("suggestionID") %>' OnCommand="removeSuggestion_ItemCommand">×</asp:LinkButton>
-                                                                <br />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </ItemTemplate>
-                                        </asp:Repeater>
-
+                                            </div>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                        
 
                                     </div>
                                     
-                                </div>
+                                </div>                        
                         </li>
-                        
                         <li class="nav-item">
                             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                                <ContentTemplate>
@@ -494,7 +466,6 @@
                                 </ContentTemplate>
                             </asp:UpdatePanel> 
                         </li>
-
                     </ul>
                 </div>
             </div>
@@ -507,13 +478,12 @@
             }
         </script>
 
-        <div class="container-fluid">
+        <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
 
-        
-
+       
     </form>
     </div>
 

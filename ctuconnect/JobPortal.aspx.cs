@@ -114,7 +114,7 @@ namespace ctuconnect
                     }
                     ApplyForJob.Value = e.CommandName.ToString();
                     Name.Value = Session["FNAME"].ToString() + " " + Session["LNAME"].ToString();
-                    Resume.Value = Session["ResumeFile"].ToString();
+                    Resume.Value = getResume();
                     applyJobId.Text = jobId.ToString();
                     applyIndustryId.Text = getApplyIndustryId(jobId).ToString();
                     if (Session["STATUSorTYPE"].ToString() == "Intern")
@@ -145,7 +145,9 @@ namespace ctuconnect
             reader.Read();
             int industryAccId = int.Parse(reader["industry_accID"].ToString());
             reader.Close();
+            conDB.Close();
             return industryAccId;
+          
         }
 
         protected void SubmitApply_Command(object sender, CommandEventArgs e) //submitApplication
@@ -548,16 +550,35 @@ namespace ctuconnect
             }
             conDB.Open();
             SqlCommand cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' " +
-                "and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID)", conDB);
+                "and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID)", conDB);
             cmd.Parameters.AddWithValue("@studentAccID", student_accId);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
-            {
-               
+            {              
                     totalJob.InnerText = "Total " + reader["TotalJob"].ToString() + " jobs found";
             }
             reader.Close();
             conDB.Close();
+        }
+
+        string getResume()
+        {
+            string resume = "";
+            int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select resumeFile from STUDENT_ACCOUNT where student_accID = @student_accID", conDB);
+            cmd.Parameters.AddWithValue("@student_accID", student_accId);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                resume = reader["resumeFile"].ToString();
+                conDB.Close();
+                reader.Close();
+                return resume;
+            }
+            conDB.Close();
+            reader.Close();
+            return resume;
         }
     }
 }

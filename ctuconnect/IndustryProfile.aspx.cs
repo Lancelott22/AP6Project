@@ -7,14 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace ctuconnect
 {
-    public partial class Site2 : System.Web.UI.MasterPage
+    public partial class IndustryProfile : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack && Session["Username"] != null)
-            {
-                back.HRef = "CoordinatorProfile.aspx";
-            }
+
         }
     }
 }
