@@ -186,6 +186,7 @@
     <Content Include="ReferralList_Admin.aspx" />
     <Content Include="RegisterIndustry.aspx" />
     <Content Include="RegisterStudent.aspx" />
+    <Content Include="Report.aspx" />
     <Content Include="Resume.aspx" />
     <Content Include="ResumeProfile\defaultprofile.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -552,6 +553,13 @@
     </Compile>
     <Compile Include="RegisterStudent.aspx.designer.cs">
       <DependentUpon>RegisterStudent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="Resume.aspx.cs">
       <DependentUpon>Resume.aspx</DependentUpon>

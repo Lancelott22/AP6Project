@@ -202,8 +202,8 @@ namespace ctuconnect
             conDB.Open();
             if (Usertype == "Alumni")
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,applicantFName, appliedPosition, applicantLName, industry_accID, dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType) " +
-                    "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID,@studentType)", conDB);
+                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,applicantFName, appliedPosition, applicantLName, industry_accID, dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, isRead, isRemove ) " +
+                    "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID,@studentType, @isRead, @isRemove)", conDB);
 
                 cmd.Parameters.AddWithValue("@jobtype", jobtype);
                 cmd.Parameters.AddWithValue("@student_accId", alumni_accId);
@@ -218,6 +218,8 @@ namespace ctuconnect
                 cmd.Parameters.AddWithValue("@applicantStatus", "Pending");
                 cmd.Parameters.AddWithValue("@jobID", jobID);
                 cmd.Parameters.AddWithValue("@studentType", Usertype);
+                cmd.Parameters.AddWithValue("@isRead", 0);
+                cmd.Parameters.AddWithValue("@isRemove", 0);
                 int ctr = cmd.ExecuteNonQuery();
                 if (ctr > 0)
                 {
@@ -231,8 +233,8 @@ namespace ctuconnect
             }
             else if (Usertype == "Intern")
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accID,applicantFName, applicantLName, appliedPosition, industry_accID,dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, EndorsementLetter) " +
-                  "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID, @studentType,@endorsementLetter)", conDB);
+                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accID,applicantFName, applicantLName, appliedPosition, industry_accID,dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, EndorsementLetter, isRead, isRemove) " +
+                  "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID, @studentType,@endorsementLetter, @isRead, @isRemove)", conDB);
 
                 cmd.Parameters.AddWithValue("@jobtype", jobtype);
                 cmd.Parameters.AddWithValue("@student_accId", student_accId);
@@ -248,6 +250,8 @@ namespace ctuconnect
                 cmd.Parameters.AddWithValue("@jobID", jobID);
                 cmd.Parameters.AddWithValue("@studentType", Usertype);
                 cmd.Parameters.AddWithValue("@endorsementLetter", endorsementLetterFile);
+                cmd.Parameters.AddWithValue("@isRead", 0);
+                cmd.Parameters.AddWithValue("@isRemove", 0);
                 int ctr = cmd.ExecuteNonQuery();
                 if (ctr > 0)
                 {

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="JobPortal.aspx.cs" Inherits="ctuconnect.JobPortal" MaintainScrollPositionOnPostback="true" ClientIDMode="AutoID" EnableViewState="true" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Student.Master" AutoEventWireup="true" CodeBehind="JobPortal.aspx.cs" Inherits="ctuconnect.JobPortal" MaintainScrollPositionOnPostback="true" ClientIDMode="AutoID" EnableViewState="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -9,8 +9,8 @@
         .box {
             min-width: 250px;
             width: contain;
-            min-height: 260px;
-            height: 260px;
+            min-height: 200px;
+            height: 200px;
             border: 1px solid #FFFFFF;
             border-radius: 5px;
             padding: 10px;
@@ -324,8 +324,6 @@
 
                                 <br />
                                 <asp:Label ID="StudentID" CssClass="accountid" runat="server"></asp:Label>
-                                <hr style="height: 2px; border-width: 0; margin-top: 10px; color: gray; background-color: gray">
-                                <a href="MyAccount.aspx" class="btn btn-primary btn-md">View Profile</a>
                             </div>                          
                             <div class="detailsBox" id="JobDetailBox" runat="server" visible="false">
                                 <asp:UpdateProgress ID="LoadDetails" class="align-items-center h-100" runat="server" AssociatedUpdatePanelID="UpdatePanel1" DynamicLayout="true">

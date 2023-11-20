@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="MyJobApplication.aspx.cs" Inherits="ctuconnect.WebForm1" MaintainScrollPositionOnPostback="true" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Student.Master" AutoEventWireup="true" CodeBehind="MyJobApplication.aspx.cs" Inherits="ctuconnect.WebForm1" MaintainScrollPositionOnPostback="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -254,9 +254,9 @@
                                 <i class='bx bx-cog icon'></i>
                                 <span class="text nav-text">Account Settings</span>
                             </a>
-                            <a href="#help">
-                                <i class='bx bx-help-circle icon'></i>
-                                <span class="text nav-text">Help</span>
+                            <a href="Report.aspx">
+                                <i class='bx bxs-flag-alt'></i>
+                                <span class="text nav-text">Report</span>
                             </a>
                             <hr style="height: 2px; border-width: 0; color: #881A30; background-color: #881A30">
                             <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">

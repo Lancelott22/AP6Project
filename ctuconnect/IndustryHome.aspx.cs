@@ -82,6 +82,7 @@ namespace ctuconnect
                     jobInstruct.Text = reader["applicationInstruction"].ToString();
                     salary.Text = reader["salaryRange"].ToString();
                     PostJob.Text = "Update Post";
+                    JobTitle.Enabled = false;
                     if (bool.Parse(reader["isActive"].ToString()) == true)
                     {
                         checkActivateJob.Checked = true;
@@ -210,16 +211,33 @@ namespace ctuconnect
 
                 if (ctr > 0)
                 {
-                  /*  jobPostNotify(industryAccID);*/
-                    Response.Write("<script>alert('The job has been posted successfully.');document.location='IndustryJobPosted.aspx';</script>");
+
+                   cmd = new SqlCommand("INSERT INTO NOTIFICATION (industry_accID, type, " +
+                   "title, description, dateCreated, isRead, isRemove)" +
+                   "VALUES(@industry_accID,@type, @title, @description," +
+                   "@dateCreated,@isRead,@isRemove)", conDB);
+                    cmd.Parameters.AddWithValue("@industry_accID", industryAccID);
+                    cmd.Parameters.AddWithValue("@type", jobType);
+                    cmd.Parameters.AddWithValue("@title", jobTitle);
+                    cmd.Parameters.AddWithValue("@description", jobDescription);
+                    cmd.Parameters.AddWithValue("@dateCreated", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@isRead", 0);
+                    cmd.Parameters.AddWithValue("@isRemove", 0);
+                    ctr =  cmd.ExecuteNonQuery();
+                    if(ctr > 0)
+                    {
+                       Response.Write("<script>alert('The job has been posted successfully.');document.location='IndustryJobPosted.aspx';</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script>alert('Cannot post a job now! Please try again later.')</script>");
+                    }
                 }
                 else
                 {
                     Response.Write("<script>alert('Cannot post a job now! Please try again later.')</script>");
                 }
-
             }
-
             conDB.Close();
         }
         protected void SignOut_Click(object sender, EventArgs e)
@@ -233,25 +251,7 @@ namespace ctuconnect
         }
        /* void jobPostNotify(int industryAccID)
         {
-            conDB.Open();
-            SqlCommand cmd = new SqlCommand("INSERT INTO NOTIFICATION(industry_accID, type, title, description, dateCreated, isRead, isRemove)" +
-                   "VALUES()", conDB);
-            cmd.Parameters.AddWithValue("@jobPostedDate", DateTime.Now);
-            cmd.Parameters.AddWithValue("@jobPostedDate", DateTime.Now);
-            cmd.Parameters.AddWithValue("@jobPostedDate", DateTime.Now);
-            cmd.Parameters.AddWithValue("@jobPostedDate", DateTime.Now);
-            var ctr = cmd.ExecuteNonQuery();
-
-            if (ctr > 0)
-            {
-                jobPostNotify(industryAccID);
-                Response.Write("<script>alert('The job has been posted successfully.');document.location='IndustryJobPosted.aspx';</script>");
-            }
-            else
-            {
-                Response.Write("<script>alert('Cannot post a job now! Please try again later.')</script>");
-            }
-            conDB.Close();
+           
         }*/
     /* void Clear()
      {
