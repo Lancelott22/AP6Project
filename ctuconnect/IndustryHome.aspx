@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="IndustryHome.aspx.cs" Inherits="ctuconnect.IndustryHome" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Industry.Master" AutoEventWireup="true" CodeBehind="IndustryHome.aspx.cs" Inherits="ctuconnect.IndustryHome" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -49,10 +49,11 @@
         .sidemenu-container{
             font-family: 'Poppins', sans-serif;
             width:253px;
-            height:280px;
+            min-height:280px;
             background-color:white;
             /*margin-top:22%;*/
             padding-top:4px;
+            padding-bottom:4px;
             margin-bottom:10%;
             margin-left:4%;
             border-radius: 25px;
@@ -313,6 +314,7 @@
                     <a href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
                     <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                     <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
+                    <a href="IndustryProfile.aspx"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
                     <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
 <i class="fa fa-sign-out" aria-hidden="true"></i>
  Sign-out

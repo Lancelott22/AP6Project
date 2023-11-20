@@ -22,7 +22,7 @@
                 if (!IsPostBack && Session["IndustryEmail"] == null)
                 {
                     Response.Redirect("LoginIndustry.aspx");
-
+                    
 
                 }
                 if (!IsPostBack)
@@ -33,7 +33,13 @@
                     myLinkButton1.CssClass += " active";
                     dataRepeater1.Visible = true;
                     dataRepeater2.Visible = false;
-                }
+
+                disp_industryName.Text = Session["INDUSTRYNAME"].ToString();
+                disp_accID.Text = Session["INDUSTRY_ACC_ID"].ToString();
+
+                string imagePath = "~/images/IndustryProfile/" + Session["INDUSTRYPIC"].ToString();
+                industryImage1.ImageUrl = imagePath;
+            }
 
 
                 else

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="HiredList.aspx.cs" Inherits="ctuconnect.HiredList" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Industry.Master" AutoEventWireup="true" CodeBehind="HiredList.aspx.cs" Inherits="ctuconnect.HiredList" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -39,10 +39,11 @@
         .sidemenu-container{
             font-family: 'Poppins', sans-serif;
            width:253px;
-            height:280px;
+            min-height:280px;
             background-color:white;
             /*margin-top:22%;*/
             padding-top:4px;
+            padding-bottom:4px;
             margin-bottom:10%;
             margin-left:4%;
             border-radius: 25px;
@@ -232,8 +233,16 @@
         <asp:TableRow>
             <asp:TableCell Style="vertical-align:top; height:200px;">
                 <div class="profile-container">
-                <img src="images/industrypic.png" />
-                <p >Industry Name</p>
+                    <asp:Image ID="industryImage1" runat="server" />
+                    <center>
+                        <b>
+                            <asp:Label ID="disp_industryName" CssClass="disp_industryName" runat="server" Text=""></asp:Label></b></center>
+                    <center>
+                        <p style="font-size: 14px;">
+                            Account ID: <b>
+                                <asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b>
+                        </p>
+                    </center>
                 </div>
             </asp:TableCell>
             <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
@@ -383,6 +392,7 @@
                      <a href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
                      <a class="active" href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                      <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
+                    <a href="IndustryProfile.aspx"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
                      <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                      Sign-out

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="IndustryDashboard.aspx.cs" Inherits="ctuconnect.IndustryDashboard" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Industry.Master" AutoEventWireup="true" CodeBehind="IndustryDashboard.aspx.cs" Inherits="ctuconnect.IndustryDashboard" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -49,15 +49,16 @@ background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%)
         .sidemenu-container {
             font-family: 'Poppins', sans-serif;
             width: 253px;
-            height: 280px;
+            min-height: 280px;
             background-color: white;
             /*margin-top:22%;*/
             padding-top: 4px;
-            margin-bottom: 10%;
-            margin-left: 4%;
-            border-radius: 25px;
-            border: 2px;
-            box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+             padding-bottom:4px;
+             margin-bottom:10%;
+             margin-left:2%;
+             border-radius: 20px;
+             border: 2px ;
+             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
         }
 
             .sidemenu-container a {
@@ -305,6 +306,7 @@ background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%)
                     <a href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
                     <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                     <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
+                    <a href="IndustryProfile.aspx"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
                     <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
                        <i class="fa fa-sign-out" aria-hidden="true"></i>
                         Sign-out
