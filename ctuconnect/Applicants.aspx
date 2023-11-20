@@ -350,7 +350,7 @@
                                                 <asp:Label ID="lblEndorsement" runat="server" Visible="false" Text='<%# Eval("endorsementLetter") %>'></asp:Label>  
                                             </div>
                                             <div class="col-5">
-                                                <asp:Button ID="btnEndorsement" runat="server" Text="View Endorsement Letter" Width="200px" Height="30px" CssClass="btnEndorsement" OnCommand="EndorsementButton_Command" CommandName="Endorsement" CommandArgument='<%# Eval("applicantID") %>' />
+                                                <asp:Button ID="btnEndorsement" runat="server" Text="View Endorsement Letter" Width="210px" Height="30px" CssClass="btnEndorsement" OnCommand="EndorsementButton_Command" CommandName="Endorsement" CommandArgument='<%# Eval("applicantID") %>' />
                                                 <asp:Label ID="lblendorsementStatus" runat="server" Visible="false" Text="N/A"></asp:Label>
                                             </div>                                          
                                         </div> 
