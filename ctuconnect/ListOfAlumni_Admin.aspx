@@ -164,7 +164,7 @@
                     <img src="images/administratorpic.jpg" />
                     <p >Admin</p>
                     <hr class="horizontal-line" />
-                    <a href="#">
+                    <a href="AdminDashboard.aspx">
                         <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Dashboard
                     </a>
@@ -203,6 +203,14 @@
                         Blacklist
                     </a>
                     <hr class="second" />
+                    <a href="TracerDashboard.aspx">
+                        <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                        Tracer
+                    </a>
+                    <a href="#">
+                        <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
+                        Profile
+                    </a>
                     <asp:LinkButton runat="server" ID ="LinkButton1">
                         <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
                         Sign-out

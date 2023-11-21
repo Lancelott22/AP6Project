@@ -110,54 +110,58 @@
                         <img src="images/administratorpic.jpg" />
                         <p >Admin</p>
                         <hr class="horizontal-line" />
-                        <a class="active" href="#">
+                        <a class="active" href="AdminDashboard.aspx">
                             <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
                             Dashboard
                         </a>
-                        <a href="#">
-                            <i class="fa fa-users" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                            Create Partnership
-                        </a>
-                        <a href="#">
-                            <i class="fa fa-users" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                            Industry Verification
-                        </a>
-                        <a href="#">
-                            <i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                            Referred Student
-                        </a>
-                        <hr class="horizontal-line" />
-                        <a href="#">
-                            <i class="fa fa-industry" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                            List of Industry
-                        </a>
-                        <a href="#">
-                            <i class="fa fa-industry" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                            List of Interns
-                        </a>
-                        <a href="#">
-                            <i class="fa fa-industry" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                            List of Alumni
-                        </a>
-                        <hr class="horizontal-line" />
-                        <a href="#">
-                            <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                            Dispute
-                        </a>
-                        <a href="#">
-                            <i class="fa fa-ban" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                            Blacklist
-                        <br />
-                        </a>
-                        <hr class="second" />
-                        <a href="#">
-                            <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                            Profile
-                        </a>
-                        <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
-                            <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                            Sign-out
-                        </asp:LinkButton>
+                    <a href="#myaccount">
+                        <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                        Create Partnership
+                    </a>
+                    <a  href="IndustryVerification.aspx">
+                        <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                        Industry Verification
+                    </a>
+                    <a href="ReferralList_Admin.aspx">
+                        <i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                        Referred Student
+                    </a>
+                    <hr class="horizontal-line" />
+                    <a href="ListOfIndustries_Alumni.aspx">
+                        <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                        List of Industry
+                    </a>
+                    <a href="ListOfInterns_Alumni.aspx">
+                        <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                        List of Interns
+                    </a>
+                    <a href="ListOfAlumni_Admin.apsx">
+                        <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                        List of Alumni
+                    </a>
+                    <hr class="horizontal-line" />
+                    <a href="#">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                        Dispute
+                    </a>
+                    <a href="Blacklist_Admin.aspx">
+                        <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                        Blacklist
+                    </a>
+                    <hr class="second" />
+                    <a href="TracerDashboard.aspx">
+                        <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                        Tracer
+                    </a>
+                    <a href="#">
+                        <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
+                        Profile
+                    </a>
+                    <asp:LinkButton runat="server" ID ="LinkButton1">
+                        <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
+                        Sign-out
+                    </asp:LinkButton>
+
                     </div>
                     
                 </div>
