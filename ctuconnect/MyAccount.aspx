@@ -105,9 +105,9 @@
                             <i class='bx bx-cog icon' ></i>
                             <span class="text nav-text">Account Settings</span>
                     </a>
-                    <a href="#help">
-                            <i class='bx bx-help-circle icon' ></i>
-                            <span class="text nav-text">Help</span>
+                    <a href="Report.aspx">
+                        <i class='bx bxs-flag-alt'></i>
+                        <span class="text nav-text">Report</span>
                     </a>
                     <hr style="height:2px;border-width:0;color:#881A30;background-color:#881A30">
                     <asp:LinkButton runat="server" ID ="SignOut" OnClick="SignOut_Click" >

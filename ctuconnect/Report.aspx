@@ -14,11 +14,12 @@
 
     <style>
         .nav {
-            padding: 10px 10px 10px 10px;
-            width: 200px;
-            margin: auto;
-            margin-top: auto;
-            text-decoration: none;
+            padding:10px 10px 10px 10px;
+            width:200px;
+            margin:auto;
+            margin-top:20px;
+            position: absolute;
+            margin-left:70px;
         }
 
             .nav a {
@@ -137,7 +138,7 @@
                     </div>
                     <div class="mb-3">
                         <asp:Label ID="reasonLabel" runat="server" Text="Reason for reporting" Style="font-size: 20px;"></asp:Label><span style="color: red">*</span>
-                        <asp:TextBox ID="reasonTxt" runat="server" ValidateRequestMode="Disabled" Rows="5" TextMode="MultiLine" CssClass="form-control summernote"></asp:TextBox>
+                        <asp:TextBox ID="reasonTxt" runat="server" ValidateRequestMode="Disabled" Rows="5" TextMode="MultiLine" CssClass="form-control"></asp:TextBox>
                     </div>
                     <div>
                         <asp:Button ID="SubmitReport" runat="server" CssClass="submitStyle" Text="Submit" OnClick="SubmitReport_Click"/>

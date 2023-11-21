@@ -167,12 +167,12 @@
                         <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         List of Interns
                     </a>
-                    <a href="#">
+                   <a href="ListOfAlumni_Admin.aspx">
                         <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         List of Alumni
                     </a>
                     <hr class="horizontal-line" />
-                    <a href="#">
+                    <a href="Dispute.aspx">
                         <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Dispute
                     </a>

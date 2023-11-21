@@ -86,6 +86,7 @@ namespace ctuconnect
                     Button btnReview = (Button)item.FindControl("btnReview");
                     Button btnSchedule = (Button)item.FindControl("btnSchedule");
                     Label lblresumeStatus = (Label)item.FindControl("lblresumeStatus");
+                    Button btnApplication = (Button)item.FindControl("btnApplication");
 
                     if (lblresumeStatus != null)
                     {
@@ -109,6 +110,7 @@ namespace ctuconnect
                             lblresumeStatus.Style["height"] = "20px";
                             lblresumeStatus.Style["border-radius"] = "15px";
                             btnSchedule.Visible = false;
+                            btnApplication.Visible= false;
                         }
                     }
                 }
@@ -121,7 +123,7 @@ namespace ctuconnect
             {
                 if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
                 {
-
+                    Button btnApplication = (Button)item.FindControl("btnApplication");
                     Button btnSchedule = (Button)item.FindControl("btnSchedule");
                     Label lblinterviewStatus = (Label)item.FindControl("lblinterviewStatus");
 
@@ -146,6 +148,7 @@ namespace ctuconnect
                             lblinterviewStatus.Style["padding-left"] = "0.5em";
                             lblinterviewStatus.Style["height"] = "20px";
                             lblinterviewStatus.Style["border-radius"] = "15px";
+                            btnApplication.Visible = false;
                         }
                     }
 
@@ -403,7 +406,7 @@ namespace ctuconnect
                         cmd.CommandText = sql;
                         cmd.Parameters.AddWithValue("@applicantID", applicantID);
                         cmd.Parameters.AddWithValue("@InterviewDetails", interviewDetails);
-                        cmd.Parameters.AddWithValue("@InterviewDate", interviewScheduledDate);
+                        cmd.Parameters.AddWithValue("@InterviewDate", DateTime.Now.ToString("yyyy/MM/dd"));
                         cmd.Parameters.AddWithValue("@InterviewScheduledDate", interviewScheduledDate);
 
                         cmd.ExecuteNonQuery();
