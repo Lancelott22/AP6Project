@@ -213,7 +213,7 @@ namespace ctuconnect
         {
             int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString()); //int.Parse(Sessios["student_accID"].ToString());
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select applicantStatus,  CONVERT(nvarchar,applicationApprovalDate, 1) as applicationApprovalDate,CONVERT(nvarchar,dateStarted, 1) as dateStarted,requirements from APPLICANT Where student_accID = @Student_accID and applicantID = @applicantId and jobID = @jobId", conDB);
+            SqlCommand cmd = new SqlCommand("select applicantStatus,  CONVERT(nvarchar,applicationApprovalDate, 1) as applicationApprovalDate,CONVERT(nvarchar,dateStart, 1) as dateStart,requirements from APPLICANT Where student_accID = @Student_accID and applicantID = @applicantId and jobID = @jobId", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
             cmd.Parameters.AddWithValue("@applicantId", applicantID);
             cmd.Parameters.AddWithValue("@jobId", jobId);
@@ -223,7 +223,7 @@ namespace ctuconnect
                 string applicantStatus = reader["applicantStatus"].ToString();
                 dateApproved.InnerText = reader["applicationApprovalDate"].ToString();
                 requirementDetails.Text = "<br /><b>Details: </b><br />" + reader["requirements"].ToString();
-                dateStarted.Text = "<br /><b>Work Start Date: </b>" + reader["dateStarted"].ToString();
+                dateStarted.Text = "<br /><b>Work Start Date: </b>" + reader["dateStart"].ToString();
                 conDB.Close();
                 return applicantStatus;
             }

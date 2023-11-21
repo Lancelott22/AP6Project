@@ -265,15 +265,15 @@ namespace ctuconnect
             }
             refreshCounting();
             this.disableHeader();
-            //RedirectToPortal(notificationID);
+            RedirectToJobPosted(notificationID);
         }
 
-        /*
-        private void RedirectToPortal(int notificationID)
+        
+        private void RedirectToJobPosted(int notificationID)
         {
-
+            Response.Redirect("Admin_JobPosted.aspx?referralID=" + notificationID);
         }
-        */
+        
 
         private void NotificationRead(int notificationID)
         {
@@ -561,7 +561,7 @@ namespace ctuconnect
             Session.Abandon();
             Session.Clear();
             Session.RemoveAll();
-            Response.Redirect("LoginStudent.aspx");
+            Response.Redirect("Login.aspx");
 
         }
     }

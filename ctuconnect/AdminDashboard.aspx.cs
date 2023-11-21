@@ -30,7 +30,7 @@ namespace ctuconnect
             Session.Abandon();
             Session.Clear();
             Session.RemoveAll();
-            Response.Redirect("LoginIndustry.aspx");
+            Response.Redirect("Login.aspx");
 
         }
 

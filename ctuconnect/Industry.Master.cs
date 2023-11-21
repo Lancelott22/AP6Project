@@ -423,7 +423,7 @@ namespace ctuconnect
             Session.Abandon();
             Session.Clear();
             Session.RemoveAll();
-            Response.Redirect("LoginStudent.aspx");
+            Response.Redirect("LoginIndustry.aspx");
 
         }
     }
