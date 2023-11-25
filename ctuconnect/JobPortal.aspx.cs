@@ -584,5 +584,66 @@ namespace ctuconnect
             reader.Close();
             return resume;
         }
+
+        protected void ReportJob_Command(object sender, CommandEventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showReportModal();", true);
+            report_jobID.Text = Job_ID.Text;
+            Report_JobTitle.InnerText = JobTitle.Text;
+            Report_IndustryName.InnerText = IndustryName.Text;
+
+            if (!IsAsync)
+            {
+                submitErrorMsg.Visible = false;
+                problemType.Value = string.Empty;
+                reportDetails.Value = string.Empty;
+            }
+        }
+
+        protected void SubmitReport_Command(object sender, CommandEventArgs e)
+        {
+            int reportJobId = int.Parse(report_jobID.Text);
+            string problem_Type = problemType.Value;
+            string report_Details = reportDetails.Value;
+            string Usertype = Session["STATUSorTYPE"].ToString();
+            int user_accID = -1;
+            if(Usertype == "Alumni")
+            {
+                user_accID = int.Parse(Session["Alumni_accID"].ToString());
+            }
+            else if (Usertype == "Intern")
+            {
+                user_accID = int.Parse(Session["Student_ACC_ID"].ToString());
+            }
+
+            if (string.IsNullOrEmpty(problemType.Value) || string.IsNullOrEmpty(reportDetails.Value))
+            {
+                submitErrorMsg.Visible = true;
+                ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Popup1", "$('.modal-backdrop').removeClass('modal-backdrop');", true);
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showReportModal();", true);
+                return;
+            }
+            else
+            {
+                conDB.Open();
+                SqlCommand cmd = new SqlCommand("INSERT INTO REPORT_JOB (user_accID, jobID, problemType, reportDetails, reportDate) " +
+                  "Values(@user_accID, @jobID, @problemType, @reportDetails, @reportDate)", conDB);
+
+                cmd.Parameters.AddWithValue("@user_accID", user_accID);
+                cmd.Parameters.AddWithValue("@jobID", reportJobId);
+                cmd.Parameters.AddWithValue("@problemType", problem_Type);
+                cmd.Parameters.AddWithValue("@reportDetails", report_Details);
+                cmd.Parameters.AddWithValue("@reportDate", DateTime.Now);
+                int ctr = cmd.ExecuteNonQuery();
+                if (ctr > 0)
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('You have successfully submitted your report.');$('.modal-backdrop').removeClass('modal-backdrop');$('body').removeClass('modal-open');", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertError", "alert('Sorry! There is something wrong in reporting the job. Please try again later..');$('.modal-backdrop').removeClass('modal-backdrop');$('body').removeClass('modal-open');", true);
+                }
+            }
+        }
     }
 }

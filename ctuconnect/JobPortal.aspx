@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
         .box {
@@ -251,8 +251,8 @@
             width: contain;
             min-width: 250px;
             margin-bottom: 20px;
-            min-height: 650px;
-            height: 650px;
+            min-height: 660px;
+            height: 660px;
             top: 20px;
             border: 1px solid #881A30;
             border-radius: 7px;
@@ -286,6 +286,7 @@
         .detailsFooter {
             font-size: 14px;
             padding-left: 20px;
+            padding-right: 20px;
             height: 50px;
             padding-top: 0px;
         }
@@ -304,9 +305,10 @@
             .detailsBody::-webkit-scrollbar-thumb:hover {
                 background: #881A30;
             }
-            body:not(.modal-open){
-  padding-right: 0px !important;
-}
+
+        body:not(.modal-open) {
+            padding-right: 0px !important;
+        }
     </style>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server" ClientIDMode="AutoID">
         <ContentTemplate>
@@ -324,7 +326,7 @@
 
                                 <br />
                                 <asp:Label ID="StudentID" CssClass="accountid" runat="server"></asp:Label>
-                            </div>                          
+                            </div>
                             <div class="detailsBox" id="JobDetailBox" runat="server" visible="false">
                                 <asp:UpdateProgress ID="LoadDetails" class="align-items-center h-100" runat="server" AssociatedUpdatePanelID="UpdatePanel1" DynamicLayout="true">
                                     <ProgressTemplate>
@@ -385,15 +387,20 @@
                                             </div>
                                             <hr style="border: 1px solid #000000;" />
                                             <div class="container-fluid row">
-                                                  <h4><label>Job Description</label></h4>
-                                              <asp:Label ID="JobDescription" runat="server" Style="margin-bottom: 10px;" /><br />
+                                                <h4>
+                                                    <label>Job Description</label></h4>
+                                                <asp:Label ID="JobDescription" runat="server" Style="margin-bottom: 10px;" /><br />
 
-                                               <h4><label>Job Qualification </label></h4>
+                                                <h4>
+                                                    <label>Job Qualification </label>
+                                                </h4>
                                                 <asp:Label ID="JobQualification" runat="server" Style="margin-bottom: 10px;" /><br />
 
-                                                <h4><label>Application Instruction </label></h4>
-                                                
-                                                <asp:Label ID="ApplicationInstruction" runat="server" Style="margin-bottom:5px;" />
+                                                <h4>
+                                                    <label>Application Instruction </label>
+                                                </h4>
+
+                                                <asp:Label ID="ApplicationInstruction" runat="server" Style="margin-bottom: 5px;" />
                                             </div>
                                         </div>
 
@@ -404,6 +411,11 @@
                                             <span>
                                                 <label>Date Posted: </label>
                                                 <asp:Label ID="DatePosted" runat="server" /></span>
+                                        </div>
+                                        <div style="float: right;">
+                                            <span>
+                                                <asp:LinkButton ID="ReportJob" runat="server" CssClass="btn btn-default" OnCommand="ReportJob_Command"><i class="fa fa-flag" aria-hidden="true"></i> Report Job</asp:LinkButton>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -416,7 +428,7 @@
                         <br />
                         <asp:TextBox ID="txtsearchOrder" CssClass="form-control searchbox" runat="server" placeholder="Search job title or keyword"></asp:TextBox>
                         <br />
-                        <label id="totalJob" runat="server" ></label>
+                        <label id="totalJob" runat="server"></label>
                         <div class="jobs">
 
 
@@ -491,7 +503,7 @@
                                     <asp:NextPreviousPagerField ButtonType="Link" ShowNextPageButton="true" ShowLastPageButton="true" ShowPreviousPageButton="false" RenderDisabledButtonsAsLabels="false" RenderNonBreakingSpacesBetweenControls="false" ButtonCssClass="btn btn-default" />
                                 </Fields>
                             </asp:DataPager>
-                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -500,81 +512,121 @@
             <br />
 
             <!-- Modal -->
-          
-                    <div class="modal" id="ApplyJobModal" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <asp:Label ID="applyJobId" runat="server" Visible="false"></asp:Label>
-                                <asp:Label ID="applyIndustryId" runat="server" Visible="false"></asp:Label>
-                                <div class="modal-header">
-                                    <h2><b>Job Application</b></h2>
+
+            <div class="modal" id="ApplyJobModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <asp:Label ID="applyJobId" runat="server" Visible="false"></asp:Label>
+                        <asp:Label ID="applyIndustryId" runat="server" Visible="false"></asp:Label>
+                        <div class="modal-header">
+                            <h2><b>Job Application</b></h2>
+                        </div>
+
+                        <div class="modal-body" style="padding: 20px;">
+                            <div runat="server" id="JobApply">
+                                <div class="form-group row">
+                                    <label for="ApplyForJob" class="col-sm-3 col-form-label">Job Title</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="ApplyForJob" runat="server" placeholder="Job Title" disabled>
+                                    </div>
                                 </div>
-
-                                <div class="modal-body" style="padding: 20px;">                                 
-                                            <div runat="server" id="JobApply">
-                                                <div class="form-group row">
-                                                    <label for="ApplyForJob" class="col-sm-3 col-form-label">Job Title</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" class="form-control" id="ApplyForJob" runat="server" placeholder="Job Title" disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="job_Type" class="col-sm-3 col-form-label">Job Type</label>
-                                                    <div class="col-sm-9">
-                                                        <select runat="server" class="form-control" id="job_Type">
-                                                            <option value="" disabled selected hidden>Select Job Type</option>
-                                                            <option value="internship">Internship</option>
-                                                            <option value="fulltime">Full-time</option>
-                                                        </select>
-                                                        <span runat="server" id="requiredError" class="text-danger" visible="false" style="position:absolute; right:15%; top:0;">*</span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="Name" class="col-sm-3 col-form-label">Name</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" class="form-control" id="Name" runat="server" placeholder="Your Name" disabled>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group row">
-                                                    <label for="Resume" class="col-sm-3 col-form-label">Resume</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" class="form-control" id="Resume" runat="server" placeholder="Your Resume" disabled>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group row" id="Endorsement_LetterBox" runat="server">
-                                                    <label for="EndorsementLetter" class="col-sm-3 col-form-label">Endorsement Letter</label>
-                                                    <div class="col-sm-9">
-                                                        <asp:FileUpload ID="EndorsementLetter" class="form-control" runat="server" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div runat="server" id="AlreadyApplied">
-                                                <h3 style="position: relative; top: 40%;">
-                                                    <asp:Label CssClass="alert alert-light d-flex p-2 bd-highlight justify-content-sm-center" runat="server" ID="Label1" Text="You already applied to this job!"></asp:Label></h3>
-                                            </div>                                        
+                                <div class="form-group row">
+                                    <label for="job_Type" class="col-sm-3 col-form-label">Job Type</label>
+                                    <div class="col-sm-9">
+                                        <select runat="server" class="form-control" id="job_Type">
+                                            <option value="" disabled selected hidden>Select Job Type</option>
+                                            <option value="internship">Internship</option>
+                                            <option value="fulltime">Full-time</option>
+                                        </select>
+                                        <span runat="server" id="requiredError" class="text-danger" visible="false" style="position: absolute; right: 15%; top: 0;">*</span>
+                                    </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <div style="float: right;">
-                                        <button type="button" id="CancelorClose" runat="server" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                                        <asp:LinkButton ID="SubmitApply" class="buttonStyleSubmit" runat="server" OnCommand="SubmitApply_Command" AutoPostBack="false" ValidationGroup="SubmitApply">Submit Application</asp:LinkButton>
+                                <div class="form-group row">
+                                    <label for="Name" class="col-sm-3 col-form-label">Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="Name" runat="server" placeholder="Your Name" disabled>
                                     </div>
                                 </div>
 
+                                <div class="form-group row">
+                                    <label for="Resume" class="col-sm-3 col-form-label">Resume</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="Resume" runat="server" placeholder="Your Resume" disabled>
+                                    </div>
+                                </div>
 
+                                <div class="form-group row" id="Endorsement_LetterBox" runat="server">
+                                    <label for="EndorsementLetter" class="col-sm-3 col-form-label">Endorsement Letter</label>
+                                    <div class="col-sm-9">
+                                        <asp:FileUpload ID="EndorsementLetter" class="form-control" runat="server" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div runat="server" id="AlreadyApplied">
+                                <h3 style="position: relative; top: 40%;">
+                                    <asp:Label CssClass="alert alert-light d-flex p-2 bd-highlight justify-content-sm-center" runat="server" ID="Label1" Text="You already applied to this job!"></asp:Label></h3>
                             </div>
                         </div>
-                    </div>  
-            
+                        <div class="modal-footer">
+                            <div style="float: right;">
+                                <button type="button" id="CancelorClose" runat="server" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                <asp:LinkButton ID="SubmitApply" class="buttonStyleSubmit" runat="server" OnCommand="SubmitApply_Command" AutoPostBack="false" ValidationGroup="SubmitApply">Submit Application</asp:LinkButton>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal" id="ReportJobModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <asp:Label ID="report_jobID" runat="server" Visible="false"></asp:Label>
+                        <div class="modal-header">
+                            <h3><b>Report Job Problem</b></h3>
+                        </div>
+                        <div class="modal-body" style="padding: 20px;">
+                            <span id="submitErrorMsg" runat="server" visible="false" class="text-danger">*Please fill all fields</span>
+                            <span>
+                                <h5 id="Report_JobTitle" runat="server" class="fw-bold opacity-75"></h5>
+                                <h5 id="Report_IndustryName" runat="server" class="opacity-75"></h5>
+                            </span>
+                            <div class="container-fluid d-flex flex-column">
+                                <div class="form-group row">
+                                    <label for="problemType" class="fs-4">Problem Type</label>
+                                    <input type="text" class="form-control" id="problemType" runat="server" placeholder="Input problem type">
+                                </div>
+                                <div class="form-group row">
+                                    <label for="reportDetails" class="fs-4">Describe your problem</label>
+                                    <textarea class="form-control" cols="40" rows="5" id="reportDetails" runat="server" placeholder="Problem Details"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div style="float: right;">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                <asp:LinkButton ID="SubmitReport" class="buttonStyleSubmit" runat="server" OnCommand="SubmitReport_Command">Submit Report</asp:LinkButton>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
         </ContentTemplate>
-     <Triggers>
-         <asp:PostBackTrigger ControlID="SubmitApply"/>
-     </Triggers>
+        <Triggers>
+            <asp:PostBackTrigger ControlID="SubmitApply" />
+        </Triggers>
     </asp:UpdatePanel>
     <script type="text/javascript">
         function showModalFunction() {
             $('#ApplyJobModal').modal('show');
+        }
+    </script>
+    <script type="text/javascript">
+        function showReportModal() {
+            $('#ReportJobModal').modal('show');
         }
     </script>
     <script type="text/javascript">
