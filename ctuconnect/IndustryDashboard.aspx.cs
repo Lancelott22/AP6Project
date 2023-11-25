@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -77,6 +78,36 @@ namespace ctuconnect
             }
             reader.Close();
             conDB.Close();
+        }
+        protected void Submit_Suggestions(object sender, EventArgs e)
+        {
+            int industryAccID = Convert.ToInt32(Session["INDUSTRY_ACC_ID"]);
+            string suggestions = txtsuggestion.Text;
+
+            using (conDB)
+            {
+                conDB.Open();
+                using (var cmd = conDB.CreateCommand())
+                {
+                    //SQL Statement
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "INSERT INTO SUGGESTIONS (industry_accID, suggestion, dateCreated, isRead, isRemove ) " +
+                                          "VALUES (@industry_accID, @suggestion, @dateCreated, @isRead, @isRemove)";
+
+                    cmd.Parameters.AddWithValue("@industry_accID", industryAccID);
+                    cmd.Parameters.AddWithValue("@suggestion", suggestions);
+                    cmd.Parameters.AddWithValue("@dateCreated", DateTime.Now.ToString("yyyy/MM/dd"));
+                    cmd.Parameters.AddWithValue("@isRead", 0);
+                    cmd.Parameters.AddWithValue("@isRemove", 0);
+                    cmd.ExecuteNonQuery();
+                }
+                ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('show');", true);
+            }
+
+        }
+        protected void Close_SuccessPrompt(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('hide');document.location='IndustryDashboard.aspx'", true);
         }
     }
 }

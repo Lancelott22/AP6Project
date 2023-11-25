@@ -176,7 +176,7 @@
                 <br />
                 <div class="row gx-4 gx-lg-5 h-100">
                     <div class="col-lg-12 align-self-end">
-                        <p><asp:Button ID="btn" class="btnSend" runat="server" Text="Send" OnClick="Submit_Suggestions"/></p>
+                        <p><asp:Button ID="btn" class="btnSend" runat="server" Text="Submit" OnClick="Submit_Suggestions"/></p>
                     </div>       
                 </div>
             </div>

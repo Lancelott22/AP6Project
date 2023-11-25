@@ -261,8 +261,8 @@ namespace ctuconnect
             if (reader.Read())
             {
                 interviewDetail = reader["interviewDetails"].ToString();
-                interviewDate.Text = "<br /><b>Interview Date: </b>" + reader["interviewDate"].ToString();
-                dateScheduled.InnerText = reader["interviewScheduledDate"].ToString();
+                dateScheduled.Text = "<br /><b>Interview Date: </b>" + reader["interviewDate"].ToString();
+                interviewDate.InnerText = reader["interviewScheduledDate"].ToString();
                 conDB.Close();
                 return interviewDetail;
             }

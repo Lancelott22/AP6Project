@@ -132,13 +132,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label interviewStatusCheck;
 
         /// <summary>
-        /// interviewDate control.
+        /// dateScheduled control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal interviewDate;
+        protected global::System.Web.UI.WebControls.Literal dateScheduled;
 
         /// <summary>
         /// statusInterview control.
@@ -150,13 +150,13 @@ namespace ctuconnect
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusInterview;
 
         /// <summary>
-        /// dateScheduled control.
+        /// interviewDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dateScheduled;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl interviewDate;
 
         /// <summary>
         /// ResumeStatus control.

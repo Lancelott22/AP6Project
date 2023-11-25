@@ -372,16 +372,16 @@ namespace ctuconnect
             }
             refreshCounting();
             this.disableHeader2();
-            //RedirectToIndustryList(industryID);
+            RedirectToListOfIndustries(industryID);
 
         }
 
-        /*
-        void RedirectToIndustryList(int industryID)
+        
+        void RedirectToListOfIndustries(int industryID)
         {
-            Response.Redirect("IndustryList.aspx?referralID=" + industryID);
+            Response.Redirect("ListOfIndustries.aspx?industryID=" + industryID);
         }
-        */
+        
 
         private void RegisteredRead(int industryID)
         {

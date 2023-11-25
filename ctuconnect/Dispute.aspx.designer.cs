@@ -11,7 +11,7 @@ namespace ctuconnect
 {
 
 
-    public partial class AdminDashboard
+    public partial class Dispute
     {
 
         /// <summary>
@@ -24,30 +24,21 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
 
         /// <summary>
-        /// totalIndustry control.
+        /// showDispute control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalIndustry;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl showDispute;
 
         /// <summary>
-        /// totalInterns control.
+        /// disputeListView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalInterns;
-
-        /// <summary>
-        /// totalAlumni control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalAlumni;
+        protected global::System.Web.UI.WebControls.ListView disputeListView;
     }
 }

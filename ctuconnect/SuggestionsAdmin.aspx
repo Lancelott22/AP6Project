@@ -1,8 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="true" CodeBehind="AdminDashboard.aspx.cs" Inherits="ctuconnect.AdminDashboard" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="true" CodeBehind="SuggestionsAdmin.aspx.cs" Inherits="ctuconnect.SuggestionsAdmin" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .profile-container{
             background-color:white;
@@ -135,12 +135,12 @@
                         <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         List of Interns
                     </a>
-                    <a href="ListOfAlumni_Admin.aspx">
+                    <a href="ListOfAlumni_Admin.apsx">
                         <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         List of Alumni
                     </a>
                     <hr class="horizontal-line" />
-                    <a href="Dispute.aspx">
+                    <a href="#">
                         <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Dispute
                     </a>
@@ -172,39 +172,40 @@
             </div>
             <div class="col-9 d-flex flex-column">
                 <br />
-                <div class="container">
-                    <h2 class="title opacity-75" >Dashboard</h2>
-                    <br /><br /><br />
-                    <div class="row">
-                        <div class="col">
-                            <div class="card text-white p-2" style="max-width: 20rem;">
-
-                                <div class="card-body">
-                                    <h4 class="card-title">Total Industry</h4>
-                                    <h2 class="card-text" id="totalIndustry" runat="server"></h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card text-white  p-2" style="max-width: 20rem;">
-
-                                <div class="card-body">
-                                    <h4 class="card-title">Total Interns</h4>
-                                    <h2 class="card-text" id="totalInterns" runat="server"></h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card text-white  p-2" style="max-width: 20rem;">
-
-                                <div class="card-body">
-                                    <h4 class="card-title">Total Alumni</h4>
-                                    <h2 class="card-text" id="totalAlumni" runat="server"></h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="container">
+                <h1 class="title">List of Partnered Industries</h1>
+                 
+                <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
+                                <table  class="table-list">
+                     <tr>
+                         <th>No.</th>
+                         <th>Industry Name</th>
+                         <th>Location</th>
+                         <th>Contact Person</th>
+                         <th>Contact Number</th>
+                         <th>Contact Email</th>
+                         <th>Memorandum Of Understanding</th>
+                     </tr>
+                     <asp:Repeater ID="dataRepeater" runat="server">
+                         <Itemtemplate>
+                             <tr class="datas">
+                                 <td><%# Container.ItemIndex + 1 %></td>
+                                 <td><%# Eval("industryName") %></td>
+                                 <td><%# Eval("location") %></td>
+                                 <td><%# Eval("contactPerson") %></td>
+                                 <td><%# Eval("contactNumber") %></td>
+                                 <td><%# Eval("contactEmail") %></td>
+                                 <td>
+                                     <asp:Button ID="btnMOU" runat="server" Text="View MOU"
+                                        OnCommand="ViewMOU_Command" CommandName="View"  
+                                        CommandArgument='<%# Eval("mou") %>'/>
+                                     </td>
+                             </tr>
+                         </Itemtemplate>
+     
+                     </asp:Repeater>
+                 </table>
+</div>
             </div>    
        
         </div>

@@ -6,11 +6,12 @@
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <style>
         .nav {
-            padding: 10px 10px 10px 10px;
-            width: 200px;
-            margin: auto;
-            margin-top: auto;
-            text-decoration: none;
+            padding:10px 10px 10px 10px;
+            width:200px;
+            margin:auto;
+            margin-top:20px;
+            position: absolute;
+            margin-left:70px;
         }
 
             .nav a {
@@ -393,10 +394,10 @@
                                                 <br />
                                                 <b><span id="StatusOrDetails" runat="server">Status: </span></b>
                                                 <asp:Label ID="interviewStatusCheck" runat="server" Text="Waiting for your interview schedule..."></asp:Label>                
-                                                <asp:Literal ID="interviewDate" runat="server" Visible="false" Mode="PassThrough"></asp:Literal>
+                                                <asp:Literal ID="dateScheduled" runat="server" Visible="false" Mode="PassThrough"></asp:Literal>
                                                 <br />
                                                 <br />
-                                                <span id="statusInterview" visible="false" runat="server"></span> <span id="dateScheduled" runat="server" visible="false"></span>
+                                                <span id="statusInterview" visible="false" runat="server"></span> <span id="interviewDate" runat="server" visible="false"></span>
                                                 <br />
                                                 <br />
                                             </div>

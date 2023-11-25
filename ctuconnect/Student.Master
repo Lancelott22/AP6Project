@@ -211,15 +211,7 @@
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 navbar-right" >
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Home">Home</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Internship
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                              <a class="dropdown-item" href="MyJobApplication.aspx">Application</a>
-                              <a class="dropdown-item" href="Resume.aspx">Resume</a>
-                            </div>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/MyJobApplication">Application</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/JobPortal">Job Portal</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/About">About</a></li>
                         <li class="nav-item">

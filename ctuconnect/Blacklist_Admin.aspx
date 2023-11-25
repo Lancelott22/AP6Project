@@ -146,7 +146,7 @@
                         <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Dashboard
                     </a>
-                    <a href="#myaccount">
+                    <a href="AdminDashboard.aspx">
                         <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Create Partnership
                     </a>
@@ -167,12 +167,12 @@
                         <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         List of Interns
                     </a>
-                    <a href="#">
+                   <a href="ListOfAlumni_Admin.aspx">
                         <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         List of Alumni
                     </a>
                     <hr class="horizontal-line" />
-                    <a href="#">
+                    <a href="Dispute.aspx">
                         <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Dispute
                     </a>
@@ -181,6 +181,14 @@
                         Blacklist
                     </a>
                     <hr class="second" />
+                                        <a href="TracerDashboard.aspx">
+                        <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                        Blacklist
+                    </a>
+                    <a href="#">
+                        <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
+                        Profile
+                    </a>
                     <asp:LinkButton runat="server" ID ="LinkButton1">
                         <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
                         Sign-out

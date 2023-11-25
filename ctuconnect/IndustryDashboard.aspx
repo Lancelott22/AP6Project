@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
     <style>
@@ -87,13 +88,13 @@ background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%)
 
         .display-container {
             font-family: 'Poppins', sans-serif;
-            width: 1000px;
+            width: 100%;
             top: 0;
             bottom: 0;
             padding: 2% 7% 4% 7%;
             overflow: auto;
             /*background-color:white;*/
-            height: 900px;
+            height: 100%;
             /*overflow: auto;
                 float:left;
                 margin-left:25%;
@@ -243,6 +244,25 @@ background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%)
             .postJobStyle:hover {
                 box-shadow: 3px 6px 7px -4px grey;
             }
+                    .txtsuggestion{
+           background-color: #F0EBEB;
+           border: 1px solid grey;
+           border-radius: 5px;
+           min-width:100%;
+           min-height:200px;
+           padding-top:2px;
+           padding:20px;
+           line-height: 60px;
+        }
+
+        .btnSend{
+            border: 1px #F7941F;
+            border-radius: 5px;
+            background-color: #F7941F;
+            border-radius: 25px;
+            width: 120px;
+            color:#F0EBEB;
+        }
     </style>
 
     <asp:Table ID="Table1" runat="server" CssClass="content">
@@ -266,7 +286,7 @@ background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%)
                     <br />
                     <div class="row">
                         <div class="col">
-                            <div class="card text-white p-2" style="max-width: 18rem;">
+                            <div class="card text-white p-2" style="max-width: 50rem;">
 
                                 <div class="card-body">
                                     <h4 class="card-title">Total Hired</h4>
@@ -275,7 +295,7 @@ background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%)
                             </div>
                         </div>
                         <div class="col">
-                            <div class="card text-white  p-2" style="max-width: 18rem;">
+                            <div class="card text-white  p-2" style="max-width: 50rem;">
 
                                 <div class="card-body">
                                     <h4 class="card-title">Total Applicants</h4>
@@ -284,7 +304,7 @@ background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%)
                             </div>
                         </div>
                         <div class="col">
-                            <div class="card text-white  p-2" style="max-width: 18rem;">
+                            <div class="card text-white  p-2" style="max-width: 50rem;">
 
                                 <div class="card-body">
                                     <h4 class="card-title">Total Jobs</h4>
@@ -292,8 +312,30 @@ background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%)
                                 </div>
                             </div>
                         </div>
+                         <div class="row gx-4 gx-lg-5 h-100">
+                            <div class="col-lg-12 align-self-end">
+                            <h1>Share us your Suggestions!</h1>   
+                                <p style="text-indent: 60px;">We value your insights and ideas! Your suggestions are crucial to us as we strive to improve and enhance our services. Whether you have 
+                                    thoughts on how we can make things even better or ideas for new features, we want to hear from you. Help us shape the future by sharing 
+                                    your suggestions — because together, we can create an even more exceptional experience for you! 🚀</p>
+                                <p style="float:right;">--Team Admin</p>
+                            </div>       
+                        </div>
+                        <div class="row gx-4 gx-lg-5 h-100">
+                            <div class="col-lg-12 align-self-end">
+                                <asp:TextBox ID="txtsuggestion" runat="server" CssClass="txtsuggestion"></asp:TextBox>
+                            </div>       
+                        </div>
+                        <br />
+                        <div class="row gx-4 gx-lg-5 h-100">
+                            <div class="col-lg-12 align-self-end">
+                                <p><asp:Button ID="btn" class="btnSend" runat="server" Text="Submit" OnClick="Submit_Suggestions" /></p>
+                            </div>       
+                        </div>               
                     </div>
                 </div>
+    
+
             </asp:TableCell>
         </asp:TableRow>
 
@@ -316,4 +358,22 @@ background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%)
         </asp:TableRow>
 
     </asp:Table>
+        <%--SuccesPromptModal--%>
+        <div class="modal fade" id="SuccessPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                        <br />
+                        <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
+                        <asp:Label ID="Label11" runat="server" Text="Submitted !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label12" runat="server" Text="Your suggestion was succesfully submitted." Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button runat="server" type="button" class="btn btn-secondary" Text="Close" OnCLick="Close_SuccessPrompt" />
+                    </div>
+                </div>
+            </div>
+</div>
 </asp:Content>
