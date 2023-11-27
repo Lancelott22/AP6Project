@@ -161,8 +161,10 @@ namespace ctuconnect
 
             string Usertype = Session["STATUSorTYPE"].ToString();
             string jobtype = "";
+            string applicantEmail = "";
             if (Usertype == "Alumni")
             {
+                applicantEmail = Session["StudentEmail"].ToString();
                 alumni_accId = int.Parse(Session["Alumni_accID"].ToString());
                 if (job_Type.Value != "" || job_Type.Value != string.Empty)
                 {
@@ -178,6 +180,7 @@ namespace ctuconnect
             }
             else if (Usertype == "Intern")
             {
+                applicantEmail = Session["StudentEmail"].ToString();
                 student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
                 jobtype = job_Type.Value;
             }
@@ -202,8 +205,8 @@ namespace ctuconnect
             conDB.Open();
             if (Usertype == "Alumni")
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,applicantFName, appliedPosition, applicantLName, industry_accID, dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, isRead, isRemove ) " +
-                    "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID,@studentType, @isRead, @isRemove)", conDB);
+                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,applicantFName, appliedPosition, applicantLName, industry_accID, dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, isRead, isRemove,applicantEmail ) " +
+                    "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID,@studentType, @isRead, @isRemove,@applicantEmail)", conDB);
 
                 cmd.Parameters.AddWithValue("@jobtype", jobtype);
                 cmd.Parameters.AddWithValue("@student_accId", alumni_accId);
@@ -220,6 +223,7 @@ namespace ctuconnect
                 cmd.Parameters.AddWithValue("@studentType", Usertype);
                 cmd.Parameters.AddWithValue("@isRead", 0);
                 cmd.Parameters.AddWithValue("@isRemove", 0);
+                cmd.Parameters.AddWithValue("@applicantEmail", applicantEmail);
                 int ctr = cmd.ExecuteNonQuery();
                 if (ctr > 0)
                 {
@@ -233,8 +237,8 @@ namespace ctuconnect
             }
             else if (Usertype == "Intern")
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accID,applicantFName, applicantLName, appliedPosition, industry_accID,dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, EndorsementLetter, isRead, isRemove) " +
-                  "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID, @studentType,@endorsementLetter, @isRead, @isRemove)", conDB);
+                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accID,applicantFName, applicantLName, appliedPosition, industry_accID,dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, EndorsementLetter, isRead, isRemove,applicantEmail) " +
+                  "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID, @studentType,@endorsementLetter, @isRead, @isRemove,@applicantEmail)", conDB);
 
                 cmd.Parameters.AddWithValue("@jobtype", jobtype);
                 cmd.Parameters.AddWithValue("@student_accId", student_accId);
@@ -252,6 +256,7 @@ namespace ctuconnect
                 cmd.Parameters.AddWithValue("@endorsementLetter", endorsementLetterFile);
                 cmd.Parameters.AddWithValue("@isRead", 0);
                 cmd.Parameters.AddWithValue("@isRemove", 0);
+                cmd.Parameters.AddWithValue("@applicantEmail", applicantEmail);
                 int ctr = cmd.ExecuteNonQuery();
                 if (ctr > 0)
                 {

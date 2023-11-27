@@ -151,7 +151,11 @@
                         <a href="SuggestionsAdmin.aspx">
                         <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
                         Suggestions
-                    </a>
+                        </a>
+                        <a href="Admin_Contact.aspx">
+                            <i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Contact
+                        </a>
                     <hr class="second" />
                     <a href="TracerDashboard.aspx">
                         <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
