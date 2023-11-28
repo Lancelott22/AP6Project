@@ -415,7 +415,10 @@ namespace ctuconnect
 
                             reader.Close();
 
-                            MailMessage mm = new MailMessage("ctuconnect00@gmail.com", emailApplicant);
+                            string sendFrom = Session["IndustryEmail"].ToString();
+                            MailMessage mm = new MailMessage();
+                            mm.From = new MailAddress(sendFrom, "Message from " + industryName);
+                            mm.To.Add(emailApplicant);
                             mm.Subject = "Resume Status";
                             mm.Body = string.Format("Dear {0}, <br /><br />" +
                                 "I am writing to inform you that we have thoroughly reviewed your resume " +
@@ -538,11 +541,15 @@ namespace ctuconnect
                             string nameApplicant = reader["applicantFname"].ToString() + " " + reader["applicantLname"].ToString();
                             DateTime interviewScheduledDate = Convert.ToDateTime(reader["interviewScheduledDate"]);
                             string interviewSched = interviewScheduledDate.ToString("MM/dd/yyyy");
+                            string interviewDetails = HttpUtility.HtmlDecode(reader["interviewDetails"].ToString());
 
 
                             reader.Close();
 
-                            MailMessage mm = new MailMessage("ctuconnect00@gmail.com", emailApplicant);
+                            string sendFrom = Session["IndustryEmail"].ToString();
+                            MailMessage mm = new MailMessage();
+                            mm.From = new MailAddress(sendFrom, "Message from " + industryName);
+                            mm.To.Add(emailApplicant);
                             mm.Subject = "Interview Status";
                             mm.Body = string.Format("Dear {0}, <br /><br />" +
                                 "I trust this email finds you well. We are pleased to inform you that your application for <br/>" +
@@ -550,12 +557,12 @@ namespace ctuconnect
                                 "and we would like to invite you for an interview.<br/><br/>" +
                                 "Your interview has been scheduled for:<br/><br/>" +
                                 "Date: {3}<br/>" +
-                                "Location: {4}<br/><br/>" +
+                                "Details: {4}<br/><br/>" +
                                 "We look forward to discussing your qualifications, experiences, and how they align with the<br/>" +
                                 "requirements of the position. Please be prepared to share more about your skills and insights into <br/>" +
                                 "how you can contribute to our team.<br/><br/>" +
                                 "Best regards,<br/>" +
-                                "{5}", nameApplicant, positionApplicant, industryName, interviewSched, industryLocation, industryName);
+                                "{5}", nameApplicant, positionApplicant, industryName, interviewSched, interviewDetails, industryName);
                             mm.IsBodyHtml = true;
                             SmtpClient smtp = new SmtpClient();
                             smtp.Host = "smtp.gmail.com";
@@ -873,7 +880,10 @@ namespace ctuconnect
 
                             reader.Close();
 
-                            MailMessage mm = new MailMessage("ctuconnect00@gmail.com", emailApplicant);
+                            string sendFrom = Session["IndustryEmail"].ToString();
+                            MailMessage mm = new MailMessage();
+                            mm.From = new MailAddress(sendFrom, "Message from " + industryName);
+                            mm.To.Add(emailApplicant);
                             mm.Subject = "Update on Your Application";
                             mm.Body = string.Format("Dear {0}, <br /><br />" +
                                 "I hope this message finds you well. Thank you for your interest in the {1} position at {2} <br/>" +
@@ -922,11 +932,14 @@ namespace ctuconnect
                             string nameApplicant = reader["applicantFname"].ToString() + " " + reader["applicantLname"].ToString();
                             DateTime dateStartApplicant = Convert.ToDateTime(reader["dateStart"]);
                             string dateStart = dateStartApplicant.ToString("MM/dd/yyyy");
-                            string requirementApplicant = reader["requirements"].ToString();
+                            string requirementApplicant = HttpUtility.HtmlDecode(reader["requirements"].ToString());
 
                             reader.Close();
 
-                            MailMessage mm = new MailMessage("ctuconnect00@gmail.com", emailApplicant);
+                            string sendFrom = Session["IndustryEmail"].ToString();
+                            MailMessage mm = new MailMessage();
+                            mm.From = new MailAddress(sendFrom, "Message from " + industryName);
+                            mm.To.Add(emailApplicant);
                             mm.Subject = "Update on Your Application";
                             mm.Body = string.Format("Dear {0}, <br /><br />" +
                                 "I am delighted to inform you that your application for the {1} position has been approved, <br/>" +
