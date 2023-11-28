@@ -34,7 +34,7 @@
             width: 90%;
             margin-left:auto;
             margin-right:auto;
-            margin-top:13%;
+            margin-top:2%;
             margin-bottom:0%;
         }
              

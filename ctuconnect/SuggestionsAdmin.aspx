@@ -83,23 +83,67 @@
     
         }
 
-        .container {
-            min-height: 100%;
-            border-color: grey;
-            width:200%;
-            border: 2px;
-            box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
-            padding-top:2em;
-            padding-left:2em;
-            padding-right:2em;                  
-            margin-left:1px;
-        }
+    .container {
+        min-height: 550px;
+        background-color: #FFFFFF;
+        max-width:100%;
+        width:1550px;
+        border: 2px;
+        box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+        padding-top:2em;
+        padding-left:2em;
+        padding-right:2em;                  
+        margin-left:3px;
+    }
+    .container .title{
+    font-size:25px;
+    font-weight:500;
+    position:relative;
+    margin-bottom:3%;
+    padding-bottom:4px;
+    }
+    .container .title:before{
+        content:'';
+        position:absolute;
+        height:2px;
+        width:60px;
+        bottom:0;
+        background-color: #881A30;
+
+    }
        
         .card {
             background: rgb(121,101,55);
             background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%);
             border-radius:10px;
         }
+                .txtsuggestion{
+           background-color: #F0EBEB;
+           border: 1px solid grey;
+           border-radius: 5px;
+           min-width:100%;
+           min-height:200px;
+           padding-top:2px;
+           padding:20px;
+           line-height: 60px;
+        }
+        .suggestion-container{
+    max-height: 500px; 
+    overflow-y: auto;
+    background-color:plum;
+    margin-left:20%;
+    margin-right:20%;
+    padding:20px;
+}
+.suggestion-item{
+    background-color:whitesmoke;
+    padding:10px;
+    margin-bottom:1%;
+}
+.suggestion-text{
+    padding-top:5px;
+    text-indent: 29px;
+}
     
     </style>
     <div class="container-fluid">
@@ -173,38 +217,28 @@
             <div class="col-9 d-flex flex-column">
                 <br />
             <div class="container">
-                <h1 class="title">List of Partnered Industries</h1>
+                <h1 class="title">List of Suggestions</h1>
                  
-                <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
-                                <table  class="table-list">
-                     <tr>
-                         <th>No.</th>
-                         <th>Industry Name</th>
-                         <th>Location</th>
-                         <th>Contact Person</th>
-                         <th>Contact Number</th>
-                         <th>Contact Email</th>
-                         <th>Memorandum Of Understanding</th>
-                     </tr>
-                     <asp:Repeater ID="dataRepeater" runat="server">
-                         <Itemtemplate>
-                             <tr class="datas">
-                                 <td><%# Container.ItemIndex + 1 %></td>
-                                 <td><%# Eval("industryName") %></td>
-                                 <td><%# Eval("location") %></td>
-                                 <td><%# Eval("contactPerson") %></td>
-                                 <td><%# Eval("contactNumber") %></td>
-                                 <td><%# Eval("contactEmail") %></td>
-                                 <td>
-                                     <asp:Button ID="btnMOU" runat="server" Text="View MOU"
-                                        OnCommand="ViewMOU_Command" CommandName="View"  
-                                        CommandArgument='<%# Eval("mou") %>'/>
-                                     </td>
-                             </tr>
-                         </Itemtemplate>
-     
-                     </asp:Repeater>
-                 </table>
+                <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p><br />
+         <div class="suggestion-container ">
+    <div class="suggestion-list">
+        <%-- Display suggestions here --%>
+        <asp:Repeater ID="rptSuggestions" runat="server">
+            <ItemTemplate>
+                <div class="suggestion-item">
+                    <div style="display: flex; gap:6px;">
+                    <img src="images/defaultprofile.jpg" style="width:40px; height:auto; border-radius: 50%;"/>
+                    <div>
+                        <b>Anonymous:</b> <br />
+                        <span style="font-size: 11px; color: #888;">Date Posted: <%# Eval("dateCreated") %></span>
+                    </div>
+                </div>
+                    <p class="suggestion-text"> <%# Eval("Suggestion") %></p>
+                </div>
+            </ItemTemplate>
+        </asp:Repeater>
+    </div>
+</div>
 </div>
             </div>    
        

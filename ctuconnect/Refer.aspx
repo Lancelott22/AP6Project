@@ -276,14 +276,11 @@
        border-collapse: collapse;
         border-color:white;
         background-color:#f4f4fb;
-        padding:5px;
 
     }
     .datas{
-         padding:9px;
-          border: 8px solid;
+          border: 5px solid;
           border-color:white;
-         font-weight:bold;
          color:black;
     }
     
@@ -350,9 +347,10 @@
                                         <asp:boundfield datafield="referralstatus" headertext="status" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"  itemstyle-cssclass="status-column" />
                             </columns>
                             </asp:gridview>--%>
-                                                <table  class="table-list">
+                              <asp:ListView ID="referredListView" runat="server">
+                                    <LayoutTemplate>
+                                      <table  class="table-list">
                                         <tr>
-                                            <th>No.</th>
                                             <th>Last Name</th>
                                             <th>First Name</th>
                                             <th>Middle Initial</th>
@@ -362,10 +360,13 @@
                                             <th>Date</th>
                                             <th>Status</th>
                                         </tr>
-                                        <asp:Repeater ID="dataRepeater" runat="server">
-                                            <ItemTemplate>
+                                        <tbody>
+                                            <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                                        </tbody>
+                                    </table>
+                                </LayoutTemplate>
+                                  <ItemTemplate>
                                                 <tr class="datas">
-                                                    <td><%# Container.ItemIndex + 1 %></td>
                                                     <td><%# Eval("lastName") %></td>
                                                     <td><%# Eval("firstName") %></td>
                                                     <td><%# Eval("midInitials") %></td>
@@ -380,9 +381,7 @@
                                                     <td class='<%# GetStatusCssClass(Eval("ReferralStatus").ToString()) %>' ><%# Eval("ReferralStatus") %></td>
                                                 </tr>
                                             </ItemTemplate>
-                                            
-                                        </asp:Repeater>
-                                    </table>
+                            </asp:ListView>
                 </div>
             </asp:TableCell>
         </asp:TableRow>

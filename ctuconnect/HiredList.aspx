@@ -4,6 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-9aLThZMxx+rKTEzeibpBtJPLcA6nhcwScQJ/DV+ytI+73m9Z2ap53lr1dH5tRjS9bOwD3GH1vbAhr5ZC9fIvnQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>
 
     <style>
@@ -91,7 +92,7 @@
                 font-size:25px;
                 font-weight:500;
                 position:relative;
-                margin-bottom:3%;
+                margin-bottom:1%;
                 padding-bottom:4px;
             }
          .display-container .title:before{
@@ -152,10 +153,20 @@
                     width:20px;
                     margin-right: 19px; 
         }
-        .topnav {
+.topnav {
           overflow: hidden;
+          width:100%;
         }
-
+        .topnav2{
+            overflow: hidden;
+            width:100%;
+            padding: 2px 15px;
+        }
+        .bulk-action{
+            float:right;
+            display:flex; 
+            gap:10px;
+        }
         .topnav .linkbutton {
           float: left;
           display: block;
@@ -178,25 +189,24 @@
            border-collapse: collapse;
             border-color:white;
             background-color:#f4f4fb;
-            padding:4px;
 
         }
+
         .datas{
-             padding:4px;
               border: 5px solid;
               border-color:white;
-             font-weight:bold;
              color:black;
-             align-items:center;
+             cursor:default;
         }
 
 
         .table-list{
-             border-collapse: collapse;
-            font-size:13px; 
-            height:auto; 
-            width:100%;
-            color:dimgray;
+         border-collapse: collapse;
+        font-size:13px; 
+        height:auto; 
+        width:100%;
+        color:dimgray;
+        padding-right:4px;
         }
         .evaluateButton{
             background-color: #F9E9B7; 
@@ -219,15 +229,26 @@
             background-color: whitesmoke; /* Adjust background color as needed */
         }
         .modal{
-     width:600px;
+     width:500px;
      margin:auto;
      margin-top:100px;
-    
-     
  }
  .modal-content{
      padding-left:2em;
  }
+         .selectedRow {
+        background-color: whitesmoke; /* Change this to your desired highlight color */
+    }
+    .icon-link-button {
+        background: none;
+        border: none;
+        padding: 0;
+        font-size: inherit;
+        color:gray;/* You can adjust the color to match your design */
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
     </style>
     <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
@@ -248,12 +269,20 @@
             <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
                <div class="display-container">
                    <h1 class="title">Hired List</h1>
+                   <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p> 
                    <div class="col-lg-5 order-1 order-lg-2 topnav">
                        <asp:LinkButton ID="myLinkButton1"  runat="server" OnClick="btnSwitchGrid_Click1" CssClass="linkbutton" >Full Time</asp:LinkButton>
-                       <asp:LinkButton ID="myLinkButton2" runat="server" OnClick="btnSwitchGrid_Click2" CssClass="linkbutton">Internship</asp:LinkButton>      
-                   </div>
-                   <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p> 
-                
+                       <asp:LinkButton ID="myLinkButton2" runat="server" OnClick="btnSwitchGrid_Click2" CssClass="linkbutton">Internship</asp:LinkButton>  
+                       <p style="float:left;">Status <asp:DropDownList ID="academicYear" runat="server" AutoPostBack="true" Style="width:90px;" CssClass="sort-dropdown">
+                            <asp:ListItem Text="ongoing" Value="ColumnName1"></asp:ListItem>
+                            <asp:ListItem Text="done" Value="ColumnName2"></asp:ListItem>
+                        </asp:DropDownList></p>
+                       <div class="bulk-action">
+                   <asp:Button Text="Edit" ID="btnEdit" runat="server" style="background-color:white; border:1px solid; border-color:gray; box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);" OnClick="onEditButton_Click" />
+                   <button runat="server" style="background-color:white; border:1px solid; border-color:gray; box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);"><i class="fa fa-trash" aria-hidden="true"></i>Delete </button>
+                   <button runat="server" style="background-color:white; border:1px solid; border-color:gray; box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);"><i class="fa fa-paper-plane" aria-hidden="true"></i>Refer </button>
+                           </div>
+                    </div>
                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
      <ContentTemplate>
                             <%--First Gridview--%>
@@ -261,11 +290,11 @@
                             <HeaderTemplate>
                                 <table  class="table-list">
                                     <tr>
-                                        <th style="width: 50px;">No.</th>
-                                       <th style="width: 200px;">Last Name</th>
-                                       <th style="width: 200px;">First Name</th>
-                                       <th style="width: 200px;">Date Started</th>
-                                       <th style="width: 200px;">Position</th>
+                                        <th>No.</th>
+                                       <th>Last Name</th>
+                                       <th >First Name</th>
+                                       <th >Date Started</th>
+                                       <th>Position</th>
                                        <th>Resume</th>
                                     </tr>
                                   </table>
@@ -273,11 +302,11 @@
                                     <ItemTemplate>
                                         <table class="table-list">
                                         <tr>
-                                            <td class="datas" style="width: 50px;"><%# Container.ItemIndex + 1 %></td>
-                                           <td class="datas" style="width: 150px;"><%# Eval("lastName") %></td>
-                                           <td class="datas" style="width: 150px;"><%# Eval("firstName") %></td>
-                                           <td class="datas" style="width: 150px;"><%# Eval("dateStarted") %></td>
-                                           <td class="datas" style="width: 150px;"><%# Eval("position") %></td>
+                                            <td><%# Container.ItemIndex + 1 %></td>
+                                           <td ><%# Eval("lastName") %></td>
+                                           <td ><%# Eval("firstName") %></td>
+                                           <td><%# Eval("dateStarted") %></td>
+                                           <td><%# Eval("position") %></td>
                                             <td class="datas">
                                                 <asp:Button ID="ResumeButton"  runat="server" Text="View Resume"
                                                 OnCommand="ViewResume_Command" CommandName="View"  
@@ -287,95 +316,51 @@
                                             </table>
                                     </ItemTemplate>
                                 </asp:Repeater>
-                           
-                            <%--<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Style="text-align:center;" Height="100%" Width="100%"  AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" 
-                                CellPadding="50" CellSpacing="50" Font-Bold="False" Font-Size="13px" ShowHeaderWhenEmpty="true">
-                            <PagerStyle  HorizontalAlign="Center" />
-                            <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
-                                <EmptyDataTemplate>
-                                    <p>No data available</p>
-                                </EmptyDataTemplate>
-                            <Columns>
-                                <asp:TemplateField HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
-                                    <ItemTemplate>
-                                        <%# Container.DataItemIndex + 1 %>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:BoundField DataField="LastName" HeaderText="Last Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                <asp:BoundField DataField="FirstName" HeaderText="First Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                <asp:BoundField DataField="DateStarted" HeaderText="Date Started" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                                <asp:BoundField DataField="Position" HeaderText="Position" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                <asp:BoundField DataField="ResumeFile" HeaderText="Resume" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                            </Columns>
-                            </asp:GridView>--%>
+                          
                    
                             <%--Second Gridview--%>
-                                   <asp:Repeater ID="dataRepeater2" runat="server">
-                                    <HeaderTemplate>
+                                  
+                                       <asp:ListView ID="listView2" runat="server">
+                                    <LayoutTemplate>
                                         <table  class="table-list">
                                             <tr>
-                                                <th style="width: 78px;">No.</th>
-                                                <th style="width: 200px;">Last Name</th>
-                                                <th style="width: 200px;">First Name</th>
-                                                <th style="width: 200px;">Position</th>
-                                                <th style="width: 200px;">Hired</th>
-                                                <th style="width: 200px;">Started</th>
-                                                <th style="width: 200px;">Ended</th>
-                                                <th style="width: 200px;">Internship Status</th>
-                                                <th style="width: 200px;">Rendered Hours</th>
-                                                <th style="width: 200px;">Evaluation</th>
-                                                <th style="width: 5px;"></th>
+                                                <th></th>
+                                                <th>Last Name</th>
+                                                <th>First Name</th>
+                                                <th>Position</th>
+                                                <th>Hired</th>
+                                                <th>Started</th>
+                                                <th>Ended</th>
+                                                <th>Internship Status</th>
+                                                <th>Rendered Hours</th>
+                                                <th>Evaluation</th>
                                             </tr>
+                                            <tbody>
+                                        <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                                            </tbody>
                                             </table>
-                                        </HeaderTemplate>
+                                        </LayoutTemplate>
                                                 <ItemTemplate>
-                                                     <table class="table-list" >
-                                                    <tr class="datas" >
-                                                       <td  style="width: 70px;"><%# Container.ItemIndex + 1 %></td>
-                                                        <td style="width: 155px;"><%# Eval("lastName") %></td>
-                                                        <td style="width: 150px;"><%# Eval("firstName") %></td>
-                                                        <td  style="width: 150px;"><%# Eval("position") %></td>
-                                                        <td  style="width: 150px;"><%# Eval("dateHired") %></td>
-                                                        <td  style="width: 150px;"><%# Eval("dateStarted") %></td>
-                                                        <td  style="width: 150px;"><%# Eval("dateEnded") %></td>
-                                                        <td  style="width: 150px;"><%# Eval("internshipStatus") %></td>
-                                                        <td  style="width: 150px;"><%# Eval("renderedHours") %></td>
-                                                        <td style="width: 110px;">
+                                                    <tr class="datas clickableRow" onclick="toggleHighlightAndCheckbox(document.getElementById('<%# ((ListViewDataItem)Container).FindControl("chkSelect").ClientID %>'));" >
+                                                        <td>
+                                                            <asp:CheckBox ID="chkSelect" runat="server" onclick="event.stopPropagation(); toggleHighlight(this);"  />
+                                                        </td>
+                                                        <td style="display:none;"><asp:Label ID="lblStudentID" runat="server" Visible="false" Text='<%# Eval("student_accID") %>'></asp:Label></td>
+                                                        <td ><%# Eval("lastName") %></td>
+                                                        <td><%# Eval("firstName") %></td>
+                                                        <td ><%# Eval("position") %></td>
+                                                        <td  ><%# Eval("dateHired") %></td>
+                                                        <td ><%# Eval("dateStarted") %></td>
+                                                        <td ><%# Eval("dateEnded") %></td>
+                                                        <td ><%# Eval("internshipStatus") %></td>
+                                                        <td ><%# Eval("renderedHours") %></td>
+                                                        <td >
                                                             <asp:Button ID="EvaluationBtn" CssClass="evaluateButton" runat="server" Text='<%# Eval("evaluationRequest") %>'
                                                             OnCLick="Evaluate_BtnClick"/>
                                                         </td>
-                                                        <td style="width: 50px;" >
-                                                            <asp:Button ID="LinkButton1" runat="server" Text="&#8230;" class="ellipsis" OnClick="editRow_Click" CommandArgument='<%# Eval("student_accID") %>' />
-                                                           
-                                                        </td>
                                                     </tr>
-                                                    </table>
-                                                     
                                                 </ItemTemplate>
-        
-                                            </asp:Repeater>
-                                      
-                            <%--<asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Visible="false" Style="text-align:center;" Height="100%" Width="100%"  AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" 
-                                CellPadding="50" CellSpacing="50" Font-Bold="False" Font-Size="13px" ShowHeaderWhenEmpty="true" OnRowDataBound="GridView2_RowDataBound">
-                                <PagerStyle  HorizontalAlign="Center" />
-                                <HeaderStyle Font-Bold="false"  BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle"/>
-                                <EmptyDataTemplate>
-                                     <p>No data available</p>
-                                </EmptyDataTemplate>
-                             <Columns>
-                                    <asp:TemplateField HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
-                                        <ItemTemplate>
-                                            <%# Container.DataItemIndex + 1 %>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:BoundField DataField="LastName" HeaderText="Last Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                    <asp:BoundField DataField="FirstName" HeaderText="First Name" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                    <asp:BoundField DataField="DateStarted" HeaderText="Date Started" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                    <asp:BoundField DataField="InternshipStatus" HeaderText="Status" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                    <asp:BoundField DataField="RenderedHours" HeaderText="Rendered hours" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                    <asp:BoundField DataField="EvaluationRequest" HeaderText="Evaluation Request" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                               </Columns>
-                            </asp:GridView>--%>
+                                            </asp:ListView>
                        </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
@@ -401,12 +386,47 @@
             </asp:TableCell>
         </asp:TableRow>
     </asp:Table>
+
+
+
     <div id="myModal" class="modal">
     <div class="modal-content">
         <!--<span class="close" onclick="closeModal()">&times;</span>-->
         <br />
-        <h3 style="text-align:center">Interview Schedule</h3> 
+        <h3 style="text-align:center">Intern Details</h3> 
         <br />
+        <div class="row applicant-details">
+            <div class="col-3 d-flex flex-column">
+                First Name
+            </div>
+            <div class="col-9 d-flex flex-column">
+                <asp:Label ID="fnameLabel" runat="server"></asp:Label>
+            </div>
+        </div>
+         <div class="row applicant-details">
+            <div class="col-3 d-flex flex-column">
+                Last Name
+            </div>
+            <div class="col-9 d-flex flex-column">
+                <asp:Label ID="lnameLabel" runat="server"></asp:Label>
+            </div>
+        </div>
+          <div class="row applicant-details">
+            <div class="col-3 d-flex flex-column">
+                 Position
+            </div>
+            <div class="col-9 d-flex flex-column">
+                <asp:Label ID="positionLabel" runat="server"></asp:Label>
+            </div>
+        </div>
+         <div class="row applicant-details">
+            <div class="col-3 d-flex flex-column">
+                 Hired
+            </div>
+            <div class="col-9 d-flex flex-column">
+                <asp:Label ID="hiredLabel" runat="server"></asp:Label>
+            </div>
+        </div>
         <div class="row applicant-details">
             <div class="col-3 d-flex flex-column">
                 Date Started
@@ -425,9 +445,18 @@
             </div>
         </div>
         <br />
+        <div class="row applicant-details">
+            <div class="col-3 d-flex flex-column">
+                Feedback
+            </div>
+            <div class="col-9 d-flex flex-column">
+                <asp:TextBox ID="txtFeedback" runat="server" TextMode="MultiLine" CssClass="txtbox" Width="200px" Height="25px"></asp:TextBox>
+            </div>
+        </div>
+        <br />
         <div class="row applicant-buttons">
             <div class="col-4 d-flex flex-column">
-                <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="SaveDatesDetails" CssClass="btn2" Height="28px" Width="100px"/>
+                <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="saveDatesDetails" CssClass="btn2" Height="28px" Width="100px"/>
             </div>
             <div class="col-2 d-flex flex-column">
                 
@@ -441,7 +470,67 @@
        
     </div>
 </div>
-    <script>
+
+        <div id="myModal2" class="modal">
+    <div class="modal-content">
+        <!--<span class="close" onclick="closeModal()">&times;</span>-->
+        <br />
+        <h3 style="text-align:center">Intern Details</h3> 
+        <br />
+        <div class="row applicant-details">
+            <div class="col-3 d-flex flex-column">
+                Date Started
+            </div>
+            <div class="col-9 d-flex flex-column">
+                <asp:TextBox ID="TextBox1" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px"></asp:TextBox>
+            </div>
+        </div>
+        <br />
+        <div class="row applicant-details">
+            <div class="col-3 d-flex flex-column">
+                Date Ended
+            </div>
+            <div class="col-9 d-flex flex-column">
+                <asp:TextBox ID="TextBox2" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px"></asp:TextBox>
+            </div>
+        </div>
+        <br />
+        <div class="row applicant-buttons">
+            <div class="col-4 d-flex flex-column">
+                <asp:Button ID="Button1" runat="server" Text="Save"  CssClass="btn2" Height="28px" Width="100px"/>
+            </div>
+            <div class="col-2 d-flex flex-column">
+                
+            </div>
+            <div class="col-4 d-flex flex-column">
+                <asp:Button ID="Button2" runat="server" Text="Close" CssClass="btn1" Height="28px" Width="100px"/>
+            </div>
+        </div>
+        <br /><br />
+
+       
+    </div>
+</div>
+
+        <div class="modal fade" id="SuccessPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                         <br />
+                        <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
+                        <asp:Label ID="Label11" runat="server" Text="Success !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label12" runat="server" Text="Your update was succesful." Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button runat="server" type="button" class="btn btn-secondary" Text="Close" OnCLick="Close_SuccessPrompt" />
+                    </div>
+                </div>
+            </div>
+</div>
+
+    <script type="text/javascript">
         //function highlightRow(row) {
         //    // Remove the 'highlighted-row' class from all rows
         //    var rows = document.querySelectorAll('.datas');
@@ -452,21 +541,42 @@
         //    // Add the 'highlighted-row' class to the clicked row
         //    row.classList.add('highlighted-row');
         //}
-        function openModal(StartedDate) {
+        function openModal2() {
+            var modal = document.getElementById("myModal2");
+            modal.style.display = "block";
+        }
+        function openModal(fname,lname , position , hired , startedDate) {
             var modal = document.getElementById("myModal");
 
-            var txtDateStarted = document.getElementById('<%=txtDateStarted.ClientID%>');
-            if (modal && txtDateStarted) {
-                modal.style.display = "";
-                txtDateStarted.value = StartedDate;
-            } else {
-                console.error("Modal or TextBox not found.");
-            }
+            document.getElementById('<%=fnameLabel.ClientID%>').innerHTML = fname;
+            document.getElementById('<%=lnameLabel.ClientID%>').innerHTML = lname;
+            document.getElementById('<%=positionLabel.ClientID%>').innerHTML = position;
+            document.getElementById('<%=hiredLabel.ClientID%>').innerHTML = hired;
+            document.getElementById('<%=txtDateStarted.ClientID%>').value = startedDate;
+
+            modal.style.display = "block";
         }
+
 
         function closeModal() {
             document.getElementById("myModal").style.display = "none";
+
+        }
+        function toggleHighlightAndCheckbox(checkbox) {
+            checkbox.checked = !checkbox.checked; // Toggle the checkbox
+            toggleHighlight(checkbox);
+            /*toggleButtonsVisibility(checkbox.checked);*/
+        }
+
+        function toggleHighlight(checkbox) {
+            var row = checkbox.closest('tr');
+            if (checkbox.checked) {
+                row.classList.add('selectedRow');
+                /*toggleButtonsVisibility(checkbox.checked);*/
+            } else {
+                row.classList.remove('selectedRow');
+                /*toggleButtonsVisibility(checkbox.checked);*/
+            }
         }
     </script>
-  
 </asp:Content>
