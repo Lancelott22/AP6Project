@@ -127,18 +127,18 @@
                 </div>
             </div>
 
-            <div class="col-9 d-flex flex-column">
+            <div class="col-6 d-flex flex-column">
                  
-                <div class="container p-5" style="background-color:white;">
+                <div class="container-fluid p-5" style="background-color:white;">
                     <h3 class="title opacity-75 my-0 mb-5" >Report Industry</h3>
-                    <div class="mb-3">
-                        <asp:Label ID="industryName" runat="server" Text="Industry Name" Style="font-size: 20px;"></asp:Label><span style="color: red">*</span>
+                     <div class="form-group row p-2">
+                        <asp:Label ID="industryName" runat="server" Text="Industry Name" Style="font-size: 20px;"></asp:Label>
                         <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="industry" AutoPostBack="true">
                         </asp:DropDownList>
                     </div>
-                    <div class="mb-3">
-                        <asp:Label ID="reasonLabel" runat="server" Text="Reason for reporting" Style="font-size: 20px;"></asp:Label><span style="color: red">*</span>
-                        <asp:TextBox ID="reasonTxt" runat="server" ValidateRequestMode="Disabled" Rows="5" TextMode="MultiLine" CssClass="form-control"></asp:TextBox>
+                     <div class="form-group row p-2">
+                        <asp:Label ID="reasonLabel" runat="server" Text="Reason for reporting" Style="font-size: 20px;"></asp:Label>
+                         <textarea class="form-control" cols="40" rows="5" id="reasonTxt" runat="server" placeholder="Input reason..."></textarea>
                     </div>
                     <div>
                         <asp:Button ID="SubmitReport" runat="server" CssClass="submitStyle" Text="Submit" OnClick="SubmitReport_Click"/>
@@ -147,20 +147,4 @@
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
-            $('.summernote').summernote({
-                height: 300,
-                placeholder: 'Enter your reason here...',
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font'],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['height', ['height']]
-                ]
-            });
-        });
-    </script>
 </asp:Content>

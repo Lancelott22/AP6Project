@@ -124,7 +124,7 @@ namespace ctuconnect
             if (Request.QueryString["IndustryID"] != null)
             {
                 int industry_accID = int.Parse(Request.QueryString["IndustryID"].ToString());
-                SqlCommand cmd = new SqlCommand("SELECT HIRING.*, CONVERT(nvarchar,jobPostedDate, 1) as Job_PostedDate, COALESCE(HIRED_LIST.totalEmployee, 0) AS TotalJobEmployee " +
+                SqlCommand cmd = new SqlCommand("SELECT HIRING.*,case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar,jobPostedDate, 1) as Job_PostedDate, COALESCE(HIRED_LIST.totalEmployee, 0) AS TotalJobEmployee " +
                     "FROM HIRING LEFT JOIN (SELECT jobID, COUNT(id) AS totalEmployee FROM HIRED_LIST WHERE internshipStatus = 'Ongoing' or workStatus = 'Ongoing' GROUP BY jobID) HIRED_LIST ON HIRING.jobID = HIRED_LIST.jobID " +
                     "WHERE HIRING.industry_accID = @industry_accID", conDB);
                 cmd.Parameters.AddWithValue("@industry_accID", industry_accID);

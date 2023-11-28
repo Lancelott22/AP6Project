@@ -40,7 +40,45 @@ namespace ctuconnect
 
         protected void blacklistBtn_Command(object sender, CommandEventArgs e)
         {
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showBlackList();", true);
+            blacklist_ID.Text = e.CommandArgument.ToString();
+            BlackList_IndustryName.InnerText = e.CommandName.ToString();
+            errorText.Visible = false;
+            BlacklistReason.Value = string.Empty;
+        }
 
+        protected void ConfirmBlacklist_Command(object sender, CommandEventArgs e)
+        {
+            int industryID = int.Parse(blacklist_ID.Text);
+            string industryName = BlackList_IndustryName.InnerText;
+            string reason = BlacklistReason.Value;
+
+            if (string.IsNullOrEmpty(BlacklistReason.Value))
+            {
+                errorText.Visible = true;
+                ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Popup1", "$('.modal-backdrop').removeClass('modal-backdrop');", true);
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showBlackList();", true);
+            }
+            else
+            {
+                conDB.Open();
+                SqlCommand cmd = new SqlCommand("INSERT INTO BLOCKLIST (industry_accID, industryName, reason, dateAdded) " +
+                    "VALUES(@industry_accID, @industryName, @reason,@dateAdded)", conDB);
+                cmd.Parameters.AddWithValue("@industry_accID", industryID);
+                cmd.Parameters.AddWithValue("@industryName", industryName);
+                cmd.Parameters.AddWithValue("@reason", reason);
+                cmd.Parameters.AddWithValue("@dateAdded", DateTime.Now);
+                int ctr = cmd.ExecuteNonQuery();
+                if (ctr > 0)
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('You have successfully added the industry to blacklist.');document.location='Blacklist_Admin.aspx';", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertError", "alert('Sorry! There is something wrong in adding the industry to blacklist.. Please try again later..');document.location='Dispute.aspx';", true);
+                }
+                conDB.Close();
+            }
         }
     }
 }

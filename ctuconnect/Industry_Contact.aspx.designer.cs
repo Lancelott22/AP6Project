@@ -11,88 +11,97 @@ namespace ctuconnect
 {
 
 
-    public partial class Dispute
+    public partial class Industry_Contact
     {
 
         /// <summary>
-        /// LinkButton1 control.
+        /// Table1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
+        protected global::System.Web.UI.WebControls.Table Table1;
 
         /// <summary>
-        /// showDispute control.
+        /// industryImage1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl showDispute;
+        protected global::System.Web.UI.WebControls.Image industryImage1;
 
         /// <summary>
-        /// disputeListView control.
+        /// disp_industryName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView disputeListView;
+        protected global::System.Web.UI.WebControls.Label disp_industryName;
 
         /// <summary>
-        /// blacklist_ID control.
+        /// disp_accID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label blacklist_ID;
+        protected global::System.Web.UI.WebControls.Label disp_accID;
 
         /// <summary>
-        /// deleteErrorMsg control.
+        /// SendToUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl deleteErrorMsg;
+        protected global::System.Web.UI.WebControls.DropDownList SendToUser;
 
         /// <summary>
-        /// BlackList_IndustryName control.
+        /// SendToEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl BlackList_IndustryName;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect SendToEmail;
 
         /// <summary>
-        /// errorText control.
+        /// Subject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl errorText;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Subject;
 
         /// <summary>
-        /// BlacklistReason control.
+        /// message control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea BlacklistReason;
+        protected global::System.Web.UI.WebControls.TextBox message;
 
         /// <summary>
-        /// ConfirmBlacklist control.
+        /// SendMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ConfirmBlacklist;
+        protected global::System.Web.UI.WebControls.Button SendMessage;
+
+        /// <summary>
+        /// SignOut control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton SignOut;
     }
 }

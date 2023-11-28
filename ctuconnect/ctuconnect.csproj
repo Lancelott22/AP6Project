@@ -59,6 +59,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -114,6 +115,7 @@
     <Content Include="About.aspx" />
     <Content Include="AdminDashboard.aspx" />
     <Content Include="AdminProfile.aspx" />
+    <Content Include="Admin_Contact.aspx" />
     <Content Include="Admin_JobPosted.aspx" />
     <Content Include="Applicants.aspx" />
     <Content Include="ApplyJob.aspx" />
@@ -138,6 +140,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="CoordinatorProfile.aspx" />
+    <Content Include="Coordinator_Contact.aspx" />
     <Content Include="CourseLists.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Dispute.aspx" />
@@ -171,6 +174,7 @@
     <Content Include="IndustryProfile.aspx" />
     <Content Include="IndustryVerification.aspx" />
     <Content Include="IndustryJobPosted.aspx" />
+    <Content Include="Industry_Contact.aspx" />
     <Content Include="JobPortal.aspx" />
     <Content Include="ListOfAlumni.aspx" />
     <Content Include="ListOfAlumni_Admin.aspx" />
@@ -285,6 +289,13 @@
     <Compile Include="AdminProfile.aspx.designer.cs">
       <DependentUpon>AdminProfile.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin_Contact.aspx.cs">
+      <DependentUpon>Admin_Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin_Contact.aspx.designer.cs">
+      <DependentUpon>Admin_Contact.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin_JobPosted.aspx.cs">
       <DependentUpon>Admin_JobPosted.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -342,6 +353,13 @@
     </Compile>
     <Compile Include="CoordinatorProfile.aspx.designer.cs">
       <DependentUpon>CoordinatorProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Coordinator_Contact.aspx.cs">
+      <DependentUpon>Coordinator_Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Coordinator_Contact.aspx.designer.cs">
+      <DependentUpon>Coordinator_Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="CourseLists.aspx.cs">
       <DependentUpon>CourseLists.aspx</DependentUpon>
@@ -436,6 +454,13 @@
     </Compile>
     <Compile Include="IndustryJobPosted.aspx.designer.cs">
       <DependentUpon>IndustryJobPosted.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Industry_Contact.aspx.cs">
+      <DependentUpon>Industry_Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Industry_Contact.aspx.designer.cs">
+      <DependentUpon>Industry_Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="JobPortal.aspx.cs">
       <DependentUpon>JobPortal.aspx</DependentUpon>

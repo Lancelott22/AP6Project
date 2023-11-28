@@ -101,7 +101,7 @@ namespace ctuconnect
                 using (conDB)
                 {
                     conDB.Open();
-                    string query = "SELECT * FROM COORDINATOR_ACCOUNT WHERE USERNAME = '" + getUsername + "' ";
+                    string query = "SELECT * FROM COORDINATOR_ACCOUNT WHERE username = '" + getUsername + "' ";
                     SqlCommand command = new SqlCommand(query, conDB);
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.Read())

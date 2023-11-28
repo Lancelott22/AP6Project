@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site2.Master" AutoEventWireup="true" CodeBehind="TracerDashboard.aspx.cs" Inherits="ctuconnect.TracerDashboard" %>
 
+<%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -98,5 +100,26 @@
                 </div>
             </div>
         </div>
+        <div class="row my-5" >
+        <asp:Chart ID="Chart1" runat="server" Width="500px" BorderlineDashStyle="Solid">
+            <Titles>
+                <asp:Title Name="ChartTitle" Text="Total Hired per Industry" />
+            </Titles>
+            <Series>
+                <asp:Series Name="Internship" ChartType="StackedColumn" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="Internship" XValueMember="industryName" YValueMembers="hiredCount">
+                   
+                </asp:Series>
+                 <asp:Series Name="Fulltime" ChartType="StackedColumn" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="Fulltime" XValueMember="industryName" YValueMembers="hiredCount">
+                </asp:Series>
+            </Series>
+            <ChartAreas>
+                <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
+            </ChartAreas>
+             <Legends>
+        <asp:Legend Name="Internship" Docking="Bottom"></asp:Legend>
+ <asp:Legend Name="Fulltime" Docking="Bottom" ></asp:Legend>
+    </Legends>
+        </asp:Chart>
+            </div>
     </div>
 </asp:Content>

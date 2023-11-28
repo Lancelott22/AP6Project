@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Industry.Master" AutoEventWireup="true" CodeBehind="IndustryDashboard.aspx.cs" Inherits="ctuconnect.IndustryDashboard" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Industry.Master" AutoEventWireup="true" CodeBehind="Industry_Contact.aspx.cs" Inherits="ctuconnect.Industry_Contact" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
@@ -219,9 +222,6 @@
                  font-size:20px;
                  color:black;
               }*/
-        label {
-            font-size: 50px;
-        }
 
         .dropdown-bx {
             border-radius: 10px;
@@ -267,6 +267,20 @@
             width: 120px;
             color: #F0EBEB;
         }
+
+        .submitStyle {
+            float: right;
+            color: white;
+            background-color: orange;
+            border-radius: 15px;
+            height: 40px;
+            width: 20%;
+            border: 1px solid orange;
+        }
+
+            .submitStyle:hover {
+                box-shadow: 3px 6px 7px -4px grey;
+            }
     </style>
 
     <asp:Table ID="Table1" runat="server" CssClass="content">
@@ -286,62 +300,36 @@
                 </div>
             </asp:TableCell>
             <asp:TableCell RowSpan="2" Style="padding: 0px 5px 0px 40px">
-                <h2 class="title opacity-75">Dashboard</h2>
-                <div class="display-container">
-                    <br />
-                    <br />
-                    <br />
-                    <div class="row">
-                        <div class="col">
-                            <div class="card text-white p-2" style="max-width: 50rem;">
 
-                                <div class="card-body">
-                                    <h4 class="card-title">Total Hired</h4>
-                                    <h2 class="card-text" id="totalHired" runat="server"></h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card text-white  p-2" style="max-width: 50rem;">
+                <div class="container p-5" style="background-color: white;">
+                    <h2 class="title">Contact</h2>
 
-                                <div class="card-body">
-                                    <h4 class="card-title">Total Applicants</h4>
-                                    <h2 class="card-text" id="totalApplicant" runat="server"></h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card text-white  p-2" style="max-width: 50rem;">
-
-                                <div class="card-body">
-                                    <h4 class="card-title">Total Jobs</h4>
-                                    <h2 class="card-text" id="totalJobs" runat="server"></h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row gx-4 gx-lg-5 h-100">
-                            <div class="col-lg-12 align-self-end">
-                                <h1>Share us your Suggestions!</h1>
-                                <p style="text-indent: 60px;">
-                                    We value your insights and ideas! Your suggestions are crucial to us as we strive to improve and enhance our services. Whether you have 
-                                    thoughts on how we can make things even better or ideas for new features, we want to hear from you. Help us shape the future by sharing 
-                                    your suggestions — because together, we can create an even more exceptional experience for you! 🚀
-                                </p>
-                                <p style="float: right;">--Team Admin</p>
-                            </div>
-                        </div>
-                        <div class="row gx-4 gx-lg-5 h-100">
-                            <div class="col-lg-12 align-self-end">
-                                <asp:TextBox ID="txtsuggestion" runat="server" CssClass="txtsuggestion"></asp:TextBox>
-                            </div>
-                        </div>
+                    <br />
+                    <div class="form-group row p-2">
+                        <label class="fs-3 fw-normal">Send to:</label>
+                        
+                        <asp:DropDownList runat="server" title="Select User"  CssClass="selectpicker form-control" ID="SendToUser" AutoPostBack="true" OnSelectedIndexChanged="SendToUser_SelectedIndexChanged">
+                             <asp:ListItem Value="" Enabled="false" Selected="true">Select User</asp:ListItem>
+                            <asp:ListItem Value="Admin">Admin</asp:ListItem>
+                             <asp:ListItem Value="OJTCoordinator">OJT Coordinator</asp:ListItem>
+                             <asp:ListItem Value="HiredStudent">Hired</asp:ListItem>
+                        </asp:DropDownList>                             
                         <br />
-                        <div class="row gx-4 gx-lg-5 h-100">
-                            <div class="col-lg-12 align-self-end">
-                                <p>
-                                    <asp:Button ID="btn" class="btnSend" runat="server" Text="Submit" OnClick="Submit_Suggestions" /></p>
-                            </div>
-                        </div>
+                           <br />
+                        <select runat="server" title="Select Account" class="selectpicker form-control" data-actions-box="true" multiple="true" name="SendToEmail" id="SendToEmail">
+                        </select>
+                   
+                    </div>
+                    <div class="form-group row p-2">
+                        <label class="fs-3 fw-normal">Subject:</label>
+                        <input class="form-control" id="Subject" runat="server" placeholder="Input subject...">
+                    </div>
+                    <div class="form-group row p-2">
+                        <label class="fs-3 fw-normal">Message:</label>
+                        <asp:TextBox class="form-control summernote" rows="5" TextMode="MultiLine" id="message" runat="server" ValidateRequestMode="Disabled"></asp:TextBox>
+                    </div>
+                    <div>
+                        <asp:Button ID="SendMessage" runat="server" CssClass="submitStyle" Text="Send Message" OnClick="SendMessage_Click" />
                     </div>
                 </div>
 
@@ -352,14 +340,14 @@
         <asp:TableRow>
             <asp:TableCell Style="vertical-align: top;">
                 <div class="sidemenu-container">
-                    <a class="active" href="#"><i class='bx bxs-dashboard' aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
+                    <a href="IndustryDashboard.aspx"><i class='bx bxs-dashboard' aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
                     <a href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
                     <a href="IndustryJobPosted.aspx"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
                     <a href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
                     <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                     <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
                     <a href="IndustryProfile.aspx"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
-                    <a href="Industry_Contact"><i class="fa fa-comments" aria-hidden="true"></i>Contact</a>
+                    <a class="active" href="#"><i class="fa fa-comments" aria-hidden="true"></i>Contact</a>
                     <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
                        <i class="fa fa-sign-out" aria-hidden="true"></i>
                         Sign-out
@@ -370,21 +358,27 @@
 
     </asp:Table>
     <%--SuccesPromptModal--%>
-    <div class="modal fade" id="SuccessPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content rounded-0">
-                <div class="modal-body p-4 px-5">
-                    <div class="main-content text-center">
-                        <br />
-                        <img src="images/check-mark.png" style="width: 100px; height: auto;" /><br />
-                        <asp:Label ID="Label11" runat="server" Text="Submitted !" Style="font-size: 25px;"></asp:Label><br />
-                        <asp:Label ID="Label12" runat="server" Text="Your suggestion was succesfully submitted." Style="font-size: 18px;"></asp:Label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <asp:Button runat="server" type="button" class="btn btn-secondary" Text="Close" OnClick="Close_SuccessPrompt" />
-                </div>
-            </div>
-        </div>
-    </div>
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                height: 300,
+                placeholder: 'Input message...',
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font',],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+
+                    ['height', ['height']]
+                ]
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.selectpicker').selectpicker();
+        });
+    </script>
 </asp:Content>
+

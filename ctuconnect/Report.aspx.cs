@@ -49,7 +49,7 @@ namespace ctuconnect
         }
         protected void SubmitReport_Click(object sender, EventArgs e)
         {
-            if (industry.SelectedIndex == 0 || string.IsNullOrEmpty(reasonTxt.Text))
+            if (industry.SelectedIndex == 0 || string.IsNullOrEmpty(reasonTxt.Value))
             {
                 Response.Write("<script>alert('Please fill up the required field.')</script>");
             }
@@ -57,7 +57,7 @@ namespace ctuconnect
               
                 int industry_accID = int.Parse(industry.SelectedValue);
                 int student_accID = int.Parse(Session["Student_ACC_ID"].ToString());
-                string reason = HttpUtility.HtmlEncode(reasonTxt.Text);
+                string reason = reasonTxt.Value;
                 string status = "Open";
                 conDB.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO DISPUTE (industry_accID, student_accID, reason,dateAdded, status) " +
