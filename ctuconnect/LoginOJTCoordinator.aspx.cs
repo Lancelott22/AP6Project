@@ -107,10 +107,10 @@ namespace ctuconnect
                     if (reader.Read())
                     {
                         Session["Coor_ACC_ID"] = reader["coordinator_accID"];
-                        Session["FNAME"] = reader["firstNanme"];
+                        Session["FNAME"] = reader["firstName"];
                         Session["MIDNAME"] = reader["midInitials"];
                         Session["LNAME"] = reader["lastName"];
-                        Session["DEPART"] = reader["department"];
+                        Session["DEPART"] = reader["department_ID"];
                         Session["USRNAME"] = reader["username"];
                         Session["PWD"] = reader["password"];
                         

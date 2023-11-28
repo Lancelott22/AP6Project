@@ -1,4 +1,5 @@
 ﻿using iTextSharp.tool.xml.html;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -7,6 +8,8 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.EnterpriseServices;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Web;
@@ -76,7 +79,6 @@ namespace ctuconnect
 
         }
 
-
         void ChangeReviewButtonText()
         {
             foreach (RepeaterItem item in rptApplicant.Items)
@@ -97,7 +99,7 @@ namespace ctuconnect
                         {
                             btnReview.Text = "Reviewed";
                             lblresumeStatus.BackColor = System.Drawing.Color.GreenYellow;
-                            lblresumeStatus.Style["width"] = "85px";
+                            lblresumeStatus.Style["width"] = "90px";
                             lblresumeStatus.Style["padding-left"] = "0.5em";
                             lblresumeStatus.Style["height"] = "20px";
                             lblresumeStatus.Style["border-radius"] = "15px";
@@ -136,7 +138,7 @@ namespace ctuconnect
                         {
                             btnSchedule.Text = "Reschedule";
                             lblinterviewStatus.BackColor = System.Drawing.Color.GreenYellow;
-                            lblinterviewStatus.Style["width"] = "90px";
+                            lblinterviewStatus.Style["width"] = "100px";
                             lblinterviewStatus.Style["padding-left"] = "0.5em";
                             lblinterviewStatus.Style["height"] = "20px";
                             lblinterviewStatus.Style["border-radius"] = "15px";
@@ -188,7 +190,7 @@ namespace ctuconnect
                             btnApplication.Visible = false;
                             btnSchedule.Visible = false;
                             lblapplicantStatus.BackColor = System.Drawing.Color.GreenYellow;
-                            lblapplicantStatus.Style["width"] = "90px";
+                            lblapplicantStatus.Style["width"] = "100px";
                             lblapplicantStatus.Style["padding-left"] = "0.5em";
                             lblapplicantStatus.Style["height"] = "20px";
                             lblapplicantStatus.Style["border-radius"] = "15px";
@@ -200,7 +202,7 @@ namespace ctuconnect
                             btnApplication.Visible = false;
                             btnSchedule.Visible = false;
                             lblapplicantStatus.BackColor = System.Drawing.Color.Red;
-                            lblapplicantStatus.Style["width"] = "80px";
+                            lblapplicantStatus.Style["width"] = "90px";
                             lblapplicantStatus.Style["padding-left"] = "0.5em";
                             lblapplicantStatus.Style["height"] = "20px";
                             lblapplicantStatus.Style["border-radius"] = "15px";
@@ -268,6 +270,39 @@ namespace ctuconnect
             rptApplicant.DataSource = dtApplicants;
             rptApplicant.DataBind();
         }
+
+        
+        protected void SearchApplicant_Click(object sender, EventArgs e)
+        {
+            string applicantss = ApplicantsID.Text;
+            SearchApplicants(applicantss);
+        }
+
+        void SearchApplicants(string applicantss)
+        {
+            int industryAccID = Convert.ToInt32(Session["INDUSTRY_ACC_ID"].ToString());
+            using (var db = new SqlConnection(conDB))
+            {
+                string query = "SELECT * FROM APPLICANT WHERE industry_accID = @industryAcctID and applicantFname LIKE '%" + applicantss + "%' or " +
+                    "applicantLname LIKE '%" + applicantss + "%' or resumeStatus LIKE '%" + applicantss + "%' or " +
+                    "interviewStatus LIKE '%" + applicantss + "%' or applicantStatus LIKE '%" + applicantss + "%' ORDER BY dateApplied DESC";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@industryAcctID", industryAccID);
+
+                db.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dtApplicants);
+            }
+
+            rptApplicant.DataSource = dtApplicants;
+            rptApplicant.DataBind();
+            this.ChangeReviewButtonText();
+            this.ChangeScheduleButtonText();
+            this.ChangeApplicantButton();
+            this.endorsementButton();
+
+        }
+        
 
         protected void EndorsementButton_Command(object sender, CommandEventArgs e)
         {
@@ -349,10 +384,64 @@ namespace ctuconnect
                 SqlCommand cmd = new SqlCommand(query, db);
                 cmd.Parameters.AddWithValue("@applicantID", applicantID);
                 cmd.Parameters.AddWithValue("@ResumeReviewDate", DateTime.Now.ToString("yyyy/MM/dd"));
-
+                
                 db.Open();
                 cmd.ExecuteNonQuery();
+
+                sendResumeStatus(applicantID);
             }
+        }
+
+        void sendResumeStatus(int applicantID)
+        {
+            string industryName = Session["INDUSTRYNAME"].ToString();
+
+            using (SqlConnection connection = new SqlConnection(conDB))
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT * FROM APPLICANT WHERE applicantID = @ApplicantID";
+                    command.Parameters.AddWithValue("@ApplicantID", applicantID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+
+                            string emailApplicant = reader["applicantEmail"].ToString();
+                            string positionApplicant = reader["appliedPosition"].ToString();
+                            string nameApplicant = reader["applicantFname"].ToString() + " " + reader["applicantLname"].ToString();
+
+                            reader.Close();
+
+                            MailMessage mm = new MailMessage("ctuconnect00@gmail.com", emailApplicant);
+                            mm.Subject = "Resume Status";
+                            mm.Body = string.Format("Dear {0}, <br /><br />" +
+                                "I am writing to inform you that we have thoroughly reviewed your resume " +
+                                "for the {1} position at {2}. Your qualifications " +
+                                "have captured our attention, and we appreciate the effort you put into your application. " +
+                                "Currently, we are in the process of evaluating all applicants and will be " +
+                                "reaching out shortly with an update of your interview schedule. " +
+                                "Thank you for your patience!<br/><br/>" +
+                                "Best regards,<br/>" +
+                                "{3}", nameApplicant, positionApplicant, industryName, industryName);
+                            mm.IsBodyHtml = true;
+                            SmtpClient smtp = new SmtpClient();
+                            smtp.Host = "smtp.gmail.com";
+                            smtp.EnableSsl = true;
+                            NetworkCredential NetworkCred = new NetworkCredential();
+                            NetworkCred.UserName = "ctuconnect00@gmail.com";
+                            NetworkCred.Password = "diwvlfhaanwwfsid";
+                            smtp.UseDefaultCredentials = true;
+                            smtp.Credentials = NetworkCred;
+                            smtp.Port = 587;
+                            smtp.Send(mm);
+
+                        }
+                    }
+                }
+            }    
         }
 
         private byte[] GetResumeFileData(int applicantID)
@@ -383,12 +472,13 @@ namespace ctuconnect
         {
 
             int applicantID = currentApplicantID;
-            string interviewDetails = txtInterviewDetails.Text;
+            //string interviewDetails = txtInterviewDetails.Text;
+            string interviewDetails = HttpUtility.HtmlEncode(txtInterviewDetails.Text);
             //string interviewScheduledDate = txtInterviewDate.Text;
             DateTime ScheduledDate = Convert.ToDateTime(txtInterviewDate.Text);
 
             //Check if the selected date is in the past
-            if (ScheduledDate < DateTime.Now.Date)
+            if (ScheduledDate <= DateTime.Now.Date)
             {
                 Response.Write("<script>alert('Invalid Date!')</script>");
                 lblinterviewdate.Visible = false;
@@ -411,6 +501,7 @@ namespace ctuconnect
 
                         cmd.ExecuteNonQuery();
 
+                        sendInterviewStatus(applicantID);
                     }
 
                 }
@@ -424,16 +515,75 @@ namespace ctuconnect
 
         }
 
+        void sendInterviewStatus(int applicantID)
+        {
+            string industryName = Session["INDUSTRYNAME"].ToString();
+            string industryLocation = Session["LOCATION"].ToString();
+
+            using (SqlConnection connection = new SqlConnection(conDB))
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT * FROM APPLICANT WHERE applicantID = @ApplicantID";
+                    command.Parameters.AddWithValue("@ApplicantID", applicantID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+
+                            string emailApplicant = reader["applicantEmail"].ToString();
+                            string positionApplicant = reader["appliedPosition"].ToString();
+                            string nameApplicant = reader["applicantFname"].ToString() + " " + reader["applicantLname"].ToString();
+                            DateTime interviewScheduledDate = Convert.ToDateTime(reader["interviewScheduledDate"]);
+                            string interviewSched = interviewScheduledDate.ToString("MM/dd/yyyy");
+
+
+                            reader.Close();
+
+                            MailMessage mm = new MailMessage("ctuconnect00@gmail.com", emailApplicant);
+                            mm.Subject = "Interview Status";
+                            mm.Body = string.Format("Dear {0}, <br /><br />" +
+                                "I trust this email finds you well. We are pleased to inform you that your application for <br/>" +
+                                "the {1} position at {2} has progressed successfully," +
+                                "and we would like to invite you for an interview.<br/><br/>" +
+                                "Your interview has been scheduled for:<br/><br/>" +
+                                "Date: {3}<br/>" +
+                                "Location: {4}<br/><br/>" +
+                                "We look forward to discussing your qualifications, experiences, and how they align with the<br/>" +
+                                "requirements of the position. Please be prepared to share more about your skills and insights into <br/>" +
+                                "how you can contribute to our team.<br/><br/>" +
+                                "Best regards,<br/>" +
+                                "{5}", nameApplicant, positionApplicant, industryName, interviewSched, industryLocation, industryName);
+                            mm.IsBodyHtml = true;
+                            SmtpClient smtp = new SmtpClient();
+                            smtp.Host = "smtp.gmail.com";
+                            smtp.EnableSsl = true;
+                            NetworkCredential NetworkCred = new NetworkCredential();
+                            NetworkCred.UserName = "ctuconnect00@gmail.com";
+                            NetworkCred.Password = "diwvlfhaanwwfsid";
+                            smtp.UseDefaultCredentials = true;
+                            smtp.Credentials = NetworkCred;
+                            smtp.Port = 587;
+                            smtp.Send(mm);
+
+                        }
+                    }
+                }
+            }
+        }
+
 
         protected void txtDate_TextChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(txtInterviewDate.Text))
             {
 
-                if (Convert.ToDateTime(txtInterviewDate.Text) < DateTime.Now.Date)
+                if (Convert.ToDateTime(txtInterviewDate.Text) <= DateTime.Now.Date)
                 {
                     lblinterviewdate.Visible = true;
-                    lblinterviewdate.Text = "Interview date must be a current or future date.";
+                    lblinterviewdate.Text = "Interview date must be a future date.";
                 }
                 else
                 {
@@ -455,7 +605,12 @@ namespace ctuconnect
                 if (Convert.ToDateTime(txtDateStart.Text) <= DateTime.Now.Date)
                 {
                     lblerrordate.Visible = true;
-                    lblerrordate.Text = "Date start must be in the future.";
+                    lblerrordate.Text = "Date start must be a future date.";
+                }
+                else if (txtDateStart.Text == GetInterviewDateFromDatabase(currentApplicantID))
+                {
+                    lblerrordate.Visible = true;
+                    lblerrordate.Text = "Start date conflicts with interview date. Choose a different start date.";
                 }
                 else
                 {
@@ -470,7 +625,6 @@ namespace ctuconnect
 
         }
 
-
         private int currentApplicantID;
 
         protected void btnSchedule_Click(object sender, EventArgs e)
@@ -478,7 +632,7 @@ namespace ctuconnect
             Button btnSchedule = (Button)sender;
             currentApplicantID = Convert.ToInt32(btnSchedule.CommandArgument);
 
-            string interviewDetails = GetInterviewDetailsFromDatabase(currentApplicantID);
+            string interviewDetails = HttpUtility.HtmlDecode(GetInterviewDetailsFromDatabase(currentApplicantID));
             string interviewScheduledDate = GetInterviewDateFromDatabase(currentApplicantID);
 
 
@@ -513,6 +667,8 @@ namespace ctuconnect
                             if (!reader.IsDBNull(0))
                             {
                                 interviewDetails = reader.GetString(0);
+                                //interviewDetails = HttpUtility.HtmlDecode(reader.GetString(0));
+
                             }
                         }
                     }
@@ -531,7 +687,7 @@ namespace ctuconnect
             {
                 connection.Open();
 
-                string query = "SELECT interviewDate FROM APPLICANT WHERE applicantID = @applicantID";
+                string query = "SELECT interviewScheduledDate FROM APPLICANT WHERE applicantID = @applicantID";
 
                 using (var command = new SqlCommand(query, connection))
                 {
@@ -572,7 +728,7 @@ namespace ctuconnect
         {
             Button btnApplication = (Button)sender;
             currentApplicantID = Convert.ToInt32(btnApplication.CommandArgument);
-            string requirements = GetRequirementsFromDatabase(currentApplicantID);
+            string requirements = HttpUtility.HtmlDecode(GetRequirementsFromDatabase(currentApplicantID));
             string dateStart = GetDateStartFromDatabase(currentApplicantID);
 
             // Store currentApplicantID in ViewState
@@ -584,108 +740,219 @@ namespace ctuconnect
 
         protected void Submit_ButtonClick(object sender, EventArgs e)
         {    
-                int applicantID = currentApplicantID;
-                
-                string selectedStatus = drpApplicantStatus.Text;
-      
-                if (selectedStatus == "Reject")
+            int applicantID = currentApplicantID;           
+            string selectedStatus = drpApplicantStatus.Text;
+
+
+            if (selectedStatus == "Reject")
+            {
+                txtrequirements.Text = string.Empty;
+                txtDateStart.Text = string.Empty;
+                string status = "Rejected";
+                using (var db = new SqlConnection(conDB))
                 {
-                    txtrequirements.Text = string.Empty;
-                    txtDateStart.Text = string.Empty;
-                    string status = "Rejected";
-                    using (var db = new SqlConnection(conDB))
-                    {
-                        string query = "UPDATE APPLICANT SET applicantStatus = @ApplicantStatus, applicationApprovalDate = @ApplicationDate WHERE applicantID = @applicantID";
-                        SqlCommand cmd = new SqlCommand(query, db);
-                        cmd.Parameters.AddWithValue("@applicantID", applicantID);
-                        cmd.Parameters.AddWithValue("@ApplicantStatus", status);
-                        cmd.Parameters.AddWithValue("@ApplicationDate", DateTime.Now.ToString("yyyy/MM/dd"));
+                    string query = "UPDATE APPLICANT SET applicantStatus = @ApplicantStatus, applicationApprovalDate = @ApplicationDate WHERE applicantID = @applicantID";
+                    SqlCommand cmd = new SqlCommand(query, db);
+                    cmd.Parameters.AddWithValue("@applicantID", applicantID);
+                    cmd.Parameters.AddWithValue("@ApplicantStatus", status);
+                    cmd.Parameters.AddWithValue("@ApplicationDate", DateTime.Now.ToString("yyyy/MM/dd"));
 
-                        db.Open();
-                        cmd.ExecuteNonQuery();
+                    db.Open();
+                    cmd.ExecuteNonQuery();
+                    sendApplicationStatusReject(applicantID);
 
-                    }
                 }
-                else if (selectedStatus == "Approve")
+            }
+            else if (selectedStatus == "Approve")
+            {
+                //string requirements = txtrequirements.Text;
+                string requirements = HttpUtility.HtmlEncode(txtrequirements.Text);
+                DateTime dateStart = Convert.ToDateTime(txtDateStart.Text);
+
+                //Check if the selected date is in the past
+                if (dateStart <= DateTime.Now.Date || txtDateStart.Text == GetInterviewDateFromDatabase(applicantID))
                 {
-                    string requirements = txtrequirements.Text;
-                    DateTime dateStart = Convert.ToDateTime(txtDateStart.Text);
+                    Response.Write("<script>alert('Invalid Date!')</script>");
+                    lblerrordate.Visible = false;
+                    return;
+                }
 
-                    //Check if the selected date is in the past
-                    if (dateStart < DateTime.Now.Date)
+                string status = "Approved";
+                using (var db = new SqlConnection(conDB))
+                {
+                    string query = "UPDATE APPLICANT SET applicantStatus = @ApplicantStatus, applicationApprovalDate = @ApplicationDate, dateStart = @DateStart, requirements = @Requirements WHERE applicantID = @applicantID";
+                    SqlCommand cmd = new SqlCommand(query, db);
+                    cmd.Parameters.AddWithValue("@applicantID", applicantID);
+                    cmd.Parameters.AddWithValue("@ApplicantStatus", status);
+                    cmd.Parameters.AddWithValue("@ApplicationDate", DateTime.Now.ToString("yyyy/MM/dd"));
+                    cmd.Parameters.AddWithValue("@Requirements", requirements);
+                    cmd.Parameters.AddWithValue("@DateStart", dateStart);
+
+                    db.Open();
+                    cmd.ExecuteNonQuery();
+
+                    if (selectedStatus == "Approve")
                     {
-                        Response.Write("<script>alert('Invalid Date!')</script>");
-                        lblerrordate.Visible = false;
-                        return;
-                    }
-                    
-                        string status = "Approved";
-                        using (var db = new SqlConnection(conDB))
+                        using (SqlConnection connection = new SqlConnection(conDB))
                         {
-                            string query = "UPDATE APPLICANT SET applicantStatus = @ApplicantStatus, applicationApprovalDate = @ApplicationDate, dateStart = @DateStart, requirements = @Requirements WHERE applicantID = @applicantID";
-                            SqlCommand cmd = new SqlCommand(query, db);
-                            cmd.Parameters.AddWithValue("@applicantID", applicantID);
-                            cmd.Parameters.AddWithValue("@ApplicantStatus", status);
-                            cmd.Parameters.AddWithValue("@ApplicationDate", DateTime.Now.ToString("yyyy/MM/dd"));
-                            cmd.Parameters.AddWithValue("@Requirements", requirements);
-                            cmd.Parameters.AddWithValue("@DateStart", dateStart);
-
-                            db.Open();
-                            cmd.ExecuteNonQuery();
-
-                            if (selectedStatus == "Approve")
+                            connection.Open();
+                            using (SqlCommand command = connection.CreateCommand())
                             {
-                                using (SqlConnection connection = new SqlConnection(conDB))
+                                command.CommandType = CommandType.Text;
+                                command.CommandText = "SELECT jobType, student_accID, applicantFname, applicantLname, appliedPosition, resume, jobID, APPLICANT.industry_accID, StudentType, INDUSTRY_ACCOUNT.industryName, dateStart FROM APPLICANT " +
+                                    "JOIN INDUSTRY_ACCOUNT ON APPLICANT.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
+                                    "WHERE applicantID = @ApplicantID";
+                                command.Parameters.AddWithValue("@ApplicantID", applicantID);
+                                using (SqlDataReader reader = command.ExecuteReader())
                                 {
-                                    connection.Open();
-                                    using (SqlCommand command = connection.CreateCommand())
+                                    if (reader.Read())
                                     {
-                                        command.CommandType = CommandType.Text;
-                                        command.CommandText = "SELECT jobType, student_accID, applicantFname, applicantLname, appliedPosition, resume, jobID, APPLICANT.industry_accID, StudentType, INDUSTRY_ACCOUNT.industryName, dateStart FROM APPLICANT " +
-                                            "JOIN INDUSTRY_ACCOUNT ON APPLICANT.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
-                                            "WHERE applicantID = @ApplicantID";
-                                        command.Parameters.AddWithValue("@ApplicantID", applicantID);
-                                        using (SqlDataReader reader = command.ExecuteReader())
-                                        {
-                                            if (reader.Read())
-                                            {
-                                                string jobType = reader["jobType"].ToString();
-                                                string student_accID = reader["student_accID"].ToString();
-                                                int studentID = Convert.ToInt32(student_accID);
-                                                string applicantfname = reader["applicantFname"].ToString();
-                                                string applicantlname = reader["applicantLname"].ToString();
-                                                string jobID = reader["jobID"].ToString();
-                                                int jobid = Convert.ToInt32(jobID);
-                                                string industry_accID = reader["industry_accID"].ToString();
-                                                int industryID = Convert.ToInt32(industry_accID);
-                                                string studentType = reader["StudentType"].ToString();
-                                                string WorkedAt = reader["industryName"].ToString();
-                                                string position = reader["appliedPosition"].ToString();
-                                                string resumefile = reader["resume"].ToString();
-                                                object dateStarted = reader["dateStart"].ToString();
-                                                DateTime startingDate = Convert.ToDateTime(dateStarted);
-                                                reader.Close();
+                                        string jobType = reader["jobType"].ToString();
+                                        string student_accID = reader["student_accID"].ToString();
+                                        int studentID = Convert.ToInt32(student_accID);
+                                        string applicantfname = reader["applicantFname"].ToString();
+                                        string applicantlname = reader["applicantLname"].ToString();
+                                        string jobID = reader["jobID"].ToString();
+                                        int jobid = Convert.ToInt32(jobID);
+                                        string industry_accID = reader["industry_accID"].ToString();
+                                        int industryID = Convert.ToInt32(industry_accID);
+                                        string studentType = reader["StudentType"].ToString();
+                                        string WorkedAt = reader["industryName"].ToString();
+                                        string position = reader["appliedPosition"].ToString();
+                                        string resumefile = reader["resume"].ToString();
+                                        object dateStarted = reader["dateStart"].ToString();
+                                        DateTime startingDate = Convert.ToDateTime(dateStarted);
+                                        reader.Close();
 
-                                                editStudentAccount(studentID);
-                                                InsertHiredList(jobType, studentID, applicantfname, applicantlname, jobid, industryID, studentType, WorkedAt, position, resumefile, startingDate);
-
-                                            }
-                                        }
+                                        editStudentAccount(studentID);
+                                        InsertHiredList(jobType, studentID, applicantfname, applicantlname, jobid, industryID, studentType, WorkedAt, position, resumefile, startingDate);
+                                        sendApplicationStatusApprove(applicantID);
                                     }
                                 }
-
                             }
                         }
-                    
+
+                    }
                 }
+            }
+            else
+            {
+                Response.Write("<script>alert('Invalid Input!')</script>");
+                return;
+            }
 
-                
-                this.LoadApplicants();
-                ChangeReviewButtonText();
-                ChangeScheduleButtonText();
-                ChangeApplicantButton();
-                endorsementButton();
+            this.LoadApplicants();
+            ChangeReviewButtonText();
+            ChangeScheduleButtonText();
+            ChangeApplicantButton();
+            endorsementButton();
+            
+        }
 
+        void sendApplicationStatusReject(int applicantID)
+        {
+            string industryName = Session["INDUSTRYNAME"].ToString();
+
+            using (SqlConnection connection = new SqlConnection(conDB))
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT * FROM APPLICANT WHERE applicantID = @ApplicantID";
+                    command.Parameters.AddWithValue("@ApplicantID", applicantID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+
+                            string emailApplicant = reader["applicantEmail"].ToString();
+                            string positionApplicant = reader["appliedPosition"].ToString();
+                            string nameApplicant = reader["applicantFname"].ToString() + " " + reader["applicantLname"].ToString();
+
+
+                            reader.Close();
+
+                            MailMessage mm = new MailMessage("ctuconnect00@gmail.com", emailApplicant);
+                            mm.Subject = "Update on Your Application";
+                            mm.Body = string.Format("Dear {0}, <br /><br />" +
+                                "I hope this message finds you well. Thank you for your interest in the {1} position at {2} <br/>" +
+                                "and for participating in our interview process. After careful consideration, we regret <br/>" +
+                                "to inform you that we have chosen not to move forward with your application at this time.<br/><br/>" +
+                                "We appreciate your time and effort and wish you success in your future endeavors.<br/><br/>" +
+                                "Best regards,<br/>" +
+                                "{3}", nameApplicant, positionApplicant, industryName, industryName);
+                            mm.IsBodyHtml = true;
+                            SmtpClient smtp = new SmtpClient();
+                            smtp.Host = "smtp.gmail.com";
+                            smtp.EnableSsl = true;
+                            NetworkCredential NetworkCred = new NetworkCredential();
+                            NetworkCred.UserName = "ctuconnect00@gmail.com";
+                            NetworkCred.Password = "diwvlfhaanwwfsid";
+                            smtp.UseDefaultCredentials = true;
+                            smtp.Credentials = NetworkCred;
+                            smtp.Port = 587;
+                            smtp.Send(mm);
+
+                        }
+                    }
+                }
+            }
+        }
+
+        void sendApplicationStatusApprove(int applicantID)
+        {
+            string industryName = Session["INDUSTRYNAME"].ToString();
+
+            using (SqlConnection connection = new SqlConnection(conDB))
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT * FROM APPLICANT WHERE applicantID = @ApplicantID";
+                    command.Parameters.AddWithValue("@ApplicantID", applicantID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+
+                            string emailApplicant = reader["applicantEmail"].ToString();
+                            string positionApplicant = reader["appliedPosition"].ToString();
+                            string nameApplicant = reader["applicantFname"].ToString() + " " + reader["applicantLname"].ToString();
+                            DateTime dateStartApplicant = Convert.ToDateTime(reader["dateStart"]);
+                            string dateStart = dateStartApplicant.ToString("MM/dd/yyyy");
+                            string requirementApplicant = reader["requirements"].ToString();
+
+                            reader.Close();
+
+                            MailMessage mm = new MailMessage("ctuconnect00@gmail.com", emailApplicant);
+                            mm.Subject = "Update on Your Application";
+                            mm.Body = string.Format("Dear {0}, <br /><br />" +
+                                "I am delighted to inform you that your application for the {1} position has been approved, <br/>" +
+                                "and we are thrilled to welcome you to {2} Company. <br/><br/>" +
+                                "Start Date: {3}<br/><br/>" +
+                                "Requirements: <br/>" +
+                                "{4}. <br/><br/>" +
+                                "Best of luck, and we look forward to welcoming you to {5} Company!<br/><br/>" +
+                                "Best regards,<br/>" +
+                                "{6}", nameApplicant, positionApplicant, industryName, dateStart, requirementApplicant, industryName, industryName);
+                            mm.IsBodyHtml = true;
+                            SmtpClient smtp = new SmtpClient();
+                            smtp.Host = "smtp.gmail.com";
+                            smtp.EnableSsl = true;
+                            NetworkCredential NetworkCred = new NetworkCredential();
+                            NetworkCred.UserName = "ctuconnect00@gmail.com";
+                            NetworkCred.Password = "diwvlfhaanwwfsid";
+                            smtp.UseDefaultCredentials = true;
+                            smtp.Credentials = NetworkCred;
+                            smtp.Port = 587;
+                            smtp.Send(mm);
+
+                        }
+                    }
+                }
+            }
         }
 
         private string GetRequirementsFromDatabase(int applicantID)

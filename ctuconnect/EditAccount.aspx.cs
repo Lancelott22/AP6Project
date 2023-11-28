@@ -239,8 +239,7 @@ namespace ctuconnect
                         + "WHERE student_accID='" + studentAcctID + "'";
                     var ctr = cmd.ExecuteNonQuery();
                     if (ctr > 0)
-                        Response.Write("<script>alert('Record Updated!')</script>");
-                    Response.Redirect("MyAccount.aspx");
+                        Response.Write("<script>alert('Record Updated!');document.location='MyAccount.aspx'</script>");
 
                 }
 

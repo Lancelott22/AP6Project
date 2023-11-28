@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -11,21 +12,34 @@ namespace ctuconnect
 {
     public partial class Student : System.Web.UI.MasterPage
     {
-        SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
+        string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
+        private DataTable dtRefer = new DataTable();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-                displayStudentInfo();
-            
+            if (!IsPostBack)
+            {
+                studentDetails();
+                displayStudentPic();
+            }
+            int totalCounts = UnreadReferCount();
+            lblUnreadCount.Text = totalCounts.ToString();
+
+            this.LoadRefer();
+            rptrefer.DataSource = dtRefer;
+            rptrefer.DataBind();
+
+            refreshCounting();
+            disableHeader();
+
         }
 
-        private void displayStudentInfo()
+        private void displayStudentPic()
         {
-            if (!string.IsNullOrEmpty(Session["PROFILE"].ToString()))
+            if (!string.IsNullOrEmpty(Session["PICTURE"].ToString()))
             {
-                imageProfile.ImageUrl = "~/images/StudentProfiles/" + Session["PROFILE"].ToString();
-                profileimg.Src = "~/images/StudentProfiles/" + Session["PROFILE"].ToString();
+                imageProfile.ImageUrl = "~/images/StudentProfiles/" + Session["PICTURE"].ToString();
+                profileimg.Src = "~/images/StudentProfiles/" + Session["PICTURE"].ToString();
             }
             else
             {
@@ -33,8 +47,209 @@ namespace ctuconnect
                 profileimg.Src = "~/images/StudentProfiles/defaultprofile.jpg";
             }
 
-            lblname.Text = Session["FNAME"].ToString() + " " + Session["LNAME"].ToString();
-            lblstudentID.Text = Session["STUDENT_ID"].ToString();
+        }
+
+        private void studentDetails()
+        {
+            string studentAccID = Session["Student_ACC_ID"].ToString();
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "SELECT * FROM STUDENT_ACCOUNT WHERE student_accID = '" + studentAccID + "' ";
+                SqlCommand command = new SqlCommand(query, db);
+                db.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    lblname.Text = reader["firstName"].ToString() + " " + reader["lastName"].ToString();
+                    Session["PICTURE"] = reader["studentPicture"];
+                    lblstudentID.Text = reader["studentID"].ToString();
+
+                }
+                reader.Close();
+            }
+        }
+
+        void refreshCounting()
+        {
+            if (lblUnreadCount.Text == "0")
+            {
+                lblUnreadCount.Visible = false;
+            }
+            else
+            {
+                lblUnreadCount.Visible = true;
+            }
+        }
+
+        void disableHeader()
+        {
+
+            if (rptrefer.Items.Count == 0)
+            {
+                // Find the headerTemplateContainer and set its Visible property to false
+                Control headerTemplateContainer = rptrefer.Controls[0].Controls[0].FindControl("headerTemplateContainer");
+
+                if (headerTemplateContainer != null)
+                {
+                    headerTemplateContainer.Visible = false;
+                }
+            }
+
+        }
+
+        private void LoadRefer()
+        {
+            string studentAccID = Session["Student_ACC_ID"].ToString();
+
+
+                using (var db = new SqlConnection(conDB))
+                {
+                    string query = "SELECT * FROM REFERRAL JOIN INDUSTRY_ACCOUNT ON REFERRAL.INDUSTRY_ACCID = INDUSTRY_ACCOUNT.INDUSTRY_ACCID WHERE isStudentRemove = 0 and student_accID = '" + studentAccID + "' ORDER BY dateReferred DESC";
+                    SqlCommand cmd = new SqlCommand(query, db);
+
+                    db.Open();
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(dtRefer);
+                }
+
+
+                rptrefer.DataSource = dtRefer;
+                rptrefer.DataBind();
+                disableHeader();
+            
+
+        }
+
+        protected int UnreadReferCount()
+        {
+            string studentAccID = Session["Student_ACC_ID"].ToString();
+            int count = 0;
+
+            // Replace with your connection string
+            string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(conDB))
+            {
+                connection.Open();
+
+                string query = "SELECT COUNT(*) FROM REFERRAL WHERE isStudentRead = 0 and student_accID = '" + studentAccID + "'";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    count = (int)command.ExecuteScalar();
+                }
+            }
+
+            return count;
+        }
+
+        protected void readRefer_ItemCommand(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "MarkAsRead")
+            {
+                int referralID = Convert.ToInt32(e.CommandArgument);
+
+                MarkReferAsRead(referralID);
+
+
+            }
+            // Refresh the notifications
+            this.LoadRefer();
+            this.UnreadReferCount();
+
+        }
+
+
+        private void MarkReferAsRead(int referralID)
+        {
+
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE REFERRAL SET isStudentRead = 1 WHERE referralID = @ReferralID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@ReferralID", referralID);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+
+
+                // Update the unread count
+                int totalCounts = UnreadReferCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            this.disableHeader();
+            RedirectToJobPortal(referralID);
+
+
+        }
+
+        private void RedirectToJobPortal(int referralID)
+        {
+            Response.Redirect("JobPortal.aspx?referralID=" + referralID);
+        }
+
+        private void ReferRead(int referralID)
+        {
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE REFERRAL SET isStudentRead = 1 WHERE referralID = @ReferralID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@ReferralID", referralID);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+
+
+                // Update the unread count
+                int totalCounts = UnreadReferCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            this.disableHeader();
+        }
+
+        protected void removeRefer_ItemCommand(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "MarkAsRemove")
+            {
+                int referralID = Convert.ToInt32(e.CommandArgument);
+
+                MarkReferAsRemoved(referralID);
+                ReferRead(referralID);
+
+
+            }
+
+            // Refresh the notifications
+            this.LoadRefer();
+            this.UnreadReferCount();
+        }
+        private void MarkReferAsRemoved(int referralID)
+        {
+            // Update the isRemove property in the database
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE REFERRAL SET isStudentRemove = 1 WHERE referralID = @ReferralID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@ReferralID", referralID);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+                int totalCounts = UnreadReferCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            //this.disableHeader();
+
+            if (rptrefer.Items.Count == 1)
+            {
+                disableHeader();
+            }
         }
 
         protected void SignOut_Click(object sender, EventArgs e)

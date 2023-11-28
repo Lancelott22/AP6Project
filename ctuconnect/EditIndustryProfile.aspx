@@ -1,56 +1,51 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Student.Master" AutoEventWireup="true" CodeBehind="EditAccount.aspx.cs" Inherits="ctuconnect.EditAccount" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Industry.Master" AutoEventWireup="true" CodeBehind="EditIndustryProfile.aspx.cs" Inherits="ctuconnect.EditIndustryProfile" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <style>
-        .container {
-            min-height: 550px;
-            background-color: #FFFFFF;
-            width:55%;
-            border: 1px solid #FFFFFF;
-            padding-top:2em;
-            padding-left:2em;
-            padding-right:2em;
-            font-size:20px;
+    .container {
+        min-height: 550px;
+        background-color: #FFFFFF;
+        width:55%;
+        border: 1px solid #FFFFFF;
+        padding-top:2em;
+        padding-left:2em;
+        padding-right:2em;
+        font-size:20px;
   
-        }
+    }
 
-        .txtbox{
-            border-radius: 5px;
+    .txtbox{
+        border-radius: 5px;
 
-    
-        }
 
-        .btn-md{
-            border: 1px #F7941F;
-            background-color: #F7941F;
-            position:center;
-            width: 120px;
-            height:45px;
-        }
+    }
 
-        .btn-cancel{
-            border: 1px solid #F7941F;
-            background-color: #F0EBEB;
-            position:center;
-            width: 120px;
-            height:45px;
-            color:  #F7941F;
-        }
+    .btn-md{
+        border: 1px #F7941F;
+        background-color: #F7941F;
+        position:center;
+        width: 120px;
+        height:45px;
+    }
 
-        .container2{
-            min-height: 550px;
-            width:55%;
-            padding-top:2em;
-            padding-left:400px;
-            padding-right:2em;
-        }
+    .btn-cancel{
+        border: 1px solid #F7941F;
+        background-color: #F0EBEB;
+        position:center;
+        width: 120px;
+        height:45px;
+        color:  #F7941F;
+    }
+
+    .container2{
+        min-height: 550px;
+        width:55%;
+        padding-top:2em;
+        padding-left:400px;
+        padding-right:2em;
+    }
     </style>
-
-
-
-
-
 <div class="container-fluid">
     <br />
     <div class="container">
@@ -69,16 +64,33 @@
             <br />
             <div class="row">
                 <div class="col-sm-12">
-                    <b>Account Details</b>
+                    <b>Industry Details</b>
                 </div>         
             </div>
             <br />
             <div class="row">
                 <div class="col-sm-3">
-                    Last Name
+                    Name
                 </div>
                 <div class="col-sm-9">
-                    <asp:TextBox ID="txtlname" runat="server" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>
+                    <asp:TextBox ID="txtname" runat="server" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-3">
+                    Location
+                </div>
+                <div class="col-sm-9">
+                    <asp:TextBox ID="txtlocation" runat="server" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Contact Person</b>
+                    </div>         
                 </div>
             </div>
             <br />
@@ -93,38 +105,40 @@
             <br />
             <div class="row">
                 <div class="col-sm-3">
-                    Middle Initial
+                    Last Name
                 </div>
                 <div class="col-sm-9">
-                    <asp:TextBox ID="txtinitials" runat="server" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>                    
+                    <asp:TextBox ID="txtlname" runat="server" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>
                 </div>
             </div>
             <br />
             <div class="row">
                 <div class="col-sm-3">
-                    Student Status
+                    Position
                 </div>
                 <div class="col-sm-9">
-                    <asp:DropDownList ID="drpStudentStatus" CssClass="txtbox" runat="server" Width="400px" Height="30px">
-                    <asp:ListItem>Intern</asp:ListItem>
-                    <asp:ListItem>Alumni</asp:ListItem>
-                    <asp:ListItem>Withdraw</asp:ListItem>
-                    </asp:DropDownList>
+                    <asp:TextBox ID="txtposition" runat="server" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>
                 </div>
             </div>
             <br />
             <div class="row">
                 <div class="col-sm-3">
-                    Resume
+                    Contact Number
                 </div>
                 <div class="col-sm-9">
-                    <asp:FileUpload ID="resumeUpload" runat="server" Width="300px"/>
-                    <asp:Label ID="lblResumeFileName" runat="server"></asp:Label>
-
+                    <asp:TextBox ID="txtContactNum" runat="server" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>
                 </div>
             </div>
             <br />
-            
+            <div class="row">
+                <div class="col-sm-3">
+                    Email
+                </div>
+                <div class="col-sm-9">
+                    <asp:TextBox ID="txtContactEmail" runat="server" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>
+                </div>
+            </div>
+            <br />
         </div>
     </div>
     <br />

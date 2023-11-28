@@ -142,6 +142,8 @@
     <Content Include="Default.aspx" />
     <Content Include="Dispute.aspx" />
     <Content Include="EditAccount.aspx" />
+    <Content Include="EditCoordinatorProfile.aspx" />
+    <Content Include="EditIndustryProfile.aspx" />
     <Content Include="EditResume.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -182,6 +184,7 @@
     <Content Include="LoginStudent.aspx" />
     <Content Include="MyAccount.aspx" />
     <Content Include="NoticePage.aspx" />
+    <Content Include="OJTCoordinator_Profile.aspx" />
     <Content Include="PartneredIndustries.aspx" />
     <Content Include="Refer.aspx" />
     <Content Include="ReferralList.aspx" />
@@ -371,6 +374,20 @@
     <Compile Include="EditAccount.aspx.designer.cs">
       <DependentUpon>EditAccount.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EditCoordinatorProfile.aspx.cs">
+      <DependentUpon>EditCoordinatorProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditCoordinatorProfile.aspx.designer.cs">
+      <DependentUpon>EditCoordinatorProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditIndustryProfile.aspx.cs">
+      <DependentUpon>EditIndustryProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditIndustryProfile.aspx.designer.cs">
+      <DependentUpon>EditIndustryProfile.aspx</DependentUpon>
+    </Compile>
     <Compile Include="EditResume.aspx.cs">
       <DependentUpon>EditResume.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -520,6 +537,13 @@
     </Compile>
     <Compile Include="OJTCoordinator.Master.designer.cs">
       <DependentUpon>OJTCoordinator.Master</DependentUpon>
+    </Compile>
+    <Compile Include="OJTCoordinator_Profile.aspx.cs">
+      <DependentUpon>OJTCoordinator_Profile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OJTCoordinator_Profile.aspx.designer.cs">
+      <DependentUpon>OJTCoordinator_Profile.aspx</DependentUpon>
     </Compile>
     <Compile Include="PartneredIndustries.aspx.cs">
       <DependentUpon>PartneredIndustries.aspx</DependentUpon>
