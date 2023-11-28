@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -15,12 +16,42 @@ namespace ctuconnect
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
+            if(!IsPostBack) {
             HtmlControl dashboardLink = (HtmlControl)Master.FindControl("dashboard");
             dashboardLink.Attributes.Add("class", "active");
             getTotalInternInIndustry();
             getTotalIndustry();
             getTotalJob();
             getTotalAlumnInIndustry();
+                BindHiredPerIndustry();
+                BindHiredPerJobInIndustry();
+            }
+        }
+        private void BindHiredPerIndustry()
+        {
+            Chart1.Series["Internship"].Points.Clear();
+            Chart1.Series["Fulltime"].Points.Clear();
+            SqlCommand cmd = new SqlCommand("SELECT INDUSTRY_ACCOUNT.industryName, COUNT(HIRED_LIST.id) AS hiredCount" +
+                " FROM INDUSTRY_ACCOUNT" +
+                " LEFT JOIN HIRED_LIST ON INDUSTRY_ACCOUNT.industry_accID = HIRED_LIST.industry_accID AND jobType = 'internship'" +
+                " GROUP BY INDUSTRY_ACCOUNT.industryName;", conDB);
+               SqlDataAdapter da = new SqlDataAdapter(cmd);
+               DataTable dt = new DataTable();
+               da.Fill(dt);
+            Chart1.Series["Internship"].Points.DataBind(dt.DefaultView, "industryName", "hiredCount", "");
+             cmd = new SqlCommand("SELECT INDUSTRY_ACCOUNT.industryName, COUNT(HIRED_LIST.id) AS hiredCount" +
+                " FROM INDUSTRY_ACCOUNT" +
+                " LEFT JOIN HIRED_LIST ON INDUSTRY_ACCOUNT.industry_accID = HIRED_LIST.industry_accID AND jobType = 'fulltime'" +
+                " GROUP BY INDUSTRY_ACCOUNT.industryName;", conDB);
+             da = new SqlDataAdapter(cmd);
+             dt = new DataTable();
+            da.Fill(dt);
+            Chart1.Series["Fulltime"].Points.DataBind(dt.DefaultView, "industryName", "hiredCount", "");
+        }
+
+        void BindHiredPerJobInIndustry()
+        {
+
         }
         void getTotalAlumnInIndustry()
         {
