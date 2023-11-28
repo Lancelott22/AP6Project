@@ -127,7 +127,8 @@ namespace ctuconnect
 
                         }
                         Response.Write("<script>alert('Created Successfully');document.location='LoginIndustry.aspx'</script>");
-                    Session.RemoveAll();
+                        Session.RemoveAll();
+                        insertContactPerson();
                     }
                 }
                 else
@@ -137,7 +138,42 @@ namespace ctuconnect
             
         }
 
+        //gipuno ni kenth davis, ayawg ka shock!
+        private void insertContactPerson()
+        {
+            SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
+            using (conDB)
+            {
+                conDB.Open();
+                using (var cmd = conDB.CreateCommand())
+                {
 
-        
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "SELECT industry_accID FROM INDUSTRY_ACCOUNT WHERE industry_accID = (SELECT MAX(industry_accID) FROM INDUSTRY_ACCOUNT)";
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        int industryAccID = Convert.ToInt32(reader["industry_accID"].ToString());
+
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandText = "INSERT INTO CONTACT_PERSON (industry_accID) "
+                                            + " VALUES (@industryAccID)";
+                        cmd.Parameters.AddWithValue("@industryAccID", industryAccID);
+
+                        reader.Close();
+                        var ctr = cmd.ExecuteNonQuery();
+                        if (ctr > 0)
+                        {
+
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+
+
     }
 }
