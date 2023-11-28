@@ -15,6 +15,15 @@ namespace ctuconnect
     {
 
         /// <summary>
+        /// showIndustryList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl showIndustryList;
+
+        /// <summary>
         /// IndustryName control.
         /// </summary>
         /// <remarks>
@@ -49,15 +58,6 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button IndustryAdress;
-
-        /// <summary>
-        /// showIndustryList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl showIndustryList;
 
         /// <summary>
         /// IndustryListView control.

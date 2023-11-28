@@ -390,6 +390,11 @@
                                                         <span><%#Eval("DatePosted") %></span>
                                                     </div>
                                                     <div class="col">
+                                                        <label>Job Status: </label>
+                                                        <br />
+                                                        <span><%#Eval("JobStatus") %></span>
+                                                    </div>
+                                                    <div class="col">
                                                         <label>Total Applicants: </label>
                                                         <br />
                                                         <span><%#Eval("NumberOfApplicants") %></span>

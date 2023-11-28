@@ -19,8 +19,31 @@ namespace ctuconnect
             {
                 Response.Redirect("LoginStudent.aspx");
             }
+            if (!IsPostBack)
+            {
+                LoadSuggestions();
+            }
         }
-        
+
+        private void LoadSuggestions()
+        {
+            using (conDB)
+            {
+                conDB.Open();
+                using (var cmd = conDB.CreateCommand())
+                {
+                    // SQL Statement to retrieve suggestions
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "SELECT suggestion, dateCreated FROM SUGGESTIONS WHERE isRemove = 0 ORDER BY dateCreated DESC";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        rptSuggestions.DataSource = reader;
+                        rptSuggestions.DataBind();
+                    }
+                }
+            }
+        }
         protected void Submit_Suggestions(object sender, EventArgs e)
         {
             int studentAccID = Convert.ToInt32(Session["Student_ACC_ID"]);

@@ -76,8 +76,8 @@ namespace ctuconnect
             da.Fill(ds);
 
             // Bind the DataTable to the GridView
-            dataRepeater.DataSource = ds;
-            dataRepeater.DataBind();
+            referredListView.DataSource = ds;
+            referredListView.DataBind();
             
         }
         protected void addRefer_Click(object sender, EventArgs e)

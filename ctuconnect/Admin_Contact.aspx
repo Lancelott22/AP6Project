@@ -1,9 +1,17 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="true" CodeBehind="Dispute.aspx.cs" Inherits="ctuconnect.Dispute" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="true" CodeBehind="Admin_Contact.aspx.cs" Inherits="ctuconnect.Admin_Contact" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <style>
         .profile-container {
             background-color: white;
@@ -99,9 +107,21 @@
             background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%);
             border-radius: 10px;
         }
-         body:not(.modal-open) {
-     padding-right: 0px !important;
- }
+
+     
+                .submitStyle {
+    float: right;
+    color: white;
+    background-color: orange;
+    border-radius: 15px;
+    height: 40px;
+    width: 20%;
+    border: 1px solid orange;
+}
+
+    .submitStyle:hover {
+        box-shadow: 3px 6px 7px -4px grey;
+    }
     </style>
     <div class="container-fluid">
         <div class="row">
@@ -141,7 +161,7 @@
                             List of Alumni
                         </a>
                         <hr class="horizontal-line" />
-                        <a class="active" href="#">
+                        <a href="Dispute.aspx">
                             <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
                             Dispute
                         </a>
@@ -152,6 +172,10 @@
                         <a href="SuggestionsAdmin.aspx">
                             <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Suggestions
+                        </a>
+                        <a class="active" href="Admin_Contact.aspx">
+                            <i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Contact
                         </a>
                         <hr class="second" />
                         <a href="TracerDashboard.aspx">
@@ -173,84 +197,60 @@
             </div>
             <div class="col-9 d-flex flex-column">
                 <br />
-                <div class="container">
-                    <h2 class="title opacity-75">Dispute</h2>
+                <div class="container" style="background-color: white;">
+                    <h2 class="titles">Contact</h2>
                     <br />
-                    <br />
-                    <br />
-                    <div class="row" id="showDispute" runat="server">
-                        <asp:ListView ID="disputeListView" runat="server">
-                            <LayoutTemplate>
-                                <table style="font-size: 18px; line-height: 30px;">
-                                    <tr style="background-color: #336699; color: White; padding: 10px;">
-                                        <th>ID</th>
-                                        <th>Industry Name</th>
-                                        <th>Student Name</th>
-                                         <th>Reason</th>
-                                        <th>Date Added</th> 
-                                        <th>Status</th>
-                                        <th>Date Resolved</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    <tbody>
-                                        <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
-                                    </tbody>
-                                </table>
-                            </LayoutTemplate>
-                            <ItemTemplate>
-                                <tr style="border-bottom: solid 1px #336699">
-                                    <td><%#Eval("disputeID")%></td>
-                                    <td><%#Eval("industryName")%></td>
-                                    <td><%#Eval("firstName")%> <%#Eval("lastName")%> </td>      
-                                    <td><%#Eval("reason")%></td>
-                                    <td><%#Eval("date_Added")%> </td>
-                                    <td><%#Eval("status")%> </td>
-                                   <td><%#Eval("dateResolved")%> </td>
-                                    <td>
-                                        <asp:LinkButton ID="statusBtn" runat="server" OnCommand="statusBtn_Command" CommandArgument='<%#Eval("disputeID")%>'><i class="fa fa-pencil-square-o" aria-hidden="true" data-toggle="tooltip" title="change status"></i></asp:LinkButton> | 
-                                        <asp:LinkButton ID="blacklistBtn" runat="server" OnCommand="blacklistBtn_Command" CommandName='<%#Eval("industryName")%>' CommandArgument='<%#Eval("industry_accID")%>'><i class="fa fa-ban text-danger" aria-hidden="true" data-toggle="tooltip" title="blacklist"></i></asp:LinkButton>
-                                    </td>
-                                </tr>
-                            </ItemTemplate>
-                        </asp:ListView>
+                    <div class="form-group row p-2">
+                        <label class="fs-3 fw-normal">Send to:</label>
+
+                        <asp:DropDownList runat="server" title="Select User" CssClass="selectpicker form-control" ID="SendToUser" AutoPostBack="true" OnSelectedIndexChanged="SendToUser_SelectedIndexChanged">
+                            <asp:ListItem Value="" Enabled="false" Selected="true">Select User</asp:ListItem>
+                            <asp:ListItem Value="OJTCoordinator">OJT Coordinator</asp:ListItem>
+                            <asp:ListItem Value="Industry">Industry</asp:ListItem>
+                        </asp:DropDownList>
+                        <br />
+                        <br />
+                        <select runat="server" title="Select Account" class="selectpicker form-control" data-actions-box="true" multiple="true" name="SendToEmail" id="SendToEmail">
+                        </select>
+
+                    </div>
+                    <div class="form-group row p-2">
+                        <label class="fs-3 fw-normal">Subject:</label>
+                        <input class="form-control" id="Subject" runat="server" placeholder="Input subject...">
+                    </div>
+                    <div class="form-group row p-2">
+                        <label class="fs-3 fw-normal">Message:</label>
+                        <asp:TextBox class="form-control summernote" Rows="5" TextMode="MultiLine" ID="message" runat="server" ValidateRequestMode="Disabled"></asp:TextBox>
+                    </div>
+                    <div>
+                        <asp:Button ID="SendMessage" runat="server" CssClass="submitStyle" Text="Send Message" OnClick="SendMessage_Click" />
                     </div>
                 </div>
+
             </div>
 
         </div>
     </div>
+        <script>
+            $(document).ready(function () {
+                $('.summernote').summernote({
+                    height: 300,
+                    placeholder: 'Input message...',
+                    toolbar: [
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['font',],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
 
-    <div class="modal" id="BlacklistModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <asp:Label ID="blacklist_ID" runat="server" Visible="false"></asp:Label>
-            <div class="modal-header">
-                <h3><b>Blacklist Industry</b></h3>
-            </div>
-            <div class="modal-body" style="padding: 20px;">
-                <span id="deleteErrorMsg" runat="server" visible="false" class="text-danger">*Please fill all fields</span>
-                <span class="fs-3">
-                    Are you sure you want to blacklist <span id="BlackList_IndustryName" runat="server"></span>?
-                </span>
-                <div class="container-fluid d-flex flex-column py-2">
-                    <div class="form-group row">
-                        <label for="BlacklistReason" class="fs-4">Reason</label><span id="errorText" runat="server" visible="false" class="text-danger">*Please fill this input</span>
-                        <textarea class="form-control" cols="40" rows="5" id="BlacklistReason" runat="server" placeholder="Input reason..."></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div style="float: right;">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                    <asp:LinkButton ID="ConfirmBlacklist" class="btn btn-success" runat="server" OnCommand="ConfirmBlacklist_Command">Confirm Blacklist</asp:LinkButton>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-     <script type="text/javascript">
-     function showBlackList() {
-         $('#BlacklistModal').modal('show');
-     }
-     </script>
+                        ['height', ['height']]
+                    ]
+                });
+            });
+        </script>
+<script>
+    $(document).ready(function () {
+        $('.selectpicker').selectpicker();
+    });
+</script>
 </asp:Content>
