@@ -123,22 +123,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.LinkButton SignOut;
 
         /// <summary>
-        /// fnameLabel control.
+        /// fullnameLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label fnameLabel;
-
-        /// <summary>
-        /// lnameLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lnameLabel;
+        protected global::System.Web.UI.WebControls.Label fullnameLabel;
 
         /// <summary>
         /// positionLabel control.
@@ -168,6 +159,33 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.TextBox txtDateStarted;
 
         /// <summary>
+        /// lblDateStarted control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDateStarted;
+
+        /// <summary>
+        /// ddlStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlStatus;
+
+        /// <summary>
+        /// lblStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblStatus;
+
+        /// <summary>
         /// txtDateEnded control.
         /// </summary>
         /// <remarks>
@@ -177,6 +195,24 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.TextBox txtDateEnded;
 
         /// <summary>
+        /// lblDateEnded control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDateEnded;
+
+        /// <summary>
+        /// hourslbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label hourslbl;
+
+        /// <summary>
         /// txtFeedback control.
         /// </summary>
         /// <remarks>
@@ -184,6 +220,15 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFeedback;
+
+        /// <summary>
+        /// lblFeedback control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFeedback;
 
         /// <summary>
         /// btnSave control.
@@ -240,21 +285,21 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Button Button2;
 
         /// <summary>
-        /// Label11 control.
+        /// Label23 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label11;
+        protected global::System.Web.UI.WebControls.Label Label23;
 
         /// <summary>
-        /// Label12 control.
+        /// Label24 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label12;
+        protected global::System.Web.UI.WebControls.Label Label24;
     }
 }
