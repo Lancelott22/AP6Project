@@ -4,7 +4,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -58,7 +61,7 @@
         }*/
         .card {
             background: #ffc107;
-            padding:10px;
+            padding: 10px;
         }
     </style>
     <h2 class="opacity-75">Dashboard</h2>
@@ -75,7 +78,7 @@
             <div class="col-sm">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h3 class="card-title" >Total Interns</h3>
+                        <h3 class="card-title">Total Interns</h3>
                         <h2 class="card-text my-5" id="totalIntern" runat="server"></h2>
 
                     </div>
@@ -84,7 +87,7 @@
             <div class="col-sm ">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h3 class="card-title" >Total Industry</h3>
+                        <h3 class="card-title">Total Industry</h3>
                         <h2 class="card-text my-5" id="totalIndustry" runat="server"></h2>
 
                     </div>
@@ -93,33 +96,57 @@
             <div class="col-sm ">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h3 class="card-title" >Total Job Posted</h3>
+                        <h3 class="card-title">Total Job Posted</h3>
                         <h2 class="card-text my-5" id="totalJobPosted" runat="server"></h2>
 
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row my-5" >
-        <asp:Chart ID="Chart1" runat="server" Width="500px" BorderlineDashStyle="Solid">
-            <Titles>
-                <asp:Title Name="ChartTitle" Text="Total Hired per Industry" />
-            </Titles>
-            <Series>
-                <asp:Series Name="Internship" ChartType="StackedColumn" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="Internship" XValueMember="industryName" YValueMembers="hiredCount">
-                   
-                </asp:Series>
-                 <asp:Series Name="Fulltime" ChartType="StackedColumn" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="Fulltime" XValueMember="industryName" YValueMembers="hiredCount">
-                </asp:Series>
-            </Series>
-            <ChartAreas>
-                <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
-            </ChartAreas>
-             <Legends>
-        <asp:Legend Name="Internship" Docking="Bottom"></asp:Legend>
- <asp:Legend Name="Fulltime" Docking="Bottom" ></asp:Legend>
-    </Legends>
-        </asp:Chart>
+        <div class="row my-5">
+            <div class="col">
+                <asp:Chart ID="Chart1" runat="server" Width="500px" BorderlineDashStyle="Solid">
+                    <Titles>
+                        <asp:Title Name="ChartTitle" Text="Total Hired per Industry" />
+                    </Titles>
+                    <Series>
+                        <asp:Series Name="Internship" ChartType="StackedColumn" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="Internship" XValueMember="industryName" YValueMembers="hiredCount">
+                        </asp:Series>
+                        <asp:Series Name="Fulltime" ChartType="StackedColumn" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="Fulltime" XValueMember="industryName" YValueMembers="hiredCount">
+                        </asp:Series>
+                    </Series>
+                    <ChartAreas>
+                        <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
+                    </ChartAreas>
+                    <Legends>
+                        <asp:Legend Name="Internship" Docking="Bottom"></asp:Legend>
+                        <asp:Legend Name="Fulltime" Docking="Bottom"></asp:Legend>
+                    </Legends>
+                </asp:Chart>
             </div>
+            <div class="col d-flex flex-column align-items-center">
+                 <asp:DropDownList runat="server" CssClass="selectpicker" ID="IndustryJob" AutoPostBack="true" OnSelectedIndexChanged="IndustryJob_SelectedIndexChanged">
+                    </asp:DropDownList>
+                <asp:Label ID="NoData" Text="No data available" runat="server" Visible="false"></asp:Label>
+                <asp:Chart ID="Chart2" runat="server" Width="500px" BorderlineDashStyle="Solid">
+                    <Titles>
+                        <asp:Title Name="ChartTitle" Text="Total Hired per Job by Industry" />
+                    </Titles>
+                    <Series>
+                        <asp:Series Name="Internship" ChartType="StackedColumn" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="Internship" XValueMember="jobPosition" YValueMembers="HiredPerJob">
+                        </asp:Series>
+                        <asp:Series Name="Fulltime" ChartType="StackedColumn" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="Fulltime" XValueMember="jobPosition" YValueMembers="HiredPerJob">
+                        </asp:Series>
+                    </Series>
+                    <ChartAreas>
+                        <asp:ChartArea Name="ChartArea2"></asp:ChartArea>
+                    </ChartAreas>
+                    <Legends>
+                        <asp:Legend Name="Internship" Docking="Bottom"></asp:Legend>
+                        <asp:Legend Name="Fulltime" Docking="Bottom"></asp:Legend>
+                    </Legends>
+                </asp:Chart>
+            </div>
+        </div>
     </div>
 </asp:Content>

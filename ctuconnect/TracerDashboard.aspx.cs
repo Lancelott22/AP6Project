@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Antlr.Runtime.Tree;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
@@ -24,7 +26,9 @@ namespace ctuconnect
             getTotalJob();
             getTotalAlumnInIndustry();
                 BindHiredPerIndustry();
-                BindHiredPerJobInIndustry();
+                BindIndustry();
+                BindHiredPerJobInIndustry(int.Parse(IndustryJob.SelectedValue));
+                
             }
         }
         private void BindHiredPerIndustry()
@@ -49,9 +53,31 @@ namespace ctuconnect
             Chart1.Series["Fulltime"].Points.DataBind(dt.DefaultView, "industryName", "hiredCount", "");
         }
 
-        void BindHiredPerJobInIndustry()
+        void BindHiredPerJobInIndustry(int industryID)
         {
+            Chart2.Series["Internship"].Points.Clear();
+            Chart2.Series["Fulltime"].Points.Clear();
+            SqlCommand cmd = new SqlCommand("SELECT HIRED_LIST.industry_accID, HIRED_LIST.position as jobPosition, industryName, jobTitle, COUNT(*) AS HiredPerJob FROM HIRING INNER JOIN HIRED_LIST ON HIRING.jobID = HIRED_LIST.jobID AND HIRED_LIST.jobType = 'internship' WHERE HIRED_LIST.industry_accID = '"+ industryID + "' GROUP BY HIRED_LIST.industry_accID, industryName, jobTitle, HIRED_LIST.position", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            Chart2.Series["Internship"].Points.DataBind(dt.DefaultView, "jobPosition", "HiredPerJob", "");
+            cmd = new SqlCommand("SELECT HIRED_LIST.industry_accID, HIRED_LIST.position as jobPosition, industryName, jobTitle, COUNT(*) AS HiredPerJob FROM HIRING INNER JOIN HIRED_LIST ON HIRING.jobID = HIRED_LIST.jobID AND HIRED_LIST.jobType = 'fulltime' WHERE HIRED_LIST.industry_accID = '"+ industryID + "' GROUP BY HIRED_LIST.industry_accID, industryName, jobTitle, HIRED_LIST.position", conDB);
+            da = new SqlDataAdapter(cmd);
+            dt = new DataTable();
+            da.Fill(dt);
+            Chart2.Series["Fulltime"].Points.DataBind(dt.DefaultView, "jobPosition", "HiredPerJob", "");
 
+            if(dt.Rows.Count == 0)
+            {
+                Chart2.Visible = false;
+                NoData.Visible = true;
+            }
+            else
+            {
+                Chart2.Visible = true;
+                NoData.Visible = false;
+            }
         }
         void getTotalAlumnInIndustry()
         {
@@ -100,6 +126,25 @@ namespace ctuconnect
             }
             reader.Close();
             conDB.Close();
+        }
+        void BindIndustry()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM INDUSTRY_ACCOUNT", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            IndustryJob.DataSource = ds;
+            IndustryJob.DataValueField = "industry_accID";
+            IndustryJob.DataTextField = "industryName";
+            IndustryJob.DataBind();
+            IndustryJob.SelectedValue = "industry_accID";
+        }
+
+        protected void IndustryJob_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int industry_accID = int.Parse(IndustryJob.SelectedValue);
+            BindHiredPerJobInIndustry(industry_accID);
+            BindHiredPerIndustry();
         }
     }
 }

@@ -51,13 +51,22 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label disp_accID;
 
         /// <summary>
-        /// drpStatus control.
+        /// ApplicantsID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drpStatus;
+        protected global::System.Web.UI.WebControls.TextBox ApplicantsID;
+
+        /// <summary>
+        /// SearchApplicant control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SearchApplicant;
 
         /// <summary>
         /// Job_Title control.
@@ -87,6 +96,15 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.LinkButton SignOut;
 
         /// <summary>
+        /// lblinterviewDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblinterviewDetails;
+
+        /// <summary>
         /// txtInterviewDetails control.
         /// </summary>
         /// <remarks>
@@ -103,6 +121,15 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+
+        /// <summary>
+        /// lblDateinterview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDateinterview;
 
         /// <summary>
         /// txtInterviewDate control.
@@ -141,6 +168,15 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Button btnSave;
 
         /// <summary>
+        /// lblRequirements control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRequirements;
+
+        /// <summary>
         /// txtrequirements control.
         /// </summary>
         /// <remarks>
@@ -157,6 +193,15 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+
+        /// <summary>
+        /// lbldatestart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbldatestart;
 
         /// <summary>
         /// txtDateStart control.

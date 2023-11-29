@@ -22,10 +22,9 @@ namespace ctuconnect
             {
                 if (Session["Coor_ACC_ID"] != null)
                 {
-                    
+                    getDepartmentID();
                     int totalCounts = UnreadNotificationCount();
                     lblUnreadCount.Text = totalCounts.ToString();
-                    getDepartmentID();
 
                     this.LoadStudentAccount();
                     rptregisteredstudent.DataSource = dtRegisteredIntern;
@@ -34,18 +33,23 @@ namespace ctuconnect
                     refreshCounting();
                     disableHeader();
                     coordinatorInfo();
+     
+                }
+                else
+                {
+                    Response.Redirect("LoginOJTCoordinator.aspx");
                 }
             }               
             
         }
 
+        
         void getDepartmentID()
         {
             string coordinatorID = Session["Coor_ACC_ID"].ToString();
 
             using (var db = new SqlConnection(conDB))
             {
-                
                 string query = "SELECT * FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.DEPARTMENT_ID = DEPARTMENT.DEPARTMENT_ID WHERE coordinator_accID = '" + coordinatorID + "' ";
                 //string query = "SELECT * FROM COORDINATOR_ACCOUNT WHERE coordinator_accID = '" + coordinatorID + "' ";
                 SqlCommand command = new SqlCommand(query, db);
@@ -53,15 +57,16 @@ namespace ctuconnect
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
-                    Session["DEPARTMENT"] = reader["department_ID"];
+                    Session["DEPARTMENTID"] = reader["department_ID"];
                     Session["COORDINATORPIC"] = reader["coordinatorPicture"];
                     lbldepartmentName.Text = reader["departmentName"].ToString();
-                    lblname.Text = reader["firstName"].ToString() + reader["midInitials"].ToString() + reader["lastName"].ToString();
+                    lblname.Text = reader["firstName"].ToString() + " " + reader["lastName"].ToString();
 
                 }
-                reader.Close();
+                
             }
         }
+        
 
         void coordinatorInfo()
         {
@@ -112,7 +117,7 @@ namespace ctuconnect
         void LoadStudentAccount()
         {
             
-                string departmentID = Session["DEPARTMENT"].ToString();
+                string departmentID = Session["DEPARTMENTID"].ToString();
 
                 using (var db = new SqlConnection(conDB))
                 {
@@ -134,20 +139,22 @@ namespace ctuconnect
 
         protected int UnreadNotificationCount()
         {
-            string departID = Session["DEPARTMENT"] as string;
-            int departmentID = Convert.ToInt32(departID);
+            string departID = Session["DEPARTMENTID"] as string;
+            //int departmentIDDDD = Convert.ToInt32(departID);
+            //string departmentIDD = "400000";
             int count = 0;
 
             // Replace with your connection string
-            string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
-
-            using (SqlConnection connection = new SqlConnection(conDB))
+            //string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
+            //using (SqlConnection connection = new SqlConnection(conDB))
+            using (var db = new SqlConnection(conDB))
             {
-                connection.Open();
+                //connection.Open();
+                db.Open();
 
-                string query = "SELECT COUNT(*) FROM STUDENT_ACCOUNT WHERE department_ID = '" + departmentID + "' and isRead = 0";
+                string query = "SELECT COUNT(*) FROM STUDENT_ACCOUNT WHERE isRead = 0 and department_ID = '" + departID + "'";
 
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand(query, db))
                 {
                     count = (int)command.ExecuteScalar();
                 }

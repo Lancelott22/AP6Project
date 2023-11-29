@@ -4,14 +4,16 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <style>
         .nav {
-            padding:10px 10px 10px 10px;
-            width:200px;
-            margin:auto;
-            margin-top:20px;
+            padding: 10px 10px 10px 10px;
+            width: 200px;
+            margin: auto;
+            margin-top: 20px;
             position: absolute;
-            margin-left:70px;
+            margin-left: 70px;
         }
 
             .nav a {
@@ -49,7 +51,15 @@
                 color: white;
                 box-shadow: 3px 6px 7px -4px grey;
             }
-
+    .buttonStyleDone {
+    background-color: white;
+    min-width: 100%;
+    min-height: 35px;
+    color: red;
+    background-color: white;
+    border-radius: 20px;
+    border: 1.5px solid red;
+}
         .imgStyle {
             border-radius: 50%;
             border: solid grey 1px;
@@ -269,8 +279,76 @@
 
                     <div class="col-9 d-flex flex-column">
                         <br />
+                        <div>
+                            <asp:DropDownList runat="server" CssClass="selectpicker" ID="SwitchView" AutoPostBack="true" OnSelectedIndexChanged="SwitchView_SelectedIndexChanged">
+                                <asp:ListItem Value="1" Selected="true">Job Application List</asp:ListItem>
+                                <asp:ListItem Value="2">Hired Job List</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                        <br />
+                        <div class="box" id="MyJobHiredView" runat="server" visible="false">
+                            <h3 class="my-5">My Hired Job</h3>
+                            <asp:ListView ID="MyJobView" runat="server" class="container-fluid" OnItemDataBound="HiredView_ItemDataBound">
+                                <ItemTemplate>
+                                    <div id="MyHiredJob" runat="server" class="row d-flex align-items-center jobAppliedBox">
+                                        <span runat="server" id="HiredBadge" class="NewBadge" visible="false">New</span>
+                                        <div class="col-sm-2" style="text-align: center">
+                                            <img id="IndstryLogo" src='<%#String.Format("images/IndustryProfile/{0}", Eval("industryPicture"))%>' runat="server" alt="Logo" class="imgStyle" />
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="row" style="border-right: 1px solid #881A30;">
+                                                <label id="JobID" runat="server" hidden="hidden"><%#Eval("jobID")%></label>
+                                                <label id="HiredID" runat="server" hidden="hidden"><%#Eval("id")%></label>
+                                                <label id="DateHired" runat="server" hidden="hidden"><%#Eval("dateHired")%></label>
+                                                <div class="align-items-start">
+                                                    <span>
+                                                        <h3 style="color: #881A30; margin-bottom: 10px;"><b><%#Eval("position")%></b></h3>
+                                                    </span>
+                                                </div>
+                                                <div class="col">
+                                                    <label>Industry Name: </label>
+                                                    <br />
+                                                    <span>
+                                                        <%#Eval("industryName")%>
+                                                    </span>
+                                                </div>
+                                                <div class="col">
+                                                    <label>Job Location: </label>
+                                                    <br />
+                                                    <span><%#Eval("location") %></span>
+                                                </div>
+                                                <div class="col">
+                                                    <label>Job Type: </label>
+                                                    <br />
+                                                    <span><%#Eval("jobType") %></span>
+                                                </div>
+                                                <div class="col">
+                                                    <label>
+                                                        Job Status: 
+                                                    </label>
+                                                    <br />
+                                                    <span><%#Eval("internshipStatus") %></span>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                        <div class="box">
+                                        <div class="col-sm-2 d-flex align-items-center">
+                                            <div class="flex-fill">
+                                                <asp:Button ID="RequestEval" Text="Request Evaluation" class="buttonStyle" runat="server" OnCommand="RequestEval_Command" CommandArgument='<%#Eval("id")%>'/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ItemTemplate>
+                                <EmptyDataTemplate>
+                                    <h3 style="position: relative; top: 100px;">
+                                        <asp:Label CssClass="alert alert-light d-flex p-2 bd-highlight justify-content-sm-center" runat="server" ID="lblNoAppliedJob" Text="You're not hired yet!"></asp:Label></h3>
+                                </EmptyDataTemplate>
+                            </asp:ListView>
+
+                        </div>
+
+                        <div class="box" id="MyJobApplicationView" runat="server">
+                            <h3 class="my-5">My Job Application</h3>
                             <asp:ListView ID="MyApplication" runat="server" class="container-fluid" OnItemDataBound="MyApplication_ItemDataBound" OnPagePropertiesChanged="MyApplication_PagePropertiesChanged">
                                 <ItemTemplate>
                                     <div id="myApplicationList" runat="server" class="row d-flex align-items-center jobAppliedBox">
@@ -375,7 +453,7 @@
                                                 <asp:Literal ID="dateStarted" runat="server" Visible="false" Mode="PassThrough"></asp:Literal>
                                                 <br />
                                                 <br />
-                                                <span id="statusApplication" visible="false" runat="server"></span> <span id="dateApproved" runat="server" visible="false"></span>
+                                                <span id="statusApplication" visible="false" runat="server"></span><span id="dateApproved" runat="server" visible="false"></span>
                                                 <br />
                                                 <br />
                                             </div>
@@ -393,11 +471,11 @@
                                             <div style="padding: 10px;">
                                                 <br />
                                                 <b><span id="StatusOrDetails" runat="server">Status: </span></b>
-                                                <asp:Label ID="interviewStatusCheck" runat="server" Text="Waiting for your interview schedule..."></asp:Label>                
+                                                <asp:Label ID="interviewStatusCheck" runat="server" Text="Waiting for your interview schedule..."></asp:Label>
                                                 <asp:Literal ID="dateScheduled" runat="server" Visible="false" Mode="PassThrough"></asp:Literal>
                                                 <br />
                                                 <br />
-                                                <span id="statusInterview" visible="false" runat="server"></span> <span id="interviewDate" runat="server" visible="false"></span>
+                                                <span id="statusInterview" visible="false" runat="server"></span><span id="interviewDate" runat="server" visible="false"></span>
                                                 <br />
                                                 <br />
                                             </div>
@@ -417,7 +495,7 @@
 
                                                 <br />
                                                 <br />
-                                                <span id="statusResume" visible="false" runat="server"></span> <span id="dateReviewed" runat="server" visible="false"></span>
+                                                <span id="statusResume" visible="false" runat="server"></span><span id="dateReviewed" runat="server" visible="false"></span>
                                                 <br />
                                                 <br />
                                             </div>
@@ -435,6 +513,9 @@
                 </div>
             </div>
         </ContentTemplate>
+        <Triggers>
+            <asp:PostBackTrigger ControlID="SwitchView" />
+        </Triggers>
     </asp:UpdatePanel>
     <script type="text/javascript">
         function viewApplication() {
