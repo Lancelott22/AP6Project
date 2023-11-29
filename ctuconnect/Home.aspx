@@ -102,7 +102,24 @@
             width: 120px;
             color:#F0EBEB;
         }
-
+        .suggestion-container{
+            max-height: 500px; 
+            overflow-y: auto;
+            background-color:plum;
+            margin-top:2%;
+            margin-left:20%;
+            margin-right:20%;
+            padding:20px;
+        }
+        .suggestion-item{
+            background-color:whitesmoke;
+            padding:10px;
+            margin-bottom:1%;
+        }
+        .suggestion-text{
+            padding-top:5px;
+            text-indent: 29px;
+        }
 
     </style>
         <section id="hero" class="d-flex align-items-center">
@@ -156,6 +173,28 @@
 
         </div>
     </section>
+    <section class="suggestions">
+    <div class="suggestion-container ">
+        
+        <div class="suggestion-list">
+            <%-- Display suggestions here --%>
+            <asp:Repeater ID="rptSuggestions" runat="server">
+                <ItemTemplate>
+                    <div class="suggestion-item">
+                        <div style="display: flex; gap:6px;">
+                        <img src="images/defaultprofile.jpg" style="width:40px; height:auto; border-radius: 50%;"/>
+                        <div>
+                            <b>Anonymous:</b> <br />
+                            <span style="font-size: 11px; color: #888;">Date Posted: <%# Eval("dateCreated") %></span>
+                        </div>
+                    </div>
+                        <p class="suggestion-text"> <%# Eval("Suggestion") %></p>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
+        </div>
+    </div>
+</section>
 
     <section class="feedback">
         <div class="container px-4 px-lg-5 h-100">

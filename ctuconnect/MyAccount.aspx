@@ -2,7 +2,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-   <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         
         .nav{
@@ -56,11 +57,39 @@
           
         }
 
+        .student-details{
+            min-height: 180px;
+            background-color: #ffffff;
+            padding-left:2em;
+            width:580px;
+            float:left;
+            margin-left:10px;
+            padding-top:2em;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .student-details2{
+            min-height: 180px;
+            background-color: #ffffff;
+            padding-left:2em;
+            width:580px;
+            float:left;
+            margin-left:8px;
+            padding-top:2em;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .student-container{
+            width:80%;
+            margin-top:30px;
+            font-size:18px;
+        }
+
         .profile {
           
-          border-radius: 50px;
+          border-radius: 100px;
           position: relative;
-          top: -50px;
+          top: -75px;
           
           
         }
@@ -79,6 +108,23 @@
             position:center;
             width: 120px;
             height:45px;
+        }
+
+        .pen-icon {
+            display: inline-block;
+            cursor: pointer;
+            font-size: 20px;
+            color: #881A30;
+            text-decoration: none;
+            transition: color 0.3s;
+            justify-content:center;
+            padding-right:10px;
+            padding-bottom:10px;
+        }
+
+        /* Hover effect */
+        .pen-icon:hover {
+            color: orange;
         }
 
 
@@ -123,57 +169,98 @@
                 <div class="bottom">
                     <center>
                     
-                        <asp:Image ID="profileImage" CssClass="profile" Width="100px" Height="100px" runat="server" />
+                        <asp:Image ID="profileImage" CssClass="profile" Width="150px" Height="150px" runat="server" />
                     </center>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            Full Name:
-                        </div>
-                        <div class="col-sm-9">
-                           <asp:Label ID="disp_name" runat="server" Text=""></asp:Label>
-                        </div>
+                    <div class="edit" style="text-align:right;">
+                        <a href="EditAccount.aspx" class="pen-icon"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
                     </div>
-                    <hr class="line"/>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            Student ID:
-                        </div>
-                        <div class="col-sm-9">
-                            <asp:Label ID="disp_studentID" runat="server" Text=""></asp:Label>
-                        </div>
-                    </div>
-                    <hr class="line"/>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            Student Status:
-                        </div>
-                        <div class="col-sm-9">
-                            <asp:Label ID="disp_studentStatus" runat="server" Text=""></asp:Label>
-                        </div>
-                    </div>
-                    <hr class="line"/>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            Course:
-                        </div>
-                        <div class="col-sm-9">
-                            <asp:Label ID="disp_course" runat="server" Text=""></asp:Label>  
-                        </div>
-                    </div>
-                    <hr class="line"/>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                Resume:
-                            </div>
-                            <div class="col-sm-9">
-                                <asp:Label ID="lblResume" runat="server" Text=""></asp:Label>
-                            </div>
-                        </div>
-                    <br /><br />
                 </div>
-                <div class="container2">                 
-                            <asp:Button ID="btnEdit" class="btn btn-primary btn-md" runat="server" Text="Update" OnClick="btnEdit_Click" />
-                 </div>
+                
+                <div class="student-container">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="student-details">
+                            <div class="row">
+                                <div class="col-sm-4" style="font-weight:bold;">
+                                    Full Name:
+                                </div>
+                                <div class="col-sm-8">
+                                   <asp:Label ID="disp_name" runat="server" Text=""></asp:Label>
+                                </div>
+                            </div>
+                            <hr class="line"/>
+                            <div class="row">
+                                <div class="col-sm-4" style="font-weight:bold;">
+                                    Student ID:
+                                </div>
+                                <div class="col-sm-8">
+                                    <asp:Label ID="disp_studentID" runat="server" Text=""></asp:Label>
+                                </div>
+                            </div>
+                            <hr class="line"/>
+                            <div class="row">
+                                <div class="col-sm-4" style="font-weight:bold;">
+                                    Student Status:
+                                </div>
+                                <div class="col-sm-8">
+                                    <asp:Label ID="disp_studentStatus" runat="server" Text=""></asp:Label>
+                                </div>
+                            </div>
+                            <hr class="line"/>
+                            <div class="row">
+                                <div class="col-sm-4" style="font-weight:bold;">
+                                    Course:
+                                </div>
+                                <div class="col-sm-8">
+                                    <asp:Label ID="disp_course" runat="server" Text=""></asp:Label>  
+                                </div>
+                            </div>
+                            <hr class="line"/>
+                                <div class="row">
+                                    <div class="col-sm-4" style="font-weight:bold;">
+                                        Resume:
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <asp:Label ID="lblResume" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                            <br /><br />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="student-details2">
+                            <div class="row">
+                                <div class="col-sm-4" style="font-weight:bold;">
+                                    Contact Number:
+                                </div>
+                                <div class="col-sm-8">
+                                   <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                                </div>
+                            </div>
+                            <hr class="line"/>
+                            <div class="row">
+                                <div class="col-sm-4" style="font-weight:bold;">
+                                    Address:
+                                </div>
+                                <div class="col-sm-8">
+                                    <asp:Label ID="Label2" runat="server" Text=""></asp:Label>
+                                </div>
+                            </div>
+                            <hr class="line"/>
+                            <div class="row">
+                                <div class="col-sm-4" style="font-weight:bold;">
+                                    Year Graduated:
+                                </div>
+                                <div class="col-sm-8">
+                                    <asp:Label ID="Label3" runat="server" Text=""></asp:Label>
+                                </div>
+                            </div>
+                            
+                            <br /><br />
+                        </div>
+                    </div>
+                </div>
+                </div>
             </div>
            
         </div>

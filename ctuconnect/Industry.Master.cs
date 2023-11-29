@@ -38,19 +38,20 @@ namespace ctuconnect
                 rptreferred.DataBind();
 
                 refreshCounting();
-                industryInfo();
+                industryDetails();
+                industryPic();
 
                 disableHeader();
                 disableHeader2();
             }
         }
 
-        void industryInfo()
+        void industryPic()
         {
-            if (!string.IsNullOrEmpty(Session["INDUSTRYPIC"].ToString()))
+            if (!string.IsNullOrEmpty(Session["INDUSTRYPICTURE"].ToString()))
             {
-                imageProfile.ImageUrl = "~/images/IndustryProfile/" + Session["INDUSTRYPIC"].ToString();
-                profileimg.Src = "~/images/IndustryProfile/" + Session["INDUSTRYPIC"].ToString();
+                imageProfile.ImageUrl = "~/images/IndustryProfile/" + Session["INDUSTRYPICTURE"].ToString();
+                profileimg.Src = "~/images/IndustryProfile/" + Session["INDUSTRYPICTURE"].ToString();
             }
             else
             {
@@ -58,7 +59,26 @@ namespace ctuconnect
                 profileimg.Src = "~/images/IndustryProfile/defaultprofile.jpg";
             }
 
-            lblname.Text = Session["INDUSTRYNAME"].ToString();
+        }
+
+        void industryDetails()
+        {
+            string industryID = Session["INDUSTRY_ACC_ID"].ToString();
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "SELECT * FROM INDUSTRY_ACCOUNT WHERE industry_accID = '" + industryID + "' ";
+                SqlCommand command = new SqlCommand(query, db);
+                db.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    lblname.Text = reader["industryName"].ToString();
+                    Session["INDUSTRYPICTURE"] = reader["industryPicture"];
+
+                }
+                reader.Close();
+            }
         }
 
         void refreshCounting()

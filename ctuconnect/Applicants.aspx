@@ -4,33 +4,37 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
-        
-        .profile-container{
+         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+        .profile-container {
             font-family: 'Poppins', sans-serif;
-            max-width:200px;
-            max-height:300px;
-            background-color:white;
-            margin-left:2%;
-            border-radius: 20px;
+            max-width: 260px;
+            height: auto;
+            padding: 10px;
+            background-color: white;
+            margin-left: 4%;
+            margin-bottom: 20px;
         }
 
         @media (max-width: 790px) {
             .profile-container, .sidemenu-container {
                 max-width: 50%;
-                max-height:auto;
-                
-                 padding:5px 5px 5px 5px;
+                max-height: auto;
+                padding: 5px 5px 5px 5px;
             }
         }
 
         .profile-container img{
             display:block;
-            width:80%;
+            width:60%;
             margin-left:auto;
             margin-right:auto;
 
@@ -116,13 +120,14 @@
                 background-color: #881A30;
 
             }
-             .content{
-                 height:100%; 
-                 width:97%; 
-                 margin-left:2%; 
-                 margin-right:2%;
-                 padding: 0px 0px 0px 0px;
-             }
+             .content {
+                height: auto;
+                width: 97%;
+                margin-left: 2%;
+                margin-right: 2%;
+                padding: 0px 0px 0px 0px;
+            }
+
              .gridview-style{
                  margin-top:5%;
                  text-align:center;
@@ -200,14 +205,15 @@
             }
 
             .modal{
-                 width:700px;
+                 width:1000px;
                  margin:auto;
-                 margin-top:100px;
+                 margin-top:50px;
                 
                  
              }
              .modal-content{
-                 padding-left:2em;
+                 padding-left:1em;
+                 padding-right:2em;
              }
 
              .applicant-details{
@@ -242,11 +248,14 @@
              }
 
              .drpbox {
-                background-color: white;
-                color: #881a30;
-                border-radius: 15px;
-                border: 1.5px solid #881a30;
-                position:relative;
+                
+
+                border: 1px solid #ccc; /* Add a border */
+                border-radius: 5px; /* Add rounded corners */
+                padding: 5px; /* Add some padding */
+                font-size: 14px; /* Set the font size */
+                margin-top: 5px; /* Add some top margin */
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
              }
 
              .buttonSubmit {
@@ -273,6 +282,32 @@
                  text-align:right;
                  font-weight:bold;
              }
+
+             .btn-search{
+                border-color:#F7941F ;
+                background-color: #F7941F
+             }
+
+             .txtbox-description{
+                border-radius: 10px;
+                width: 70%;
+                min-height:100px;
+                height:auto;
+                margin-bottom:2%;
+                border: 1px solid gray;
+                padding:10px; 
+                padding-left:20px;
+                padding-top:20px;
+            }
+
+             .txtDate{
+                border: 1px solid #ccc; /* Add a border */
+                border-radius: 5px; /* Add rounded corners */
+                padding: 5px; /* Add some padding */
+                font-size: 16px; /* Set the font size */
+                margin-top: 5px; /* Add some top margin */
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+             }
              
            
     </style>
@@ -281,24 +316,26 @@
         <asp:TableRow>
             <asp:TableCell Style="vertical-align:top; height:200px;">
                 <div class="profile-container">
-                <asp:Image ID="industryImage1" runat="server" />
-                    <center><b><asp:Label ID="disp_industryName" CssClass="disp_industryName"  runat="server" Text=""></asp:Label></b></center>
-                    <center><p style="font-size: 14px;">Account ID: <b><asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b></p></center>
+                    <asp:Image ID="industryImage1" runat="server" />
+                    <center><b>
+                        <asp:Label ID="disp_industryName" CssClass="disp_industryName" runat="server" Text=""></asp:Label></b></center>
+                    <center>
+                        <p style="font-size: 14px;">Account ID: <b>
+                            <asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b></p>
+                    </center>
                 </div>
             </asp:TableCell>
           
             <asp:TableCell RowSpan="2" Style="padding:0px 10px 0px 25px; vertical-align:top;">
                 <div class="display-container">
                      <h1 class="title">Applicants List</h1>
-                    <p style="float:left; padding:10px;">
-                        <asp:DropDownList ID="drpStatus" runat="server" CssClass="searchbox">
-                        <asp:ListItem>All</asp:ListItem>
-                        <asp:ListItem>Pending</asp:ListItem>
-                        <asp:ListItem>Approved</asp:ListItem>
-                        <asp:ListItem>Rejected</asp:ListItem>
-                        </asp:DropDownList>
-                    </p>
-                
+                    <div class="input-group mb-3" style="float:left; padding:10px;">
+                        <asp:TextBox ID="ApplicantsID" runat="server" class="form-control" Placeholder="Lastname or Firstname or Status"></asp:TextBox>
+                        <div class="input-group-append">
+                            <asp:Button class="btn btn-primary btn-search" runat="server" ID="SearchApplicant" Text="Search" OnClick="SearchApplicant_Click"/>
+                        </div>
+                    </div>
+
                     <h3 id="Job_Title" runat="server" visible="false" style="float:left; padding:10px;"></h3>
                     
                     <asp:Repeater ID="rptApplicant" runat="server">
@@ -394,7 +431,7 @@
                                             </div>
                                             <div class="col-4 d-flex flex-column">
                                                 <asp:Label ID="lblapplicantID" runat="server" Text='<%# Eval("applicantID") %>' Visible="false"></asp:Label>
-                                                <asp:Button ID="btnApplication" runat="server" Text="Set Application" Width="130px" Height="30px" CssClass="btnApplicant" OnClick="btnApplication_Click" CommandName="Applicants" CommandArgument='<%# Eval("applicantID") %>'/>
+                                                <asp:Button ID="btnApplication" runat="server" Text="Set Application" Width="140px" Height="30px" CssClass="btnApplicant" OnClick="btnApplication_Click" CommandName="Applicants" CommandArgument='<%# Eval("applicantID") %>'/>
                                             </div>
                                         </div>
                                     </div>
@@ -414,7 +451,7 @@
         <asp:TableRow>
             <asp:TableCell Style="vertical-align:top; ">
                 <div class="sidemenu-container">
-                    <a href="IndustryDashboard.aspx"><i class="fa fa-th-large" aria-hidden="true"></i>Dashboard</a>
+                    <a href="IndustryDashboard.aspx"><i class="bx bxs-dashboard" aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
                     <a href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
                     <a href="IndustryJobPosted.aspx"><i class="fa fa-briefcase" aria-hidden="true"></i>Job Posted</a>
                     <a class="active" href="#"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
@@ -437,23 +474,19 @@
                                 <h2 class="title">Interview Schedule</h2>
                             </div>
                             <div class="modal-body">
-                                <div class="row applicant-details">
-                                    <div class="col-3 d-flex flex-column">
-                                        Interview Details:
-                                    </div>
-                                    <div class="col-9 d-flex flex-column">
-                                        <asp:TextBox ID="txtInterviewDetails" runat="server" Width="400px" Height="100px" TextMode="MultiLine" CssClass="txtbox" Placeholder="Enter Interview Details"></asp:TextBox>
+                                <div class="row applicant-details">                                   
+                                    <div class="col-12 d-flex flex-column">
+                                        <asp:Label ID="lblinterviewDetails" runat="server" Text="Interview Details" Style="font-size:20px;"></asp:Label>
+                                        <asp:TextBox ID="txtInterviewDetails" runat="server" Width="400px" Height="100px" ValidateRequestMode="Disabled" Rows="10" TextMode="MultiLine" CssClass="form-control txtbox-description summernote1" Placeholder="Enter Interview Details"></asp:TextBox>
                                     </div>
                                 </div>
                                 <br />
                                 <div class="row applicant-details">
-                                    <div class="col-3 d-flex flex-column">
-                                        Interview Date:
-                                    </div>
                                     <div class="col-9 d-flex flex-column">
                                         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                                             <ContentTemplate>
-                                            <asp:TextBox ID="txtInterviewDate" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px" AutoPostBack="True" OnTextChanged="txtDate_TextChanged"></asp:TextBox><br />
+                                            <asp:Label ID="lblDateinterview" runat="server" Text="Interview Date" Style="font-size:20px;"></asp:Label><br />
+                                            <asp:TextBox ID="txtInterviewDate" runat="server" TextMode="Date" CssClass="txtDate" Width="250px" Height="40px" AutoPostBack="True" OnTextChanged="txtDate_TextChanged"></asp:TextBox><br />
                                             <asp:Label ID="lblinterviewdate" runat="server" Font-Size="Medium" ForeColor="Red" Visible="false"></asp:Label><br />
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
@@ -496,8 +529,39 @@
 
                         }
 
-                                             
+                        $(document).ready(function () {
+                            $('.summernote1').summernote({
+                                height: 300,
+                                placeholder: 'Enter Interview Details...',
+                                toolbar: [
+                                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                                    ['font'],
+                                    ['fontsize', ['fontsize']],
+                                    ['color', ['color']],
+                                    ['para', ['ul', 'ol', 'paragraph']],
+
+                                    ['height', ['height']]
+
+                                ]
+                            });
+
+                            $('.summernote2').summernote({
+                                height: 300,
+                                placeholder: 'Enter Job Qualifications...',
+                                toolbar: [
+                                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                                    ['font',],
+                                    ['fontsize', ['fontsize']],
+                                    ['color', ['color']],
+                                    ['para', ['ul', 'ol', 'paragraph']],
+
+                                    ['height', ['height']]
+                                ]
+                            });
+                        });
+                           
                     </script>
+    
          
          <%--Modal--%>
                  <div class="modal" id="SetApplicationModal" tabindex="-1" role="dialog" >
@@ -508,41 +572,33 @@
                                  <div class="modal-body">
                                                 <br />
                                                 <div class="row">
-                                                    <div class="col-3 d-flex flex-column">
-                                                        Requirements:
-                                                    </div>
-                                                    <div class="col-9 d-flex flex-column">
-                                                        <asp:TextBox ID="txtrequirements" runat="server" CssClass="txtbox" TextMode="MultiLine" Width="400px" Height="100px"></asp:TextBox>
+                                                    <div class="col-12 d-flex flex-column">
+                                                        <asp:Label ID="lblRequirements" runat="server" Text="Requirements" Style="font-size:20px;"></asp:Label>
+                                                        <asp:TextBox ID="txtrequirements" runat="server" Width="400px" Height="100px" ValidateRequestMode="Disabled" Rows="10" TextMode="MultiLine" CssClass="form-control txtbox-description summernote2"></asp:TextBox>
                                                     </div>
                                                 </div>
                                                 <br />
                                                 <div class="row">
-                                                    <div class="col-3 d-flex flex-column">
-                                                        Date Start:
-                                                    </div>
-                                                    <div class="col-9 d-flex flex-column">
+                                                    <div class="col-8 d-flex flex-column">
                                                         <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
                                                             <ContentTemplate>
-                                                            <asp:TextBox ID="txtDateStart" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px" AutoPostBack="True" OnTextChanged="txtDateStart_TextChanged"></asp:TextBox><br />
+                                                            <asp:Label ID="lbldatestart" runat="server" Text="Date Start" Style="font-size:20px;"></asp:Label><br />
+                                                            <asp:TextBox ID="txtDateStart" runat="server" TextMode="Date" CssClass="txtDate" Width="250px" Height="40px" AutoPostBack="True" OnTextChanged="txtDateStart_TextChanged"></asp:TextBox><br />
                                                             <asp:Label ID="lblerrordate" runat="server" Font-Size="Medium" ForeColor="Red" Visible="false"></asp:Label><br />
                                                             </ContentTemplate>
                                                         </asp:UpdatePanel>
         
                                                     </div>
+                                                    <div class="col-4 d-flex flex-column" style="float:right; padding-top:2em;">
+                                                            <asp:DropDownList ID="drpApplicantStatus" runat="server" CssClass="drpbox" Width="250px" Height="40px">
+                                                            <asp:ListItem Enabled="true" Text= "STATUS" Value= "-1"></asp:ListItem>
+                                                            <asp:ListItem>Approve</asp:ListItem>
+                                                            <asp:ListItem>Reject</asp:ListItem>
+                                                            </asp:DropDownList>
+                                                    </div>
                                                 </div>
                                                 <br />
-                                                <div class="row">
-                                                    <div class="col-3 d-flex flex-column">
-                                                        
-                                                    </div>
-                                                    <div class="col-9 d-flex flex-column">
-                                                        <asp:DropDownList ID="drpApplicantStatus" runat="server" CssClass="drpbox" Width="110px" Height="30px">
-                                                        <asp:ListItem Enabled="true" Text= "STATUS" Value= "-1"></asp:ListItem>
-                                                        <asp:ListItem>Approve</asp:ListItem>
-                                                        <asp:ListItem>Reject</asp:ListItem>
-                                                        </asp:DropDownList>
-                                                    </div>
-                                                </div>
+                                                
                       
                              </div>
                              <div class="modal-footer">

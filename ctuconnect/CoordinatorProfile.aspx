@@ -3,6 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-9aLThZMxx+rKTEzeibpBtJPLcA6nhcwScQJ/DV+ytI+73m9Z2ap53lr1dH5tRjS9bOwD3GH1vbAhr5ZC9fIvnQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
         
@@ -97,7 +98,7 @@
                 font-size:25px;
                 font-weight:500;
                 position:relative;
-                margin-bottom:3%;
+                margin-bottom:1%;
                 padding-bottom:4px;
             }
             .display-container .title:before{
@@ -126,7 +127,6 @@
                  align-items:center;
              }
             .sort-dropdown{
-                border-radius: 12px;
                 width:100px;
                 padding-left:8px;
                 border-color:#c1beba;
@@ -179,12 +179,14 @@
         padding:5px;
 
     }
+    td{
+        padding-left:5px;
+    }
     .datas{
-         padding:9px;
-          border: 8px solid;
+          border: 5px solid;
           border-color:white;
-         font-weight:bold;
          color:black;
+         cursor:default;
     }
 
     .table-list{
@@ -193,7 +195,42 @@
         height:auto; 
         width:100%;
         color:dimgray;
+        padding-right:4px;
     }
+    .evaluateButton{
+        padding-left:3px;
+    padding-right:3px;
+    background-color: #F9E9B7; 
+    color: #F3C129; 
+    margin-right:2px;
+    border-radius: 25px;
+    text-align: center;
+    cursor: pointer;
+    border:none;
+}
+    .actions{
+     color: gray; 
+     cursor: pointer;
+     width:5px;
+     height:auto;
+    }
+        .selectedRow {
+        background-color: whitesmoke; /* Change this to your desired highlight color */
+    }
+        .topnav {
+          overflow: hidden;
+          width:100%;
+        }
+                .topnav2{
+            overflow: hidden;
+            width:100%;
+            padding: 2px 15px;
+        }
+        .bulk-action{
+            float:right;
+            display:flex; 
+            gap:10px;
+        }
     </style>
     <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
@@ -219,12 +256,21 @@
             </asp:TableCell>
             <asp:TableCell Style="padding:0px 5px 0px 40px">
                <div class="display-container">
-                   <h1 class="title">List of Interns</h1>
-                    <p style="float:left;">Sort by <asp:DropDownList ID="ddlSortBy" runat="server" AutoPostBack="true"  CssClass="sort-dropdown">
-                        <asp:ListItem Text="Course" Value="ColumnName1"></asp:ListItem>
-                        <asp:ListItem Text="Status" Value="ColumnName2"></asp:ListItem>
-                    </asp:DropDownList> for BSIT , BIT-CT</p>
+                 <h1 class="title">List of Interns</h1>
                    <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
+                    <div class="col-lg-5 order-1 order-lg-2 topnav">
+                        <p style="float:left;">Academic Year <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="true" Style="width:90px;" CssClass="sort-dropdown">
+     <asp:ListItem Text="2023" Value="ColumnName1"></asp:ListItem>
+     <asp:ListItem Text="2024" Value="ColumnName2"></asp:ListItem>
+ </asp:DropDownList></p>
+<asp:DropDownList ID="programList" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="program_SelectedIndexChanged"></asp:DropDownList>
+                       <div class="bulk-action">
+                   <asp:Button Text="Edit" ID="btnEdit" runat="server" style="background-color:white; border:1px solid; border-color:gray; box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);" OnCLick="Edit_Click" />
+                   <button runat="server" style="background-color:white; border:1px solid; border-color:gray; box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);"><i class="fa fa-trash" aria-hidden="true"></i>Delete </button>
+                   <asp:Button Text="Refer" ID="btnRefer" runat="server" style="background-color:white; border:1px solid; border-color:gray; box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);" OnCLick="referIntern_Click"/>
+                           </div>
+                    </div>
+                   
                        <%--<th>student id</th>
                         <th>last name</th>
                         <th>first name</th>
@@ -255,9 +301,13 @@
                                     oncommand="reviewletter_command" commandname="review"  
                                     commandargument='<%# Eval("evaluationRequest") %>'/>
                                 </td>--%>
-
+                   <asp:ListView ID="internListView" runat="server"> 
+                       <LayoutTemplate>
                                <table  class="table-list">
                                     <tr>
+                                        <th>
+                                            <asp:CheckBox ID="chkSelectAll" runat="server" onclick="toggleSelectAll(this);" />
+                                        </th>
                                         <th>Student ID</th>
                                         <th>Last name</th>
                                         <th>First name</th>
@@ -265,29 +315,409 @@
                                         <th>Program enrolled</th>
                                         <th>Contact Number</th>
                                         <th>Email</th>
+                                        <th>Status</th>
                                         <th>Rendered Hours</th>
                                         <th>Evaluation</th>
+                                        <th></th>
                                     </tr>
-                                    <asp:Repeater ID="dataRepeater" runat="server">
+                                   <tbody>
+                                        <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                                    </tbody>
+                                   </table>
+                          </LayoutTemplate>         
                                         <Itemtemplate>
-                                            <tr class="datas">
-                                                <td><%# Eval("studentId") %></td>
-                                                <td><%# Eval("lastname") %></td>
-                                                <td><%# Eval("firstname") %></td>
+                                            <tr class="datas clickableRow" onclick="toggleHighlightAndCheckbox(document.getElementById('<%# ((ListViewDataItem)Container).FindControl("chkSelect").ClientID %>'));">
+                                                <td>
+                                                    <asp:CheckBox ID="chkSelect" runat="server" onclick="event.stopPropagation(); toggleHighlight(this);"  />
+                                                </td>
+                                                <td style="display:none;"><asp:Label ID="lblStudentaccId" runat="server" Visible="false" Text='<%# Eval("student_accID") %>'></asp:Label></td>
+                                                <td>
+                                                    <asp:Label ID="lblStudentId" runat="server" Text='<%# Eval("studentId") %>'></asp:Label>
+
+                                                </td>
+                                                <td>
+                                                    <asp:Label ID="lblLastName" runat="server" Text='<%# Eval("lastname") %>'></asp:Label>
+
+                                                </td>
+                                                <td>
+                                                    <asp:Label ID="lblFirstName" runat="server" Text='<%# Eval("firstname") %>'></asp:Label>
+
+                                                </td>
                                                 <td><%# Eval("midinitials") %></td>
-                                                <td><%# Eval("course") %></td>
-                                                <td><%# Eval("contactNumber") %></td>
-                                                <td><%# Eval("email") %></td>
-                                                <td><%# Eval("renderedHours") %></td>
-                                                <td><%# Eval("evaluationRequest") %></td>
+                                                <td> 
+                                                    <asp:Label ID="courseLabel" runat="server" Text='<%# Eval("course") %>'></asp:Label>
+                                                </td>
+                                                <td>
+                                                    <asp:Label ID="contactLabel" runat="server" Text='<%# Eval("contactNumber") %>'></asp:Label>
+                                                </td>
+                                                <td>
+                                                    <asp:Label ID="emailLabel" runat="server" Text='<%# Eval("email") %>'></asp:Label>
+                                                </td>
+                                                <td>
+                                                    <asp:Label ID="lblIsHired" runat="server" Text='<%# Convert.ToBoolean(Eval("isHired")) %>' Visible="false"></asp:Label>
+                                                        <%# (Convert.ToBoolean(Eval("isHired")) ? "<i class='fa fa-check' style='color: green;'></i> Hired" : "<i class='fa fa-times' style='color: red;'></i> Not Hired") %>
+                                                </td>
+
+
+                                                <td>
+                                                    <asp:Label ID="hourslabel" runat="server" Text='<%# Eval("renderedHours") %>'></asp:Label>
+                                                </td>
+                                                <td>
+                                                    <asp:Button ID="EvaluationBtn" CssClass="evaluateButton" runat="server" Text='<%# Eval("evaluationRequest") %>' OnCLick="Evaluate_BtnClick" />
+                                                
+                                                </td>
                                             </tr>
                                         </Itemtemplate>
-        
-                                    </asp:Repeater>
-                                </table>
+                   </asp:ListView>
+
                </div>
             </asp:TableCell>
         </asp:TableRow>
           
     </asp:Table>
+
+             <div class="modal" id="failPrompt" tabindex="-1" role="dialog" >
+     <div class="modal-dialog modal-dialog-centered" >
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h2 class="title">
+                    <span style="color: red;">&#9888;</span> Failed to Proceed
+                </h2>
+             </div>
+                 <div class="modal-body" style="text-align:center;">
+                     <asp:Label ID="Label3" runat="server" Style="font-size:16px; text-align:center;">
+                        The row you selected includes intern that is <span style="color: green;">already hired</span>
+                    </asp:Label><br />
+                     <asp:Label ID="Label2" runat="server" Text="Select another row. Thank you!" Style="font-size:16px; text-align:center;" ></asp:Label>
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal" OnCLick="closeModal1()">Okay</button>
+             </div>
+         </div>
+     </div>
+  </div>
+
+
+     <div class="modal" id="addReferral" tabindex="-1" role="dialog" >
+     <div class="modal-dialog modal-dialog-centered" >
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h2 class="title">Refer Interns</h2>
+             </div>
+                 <div class="modal-body" style="padding-left:8%;">
+                      <asp:Label ID="Label1" runat="server" Text="Intern Names" Style="font-size:18px; float:left;" ></asp:Label><span style="margin-left:19px; font-size:18px; float:left;">:</span>
+                      <div style="margin-left: 5%; float:left;">
+                        <asp:Label ID="internNamesDisplay" runat="server" Style="white-space: pre;"></asp:Label>
+                       </div><br />
+                     <div style="clear: both;"></div>
+                     <asp:Label ID="Label4" runat="server" Text="Industry" Style="font-size:18px;" ></asp:Label><span style="margin-left:63px; font-size:18px;">:</span>
+                      <asp:DropDownList ID="dropdownIndustries" runat="server" style="margin-left:20px; width:278px;"></asp:DropDownList>
+                     <asp:Label ID="Label5" runat="server" Text="Referral Letter" Style="font-size:18px;" ></asp:Label><span style="margin-left:11px; font-size:18px;">:</span>
+                     <asp:FileUpload ID="referralUpload" runat="server" style="margin-left:20px;"/>
+                     
+                      
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal" OnClick="closeModal2()">Close</button>
+                 <asp:Button  class="buttonSubmit" runat="server" Text="Submit" OnClick="SaveRefer_Click" autopostback="false" />
+             </div>
+         </div>
+     </div>
+  </div>
+
+
+        <div class="modal fade" id="SuccessPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                         <br />
+                        <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
+                        <asp:Label ID="Label11" runat="server" Text="Success !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label12" runat="server" Text="Your referral succesfully added." Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button runat="server" type="button" class="btn btn-secondary" Text="Close" OnCLick="Close_SuccessPrompt" />
+                    </div>
+                </div>
+            </div>
+</div>
+
+            <div class="modal fade" id="SuccessSingleEditPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                         <br />
+                        <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
+                        <asp:Label ID="Label20" runat="server" Text="Success !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label21" runat="server" Text="You succesfully updated the hours rendered." Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button runat="server" type="button" class="btn btn-secondary" Text="Close" OnCLick="Close_SuccessSingleEditPrompt" />
+                    </div>
+                </div>
+            </div>
+</div>
+<%--            <div class="modal fade" id="AlreadyExistPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                         <br />
+                        <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
+                        <asp:Label ID="Label6" runat="server" Text="Intern Already Referred !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label7" runat="server" Text="the intern selected is already in the referral list" Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" OnClick="closeModal3()">Close</button>
+                    </div>
+                </div>
+            </div>
+</div>--%>
+
+         <div class="modal" id="alreadyExistPrompt" tabindex="-1" role="dialog" >
+     <div class="modal-dialog modal-dialog-centered" >
+         <div class="modal-content">
+             <div class="modal-header">
+                  <img src="images/check-mark.png" style="width:60px; height:auto;" />
+                <asp:Label ID="Label6" runat="server" Text="Intern Already Referred !" Style="font-size:25px;" ></asp:Label><br />
+             </div>
+                 <div class="modal-body" style="padding-left:8%; text-align:center;">
+                      <asp:Label ID="Label7" runat="server" Text="the selected intern is already in the referral list" Style="font-size:18px;" ></asp:Label><br />
+                     <asp:Label ID="alreadyexistintern" runat="server"  Style="font-size:15px;" ></asp:Label>
+
+                     
+                      
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal" OnClick="closeModal3()">Close</button>
+             </div>
+         </div>
+     </div>
+  </div>
+
+             <div class="modal" id="stillHaveNotHired" tabindex="-1" role="dialog" >
+     <div class="modal-dialog modal-dialog-centered" >
+         <div class="modal-content">
+             <div class="modal-header">
+                   <h2 class="title">
+                         <span style="color: red;">&#9888;</span> Failed to Proceed
+                    </h2>
+             </div>
+                 <div class="modal-body" style="padding-left:8%; text-align:center;">
+                      <asp:Label ID="Label8" runat="server" Style="font-size:16px; text-align:center;">
+                        The row you selected includes intern that is <span style="color: red;">not hired</span>
+                    </asp:Label><br />
+                    <asp:Label ID="Label9" runat="server" Text="Select another row. Thank you!" Style="font-size:16px; text-align:center;" ></asp:Label>
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal" OnClick="closeModalFailedEdit()">Close</button>
+             </div>
+         </div>
+     </div>
+  </div>
+
+                 <div class="modal" id="editMultiple" tabindex="-1" role="dialog" >
+     <div class="modal-dialog modal-dialog-centered" >
+         <div class="modal-content">
+             <div class="modal-header">
+                   <h2 class="title">
+                         Edit Hours Rendered
+                    </h2>
+             </div>
+                 <div class="modal-body" style="padding-left:8%;">
+                     <asp:Label ID="Label22" runat="server" Text="Intern Names" Style="font-size:18px; float:left;" ></asp:Label><span style="margin-left:45px; font-size:18px; float:left;">:</span>
+                    <div style="margin-left: 5%; float:left;">
+                      <asp:Label ID="internsLabel" runat="server" Style="white-space: pre;"></asp:Label>
+                     </div><br />
+                     <div style="clear: both;"></div>
+                      <asp:Label ID="Label10" runat="server" Style="font-size:18px; float:left;">
+                        Hours Rendered
+                    </asp:Label><span style="margin-left:19px; margin-right:5%; font-size:18px; float:left;">:</span>
+                    <asp:TextBox ID="txtrenderedHours" runat="server" > </asp:TextBox>
+             </div>
+             <div class="modal-footer">
+                 <asp:Button  class="buttonSubmit" runat="server" Text="Submit" OnClick="SaveMultipleEdit_Click" autopostback="false" />
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal" OnClick="closeModalBulkEdit()">Close</button>
+             </div>
+         </div>
+     </div>
+  </div>
+
+            <div class="modal fade" id="NoSelected" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                         <br />
+                        <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
+                        <asp:Label ID="Label13" runat="server" Text="No Selected !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label14" runat="server" Text="PLease select atleast one row, Thank you." Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button runat="server" type="button" class="btn btn-secondary" Text="Close" OnCLick="Close_NoSelectedPrompt" />
+                    </div>
+                </div>
+            </div>
+</div>
+
+                     <div class="modal" id="singleEdit" tabindex="-1" role="dialog" >
+     <div class="modal-dialog modal-dialog-centered" >
+         <div class="modal-content">
+             <div class="modal-header">
+                   <h2 class="title">
+                         Edit Hours Rendered
+                    </h2>
+             </div>
+                 <div class="modal-body" style="padding-left:8%;">
+                     <asp:Label ID="Label16" runat="server" Text="Intern Name" Style="font-size:18px;" ></asp:Label><span style="margin-left:63px; font-size:18px;">:</span>
+                     <asp:Label ID="fullnametxt" runat="server" Style="font-size:18px;" ></asp:Label><br />
+                     <asp:Label ID="Label17" runat="server" Text="Program" Style="font-size:18px;" ></asp:Label><span style="margin-left:93px; font-size:18px;">:</span>
+                     <asp:Label ID="programtxt" runat="server" Style="font-size:18px;" ></asp:Label><br />
+                     <asp:Label ID="Label19" runat="server" Text="Contact Number" Style="font-size:18px;" ></asp:Label><span style="margin-left:31px; font-size:18px;">:</span>
+                     <asp:Label ID="contacttxt" runat="server" Style="font-size:18px;" ></asp:Label><br />
+                     <asp:Label ID="Label18" runat="server" Text="Email" Style="font-size:18px;" ></asp:Label><span style="margin-left:117px; font-size:18px;">:</span>
+                     <asp:Label ID="emailtxt" runat="server" Style="font-size:18px;" ></asp:Label><br />
+                      <asp:Label ID="Label15" runat="server" Style="font-size:18px;">
+                        Hours Rendered
+                    </asp:Label><span style="margin-left:25px; font-size:18px;">:</span>
+                    <asp:TextBox ID="hoursRenderedtxt" runat="server"> </asp:TextBox><br />
+             </div>
+             <div class="modal-footer">
+                 <asp:Button  class="buttonSubmit" runat="server" Text="Submit" OnClick="SaveSingleEdit_Click" autopostback="false" />
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal" OnClick="closeModalSingleEdit()">Close</button>
+             </div>
+         </div>
+     </div>
+  </div>
+
+            <div class="modal fade" id="SuccessMultipleEditPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                         <br />
+                        <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
+                        <asp:Label ID="Label23" runat="server" Text="Success !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label24" runat="server" Text="You succesfully updated the hours rendered." Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button runat="server" type="button" class="btn btn-secondary" Text="Close" OnCLick="Close_MultipleEditSuccessPrompt" />
+                    </div>
+                </div>
+            </div>
+</div>
+
+   <script type="text/javascript">
+       function openModal1() {
+           var modal = document.getElementById("failPrompt");
+           modal.style.display = "block";
+       }
+       function openModal2(internNamesString) {
+           var modal = document.getElementById("addReferral");
+           modal.style.display = "block";
+
+           var formattedNames = internNamesString.replace(/,/g, '<br>');
+
+           document.getElementById('<%=internNamesDisplay.ClientID%>').innerHTML = formattedNames;
+           
+       }
+       function openModal3(existinginternNamesString) {
+           var modal = document.getElementById("alreadyExistPrompt");
+           modal.style.display = "block";
+
+           var formattedNames = existinginternNamesString.replace(/,/g, '<br>');
+
+           document.getElementById('<%=alreadyexistintern.ClientID%>').innerHTML = formattedNames;
+
+       }
+       function openModalFailedEdit() {
+           var modal = document.getElementById("stillHaveNotHired");
+           modal.style.display = "block";
+       }
+       function openModalMultipleEdit(existingname) {
+           var modal = document.getElementById("editMultiple");
+           modal.style.display = "block";
+
+           var formattedNames = existingname.replace(/,/g, '<br>');
+
+           document.getElementById('<%=internsLabel.ClientID%>').innerHTML = formattedNames;
+       }
+       function openEditModal(name, program, cnumber, emailaddress, existingrenderedhours) {
+           var modal = document.getElementById("singleEdit");
+           modal.style.display = "block";
+
+           document.getElementById('<%=fullnametxt.ClientID%>').innerHTML = name;
+           document.getElementById('<%=programtxt.ClientID%>').innerHTML = program;
+           document.getElementById('<%=contacttxt.ClientID%>').innerHTML = cnumber;
+           document.getElementById('<%=emailtxt.ClientID%>').innerHTML = emailaddress;
+           document.getElementById('<%=hoursRenderedtxt.ClientID%>').value = existingrenderedhours;;
+       }
+       
+
+       function closeModal1() {
+           document.getElementById("failPrompt").style.display = "none";
+
+       }
+       function closeModal2() {
+           document.getElementById("addReferral").style.display = "none";
+
+       }
+       function closeModal3() {
+           document.getElementById("alreadyExistPrompt").style.display = "none";
+
+       }
+       function closeModalFailedEdit() {
+           document.getElementById("stillHaveNotHired").style.display = "none";
+
+       }
+       function closeModalBulkEdit() {
+           document.getElementById("editMultiple").style.display = "none";
+
+       }
+       function closeModalSingleEdit() {
+           document.getElementById("singleEdit").style.display = "none";
+
+       }
+       
+       function toggleHighlightAndCheckbox(checkbox) {
+           checkbox.checked = !checkbox.checked; // Toggle the checkbox
+           toggleHighlight(checkbox);
+           /*toggleButtonsVisibility(checkbox.checked);*/
+       }
+
+       function toggleHighlight(checkbox) {
+           var row = checkbox.closest('tr');
+           if (checkbox.checked) {
+               row.classList.add('selectedRow');
+               /*toggleButtonsVisibility(checkbox.checked);*/
+           } else {
+               row.classList.remove('selectedRow');
+               /*toggleButtonsVisibility(checkbox.checked);*/
+           }
+       }
+       function toggleSelectAll(checkbox) {
+           var listView = document.getElementById('<%= internListView.ClientID %>');
+           var checkboxes = listView.querySelectorAll('input[id*="chkSelect"]');
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = checkbox.checked;
+            toggleHighlight(checkboxes[i]);
+            
+         }
+        }
+       //function toggleButtonsVisibility(isChecked) {
+       //    var buttons = document.querySelectorAll('.additionalButtons');
+
+       //    for (var i = 0; i < buttons.length; i++) {
+       //        buttons[i].style.display = isChecked ? 'inline' : 'none';
+       //    }
+       //}
+   </script>
 </asp:Content>

@@ -223,7 +223,7 @@ namespace ctuconnect
             {
                 string applicantStatus = reader["applicantStatus"].ToString();
                 dateApproved.InnerText = reader["applicationApprovalDate"].ToString();
-                requirementDetails.Text = "<br /><b>Details: </b><br />" + reader["requirements"].ToString();
+                requirementDetails.Text = "<br /><b>Details: </b><br />" + HttpUtility.HtmlDecode(reader["requirements"].ToString());
                 dateStarted.Text = "<br /><b>Work Start Date: </b>" + reader["dateStart"].ToString();
                 conDB.Close();
                 return applicantStatus;
@@ -261,7 +261,7 @@ namespace ctuconnect
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
-                interviewDetail = reader["interviewDetails"].ToString();
+                interviewDetail = HttpUtility.HtmlDecode(reader["interviewDetails"].ToString());
                 dateScheduled.Text = "<br /><b>Interview Date: </b>" + reader["interviewDate"].ToString();
                 interviewDate.InnerText = reader["interviewScheduledDate"].ToString();
                 conDB.Close();
