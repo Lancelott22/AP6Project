@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="CourseLists.aspx.cs" Inherits="ctuconnect.CourseLists" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OJTCoordinator.Master" AutoEventWireup="true" CodeBehind="CourseLists.aspx.cs" Inherits="ctuconnect.CourseLists" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -54,7 +54,7 @@
             
         }
        
-            a {
+            .profile-container a {
                 position:static;
                 border-radius: 10px;
                 color: black;
@@ -64,11 +64,11 @@
                 margin: 2px 15px 5px 15px ;
                 padding: 0px 0px 0px 8px;
             }
-            a.active{
+            .profile-container a.active{
                  background-color:#F6B665;
                 color:#606060;
             }
-            a:hover{
+            .profile-container a:hover{
                 background-color:#fcd49a;
                 color:#606060;
                 margin: 2px 15px 5px 15px ;
@@ -189,6 +189,7 @@
                     <a class="active" href="CourseList.aspx"> <i class="fa fa-book" aria-hidden="true" style="padding-right:12px;"></i>Course List</a>
                      <a  href="Applicants.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
                      <hr class="second" />
+                    <a href="OJTCoordinatorProfile.aspx"><i class="fa fa-user" aria-hidden="true" style="padding-right:12px;"></i>Profile</a>
                      <a  href="ReferralLIst.aspx"><i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>Sign-out</a>
                 </div>
             </asp:TableCell>
