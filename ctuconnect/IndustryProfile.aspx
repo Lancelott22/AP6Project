@@ -8,6 +8,7 @@
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha256-rqjJMwTqpcNs7L4lL7v5Et5Et4aBnaeUpK2cnFXa4UE=" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <style>
      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
@@ -192,6 +193,19 @@
             min-width:70%;
         }
 
+        .display-review{
+            font-family: 'Poppins', sans-serif;
+            font-size:12px;
+            background-color:white; 
+            width:1000px;
+            top:0;
+            bottom:0;
+            padding: 2% 2% 0% 2%;
+            overflow: visible;
+            height:500px;
+            min-width:70%;
+        }
+
         .line{
             height:2px;
             width:100%;
@@ -265,13 +279,12 @@
                     <div class="row">
                         <div class="col-lg-12 order-1 order-lg-2 topnav">
                             <a class="active" href="#about">About</a>
-                            <a href="#">Jobs</a>
-                            <a href="#">Reviews</a>
+                            <a href="#reviews">Reviews</a>
                         </div>
                     </div>
                 </div>
                 <br />
-                <div class="display-industry">
+                <div class="display-industry" id="about">
                     <div class="row">
                         <div class="col-sm-11">
                             <h3 style="font-weight:bold; color:#881A30;">Industry Details</h3>
@@ -340,10 +353,15 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="display-review" id="reviews">
+                    <!-- Reviews content goes here -->
+                </div>
                 <br /><br />
    
             </asp:TableCell>
         </asp:TableRow>
+     
 
         <asp:TableRow>
             <asp:TableCell Style="vertical-align: top;">
@@ -364,5 +382,30 @@
         </asp:TableRow>
 
     </asp:Table>
+
+    <script>
+        $(document).ready(function () {
+            // Initially, show the "display-industry" content
+            $(".display-industry").show();
+
+            // Handle tab click events
+            $(".topnav a").click(function () {
+                // Hide all content sections
+                $(".display-review, .display-industry").hide();
+
+                // Remove the 'active' class from all tabs
+                $(".topnav a").removeClass("active");
+
+                // Add 'active' class to the clicked tab
+                $(this).addClass("active");
+
+                // Show the corresponding content based on the clicked tab
+                var tabId = $(this).attr("href").substring(1);
+                $("#" + tabId).show();
+
+                return false; // Prevent default behavior of the anchor tag
+            });
+        });
+    </script>
        
 </asp:Content>

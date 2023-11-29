@@ -74,10 +74,6 @@ namespace ctuconnect
             }
         }
 
-        protected void btnEdit_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("EditAccount");
-        }
 
         protected void SignOut_Click(object sender, EventArgs e)
         {
