@@ -26,6 +26,7 @@ namespace ctuconnect
             else if (!IsPostBack)
             {
                 myApplicationBind();
+                myCurrentJobBind();
             }
         }
         void myApplicationBind()
@@ -298,6 +299,121 @@ namespace ctuconnect
         protected void MyApplication_PagePropertiesChanged(object sender, EventArgs e)
         {
             myApplicationBind();
+        }
+
+        protected void HiredView_ItemDataBound(object sender, ListViewItemEventArgs e)
+        {
+            HtmlGenericControl dateHired = (HtmlGenericControl)e.Item.FindControl("DateHired");
+            DateTime hiredDate = Convert.ToDateTime(dateHired.InnerText);
+            DateTime currentDate = DateTime.Now;
+            TimeSpan timegap = currentDate - hiredDate;
+
+            if (timegap.Days < 1)
+            {
+                HtmlGenericControl Badge = (HtmlGenericControl)e.Item.FindControl("HiredBadge");
+                Badge.Visible = true;
+                /* HtmlGenericControl myApplicationList = (HtmlGenericControl)e.Item.FindControl("myApplicationList");
+                 myApplicationList.Style.Add("background-color", "#f0e789");*/
+            }
+            HtmlGenericControl hiredID = (HtmlGenericControl)e.Item.FindControl("HiredID");
+            int hired_Id = int.Parse(hiredID.InnerText);
+            Button reqEval = (Button)e.Item.FindControl("RequestEval");
+            if (!checkStatusOngoing(hired_Id))
+            {
+                reqEval.Text = "Done";
+                reqEval.Enabled = false;
+                reqEval.CssClass = "buttonStyleDone";
+            }
+            if(checkRequestedEval(hired_Id))
+            {
+                reqEval.Text = "Requested";
+                reqEval.Enabled = false;
+                reqEval.CssClass = "buttonStyle";
+            }
+        }
+        bool checkStatusOngoing(int hiredID)
+        {
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select * from HIRED_LIST WHERE id = @hiredID", conDB);
+            cmd.Parameters.AddWithValue("@hiredID", hiredID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if(reader.Read())
+            {
+                if (reader["internshipStatus"].ToString() == "Ongoing")
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return true;
+                }
+            }
+            reader.Close();
+            conDB.Close();
+            return false;
+        }
+        bool checkRequestedEval(int hiredID)
+        {
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select * from HIRED_LIST WHERE id = @hiredID", conDB);
+            cmd.Parameters.AddWithValue("@hiredID", hiredID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (reader["evaluationRequest"].ToString() == "Requested")
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return true;
+                }
+            }
+            reader.Close();
+            conDB.Close();
+            return false;
+        }
+        void myCurrentJobBind()
+        {
+            int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString());
+
+            SqlCommand cmd = new SqlCommand("select * from HIRED_LIST JOIN INDUSTRY_ACCOUNT ON HIRED_LIST.industry_accID = INDUSTRY_ACCOUNT.industry_accID Where student_accID = @Student_accID ORDER BY dateHired DESC", conDB);
+            cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            MyJobView.DataSource = ds;
+            MyJobView.DataBind();
+            if (MyJobView.Items.Count == 0)
+            {
+               /* ListViewPager.Visible = false;*/
+            }
+        }
+        protected void RequestEval_Command(object sender, CommandEventArgs e)
+        {
+            int hiredID = int.Parse(e.CommandArgument.ToString());
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE HIRED_LIST SET evaluationRequest = 'Requested' WHERE id = @hiredID", conDB);
+            cmd.Parameters.AddWithValue("@hiredID", hiredID);
+            var ctr = cmd.ExecuteNonQuery();
+            if (ctr > 0)
+            {
+                ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('Your evaluation request has been sent successfully.');document.location='MyJobApplication.aspx';", true);
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertError", "alert('Cannot request an evaluation right now! Please try again later.')", true);
+            }
+        }
+
+        protected void SwitchView_SelectedIndexChanged(object sender, EventArgs e)
+        {          
+            if(SwitchView.SelectedValue == "1")
+            {
+                MyJobApplicationView.Visible = true;
+                MyJobHiredView.Visible = false;
+            }
+            else if(SwitchView.SelectedValue == "2")
+            {
+                MyJobApplicationView.Visible = false;
+                MyJobHiredView.Visible = true;
+            }
         }
     }
 }
