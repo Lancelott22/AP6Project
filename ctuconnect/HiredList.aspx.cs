@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Org.BouncyCastle.Asn1.IsisMtt.Ocsp;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -78,10 +79,32 @@ namespace ctuconnect
                 {
                     selectedInternshipStatus = (List<string>)ViewState["SelectedInternshipStatus"];
                 }
+
+                foreach (ListViewItem item in listView2.Items)
+                {
+                    Button EvaluationBtn = item.FindControl("EvaluationBtn") as Button;
+
+                    // Check if EvaluationBtn is found and do something with it
+                    if (EvaluationBtn != null)
+                    {
+                        // Check if the evaluation has been performed
+                        bool evaluationPerformed = CheckIfEvaluationPerformed();
+
+                        // Update the button text based on the evaluation status
+                        EvaluationBtn.Text = evaluationPerformed ? "View Evaluation" : "Requested";
+                    }
+                }
             }
             
 
-    }
+        }
+
+        private bool CheckIfEvaluationPerformed()
+        {
+            // Check the session variable or some other indicator to see if the evaluation has been performed
+            return Session["EvaluationPerformed"] != null && (bool)Session["EvaluationPerformed"];
+        }
+
         void BindTable1()
         {
             using (var db = new SqlConnection(conDB))
@@ -155,7 +178,7 @@ namespace ctuconnect
             UpdatePanel1.Update();
 
         }
-        protected void Evaluate_BtnClick(object sender, EventArgs e)
+        /*protected void Evaluate_BtnClick(object sender, EventArgs e)
         {
             // Find the button that triggered the event
             Button EvaluationBtn = (Button)sender;
@@ -164,9 +187,9 @@ namespace ctuconnect
             if (EvaluationBtn.Text == "Requested")
             {
                 // Redirect to another ASPX page
-                Response.Redirect("Home.aspx");
+                Response.Redirect("EvaluationForm.aspx?id=" + e);
             }
-        }
+        }*/
         protected void ViewResume_Command(object sender, CommandEventArgs e)
         {
             if (e.CommandName == "View")
@@ -346,10 +369,11 @@ namespace ctuconnect
             foreach (ListViewItem item in listView2.Items)
             {
                 CheckBox chkSelect = (CheckBox)item.FindControl("chkSelect");
-                
+
 
                 if (chkSelect.Checked)
                 {
+
                     Label lblStudentID = (Label)item.FindControl("lblStudentID");
                     Label lblFirstName = (Label)item.FindControl("lblFirstName");
                     Label lblLastName = (Label)item.FindControl("lblLastName");
@@ -369,6 +393,7 @@ namespace ctuconnect
                     string dateended = lblDateEnded.Text;
                     string renderhours = lblRenderedHours.Text;
                     string internshipstatus = lblInternshipStatus.Text;
+
 
                     selectedStudentIds.Add(studentaccountid);
                     selectedInternNames.Add($"{fname} {lname}");
@@ -397,8 +422,17 @@ namespace ctuconnect
             ViewState["SelectedInternshipStatus"] = selectedInternshipStatus;
 
             if (checkedCount > 1)
-             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript2", $"openModal2();", true);
+            {
+                bool anyIsDone = selectedInternshipStatus.Any(status => status == "Done");
+                if (anyIsDone)
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "openModalFailedEdit();", true);
+                }
+                else
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript2", $"openModal2();", true);
+
+                }
             }
             else if (checkedCount == 0)
             {
@@ -406,59 +440,29 @@ namespace ctuconnect
             }
             else
             {
-                string existingname = string.Join(" ", selectedInternNames);
-                string existingposition = string.Join(" ", selectedPosition);
-                string existingdatehired = string.Join(" ", selectedDateHired);
-                string existingdatestarted = string.Join(" ", selectedDateStarted);
-                string existingdateended = string.Join(" ", selectedDateEnded);
-                string existingrenderedhours = string.Join(" ", selectedHoursRendered);
-                string existingstatus = string.Join(" ", selectedInternshipStatus);
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openSingleSelectModal('{existingname}','{existingposition}','{existingdatehired}','{existingdatestarted}','{existingdateended}','{existingrenderedhours}','{existingstatus}');", true);
-            }
-        }
-        
-/*        protected void editRow_Click(object sender, EventArgs e)
-        {
-            LinkButton btnEdit = (LinkButton)sender;
-            currentStudentID = Convert.ToInt32(btnEdit.CommandArgument);
-
-            bool canEdit = CanEditStudent(currentStudentID);
-            if (canEdit)
-            {
-                string fname = GetFirstNameFromDatabase(currentStudentID);
-                string lname = GetLastNameFromDatabase(currentStudentID);
-                string position = GetPositionFromDatabase(currentStudentID);
-                string hired = GetDateHiredFromDatabase(currentStudentID);
-                string startedDate = GetDateStartedFromDatabase(currentStudentID);
-
-                ViewState["CurrentStudentID"] = currentStudentID;
-
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openModal('{fname}','{lname}','{position}','{hired}','{startedDate}');", true);
-            }
-            else
-            {
-                btnEdit.Enabled = false;
-            }
-        }*/
-/*        private bool CanEditStudent(int student_accID)
-        {
-            using (var db = new SqlConnection(conDB))
-            {
-                db.Open();
-
-                string query = "SELECT dateEnded FROM HIRED_LIST WHERE student_accID = @studentID";
-
-                using (var command = new SqlCommand(query, db))
+                bool anyIsDone = selectedInternshipStatus.Any(status => status == "Done");
+                if (anyIsDone)
                 {
-                    command.Parameters.AddWithValue("@studentID", student_accID);
-
-                    var result = command.ExecuteScalar();
-
-                    // If dateEnded has a value, editing is not allowed
-                    return result == null || result == DBNull.Value;
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "openModalFailedEdit();", true);
+                }
+                else
+                {
+                    string existingname = string.Join(" ", selectedInternNames);
+                    string existingposition = string.Join(" ", selectedPosition);
+                    string existingdatehired = string.Join(" ", selectedDateHired);
+                    string existingdatestarted = string.Join(" ", selectedDateStarted);
+                    string existingdateended = string.Join(" ", selectedDateEnded);
+                    string existingrenderedhours = string.Join(" ", selectedHoursRendered);
+                    string existingstatus = string.Join(" ", selectedInternshipStatus);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openSingleSelectModal('{existingname}','{existingposition}','{existingdatehired}','{existingdatestarted}','{existingdateended}','{existingrenderedhours}','{existingstatus}');", true);
                 }
             }
-        }*/
+        }
+        protected void Close_NoSelectedPrompt(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#NoSelected').modal('hide');document.location='CoordinatorProfile.aspx'", true);
+        }
+
         private string GetFirstNameFromDatabase(int student_accID)
         {
             string firstname = string.Empty;
@@ -613,9 +617,13 @@ namespace ctuconnect
         }
         protected void closeEditModal(object sender, EventArgs e)
         {
-            UpdatePanel1.Update();
 
-           ClientScript.RegisterStartupScript(this.GetType(), "closeModal", "closeEditModal();", true);
+           Page.ClientScript.RegisterStartupScript(this.GetType(), "closeModal", "closeEditModal();", true);
+        }
+
+        protected void EvaluationBtn_Command(object sender, CommandEventArgs e)
+        {
+            Response.Redirect("EvaluationForm.aspx?student_accID=" + e.CommandArgument.ToString());
         }
     }
 }

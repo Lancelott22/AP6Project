@@ -21,6 +21,8 @@ namespace ctuconnect
             }
             if (!IsPostBack)
             {
+                string imagePath = "~/images/OJTCoordinatorProfile/" + Session["Coord_Picture"].ToString();
+                CoordinatorImage.ImageUrl = imagePath;
                 // Create an empty DataTable
                 BindTable();
             }

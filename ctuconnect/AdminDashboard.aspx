@@ -146,7 +146,7 @@
                     </a>
                     <a href="Blacklist_Admin.aspx">
                         <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Blacklist
+                        Blacklisted
                     </a>
                         <a href="SuggestionsAdmin.aspx">
                         <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>

@@ -373,8 +373,7 @@
                                                             <asp:Label ID="lblRenderedHours" runat="server" Text='<%# Eval("renderedHours") %>'></asp:Label>
                                                         </td>
                                                         <td >
-                                                            <asp:Button ID="EvaluationBtn" CssClass="evaluateButton" runat="server" Text='<%# Eval("evaluationRequest") %>'
-                                                            OnCLick="Evaluate_BtnClick"/>
+                                                            <asp:Button ID="EvaluationBtn" CssClass="evaluateButton" runat="server" Text='<%# Eval("evaluationRequest") %>' CommandArgument='<%# Eval("student_accID") %>'  OnCommand="EvaluationBtn_Command"/>
                                                         </td>
                                                     </tr>
                                                 </ItemTemplate>
@@ -443,7 +442,6 @@
             </div>
             <div class="col-9 d-flex flex-column">
                 <asp:TextBox ID="txtDateStarted" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px"></asp:TextBox>
-                <asp:Label ID="lblDateStarted" runat="server"  Visible="false"></asp:Label>
             </div>
         </div>
         <br />
@@ -466,7 +464,6 @@
             </div>
             <div class="col-9 d-flex flex-column">
                 <asp:TextBox ID="txtDateEnded" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px"></asp:TextBox>
-                <asp:Label ID="lblDateEnded" runat="server" CssClass="txtbox"  Visible="false"></asp:Label>
             </div>
         </div>
         <br />
@@ -485,7 +482,6 @@
             </div>
             <div class="col-9 d-flex flex-column">
                 <asp:TextBox ID="txtFeedback" runat="server" TextMode="MultiLine" CssClass="txtbox" Width="200px" Height="25px"></asp:TextBox>
-                <asp:Label ID="lblFeedback" runat="server"  Visible="false"></asp:Label>
             </div>
         </div>
         <br />
@@ -565,7 +561,44 @@
             </div>
 </div>
 
+                 <div class="modal" id="stillHaveNotHired" tabindex="-1" role="dialog" >
+     <div class="modal-dialog modal-dialog-centered" >
+         <div class="modal-content">
+             <div class="modal-header">
+                   <h2 class="title">
+                         <span style="color: red;">&#9888;</span> Failed to Proceed
+                    </h2>
+             </div>
+                 <div class="modal-body" style="padding-left:8%; text-align:center;">
+                      <asp:Label ID="Label8" runat="server" Style="font-size:16px; text-align:center;">
+                        The row you selected includes intern that is already<span style="color: green;">done</span> in their internship
+                    </asp:Label><br />
+                    <asp:Label ID="Label9" runat="server" Text="Select another row. Thank you!" Style="font-size:16px; text-align:center;" ></asp:Label>
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal" OnClick="closeModalFailedEdit()">Close</button>
+             </div>
+         </div>
+     </div>
+  </div>
 
+                <div class="modal fade" id="NoSelected" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                         <br />
+                        <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
+                        <asp:Label ID="Label13" runat="server" Text="No Selected !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label14" runat="server" Text="PLease select atleast one row, Thank you." Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button runat="server" type="button" class="btn btn-secondary" Text="Close" OnCLick="Close_NoSelectedPrompt" />
+                    </div>
+                </div>
+            </div>
+</div>
     <script type="text/javascript">
         //function highlightRow(row) {
         //    // Remove the 'highlighted-row' class from all rows
@@ -584,7 +617,6 @@
         function openSingleSelectModal(existingname, existingposition, existingdatehired, existingdatestarted, existingdateended, existingrenderedhours, existingstatus) {
             var modal = document.getElementById("myModal");
             var statusDropdown = document.getElementById('<%= ddlStatus.ClientID %>');
-            var dateEndedLabel = document.getElementById('<%= lblDateEnded.ClientID %>');
 
 
             document.getElementById('<%=fullnameLabel.ClientID%>').innerHTML = existingname;
@@ -603,11 +635,8 @@
                 document.getElementById("detailsFeedback").style.display = "none";
             }
             else if (statusDropdown.value === 'Done') {
-                /*dateEndedTextBox.style.display = 'none';
-                dateEndedLabel.style.display = 'inline';
-                dateEndedLabel.innerHTML = dateEndedTextBox.value;*/
                 document.getElementById("detailsRenderedHours").style.display = "flex";
-                document.getElementById("dateEndedTextBox").style.display = "flex";
+                document.getElementById("detailsDateEnded").style.display = "flex";
                 document.getElementById("detailsFeedback").style.display = "flex";
             }
 
@@ -631,6 +660,15 @@
             
 
         }
+        function openModalFailedEdit() {
+            var modal = document.getElementById("stillHaveNotHired");
+            modal.style.display = "block";
+        }
+        function closeModalFailedEdit() {
+            var modal = document.getElementById("stillHaveNotHired");
+            modal.style.display = "none";
+        }
+
         
         function toggleHighlightAndCheckbox(checkbox) {
             checkbox.checked = !checkbox.checked; // Toggle the checkbox

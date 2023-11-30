@@ -21,6 +21,8 @@ namespace ctuconnect
             }
             if (!IsPostBack)
             {
+                string imagePath = "~/images/OJTCoordinatorProfile/" + Session["Coord_Picture"].ToString();
+                CoordinatorImage.ImageUrl = imagePath;
                 /*if (Session["Coor_ACC_ID"] != null)
                 {
                     // Retrieve the coordinator_accID from the session
