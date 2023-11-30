@@ -96,13 +96,13 @@ namespace ctuconnect
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// dataRepeater1 control.
+        /// listView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater dataRepeater1;
+        protected global::System.Web.UI.WebControls.ListView listView1;
 
         /// <summary>
         /// listView2 control.
@@ -177,6 +177,15 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label lblStatus;
 
         /// <summary>
+        /// UpdatePanel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+
+        /// <summary>
         /// txtDateEnded control.
         /// </summary>
         /// <remarks>
@@ -186,13 +195,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.TextBox txtDateEnded;
 
         /// <summary>
-        /// hourslbl control.
+        /// lbldate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label hourslbl;
+        protected global::System.Web.UI.WebControls.Label lbldate;
 
         /// <summary>
         /// txtFeedback control.
@@ -222,22 +231,22 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Button btnClose;
 
         /// <summary>
-        /// TextBox1 control.
+        /// namelabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.Label namelabel;
 
         /// <summary>
-        /// TextBox2 control.
+        /// txtendedDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox2;
+        protected global::System.Web.UI.WebControls.TextBox txtendedDate;
 
         /// <summary>
         /// Button1 control.
@@ -310,5 +319,23 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label14;
+
+        /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+
+        /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
     }
 }

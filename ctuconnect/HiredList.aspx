@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-9aLThZMxx+rKTEzeibpBtJPLcA6nhcwScQJ/DV+ytI+73m9Z2ap53lr1dH5tRjS9bOwD3GH1vbAhr5ZC9fIvnQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>
@@ -229,12 +229,18 @@
             background-color: whitesmoke; /* Adjust background color as needed */
         }
         .modal{
-     width:500px;
+     width:25%;
      margin:auto;
      margin-top:100px;
  }
+.modalprompt{
+width:100%;
+     margin:auto;
+     margin-top:100px;
+}
  .modal-content{
-     padding-left:2em;
+     padding-left:7%;
+    
  }
          .selectedRow {
         background-color: whitesmoke; /* Change this to your desired highlight color */
@@ -280,17 +286,16 @@
                        <div class="bulk-action">
                    <asp:Button Text="Edit" ID="btnEdit" runat="server" style="background-color:white; border:1px solid; border-color:gray; box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);" OnClick="onEditButton_Click" />
                    <button runat="server" style="background-color:white; border:1px solid; border-color:gray; box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);"><i class="fa fa-trash" aria-hidden="true"></i>Delete </button>
-                   <button runat="server" style="background-color:white; border:1px solid; border-color:gray; box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);"><i class="fa fa-paper-plane" aria-hidden="true"></i>Refer </button>
                            </div>
                     </div>
                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
      <ContentTemplate>
                             <%--First Gridview--%>
-                        <asp:Repeater ID="dataRepeater1" runat="server">
-                            <HeaderTemplate>
+                           <asp:ListView ID="listView1" runat="server" OnDataBound="listView1_DataBound">
+                                <LayoutTemplate>
                                 <table  class="table-list">
                                     <tr>
-                                        <th>No.</th>
+                                        <%--<th>No.</th>--%>
                                        <th>Last Name</th>
                                        <th >First Name</th>
                                        <th >Date Started</th>
@@ -298,11 +303,15 @@
                                        <th>Resume</th>
                                     </tr>
                                   </table>
-                            </HeaderTemplate>
+                                        <tbody>
+                                    <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                                        </tbody>
+                                        </table>
+                                    </LayoutTemplate>
                                     <ItemTemplate>
                                         <table class="table-list">
                                         <tr>
-                                            <td><%# Container.ItemIndex + 1 %></td>
+                                            <%--<td><%# Container.ItemIndex + 1 %></td>--%>
                                            <td ><%# Eval("lastName") %></td>
                                            <td ><%# Eval("firstName") %></td>
                                            <td><%# Eval("dateStarted") %></td>
@@ -315,7 +324,7 @@
                                         </tr>
                                             </table>
                                     </ItemTemplate>
-                                </asp:Repeater>
+                                            </asp:ListView>
                           
                    
                             <%--Second Gridview--%>
@@ -413,31 +422,31 @@
         <h3 style="text-align:center">Intern Details</h3> 
         <br />
         <div class="row applicant-details">
-            <div class="col-3 d-flex flex-column">
+            <div class="col-3 d-flex flex-column" style="font-size:18px;">
                 Intern Name
             </div>
-            <div class="col-9 d-flex flex-column">
-                <asp:Label ID="fullnameLabel" runat="server"></asp:Label>
+            <div class="col-9 d-flex flex-column" style="font-size:18px;">
+                <asp:Label ID="fullnameLabel" runat="server" style="font-size:18px;"></asp:Label>
             </div>
         </div>
           <div class="row applicant-details">
-            <div class="col-3 d-flex flex-column">
+            <div class="col-3 d-flex flex-column" style="font-size:18px;">
                  Position
             </div>
             <div class="col-9 d-flex flex-column">
-                <asp:Label ID="positionLabel" runat="server"></asp:Label>
+                <asp:Label ID="positionLabel" runat="server" style="font-size:18px;"></asp:Label>
             </div>
         </div>
          <div class="row applicant-details">
-            <div class="col-3 d-flex flex-column">
+            <div class="col-3 d-flex flex-column" style="font-size:18px;">
                  Hired
             </div>
             <div class="col-9 d-flex flex-column">
-                <asp:Label ID="hiredLabel" runat="server"></asp:Label>
+                <asp:Label ID="hiredLabel" runat="server" style="font-size:18px;"></asp:Label>
             </div>
         </div>
         <div class="row applicant-details">
-            <div class="col-3 d-flex flex-column">
+            <div class="col-3 d-flex flex-column" style="font-size:18px;">
                 Date Started
             </div>
             <div class="col-9 d-flex flex-column">
@@ -446,7 +455,7 @@
         </div>
         <br />
                 <div class="row applicant-details">
-            <div class="col-3 d-flex flex-column">
+            <div class="col-3 d-flex flex-column" style="font-size:18px;">
                 Status
             </div>
             <div class="col-9 d-flex flex-column">
@@ -459,25 +468,21 @@
         </div>
         <br />
         <div class="row applicant-details" id="detailsDateEnded">
-            <div class="col-3 d-flex flex-column">
+            <div class="col-3 d-flex flex-column" style="font-size:18px;">
                 Date Ended
             </div>
             <div class="col-9 d-flex flex-column">
-                <asp:TextBox ID="txtDateEnded" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px"></asp:TextBox>
-            </div>
-        </div>
-        <br />
-        <div class="row applicant-details " id="detailsRenderedHours">
-            <div class="col-3 d-flex flex-column">
-                 Rendered Hours
-            </div>
-            <div class="col-9 d-flex flex-column">
-                <asp:Label ID="hourslbl" runat="server"></asp:Label>
+                 <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                 <ContentTemplate>
+                <asp:TextBox ID="txtDateEnded" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px" OnTextChanged="txtDate_TextChanged"></asp:TextBox>
+                <asp:Label ID="lbldate" runat="server" Font-Size="Medium" ForeColor="Red" Visible="false"></asp:Label><br />
+                </ContentTemplate>
+            </asp:UpdatePanel>
             </div>
         </div>
         <br />
         <div class="row applicant-details" id="detailsFeedback">
-            <div class="col-3 d-flex flex-column">
+            <div class="col-3 d-flex flex-column" style="font-size:18px;">
                 Feedback
             </div>
             <div class="col-9 d-flex flex-column">
@@ -510,10 +515,10 @@
         <br />
         <div class="row applicant-details">
             <div class="col-3 d-flex flex-column">
-                Date Started
+                Intern Name
             </div>
             <div class="col-9 d-flex flex-column">
-                <asp:TextBox ID="TextBox1" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px"></asp:TextBox>
+                <asp:Label runat="server" ID="namelabel"></asp:Label>
             </div>
         </div>
         <br />
@@ -522,13 +527,13 @@
                 Date Ended
             </div>
             <div class="col-9 d-flex flex-column">
-                <asp:TextBox ID="TextBox2" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px"></asp:TextBox>
+                <asp:TextBox ID="txtendedDate" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px"></asp:TextBox>
             </div>
         </div>
         <br />
         <div class="row applicant-buttons">
             <div class="col-4 d-flex flex-column">
-                <asp:Button ID="Button1" runat="server" Text="Save"  CssClass="btn2" Height="28px" Width="100px"/>
+                <asp:Button ID="Button1" runat="server" Text="Save"  CssClass="btn2" Height="28px" Width="100px" OnClick="SaveMultipleEdit"/>
             </div>
             <div class="col-2 d-flex flex-column">
                 
@@ -561,7 +566,7 @@
             </div>
 </div>
 
-                 <div class="modal" id="stillHaveNotHired" tabindex="-1" role="dialog" >
+                 <div class="modal fade" id="doneInternshipSelected" tabindex="-1" role="dialog" >
      <div class="modal-dialog modal-dialog-centered" >
          <div class="modal-content">
              <div class="modal-header">
@@ -599,6 +604,25 @@
                 </div>
             </div>
 </div>
+
+
+                <div class="modal fade" id="SuccessMultipleEditPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                         <br />
+                        <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
+                        <asp:Label ID="Label1" runat="server" Text="Success !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label2" runat="server" Text="Your update was successful." Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button runat="server" type="button" class="btn btn-secondary" Text="Close" OnCLick="Close_MultipleEditSuccessPrompt" />
+                    </div>
+                </div>
+            </div>
+</div>
     <script type="text/javascript">
         //function highlightRow(row) {
         //    // Remove the 'highlighted-row' class from all rows
@@ -608,13 +632,18 @@
         //    });
 
         //    // Add the 'highlighted-row' class to the clicked row
-        //    row.classList.add('highlighted-row');
+        //    row.classList.add('highlighted-row');namelabel
         //}
-        function openModal2() {
+        function openModal2(existingname) {
             var modal = document.getElementById("myModal2");
             modal.style.display = "block";
+
+            var formattedNames = existingname.replace(/,/g, '<br>');
+            
+            document.getElementById('<%=namelabel.ClientID%>').innerHTML = formattedNames;
+
         }
-        function openSingleSelectModal(existingname, existingposition, existingdatehired, existingdatestarted, existingdateended, existingrenderedhours, existingstatus) {
+        function openSingleSelectModal(existingname, existingposition, existingdatehired, existingdatestarted, existingdateended, existingstatus) {
             var modal = document.getElementById("myModal");
             var statusDropdown = document.getElementById('<%= ddlStatus.ClientID %>');
 
@@ -624,18 +653,15 @@
             document.getElementById('<%=hiredLabel.ClientID%>').innerHTML = existingdatehired;
             document.getElementById('<%=txtDateStarted.ClientID%>').value = existingdatestarted;
             document.getElementById('<%=txtDateEnded.ClientID%>').value = existingdateended;
-            document.getElementById('<%=hourslbl.ClientID%>').innerHTML = existingrenderedhours;
 
             statusDropdown.value = existingstatus;
 
 
             if (statusDropdown.value === 'Ongoing') {
                 document.getElementById("detailsDateEnded").style.display = "none";
-                document.getElementById("detailsRenderedHours").style.display = "none";
                 document.getElementById("detailsFeedback").style.display = "none";
             }
             else if (statusDropdown.value === 'Done') {
-                document.getElementById("detailsRenderedHours").style.display = "flex";
                 document.getElementById("detailsDateEnded").style.display = "flex";
                 document.getElementById("detailsFeedback").style.display = "flex";
             }
@@ -661,11 +687,11 @@
 
         }
         function openModalFailedEdit() {
-            var modal = document.getElementById("stillHaveNotHired");
+            var modal = document.getElementById("doneInternshipSelected");
             modal.style.display = "block";
         }
         function closeModalFailedEdit() {
-            var modal = document.getElementById("stillHaveNotHired");
+            var modal = document.getElementById("doneInternshipSelected");
             modal.style.display = "none";
         }
 
@@ -692,7 +718,6 @@
             // Hide all divs initially
             if (statusDropdown.value === 'Ongoing'){
             document.getElementById("detailsDateEnded").style.display = "none";
-            document.getElementById("detailsRenderedHours").style.display = "none";
             document.getElementById("detailsFeedback").style.display = "none";
         }
              // Show the relevant divs based on the selected status
