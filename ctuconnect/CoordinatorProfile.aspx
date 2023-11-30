@@ -3,6 +3,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-9aLThZMxx+rKTEzeibpBtJPLcA6nhcwScQJ/DV+ytI+73m9Z2ap53lr1dH5tRjS9bOwD3GH1vbAhr5ZC9fIvnQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
@@ -226,6 +228,43 @@
             display:flex; 
             gap:10px;
         }
+            .action-button {
+        background-color: white;
+        border: 1px solid;
+        border-color: gray;
+        box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);
+        background-color: #881a30;
+        color: white;
+        padding-left: 8px;
+        padding-right: 8px; 
+        text-decoration:none;
+    }
+            .edit-button{
+        background-color: white;
+        border: 1px solid;
+        border-color: gray;
+        box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);
+        color: black;
+        padding-left: 8px;
+        padding-right: 8px; 
+        text-decoration:none;
+            }
+                            .edit-button:hover {
+        color: dimgray; 
+        text-decoration: none; 
+    }
+
+    .edit-button i {
+        margin-right: 5px; /* Adjust the margin as needed */
+    }
+                .action-button:hover {
+        color: lightgray; 
+        text-decoration: none; 
+    }
+
+    .action-button i {
+        margin-right: 5px; /* Adjust the margin as needed */
+    }
     </style>
     <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
@@ -261,10 +300,15 @@
  </asp:DropDownList></p>
 <asp:DropDownList ID="programList" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="program_SelectedIndexChanged"></asp:DropDownList>
                        <div class="bulk-action">
-                   <asp:Button Text="Edit" ID="btnEdit" runat="server" style="background-color:white; border:1px solid; border-color:gray; box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);" OnCLick="Edit_Click" />
+                     <asp:LinkButton ID="btnEdit" runat="server" CssClass="edit-button" OnClick="Edit_Click">
+                        <i class="fas fa-edit"></i> Edit
+                    </asp:LinkButton> 
                    <button runat="server" style="background-color:white; border:1px solid; border-color:gray; box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);"><i class="fa fa-trash" aria-hidden="true"></i>Delete </button>
-                   <asp:Button Text="Refer" ID="btnRefer" runat="server" style="background-color:white; border:1px solid; border-color:gray; box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);" OnCLick="referIntern_Click"/>
-                           </div>
+                    <asp:LinkButton ID="lnkRefer" runat="server" CssClass="action-button" OnClick="referIntern_Click">
+                        <i class="fas fa-paper-plane"></i> Refer
+                    </asp:LinkButton>                           
+
+                       </div>
                     </div>
                    
                        <%--<th>student id</th>

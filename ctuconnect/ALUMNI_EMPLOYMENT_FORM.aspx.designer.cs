@@ -11,125 +11,89 @@ namespace ctuconnect
 {
 
 
-    public partial class Dispute
+    public partial class ALUMNI_EMPLOYMENT_FORM
     {
 
         /// <summary>
-        /// LinkButton1 control.
+        /// EmploymentStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
+        protected global::System.Web.UI.WebControls.DropDownList EmploymentStatus;
 
         /// <summary>
-        /// showDispute control.
+        /// txtCompanyOrBusinessName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl showDispute;
+        protected global::System.Web.UI.WebControls.TextBox txtCompanyOrBusinessName;
 
         /// <summary>
-        /// disputeListView control.
+        /// txtDepartment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView disputeListView;
+        protected global::System.Web.UI.WebControls.TextBox txtDepartment;
 
         /// <summary>
-        /// blacklist_ID control.
+        /// txtPosition control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label blacklist_ID;
+        protected global::System.Web.UI.WebControls.TextBox txtPosition;
 
         /// <summary>
-        /// BlackList_IndustryName control.
+        /// TypeOfEmployment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl BlackList_IndustryName;
+        protected global::System.Web.UI.WebControls.DropDownList TypeOfEmployment;
 
         /// <summary>
-        /// errorText control.
+        /// SalaryRange control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl errorText;
+        protected global::System.Web.UI.WebControls.DropDownList SalaryRange;
 
         /// <summary>
-        /// BlacklistReason control.
+        /// txtDateHired control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea BlacklistReason;
+        protected global::System.Web.UI.WebControls.TextBox txtDateHired;
 
         /// <summary>
-        /// ConfirmBlacklist control.
+        /// ConnectedToCourse control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ConfirmBlacklist;
+        protected global::System.Web.UI.WebControls.RadioButtonList ConnectedToCourse;
 
         /// <summary>
-        /// disputeID control.
+        /// AlignedToSkills control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label disputeID;
-
-        /// <summary>
-        /// changeError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl changeError;
-
-        /// <summary>
-        /// StatusDDL control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList StatusDDL;
-
-        /// <summary>
-        /// IsResolvedDLL control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList IsResolvedDLL;
-
-        /// <summary>
-        /// DateDecided control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DateDecided;
+        protected global::System.Web.UI.WebControls.RadioButtonList AlignedToSkills;
 
         /// <summary>
         /// Save control.
@@ -138,6 +102,15 @@ namespace ctuconnect
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Save;
+        protected global::System.Web.UI.WebControls.Button Save;
+
+        /// <summary>
+        /// Cancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Cancel;
     }
 }

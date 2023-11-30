@@ -38,7 +38,7 @@ namespace ctuconnect
                 BindTable1();
                 BindTable2();
                 myLinkButton1.CssClass += " active";
-                dataRepeater1.Visible = true;
+                listView1.Visible = true;
                 listView2.Visible = false;
 
                 disp_industryName.Text = Session["INDUSTRYNAME"].ToString();
@@ -116,8 +116,8 @@ namespace ctuconnect
                 da.Fill(ds);
 
                 // Bind the DataTable to the GridView
-                dataRepeater1.DataSource = ds;
-                dataRepeater1.DataBind();
+                listView1.DataSource = ds;
+                listView1.DataBind();
 
 
 
@@ -126,11 +126,14 @@ namespace ctuconnect
 
         void BindTable2()
         {
+            string industry_accid = Session["INDUSTRY_ACC_ID"].ToString();
             using (var db = new SqlConnection(conDB))
             {
 
-                string query = "SELECT student_accID,lastName, firstName, position, CONVERT(VARCHAR(10), HIRED_LIST.dateHired, 120) AS dateHired, CONVERT(VARCHAR(10), HIRED_LIST.dateStarted, 120) AS dateStarted, CONVERT(VARCHAR(10), HIRED_LIST.dateEnded, 120) AS dateEnded, internshipStatus, renderedHours, evaluationRequest FROM HIRED_LIST WHERE jobType = 'internship' ORDER BY id DESC";
+                string query = "SELECT student_accID,lastName, firstName, position, CONVERT(VARCHAR(10), HIRED_LIST.dateHired, 120) AS dateHired, CONVERT(VARCHAR(10), HIRED_LIST.dateStarted, 120) AS dateStarted, CONVERT(VARCHAR(10), HIRED_LIST.dateEnded, 120) AS dateEnded, internshipStatus, renderedHours, evaluationRequest " +
+                    "FROM HIRED_LIST WHERE jobType = 'internship' AND  industry_accID = @industryID ORDER BY id DESC";
                 SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@industryID", industry_accid);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 da.Fill(ds);
@@ -152,7 +155,7 @@ namespace ctuconnect
             // Apply styles for the clicked button
             myLinkButton1.CssClass += " active";
 
-            dataRepeater1.Visible = true;
+            listView1.Visible = true;
             listView2.Visible = false;
 
             UpdatePanel1.Update();
@@ -172,7 +175,7 @@ namespace ctuconnect
 
             // Apply styles for the clicked button
             myLinkButton2.CssClass += " active";
-            dataRepeater1.Visible = false;
+            listView1.Visible = false;
             listView2.Visible = true;
 
             UpdatePanel1.Update();
@@ -252,6 +255,39 @@ namespace ctuconnect
             Response.Redirect("LoginIndustry.aspx");
 
         }
+        protected void SaveMultipleEdit(object sender, EventArgs e)
+        {
+            List<string> studentIds = ViewState["SelectedStudentIds"] as List<string>;
+            string dateended = txtendedDate.Text;
+            string status = "Done";
+
+            if (studentIds != null)
+            {
+                foreach (string studentId in studentIds)
+                {
+
+                    int studentaccId = Convert.ToInt32(studentId);
+
+                    using (var db = new SqlConnection(conDB))
+                    {
+                        db.Open();
+                        string query = " UPDATE HIRED_LIST SET dateEnded = @DateEnded , internshipStatus = @internshipstatus WHERE student_accID = @StudentaccountID ";
+                        SqlCommand cmd = new SqlCommand(query, db);
+                        cmd.Parameters.AddWithValue("@StudentaccountID", studentaccId);
+                        cmd.Parameters.AddWithValue("@DateEnded", dateended);
+                        cmd.Parameters.AddWithValue("@internshipstatus", status);
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                }
+                ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessMultipleEditPrompt').modal('show');", true);
+            }
+            else
+            {
+                //
+            }
+        }
         protected void saveDatesDetails(object sender, EventArgs e)
         {
             string industryname = Session["INDUSTRYNAME"].ToString();
@@ -259,11 +295,21 @@ namespace ctuconnect
 
 
             string datestarted = txtDateStarted.Text;
-            string dateended = txtDateEnded.Text;
+            string dateended = string.IsNullOrEmpty(txtDateEnded.Text) ? null : txtDateEnded.Text;
             string feedback = txtFeedback.Text;
             string stat = ddlStatus.SelectedValue;
+ /*           DateTime dateEnded = Convert.ToDateTime(txtDateEnded.Text);
 
-            foreach (ListViewItem item in listView2.Items)
+
+
+            if (dateEnded >= DateTime.Now.Date)
+            {
+                Response.Write("<script>alert('Invalid Date!')</script>");
+                lbldate.Visible = false;
+            }
+            else
+            {*/
+                foreach (ListViewItem item in listView2.Items)
             {
                 CheckBox chkSelect = (CheckBox)item.FindControl("chkSelect");
                 if (chkSelect.Checked)
@@ -317,7 +363,9 @@ namespace ctuconnect
                     }
                 }
             }
-        }
+            }
+            
+        
 
 
 /*                using (var db = new SqlConnection(conDB))
@@ -350,6 +398,49 @@ namespace ctuconnect
         {
             ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('hide'); uncheckAllCheckboxes(); location.reload(true);", true);
         }
+        protected void Close_MultipleEditSuccessPrompt(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessMultipleEditPrompt').modal('hide'); uncheckAllCheckboxes(); location.reload(true);", true);
+        }
+        protected void Close_MultipleEdit(object sender, EventArgs e)
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "closeModalEdit();", true);
+        }
+        protected void listView1_DataBound(object sender, EventArgs e)
+        {
+            if (listView1.Items.Count == 0)
+            {
+                // Display a message or show a placeholder when there is no data
+                var placeHolder = listView1.FindControl("itemPlaceHolder") as PlaceHolder;
+                if (placeHolder != null)
+                {
+                    placeHolder.Controls.Add(new LiteralControl("<tr><td colspan='5'>No data available</td></tr>"));
+                }
+            }
+        }
+        protected void txtDate_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtDateEnded.Text))
+            {
+
+                if (Convert.ToDateTime(txtDateEnded.Text) >= DateTime.Now.Date)
+                {
+                    lbldate.Visible = true;
+                    lbldate.Text = "Interview date must be a recent or past date.";
+                }
+                else
+                {
+                    lbldate.Visible = false;
+                }
+            }
+            else
+            {
+                lbldate.Visible = false;
+            }
+
+
+        }
+
 
         private List<string> selectedStudentIds = new List<string>();
         private List<string> selectedInternNames = new List<string>();
@@ -420,6 +511,7 @@ namespace ctuconnect
             ViewState["SelectedDateEnded"] = selectedDateEnded;
             ViewState["SelectedRenderedHours"] = selectedHoursRendered;
             ViewState["SelectedInternshipStatus"] = selectedInternshipStatus;
+            ViewState["SelectedStudentIds"] = selectedStudentIds;
 
             if (checkedCount > 1)
             {
@@ -430,7 +522,8 @@ namespace ctuconnect
                 }
                 else
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript2", $"openModal2();", true);
+                    string existingname = string.Join(",", selectedInternNames);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript2", $"openModal2('{existingname}');", true);
 
                 }
             }
@@ -452,15 +545,15 @@ namespace ctuconnect
                     string existingdatehired = string.Join(" ", selectedDateHired);
                     string existingdatestarted = string.Join(" ", selectedDateStarted);
                     string existingdateended = string.Join(" ", selectedDateEnded);
-                    string existingrenderedhours = string.Join(" ", selectedHoursRendered);
-                    string existingstatus = string.Join(" ", selectedInternshipStatus);
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openSingleSelectModal('{existingname}','{existingposition}','{existingdatehired}','{existingdatestarted}','{existingdateended}','{existingrenderedhours}','{existingstatus}');", true);
+/*                    string existingrenderedhours = string.Join(" ", selectedHoursRendered);
+*/                    string existingstatus = string.Join(" ", selectedInternshipStatus);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openSingleSelectModal('{existingname}','{existingposition}','{existingdatehired}','{existingdatestarted}','{existingdateended}','{existingstatus}');", true);
                 }
             }
         }
         protected void Close_NoSelectedPrompt(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#NoSelected').modal('hide');document.location='CoordinatorProfile.aspx'", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#NoSelected').modal('hide');document.location='HiredList.aspx'", true);
         }
 
         private string GetFirstNameFromDatabase(int student_accID)
