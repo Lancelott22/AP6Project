@@ -343,6 +343,7 @@
     <Content Include="AdminProfile.aspx" />
     <Content Include="Admin_Contact.aspx" />
     <Content Include="Admin_JobPosted.aspx" />
+    <Content Include="ALUMNI_EMPLOYMENT_FORM.aspx" />
     <Content Include="Applicants.aspx" />
     <Content Include="ApplyJob.aspx" />
     <Content Include="Blacklist.aspx" />
@@ -535,6 +536,13 @@
     </Compile>
     <Compile Include="Admin_JobPosted.aspx.designer.cs">
       <DependentUpon>Admin_JobPosted.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ALUMNI_EMPLOYMENT_FORM.aspx.cs">
+      <DependentUpon>ALUMNI_EMPLOYMENT_FORM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ALUMNI_EMPLOYMENT_FORM.aspx.designer.cs">
+      <DependentUpon>ALUMNI_EMPLOYMENT_FORM.aspx</DependentUpon>
     </Compile>
     <Compile Include="Applicants.aspx.cs">
       <DependentUpon>Applicants.aspx</DependentUpon>
