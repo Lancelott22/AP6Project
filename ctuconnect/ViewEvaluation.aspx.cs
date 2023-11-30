@@ -17,7 +17,6 @@ using Document = iTextSharp.text.Document;
 using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
 using PdfWriter = iTextSharp.text.pdf.PdfWriter;
-using DinkToPdf;
 using iText.Html2pdf;
 
 namespace ctuconnect

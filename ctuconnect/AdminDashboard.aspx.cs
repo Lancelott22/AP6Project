@@ -38,7 +38,7 @@ namespace ctuconnect
         {
             
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select COUNT(id) as TotalIndustry from INDUSTRY_LIST ", conDB);
+            SqlCommand cmd = new SqlCommand("select COUNT(industry_accID) as TotalIndustry from INDUSTRY_ACCOUNT ", conDB);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
@@ -52,7 +52,7 @@ namespace ctuconnect
         {
 
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select COUNT(id) as TotalIntern from INTERN_LIST ", conDB);
+            SqlCommand cmd = new SqlCommand("select COUNT(student_accID) as TotalIntern from STUDENT_ACCOUNT ", conDB);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
@@ -66,7 +66,7 @@ namespace ctuconnect
         {
 
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select COUNT(id) as TotalAlumni from ALUMNI_LIST ", conDB);
+            SqlCommand cmd = new SqlCommand("select COUNT(alumni_accID) as TotalAlumni from ALUMNI_ACCOUNT ", conDB);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
