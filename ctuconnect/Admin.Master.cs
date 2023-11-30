@@ -109,7 +109,7 @@ namespace ctuconnect
 
             using (var db = new SqlConnection(conDB))
             {
-                string query = "SELECT * FROM NOTIFICATION JOIN INDUSTRY_ACCOUNT ON NOTIFICATION.INDUSTRY_ACCID = INDUSTRY_ACCOUNT.INDUSTRY_ACCID WHERE NOTIFICATION.isRemove = 0 ORDER BY dateCreated DESC";
+                string query = "SELECT * FROM HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.INDUSTRY_ACCID = INDUSTRY_ACCOUNT.INDUSTRY_ACCID WHERE HIRING.isRemove = 0 ORDER BY jobPostedDate DESC";
                 SqlCommand cmd = new SqlCommand(query, db);
 
                 db.Open();
@@ -172,7 +172,7 @@ namespace ctuconnect
             {
                 connection.Open();
 
-                string query = "SELECT COUNT(*) FROM NOTIFICATION WHERE isRead = 0";
+                string query = "SELECT COUNT(*) FROM HIRING WHERE isRead = 0";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -245,15 +245,15 @@ namespace ctuconnect
         }
 
         
-        private void MarkNotificationAsRead(int notificationID)
+        private void MarkNotificationAsRead(int jobID)
         {
             
             using (var db = new SqlConnection(conDB))
             {
                 
-                string query = "UPDATE NOTIFICATION SET isRead = 1 WHERE notificationID = @NotificationID";
+                string query = "UPDATE HIRING SET isRead = 1 WHERE jobID = @JobID";
                 SqlCommand cmd = new SqlCommand(query, db);
-                cmd.Parameters.AddWithValue("@NotificationID", notificationID);
+                cmd.Parameters.AddWithValue("@JobID", jobID);
                 db.Open();
                 cmd.ExecuteNonQuery();
 
@@ -265,24 +265,24 @@ namespace ctuconnect
             }
             refreshCounting();
             this.disableHeader();
-            RedirectToJobPosted(notificationID);
+            RedirectToJobPosted(jobID);
         }
 
         
-        private void RedirectToJobPosted(int notificationID)
+        private void RedirectToJobPosted(int jobID)
         {
-            Response.Redirect("Admin_JobPosted.aspx?referralID=" + notificationID);
+            Response.Redirect("Admin_JobPosted.aspx?jobID=" + jobID);
         }
         
 
-        private void NotificationRead(int notificationID)
+        private void NotificationRead(int jobID)
         {
             using (var db = new SqlConnection(conDB))
             {
 
-                string query = "UPDATE NOTIFICATION SET isRead = 1 WHERE notificationID = @NotificationID";
+                string query = "UPDATE HIRING SET isRead = 1 WHERE jobID = @JobID";
                 SqlCommand cmd = new SqlCommand(query, db);
-                cmd.Parameters.AddWithValue("@NotificationID", notificationID);
+                cmd.Parameters.AddWithValue("@JobID", jobID);
                 db.Open();
                 cmd.ExecuteNonQuery();
 
@@ -300,10 +300,10 @@ namespace ctuconnect
         {
             if (e.CommandName == "MarkAsRemove")
             {
-                int notificationID = Convert.ToInt32(e.CommandArgument);
+                int jobID = Convert.ToInt32(e.CommandArgument);
 
-                MarkNotificationAsRemoved(notificationID);
-                NotificationRead(notificationID);
+                MarkNotificationAsRemoved(jobID);
+                NotificationRead(jobID);
                 
                 
             }
@@ -312,15 +312,15 @@ namespace ctuconnect
             this.LoadNotification();
             this.UnreadNotificationCount();
         }
-        private void MarkNotificationAsRemoved(int notificationID)
+        private void MarkNotificationAsRemoved(int jobID)
         {
             // Update the isRemove property in the database
             using (var db = new SqlConnection(conDB))
             {
                 
-                string query = "UPDATE NOTIFICATION SET isRemove = 1 WHERE notificationID = @NotificationID";
+                string query = "UPDATE HIRING SET isRemove = 1 WHERE jobID = @JobID";
                 SqlCommand cmd = new SqlCommand(query, db);
-                cmd.Parameters.AddWithValue("@NotificationID", notificationID);
+                cmd.Parameters.AddWithValue("@JobID", jobID);
                 db.Open();
                 cmd.ExecuteNonQuery();
 

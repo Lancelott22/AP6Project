@@ -78,22 +78,22 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label lblResume;
 
         /// <summary>
-        /// Label1 control.
+        /// disp_contactNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label disp_contactNumber;
 
         /// <summary>
-        /// Label2 control.
+        /// disp_address control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label disp_address;
 
         /// <summary>
         /// Label3 control.

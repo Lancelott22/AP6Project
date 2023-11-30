@@ -61,7 +61,7 @@
             min-height: 180px;
             background-color: #ffffff;
             padding-left:2em;
-            width:580px;
+            min-width:580px;
             float:left;
             margin-left:10px;
             padding-top:2em;
@@ -72,7 +72,7 @@
             min-height: 180px;
             background-color: #ffffff;
             padding-left:2em;
-            width:580px;
+            min-width:580px;
             float:left;
             margin-left:8px;
             padding-top:2em;
@@ -234,7 +234,7 @@
                                     Contact Number:
                                 </div>
                                 <div class="col-sm-8">
-                                   <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                                   <asp:Label ID="disp_contactNumber" runat="server" Text=""></asp:Label>
                                 </div>
                             </div>
                             <hr class="line"/>
@@ -243,7 +243,7 @@
                                     Address:
                                 </div>
                                 <div class="col-sm-8">
-                                    <asp:Label ID="Label2" runat="server" Text=""></asp:Label>
+                                    <asp:Label ID="disp_address" runat="server" Text=""></asp:Label>
                                 </div>
                             </div>
                             <hr class="line"/>
