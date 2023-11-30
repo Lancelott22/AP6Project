@@ -109,7 +109,8 @@
                     <asp:ListItem>Intern</asp:ListItem>
                     <asp:ListItem>Alumni</asp:ListItem>
                     <asp:ListItem>Withdraw</asp:ListItem>
-                    </asp:DropDownList>
+                    </asp:DropDownList><br />
+                    <asp:Label ID="lblstatus" runat="server" Font-Size="Medium" ForeColor="Red" Visible="false"></asp:Label><br />
                 </div>
             </div>
             <br />

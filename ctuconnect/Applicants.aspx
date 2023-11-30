@@ -353,8 +353,10 @@
                                                 Name
                                             </div>
                                             <div class="col-5">
+                                                <a href='<%# ResolveUrl("~/ViewApplicantProfile?student_accID=" + Eval("student_accID"))%>' style="text-decoration: underline;">
                                                 <asp:Label ID="lblfname" runat="server" Text='<%# Eval("applicantFname") %>'></asp:Label>
                                                 <asp:Label ID="lbllname" runat="server" Text='<%# Eval("applicantLname") %>'></asp:Label>
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="row">
