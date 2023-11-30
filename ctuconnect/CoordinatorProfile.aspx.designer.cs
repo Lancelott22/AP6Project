@@ -66,16 +66,16 @@ namespace ctuconnect
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEdit;
+        protected global::System.Web.UI.WebControls.LinkButton btnEdit;
 
         /// <summary>
-        /// btnRefer control.
+        /// lnkRefer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRefer;
+        protected global::System.Web.UI.WebControls.LinkButton lnkRefer;
 
         /// <summary>
         /// internListView control.
