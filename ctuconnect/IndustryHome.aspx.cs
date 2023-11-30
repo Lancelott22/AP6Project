@@ -135,7 +135,7 @@ namespace ctuconnect
                 conDB.Open();
                 SqlCommand cmd = new SqlCommand("UPDATE HIRING SET jobTitle=@jobTitle, industryName=@industryName, " +
                     "jobType=@jobType, jobCourse=@jobCourse, jobLocation=@jobLocation, jobDescription=@jobDescription, jobQualifications=@jobQualifications, " +
-                    "applicationInstruction=@applicationInstruction,salaryRange=@salary,isActive = @isActive WHERE jobID = @jobId", conDB);
+                    "applicationInstruction=@applicationInstruction,salaryRange=@salary,isActive = @isActive, WHERE jobID = @jobId", conDB);
                 cmd.Parameters.AddWithValue("@jobTitle", jobTitle);
                 cmd.Parameters.AddWithValue("@industryName", industryName);
                 cmd.Parameters.AddWithValue("@jobType", jobType);
@@ -147,7 +147,9 @@ namespace ctuconnect
                 cmd.Parameters.AddWithValue("@salary", salaryRange);
                 cmd.Parameters.AddWithValue("@isActive", isActiveJob);
                 cmd.Parameters.AddWithValue("@jobId", jobId);
-               
+                
+
+
                 var ctr = cmd.ExecuteNonQuery();
 
                 if (ctr > 0)
@@ -192,9 +194,9 @@ namespace ctuconnect
                 bool isActiveJob = checkActivateJob.Checked;
                 conDB.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO HIRING( industry_accID, jobTitle, industryName, " +
-                    "jobType, jobCourse, jobLocation, jobDescription, jobQualifications, applicationInstruction,salaryRange,isActive,jobPostedDate)" +
+                    "jobType, jobCourse, jobLocation, jobDescription, jobQualifications, applicationInstruction,salaryRange,isActive,jobPostedDate, isRead, isRemove)" +
                     "VALUES(@industry_accID, @jobTitle, @industryName,@jobType,@jobCourse,@jobLocation,@jobDescription," +
-                    "@jobQualifications,@applicationInstruction, @salary,@isActive,@jobPostedDate)", conDB);
+                    "@jobQualifications,@applicationInstruction, @salary,@isActive,@jobPostedDate, @isRead, @isRemove)", conDB);
                 cmd.Parameters.AddWithValue("@industry_accID", industryAccID);
                 cmd.Parameters.AddWithValue("@jobTitle", jobTitle);
                 cmd.Parameters.AddWithValue("@industryName", industryName);
@@ -207,6 +209,8 @@ namespace ctuconnect
                 cmd.Parameters.AddWithValue("@salary", salaryRange);
                 cmd.Parameters.AddWithValue("@isActive", isActiveJob);
                 cmd.Parameters.AddWithValue("@jobPostedDate", DateTime.Now);
+                cmd.Parameters.AddWithValue("@isRead", 0);
+                cmd.Parameters.AddWithValue("@isRemove", 0);
                 var ctr = cmd.ExecuteNonQuery();
 
                 if (ctr > 0)
