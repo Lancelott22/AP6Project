@@ -580,7 +580,7 @@ namespace ctuconnect
                 {
                     int studentaccId = Convert.ToInt32(studentId);
                     string query = @" SELECT REFERRAL.student_accID, STUDENT_ACCOUNT.firstName, STUDENT_ACCOUNT.lastName FROM REFERRAL 
-INNER JOIN STUDENT_ACCOUNT ON REFERRAL.student_accID = STUDENT_ACCOUNT.student_accID WHERE REFERRAL.student_accID = @StudentId";
+                                    INNER JOIN STUDENT_ACCOUNT ON REFERRAL.student_accID = STUDENT_ACCOUNT.student_accID WHERE REFERRAL.student_accID = @StudentId";
                     using (SqlCommand command = new SqlCommand(query, db))
                     {
                         command.Parameters.AddWithValue("@StudentId", studentaccId);

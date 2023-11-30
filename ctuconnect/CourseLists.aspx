@@ -81,7 +81,7 @@
                 width:1550px;
                 top:0;
                 bottom:0;
-                padding: 4% 7% 1% 7%;
+                padding: 4%;
                 overflow: auto;
                 height:550px;
             }
@@ -188,6 +188,13 @@
         color:dimgray;
         padding-right:4px;
     }
+    .custom-modal-size {
+        max-width: 800px; /* Set your desired width */
+    }
+    .modal-content{
+        padding-left: 3%;
+        padding-right:3%;
+    }
    
     </style>
     <asp:Table ID="Table1" runat="server"  CssClass="content">
@@ -216,12 +223,7 @@
             <asp:TableCell Style="padding:0px 5px 0px 40px">
                <div class="display-container">
                    <h1 class="title">List of Course</h1>
-                    <p style="float:left;">Sort by <asp:DropDownList ID="ddlSortBy" runat="server" AutoPostBack="true"  CssClass="sort-dropdown">
-                        <asp:ListItem Text="COED" Value="ColumnName1"></asp:ListItem>
-                        <asp:ListItem Text="CME" Value="ColumnName1"></asp:ListItem>
-                        <asp:ListItem Text="CCICT" Value="ColumnName1"></asp:ListItem>
-                        <asp:ListItem Text="COE" Value="ColumnName1"></asp:ListItem>
-                    </asp:DropDownList></p>
+                    <asp:Button runat="server" style="float:left;" Text="Add New Program" OnClick="CreateNewProgram_Click"/>
                    <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
 
 
@@ -235,6 +237,7 @@
                                         <th>Course ID</th>
                                         <th>Department</th>
                                         <th>Course</th>
+                                        <th>Name</th>
                                         <th style="width:400px;">Major</th>
                                         <th>No. of hours for Internship</th>
                                         <th></th>
@@ -252,6 +255,7 @@
                                                 <td><%# Eval("course_ID") %></td>
                                                 <td><%# Eval("departmentName") %></td>
                                                 <td><%# Eval("course") %></td>
+                                                <td><%# Eval("courseName") %></td>
                                                 <td><%# Eval("major") %></td>
                                                 <td><%# Eval("hoursNeeded") %></td>
                                             </tr>
@@ -259,29 +263,80 @@
                    </asp:ListView>
 
 
-<%--                   <asp:GridView ID="GridView1" runat="server" Style="color:black; " AutoGenerateColumns="false"  ShowHeaderWhenEmpty="true" CssClass="gridview-style"
-                                      AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" CellPadding="50" CellSpacing="50" 
-                                      Font-Bold="False" Font-Size="13px"  Height="100%" Width="100%" HorizontalAlign="Center" VerticalAlign="Middle" >  
-                        <PagerStyle  HorizontalAlign="Center" />
-                        <HeaderStyle Font-Bold="false" BackColor="#D3D3D3" Font-Size="12px" ForeColor="black" Height="28px"  HorizontalAlign="Center" VerticalAlign="Middle" Width="100%" />
-                       
-                            <Columns >
-                                <asp:TemplateField HeaderText="No." ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px">
-                                     <ItemTemplate>
-                                         <%# Container.DataItemIndex + 1 %>
-                                     </ItemTemplate>
-                                 </asp:TemplateField>
-                                <asp:BoundField DataField="Department" HeaderText="Department" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                <asp:BoundField DataField="Course" HeaderText="Course" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px"/>
-                                 <asp:BoundField DataField="Major" HeaderText="Major" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" SortExpression="ColumnName1"/>
-                                <asp:BoundField DataField="hoursNeeded" HeaderText="Internship hours" ItemStyle-BorderColor="#c1beba" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1px" />
-                               
-                           
-                                </Columns>
-                    </asp:GridView>--%>
                </div>
             </asp:TableCell>
         </asp:TableRow>
           
     </asp:Table>
+
+    <div class="modal" id="GenerateNewProgram" tabindex="-1" role="dialog">
+     <div class="modal-dialog modal-dialog-centered custom-modal-size" >
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h2 class="title">
+                    Create New Program
+                </h2>
+             </div>
+                 <div class="modal-body" style="align-items:center;">
+                     <div style="float:left; text-align:right;">
+                        <asp:Label ID="Label5" runat="server" Style="font-size:18px;">
+                            Course Code
+                        </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
+                         <asp:Label ID="Label6" runat="server" Style="font-size:18px;">
+                            Course Name
+                        </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
+                        <asp:Label ID="Label7" runat="server" Style="font-size:18px;">
+                            Major
+                        </asp:Label><span style="margin-left:11px; font-size:18px; ">:</span><br />
+                        <asp:Label ID="Label8" runat="server" Style="font-size:18px;">
+                            No. of hours for internship
+                        </asp:Label><span style="margin-left:11px; font-size:18px;">:</span>
+                    </div>
+                     <div style="float:left;">
+                    
+                        <asp:TextBox ID="txtCoursecode" CssClass="txtbox" runat="server" style="width:400px; margin-left:11px;" > </asp:TextBox><br />
+                    
+                        <asp:TextBox ID="txtCourseName" CssClass="txtbox" runat="server" style="width:400px; margin-left:11px;" > </asp:TextBox><br />
+                    
+                        <asp:TextBox ID="txtMajor" CssClass="txtbox" runat="server" style="width:400px; margin-left:11px;"  > </asp:TextBox><br /> 
+                    
+                       <asp:TextBox ID="txtHoursNeeded" CssClass="txtbox" runat="server" style="width:400px; margin-left:11px;" > </asp:TextBox><br /> 
+                   </div>
+             </div>
+             <div class="modal-footer">
+                 <asp:Button  class="buttonSubmit" runat="server" Text="Submit" OnClick="SaveNewProgram_Click" autopostback="false" />
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal" OnCLick="closeModal1()">Okay</button>
+             </div>
+         </div>
+     </div>
+  </div>
+                <div class="modal fade" id="SuccessPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                         <br />
+                        <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
+                        <asp:Label ID="Label23" runat="server" Text="Program Created !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label24" runat="server" Text="You succesfully created the program into the list" Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button runat="server" type="button" class="btn btn-secondary" Text="Close" OnCLick="close_Modal2()" />
+                    </div>
+                </div>
+            </div>
+</div>
+    <script type="text/javascript">
+        function closeModal1() {
+            var modal = document.getElementById("GenerateNewProgram");
+            modal.style.display = "none";
+        }
+        function close_Modal2() {
+            var modal = document.getElementById("SuccessPrompt");
+            modal.style.display = "none";
+        }
+    </script>
+
+
 </asp:Content>
