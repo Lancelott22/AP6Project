@@ -29,16 +29,9 @@ namespace ctuconnect
             }
             if (!IsPostBack)
             {
-                /*if (Session["Coor_ACC_ID"] != null)
-                {
-                    // Retrieve the coordinator_accID from the session
-                    *//*BindGridView1();*//*
-                }
-                else
-                {
-                    // Handle the case where the user is not logged in or doesn't have a coordinator_accID.
-                }*/
-              
+                string imagePath = "~/images/OJTCoordinatorProfile/" + Session["Coord_Picture"].ToString();
+                CoordinatorImage.ImageUrl = imagePath;
+
 
                 BindTable();
                 using (conDB)
@@ -188,8 +181,8 @@ namespace ctuconnect
                     {
                         // SQL Statement to insert data into the Referral table
                         cmd.CommandType = CommandType.Text;
-                        cmd.CommandText = "INSERT INTO REFERRAL (student_accID, industry_accID, coordinator_accID, referralLetter, dateReferred, ReferralStatus, isRead, isRemove ) " +
-                                          "VALUES (@student_accID, @industryID, @coordinatorID, @referralLetter, @dateReferred, @referralStatus, @isRead, @isRemove)";
+                        cmd.CommandText = "INSERT INTO REFERRAL (student_accID, industry_accID, coordinator_accID, referralLetter, dateReferred, ReferralStatus, isRead, isRemove, isStudentRead, isStudentRemove ) " +
+                                          "VALUES (@student_accID, @industryID, @coordinatorID, @referralLetter, @dateReferred, @referralStatus, @isRead, @isRemove,@isStudentRead, @isStudentRemove)";
 
                         cmd.Parameters.AddWithValue("@student_accID", studentAccountID);
                         cmd.Parameters.AddWithValue("@industryID", industryID);
@@ -199,6 +192,8 @@ namespace ctuconnect
                         cmd.Parameters.AddWithValue("@referralStatus", referralStatus);
                         cmd.Parameters.AddWithValue("@isRead", 0);
                         cmd.Parameters.AddWithValue("@isRemove", 0);
+                        cmd.Parameters.AddWithValue("@isStudentRead", 0);
+                        cmd.Parameters.AddWithValue("@isStudentRemove", 0);
                         cmd.ExecuteNonQuery();
                     }
                     ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('show');", true);

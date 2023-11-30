@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Configuration;
-using System.Web.UI.HtmlControls;
-using System.Security.Cryptography.X509Certificates;
 
 namespace ctuconnect
 {
-    public partial class EvaluationForm : System.Web.UI.Page
-    {
+	public partial class EvaluationForm : System.Web.UI.Page
+	{
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
         protected void Page_Load(object sender, EventArgs e)
-        {
+		{
             if (!IsPostBack)
             {
                 if (!IsPostBack && Request.QueryString["student_accID"] != null)

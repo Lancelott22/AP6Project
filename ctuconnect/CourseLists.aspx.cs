@@ -15,60 +15,44 @@ namespace ctuconnect
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack && Session["Username"] == null)
+            {
+                Response.Redirect("LoginOJTCoordinator.aspx");
+            }
             if (!IsPostBack)
             {
-                /*// Create an empty DataTable
-                DataTable dataTable = new DataTable();
-                dataTable.Columns.Add("No.", typeof(int));
-                dataTable.Columns.Add("Department", typeof(string));
-                dataTable.Columns.Add("Course", typeof(string));
-                dataTable.Columns.Add("CourseName", typeof(string));
-                dataTable.Columns.Add("Major", typeof(string));
-                dataTable.Columns.Add("hours", typeof(string));
-
-                // Add some sample data rows
-
-                dataTable.Rows.Add(1, "COED", "BSED", "Bachelor of Secondary Education", "Mathematics", "230 hours");
-                dataTable.Rows.Add(2, "CCICT", "BSIT", "Bachelor of Science in Information Technology", "--", "170 hours");
-
-                // Bind the empty DataTable to the GridView
-                GridView1.DataSource = dataTable;
-                GridView1.DataBind();*/
-                
-                BindGridView1();
+                string imagePath = "~/images/OJTCoordinatorProfile/" + Session["Coord_Picture"].ToString();
+                CoordinatorImage.ImageUrl = imagePath;
+                BindListView1();
             }
         }
-        void BindGridView1()
+        void BindListView1()
         {
-            /*SqlCommand command = new SqlCommand(query, conDB);
-            SqlDataReader reader = command.ExecuteReader();
-            if (reader.Read())
-            {
-                Session["ACC_ID"] = reader["coordinator_accID"];
-                Session["FNAME"] = reader["firstNanme"];
-                Session["MIDNAME"] = reader["midInitials"];
-                Session["LNAME"] = reader["lastName"];
-                Session["DEPART"] = reader["department"];
-                Session["USRNAME"] = reader["username"];
-                Session["PWD"] = reader["password"];
+             int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
 
-            }
-            if (Session["ACC_ID"] == )
-            {
-
-            }*/
-            string query = "SELECT department, course, major, hoursNeeded FROM PROGRAM ";
+            string query = "SELECT PROGRAM.course_ID, DEPARTMENT.departmentName, PROGRAM.course, PROGRAM.major, PROGRAM.hoursNeeded FROM PROGRAM " +
+                "LEFT JOIN COORDINATOR_ACCOUNT ON PROGRAM.department_ID = COORDINATOR_ACCOUNT.department_ID " +
+                "LEFT JOIN DEPARTMENT ON PROGRAM.department_ID = DEPARTMENT.department_ID " +
+                "WHERE COORDINATOR_ACCOUNT.coordinator_accID = @CoordinatorID ";
             SqlCommand cmd = new SqlCommand(query, conDB);
+            cmd.Parameters.AddWithValue("@CoordinatorID", coordinatorID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             da.Fill(ds);
 
             // Bind the DataTable to the GridView
-            GridView1.DataSource = ds;
-            GridView1.DataBind();
+            programListView.DataSource = ds;
+            programListView.DataBind();
 
 
 
+        }
+        protected void SignOut_Click(object sender, EventArgs e)
+        {
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+            Response.Redirect("LoginOJTCoordinator.aspx");
         }
     }
 }

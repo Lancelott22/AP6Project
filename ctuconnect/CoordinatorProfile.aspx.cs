@@ -27,7 +27,8 @@ namespace ctuconnect
             if (!IsPostBack)
             {
                 // Create an empty DataTable
-
+                string imagePath = "~/images/OJTCoordinatorProfile/" + Session["Coord_Picture"].ToString();
+                CoordinatorImage.ImageUrl = imagePath;
                 BindTable();
                 BindCourse();
 
@@ -152,8 +153,8 @@ namespace ctuconnect
                     using (var db = new SqlConnection(conDB))
                     {
                         db.Open();
-                        string query = "INSERT INTO REFERRAL (student_accID, industry_accID, coordinator_accID, referralLetter, dateReferred, ReferralStatus, isRead, isRemove ) " +
-                                        "VALUES(@StudentaccountID, @IndustryaccountID, @CoordinatoraccountID, @ReferralLetter, @dateReferred, @referralStatus, @isRead, @isRemove )";
+                        string query = "INSERT INTO REFERRAL (student_accID, industry_accID, coordinator_accID, referralLetter, dateReferred, ReferralStatus, isRead, isRemove, isStudentRead, isStudentRemove ) " +
+                                        "VALUES(@StudentaccountID, @IndustryaccountID, @CoordinatoraccountID, @ReferralLetter, @dateReferred, @referralStatus, @isRead, @isRemove, @isStudentRead, @isStudentRemove )";
                         SqlCommand cmd = new SqlCommand(query, db);
                         cmd.Parameters.AddWithValue("@StudentaccountID", studentaccId);
                         cmd.Parameters.AddWithValue("@IndustryaccountID", industryID);
@@ -163,6 +164,8 @@ namespace ctuconnect
                         cmd.Parameters.AddWithValue("@referralStatus", referralStatus);
                         cmd.Parameters.AddWithValue("@isRead", 0);
                         cmd.Parameters.AddWithValue("@isRemove", 0);
+                        cmd.Parameters.AddWithValue("@isStudentRead", 0);
+                        cmd.Parameters.AddWithValue("@isStudentRemove", 0);
 
                         cmd.ExecuteNonQuery();
                     }

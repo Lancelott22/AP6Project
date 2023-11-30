@@ -113,7 +113,8 @@ namespace ctuconnect
                         Session["DEPART"] = reader["department_ID"];
                         Session["USRNAME"] = reader["username"];
                         Session["PWD"] = reader["password"];
-                        
+                        Session["Coord_Picture"] = reader["coordinatorPicture"];
+
                     }
                     reader.Close();
                 }

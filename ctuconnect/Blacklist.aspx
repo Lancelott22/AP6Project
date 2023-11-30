@@ -199,7 +199,7 @@
      <asp:TableRow>
          <asp:TableCell  style="vertical-align: top;">
              <div class="profile-container">
-             <img src="images/industrypic.png" />
+                <asp:Image ID="CoordinatorImage" runat="server"/>
              <p >OJT Coordinator</p>
                  <hr class="horizontal-line" />
                  <a href="Coordinator.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>

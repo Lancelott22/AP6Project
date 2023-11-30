@@ -85,11 +85,6 @@
                 overflow: auto;
                 /*background-color:white;*/
                 height:550px;
-                /*overflow: auto;
-                float:left;
-                margin-left:25%;
-                position:relative;
-                padding: 4% 0% 0% 6%;*/
             }
                 .display-container {
                     max-width: 100%;
@@ -236,8 +231,8 @@
         <asp:TableRow>
             <asp:TableCell  style="vertical-align: top;">
                 <div class="profile-container">
-                <img src="images/industrypic.png" />
-                <p >OJT Coordinator</p>
+<asp:Image ID="CoordinatorImage" runat="server"/>
+                    <p >OJT Coordinator</p>
                     <hr class="horizontal-line" />
                     <a class="active" href="Coordinator.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
                     <a  href="ListOfAlumni.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Alumni</a>

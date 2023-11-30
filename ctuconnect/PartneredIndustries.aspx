@@ -200,8 +200,8 @@
      <asp:TableRow>
          <asp:TableCell  style="vertical-align: top;">
              <div class="profile-container">
-             <img src="images/industrypic.png" />
-             <p >OJT Coordinator</p>
+<asp:Image ID="CoordinatorImage" runat="server"/>
+                 <p >OJT Coordinator</p>
                  <hr class="horizontal-line" />
                  <a  href="CoordinatorProfile.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
                  <a  href="ListOfAlumni"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Alumni</a>
@@ -209,7 +209,7 @@
                   <a href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:12px; width:32px;"></i>Refer Student</a>
                  <a  href="CourseLists.aspx"> <i class="fa fa-book" aria-hidden="true" style="padding-right:12px;"></i>Course List</a>
                  <a href="Blacklist.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Blacklist Industry</a>
-                  <a  href="Applicants.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
+                  <a  href="TracerDashboard.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
                   <hr class="second" />
                  <a href="OJTCoordinatorProfile.aspx"><i class="fa fa-user" aria-hidden="true" style="padding-right:12px;"></i>Profile</a>
                      <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
