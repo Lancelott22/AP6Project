@@ -10,6 +10,7 @@ using System.Web.Configuration;
 using Antlr.Runtime;
 using System.Web.UI.HtmlControls;
 
+
 namespace ctuconnect
 {
     public partial class WebForm1 : System.Web.UI.Page
@@ -242,7 +243,7 @@ namespace ctuconnect
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
-                string dateReviewed = reader["resumeReviewedDate"].ToString();               
+                string dateReviewed = reader["resumeReviewedDate"].ToString();
                 conDB.Close();
                 return dateReviewed;
             }
@@ -318,13 +319,11 @@ namespace ctuconnect
             HtmlGenericControl hiredID = (HtmlGenericControl)e.Item.FindControl("HiredID");
             int hired_Id = int.Parse(hiredID.InnerText);
             Button reqEval = (Button)e.Item.FindControl("RequestEval");
-            if (!checkStatusOngoing(hired_Id))
+            if (checkStatusOngoing(hired_Id))
             {
-                reqEval.Text = "Done";
-                reqEval.Enabled = false;
-                reqEval.CssClass = "buttonStyleDone";
+                reqEval.Text = "Request";
             }
-            if(checkRequestedEval(hired_Id))
+            if (checkRequestedEval(hired_Id))
             {
                 reqEval.Text = "Requested";
                 reqEval.Enabled = false;
@@ -337,7 +336,7 @@ namespace ctuconnect
             SqlCommand cmd = new SqlCommand("select * from HIRED_LIST WHERE id = @hiredID", conDB);
             cmd.Parameters.AddWithValue("@hiredID", hiredID);
             SqlDataReader reader = cmd.ExecuteReader();
-            if(reader.Read())
+            if (reader.Read())
             {
                 if (reader["internshipStatus"].ToString() == "Ongoing")
                 {
@@ -382,38 +381,53 @@ namespace ctuconnect
             MyJobView.DataBind();
             if (MyJobView.Items.Count == 0)
             {
-               /* ListViewPager.Visible = false;*/
+                /* ListViewPager.Visible = false;*/
             }
         }
         protected void RequestEval_Command(object sender, CommandEventArgs e)
         {
             int hiredID = int.Parse(e.CommandArgument.ToString());
-            conDB.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE HIRED_LIST SET evaluationRequest = 'Requested' WHERE id = @hiredID", conDB);
-            cmd.Parameters.AddWithValue("@hiredID", hiredID);
-            var ctr = cmd.ExecuteNonQuery();
-            if (ctr > 0)
+            if (checkStatusOngoing(hiredID))
             {
-                ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('Your evaluation request has been sent successfully.');document.location='MyJobApplication.aspx';", true);
+                ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alert", "alert('You cannot request now because your job is currently ongoing.');", true);
+
             }
             else
             {
-                ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertError", "alert('Cannot request an evaluation right now! Please try again later.')", true);
+
+                conDB.Open();
+                SqlCommand cmd = new SqlCommand("UPDATE HIRED_LIST SET evaluationRequest = 'Requested' WHERE id = @hiredID", conDB);
+                cmd.Parameters.AddWithValue("@hiredID", hiredID);
+                var ctr = cmd.ExecuteNonQuery();
+                if (ctr > 0)
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('Your evaluation request has been sent successfully.');document.location='MyJobApplication.aspx';", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertError", "alert('Cannot request an evaluation right now! Please try again later.')", true);
+                }
             }
         }
 
         protected void SwitchView_SelectedIndexChanged(object sender, EventArgs e)
-        {          
-            if(SwitchView.SelectedValue == "1")
+        {
+            if (SwitchView.SelectedValue == "1")
             {
                 MyJobApplicationView.Visible = true;
                 MyJobHiredView.Visible = false;
             }
-            else if(SwitchView.SelectedValue == "2")
+            else if (SwitchView.SelectedValue == "2")
             {
                 MyJobApplicationView.Visible = false;
                 MyJobHiredView.Visible = true;
             }
+        }
+
+        protected void ViewEvaluation_Command(object sender, CommandEventArgs e)
+        {
+            int student_accID = int.Parse(e.CommandArgument.ToString());
+            Response.Redirect("ViewEvaluation.aspx?student_accID=" + student_accID);
         }
     }
 }

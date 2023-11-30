@@ -334,7 +334,9 @@
 
                                         <div class="col-sm-2 d-flex align-items-center">
                                             <div class="flex-fill">
-                                                <asp:Button ID="RequestEval" Text="Request Evaluation" class="buttonStyle" runat="server" OnCommand="RequestEval_Command" CommandArgument='<%#Eval("id")%>'/>
+                                                <asp:Button ID="RequestEval" Text="Request Evaluation" class="buttonStyle my-2" runat="server" OnCommand="RequestEval_Command" CommandArgument='<%#Eval("id")%>'/>
+                                               <asp:Button ID="ViewEvaluation" Text="View Evaluation" class="buttonStyle my-2" runat="server"  OnCommand="ViewEvaluation_Command" CommandArgument='<%#Eval("student_accID")%>' AutoPostBack="false" CausesValidation="false" />
+
                                             </div>
                                         </div>
                                     </div>
@@ -395,6 +397,7 @@
                                         <div class="col-sm-2 d-flex align-items-center">
                                             <div class="flex-fill">
                                                 <asp:Button ID="ViewApplication" Text="View" class="buttonStyle" runat="server" CommandName='<%#Eval("jobID")%>' OnCommand="ViewApplication_Command" CommandArgument='<%#Eval("applicantID")%>' AutoPostBack="false" CausesValidation="false" />
+
                                             </div>
 
                                         </div>

@@ -21,7 +21,7 @@ using iText.Html2pdf;
 
 namespace ctuconnect
 {
-    public partial class ViewEvaluation : System.Web.UI.Page
+    public partial class ViewEvaluation1 : System.Web.UI.Page
     {
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
         protected void Page_Load(object sender, EventArgs e)
@@ -203,5 +203,9 @@ namespace ctuconnect
 
         }
 
+        protected void btnClose_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("HiredList.aspx");
+        }
     }
 }
