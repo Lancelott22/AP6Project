@@ -375,16 +375,16 @@
                                                 <div class='<%# Eval("isRead").ToString().ToLower() == "false" ? "notification-item read" : "notification-item unread" %>'">
                                                     <div class="row">
                                                         <div class="col-10 notification-details">
-                                                            <asp:LinkButton runat="server" class="notification-link" CommandName="MarkAsRead" CommandArgument='<%# Eval("notificationID") %>' OnCommand="readNotification_ItemCommand">           
+                                                            <asp:LinkButton runat="server" class="notification-link" CommandName="MarkAsRead" CommandArgument='<%# Eval("jobID") %>' OnCommand="readNotification_ItemCommand">           
                                                                 <div class="notification-content">
                                                                     <p class="notification-message"><%# Eval("industryName") %> posted a job hiring</p>
-                                                                    <p class="notification-date"><%# Eval("dateCreated") %></p>
+                                                                    <p class="notification-date"><%# Eval("jobPostedDate") %></p>
                                                                 </div>
                                                             </asp:LinkButton>
                                                         </div>
                                                         <div class="col-2 notification-remove">
                                                                 <br />
-                                                                <asp:LinkButton runat="server" CssClass="notification-close-btn" CommandName="MarkAsRemove" CommandArgument='<%# Eval("notificationID") %>' OnCommand="removeNotification_ItemCommand">×</asp:LinkButton>
+                                                                <asp:LinkButton runat="server" CssClass="notification-close-btn" CommandName="MarkAsRemove" CommandArgument='<%# Eval("jobID") %>' OnCommand="removeNotification_ItemCommand">×</asp:LinkButton>
                                                                 <br />
                                                         </div>
                                                     </div>

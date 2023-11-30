@@ -54,7 +54,7 @@
          
      }
     
-         a {
+         .profile-container a {
              position:static;
              border-radius: 10px;
              color: black;
@@ -64,11 +64,11 @@
              margin: 2px 15px 5px 15px ;
              padding: 0px 0px 0px 8px;
          }
-         a.active{
+         .profile-container a.active{
               background-color:#F6B665;
              color:#606060;
          }
-         a:hover{
+         .profile-container a:hover{
              background-color:#fcd49a;
              color:#606060;
              margin: 2px 15px 5px 15px ;
@@ -200,17 +200,18 @@
      <asp:TableRow>
          <asp:TableCell  style="vertical-align: top;">
              <div class="profile-container">
-             <img src="images/industrypic.png" />
+                    <asp:Image ID="CoordinatorImage" runat="server"/>   
              <p >OJT Coordinator</p>
                  <hr class="horizontal-line" />
-                 <a  href="Coordinator.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
-                 <a  class="active" href="#"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Alumni</a>
+                 <a  href="CoordinatorProfile.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
+                 <a  class="active" href="ListOfAlumni"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Alumni</a>
                  <a  href="PartneredIndustries.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Partnered Industry</a>
                   <a href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:12px; width:32px;"></i>Refer Student</a>
                  <a  href="CourseLists.aspx"> <i class="fa fa-book" aria-hidden="true" style="padding-right:12px;"></i>Course List</a>
                  <a href="Blacklist.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Blacklist Industry</a>
                   <a  href="Applicants.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
                   <hr class="second" />
+                 <a href="OJTCoordinatorProfile.aspx"><i class="fa fa-user" aria-hidden="true" style="padding-right:12px;"></i>Profile</a>
                      <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
                        <i class="fa fa-sign-out" aria-hidden="true"></i>
                         Sign-out
@@ -225,24 +226,7 @@
                      <asp:ListItem Text="Status" Value="ColumnName2"></asp:ListItem>
                  </asp:DropDownList></p>
                 <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
-                <%--<asp:gridview id="gridview1" runat="server" style="color:black; " autogeneratecolumns="false"  showheaderwhenempty="true" cssclass="gridview-style"
-                                   allowpaging="true"  backcolor="#ffffff" bordercolor="#c1beba" borderstyle="solid" borderwidth="1px" cellpadding="50" cellspacing="50" 
-                                   font-bold="false" font-size="13px"  height="100%" width="100%" >  
-                     <pagerstyle  horizontalalign="center" />
-                     <headerstyle font-bold="false"  backcolor="#d3d3d3" font-size="12px" forecolor="black" height="28px"  horizontalalign="center" verticalalign="middle"/>
-                    
-                         <columns >
-                            <asp:boundfield datafield="studentid" headertext="student id"  itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
-                             <asp:boundfield datafield="lastname" headertext="last name" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
-                             <asp:boundfield datafield="firstname" headertext="first name" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
-                              <asp:boundfield datafield="course" headertext="course" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" sortexpression="columnname1"/>
-                             <asp:boundfield datafield="workedat" headertext="worked at" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" />
-                             <asp:boundfield datafield="datestarted" headertext="date started" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
-                              <asp:boundfield datafield="internshipstatus" headertext="internship status" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" sortexpression="columnname2"/>
-                             
-                        
-                             </columns>
-                 </asp:gridview>--%>
+               
                             <asp:Repeater ID="dataRepeater1" runat="server">
                              <HeaderTemplate>
                                      <table  class="table-list">

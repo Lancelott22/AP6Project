@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="CourseLists.aspx.cs" Inherits="ctuconnect.CourseLists" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OJTCoordinator.Master" AutoEventWireup="true" CodeBehind="CourseLists.aspx.cs" Inherits="ctuconnect.CourseLists" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -9,9 +9,9 @@
         .profile-container{
             font-family: 'Poppins', sans-serif;
             max-width:260px;
-            max-height:630px;
+            max-height:650px;
             background-color:white;
-            margin-left:4%;
+            margin-left:1%;
             padding-bottom:8px;
              border: 2px ;
             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
@@ -54,7 +54,7 @@
             
         }
        
-            a {
+            .profile-container a {
                 position:static;
                 border-radius: 10px;
                 color: black;
@@ -64,11 +64,11 @@
                 margin: 2px 15px 5px 15px ;
                 padding: 0px 0px 0px 8px;
             }
-            a.active{
+            .profile-container a.active{
                  background-color:#F6B665;
                 color:#606060;
             }
-            a:hover{
+            .profile-container a:hover{
                 background-color:#fcd49a;
                 color:#606060;
                 margin: 2px 15px 5px 15px ;
@@ -78,24 +78,12 @@
             .display-container{
                 font-family: 'Poppins', sans-serif;
                 background-color:white; 
-                width:1000px;
+                width:1550px;
                 top:0;
                 bottom:0;
-                padding: 2% 2% 0% 2%;
+                padding: 4% 7% 1% 7%;
                 overflow: auto;
-                /*background-color:white;*/
                 height:550px;
-                /*overflow: auto;
-                float:left;
-                margin-left:25%;
-                position:relative;
-                padding: 4% 0% 0% 6%;*/
-            }
-            }
-            @media (max-width: 790px) {
-                .display-container {
-                    max-width: 50%;
-                }
             }
             .display-container .title{
                 font-size:25px;
@@ -175,21 +163,54 @@
                 background-color: #881A30;
 
     }
+        th{
+       border-collapse: collapse;
+        border-color:white;
+        background-color:#f4f4fb;
+        padding:5px;
+
+    }
+    td{
+        padding-left:5px;
+    }
+    .datas{
+          border: 5px solid;
+          border-color:white;
+         color:black;
+         cursor:default;
+    }
+
+    .table-list{
+         border-collapse: collapse;
+        font-size:13px; 
+        height:auto; 
+        width:100%;
+        color:dimgray;
+        padding-right:4px;
+    }
    
     </style>
     <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
             <asp:TableCell  style="vertical-align: top;">
                 <div class="profile-container">
-                <img src="images/industrypic.png" />
-                <p >OJT Coordinator</p>
+                    <asp:Image ID="CoordinatorImage" runat="server"/>
+                    <p >OJT Coordinator</p>
                     <hr class="horizontal-line" />
-                    <a  href="Coordinator.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
+                    <a href="CoordinatorProfile.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
+                    <a  href="ListOfAlumni.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Alumni</a>
+                    <a  href="PartneredIndustries.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Partnered Industry</a>
                      <a href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:12px; width:32px;"></i>Refer Student</a>
-                    <a class="active" href="CourseList.aspx"> <i class="fa fa-book" aria-hidden="true" style="padding-right:12px;"></i>Course List</a>
-                     <a  href="Applicants.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
+                    <a lass="active" href="CourseLists.aspx"> <i class="fa fa-book" aria-hidden="true" style="padding-right:12px;"></i>Course List</a>
+                    <a href="Blacklist.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Blacklist Industry</a>
+                     <a  href="Coordinator_Contact.aspx"><i class="fa fa-comments" aria-hidden="true" style="padding-right:12px;"></i>Contact</a>
+                     <a  href="TracerDashboard.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
                      <hr class="second" />
-                     <a  href="ReferralLIst.aspx"><i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>Sign-out</a>
+                    <a href="OJTCoordinatorProfile.aspx"><i class="fa fa-user" aria-hidden="true" style="padding-right:12px;"></i>Profile</a>
+                     <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
+                       <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        Sign-out
+                    </asp:LinkButton>
                 </div>
             </asp:TableCell>
             <asp:TableCell Style="padding:0px 5px 0px 40px">
@@ -202,7 +223,43 @@
                         <asp:ListItem Text="COE" Value="ColumnName1"></asp:ListItem>
                     </asp:DropDownList></p>
                    <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
-                   <asp:GridView ID="GridView1" runat="server" Style="color:black; " AutoGenerateColumns="false"  ShowHeaderWhenEmpty="true" CssClass="gridview-style"
+
+
+                    <asp:ListView ID="programListView" runat="server"> 
+                        <LayoutTemplate>
+                               <table  class="table-list">
+                                    <tr>
+                                        <th>
+                                            <asp:CheckBox ID="chkSelectAll" runat="server" onclick="toggleSelectAll(this);" />
+                                        </th>
+                                        <th>Course ID</th>
+                                        <th>Department</th>
+                                        <th>Course</th>
+                                        <th style="width:400px;">Major</th>
+                                        <th>No. of hours for Internship</th>
+                                        <th></th>
+                                    </tr>
+                                   <tbody>
+                                        <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                                    </tbody>
+                                   </table>
+                          </LayoutTemplate>         
+                                        <Itemtemplate>
+                                            <tr class="datas clickableRow" onclick="toggleHighlightAndCheckbox(document.getElementById('<%# ((ListViewDataItem)Container).FindControl("chkSelect").ClientID %>'));">
+                                                <td>
+                                                    <asp:CheckBox ID="chkSelect" runat="server" onclick="event.stopPropagation(); toggleHighlight(this);"  />
+                                                </td>
+                                                <td><%# Eval("course_ID") %></td>
+                                                <td><%# Eval("departmentName") %></td>
+                                                <td><%# Eval("course") %></td>
+                                                <td><%# Eval("major") %></td>
+                                                <td><%# Eval("hoursNeeded") %></td>
+                                            </tr>
+                                        </Itemtemplate>
+                   </asp:ListView>
+
+
+<%--                   <asp:GridView ID="GridView1" runat="server" Style="color:black; " AutoGenerateColumns="false"  ShowHeaderWhenEmpty="true" CssClass="gridview-style"
                                       AllowPaging="True"  BackColor="#FFFFFF" BorderColor="#c1beba" BorderStyle="Solid" BorderWidth="1px" CellPadding="50" CellSpacing="50" 
                                       Font-Bold="False" Font-Size="13px"  Height="100%" Width="100%" HorizontalAlign="Center" VerticalAlign="Middle" >  
                         <PagerStyle  HorizontalAlign="Center" />
@@ -221,7 +278,7 @@
                                
                            
                                 </Columns>
-                    </asp:GridView>
+                    </asp:GridView>--%>
                </div>
             </asp:TableCell>
         </asp:TableRow>

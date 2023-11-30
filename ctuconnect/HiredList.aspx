@@ -346,17 +346,34 @@
                                                             <asp:CheckBox ID="chkSelect" runat="server" onclick="event.stopPropagation(); toggleHighlight(this);"  />
                                                         </td>
                                                         <td style="display:none;"><asp:Label ID="lblStudentID" runat="server" Visible="false" Text='<%# Eval("student_accID") %>'></asp:Label></td>
-                                                        <td ><%# Eval("lastName") %></td>
-                                                        <td><%# Eval("firstName") %></td>
-                                                        <td ><%# Eval("position") %></td>
-                                                        <td  ><%# Eval("dateHired") %></td>
-                                                        <td ><%# Eval("dateStarted") %></td>
-                                                        <td ><%# Eval("dateEnded") %></td>
-                                                        <td ><%# Eval("internshipStatus") %></td>
-                                                        <td ><%# Eval("renderedHours") %></td>
                                                         <td >
-                                                            <asp:Button ID="EvaluationBtn" CssClass="evaluateButton" runat="server" Text='<%# Eval("evaluationRequest") %>'
-                                                            OnCLick="Evaluate_BtnClick"/>
+                                                             <asp:Label ID="lblLastName" runat="server" Text='<%# Eval("lastName") %>'></asp:Label>
+                                                        </td>
+                                                        <td>
+                                                             <asp:Label ID="lblFirstName" runat="server" Text='<%# Eval("firstName") %>'></asp:Label>
+                                                        </td>
+                                                        <td >
+                                                             <asp:Label ID="lblPosition" runat="server" Text='<%# Eval("position") %>'></asp:Label>
+
+                                                        </td>
+                                                        <td>
+                                                            <asp:Label ID="lblDateHired" runat="server" Text='<%# Eval("dateHired") %>'></asp:Label>
+
+                                                        </td>
+                                                        <td >
+                                                            <asp:Label ID="lblDateStarted" runat="server" Text='<%# Eval("dateStarted") %>'></asp:Label>
+                                                        </td>
+                                                        <td >
+                                                            <asp:Label ID="lblDateEnded" runat="server" Text='<%# Eval("dateEnded") %>'></asp:Label>
+                                                        </td>
+                                                        <td >
+                                                             <asp:Label ID="lblInternshipStatus" runat="server" Text='<%# Eval("internshipStatus") %>'></asp:Label>
+                                                        </td>
+                                                        <td>
+                                                            <asp:Label ID="lblRenderedHours" runat="server" Text='<%# Eval("renderedHours") %>'></asp:Label>
+                                                        </td>
+                                                        <td >
+                                                            <asp:Button ID="EvaluationBtn" CssClass="evaluateButton" runat="server" Text='<%# Eval("evaluationRequest") %>' CommandArgument='<%# Eval("student_accID") %>'  OnCommand="EvaluationBtn_Command"/>
                                                         </td>
                                                     </tr>
                                                 </ItemTemplate>
@@ -397,18 +414,10 @@
         <br />
         <div class="row applicant-details">
             <div class="col-3 d-flex flex-column">
-                First Name
+                Intern Name
             </div>
             <div class="col-9 d-flex flex-column">
-                <asp:Label ID="fnameLabel" runat="server"></asp:Label>
-            </div>
-        </div>
-         <div class="row applicant-details">
-            <div class="col-3 d-flex flex-column">
-                Last Name
-            </div>
-            <div class="col-9 d-flex flex-column">
-                <asp:Label ID="lnameLabel" runat="server"></asp:Label>
+                <asp:Label ID="fullnameLabel" runat="server"></asp:Label>
             </div>
         </div>
           <div class="row applicant-details">
@@ -436,7 +445,20 @@
             </div>
         </div>
         <br />
-        <div class="row applicant-details">
+                <div class="row applicant-details">
+            <div class="col-3 d-flex flex-column">
+                Status
+            </div>
+            <div class="col-9 d-flex flex-column">
+                <asp:DropDownList runat="server" ID="ddlStatus" style="width:100px;" onchange="handleStatusChange()">
+                     <asp:ListItem Text="ongoing" Value="Ongoing"></asp:ListItem>
+                     <asp:ListItem Text="done" Value="Done"></asp:ListItem>
+                </asp:DropDownList>
+                <asp:Label ID="lblStatus" runat="server"  Visible="false"></asp:Label>
+            </div>
+        </div>
+        <br />
+        <div class="row applicant-details" id="detailsDateEnded">
             <div class="col-3 d-flex flex-column">
                 Date Ended
             </div>
@@ -445,7 +467,16 @@
             </div>
         </div>
         <br />
-        <div class="row applicant-details">
+        <div class="row applicant-details " id="detailsRenderedHours">
+            <div class="col-3 d-flex flex-column">
+                 Rendered Hours
+            </div>
+            <div class="col-9 d-flex flex-column">
+                <asp:Label ID="hourslbl" runat="server"></asp:Label>
+            </div>
+        </div>
+        <br />
+        <div class="row applicant-details" id="detailsFeedback">
             <div class="col-3 d-flex flex-column">
                 Feedback
             </div>
@@ -512,15 +543,15 @@
     </div>
 </div>
 
-        <div class="modal fade" id="SuccessPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal fade" id="SuccessPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content rounded-0">
                     <div class="modal-body p-4 px-5">
                     <div class="main-content text-center">
                          <br />
                         <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
-                        <asp:Label ID="Label11" runat="server" Text="Success !" Style="font-size:25px;" ></asp:Label><br />
-                        <asp:Label ID="Label12" runat="server" Text="Your update was succesful." Style="font-size:18px;" ></asp:Label>
+                        <asp:Label ID="Label23" runat="server" Text="Success !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label24" runat="server" Text="Your update was succesful." Style="font-size:18px;" ></asp:Label>
                     </div>
                     </div>
                     <div class="modal-footer">
@@ -530,6 +561,44 @@
             </div>
 </div>
 
+                 <div class="modal" id="stillHaveNotHired" tabindex="-1" role="dialog" >
+     <div class="modal-dialog modal-dialog-centered" >
+         <div class="modal-content">
+             <div class="modal-header">
+                   <h2 class="title">
+                         <span style="color: red;">&#9888;</span> Failed to Proceed
+                    </h2>
+             </div>
+                 <div class="modal-body" style="padding-left:8%; text-align:center;">
+                      <asp:Label ID="Label8" runat="server" Style="font-size:16px; text-align:center;">
+                        The row you selected includes intern that is already<span style="color: green;">done</span> in their internship
+                    </asp:Label><br />
+                    <asp:Label ID="Label9" runat="server" Text="Select another row. Thank you!" Style="font-size:16px; text-align:center;" ></asp:Label>
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal" OnClick="closeModalFailedEdit()">Close</button>
+             </div>
+         </div>
+     </div>
+  </div>
+
+                <div class="modal fade" id="NoSelected" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                         <br />
+                        <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
+                        <asp:Label ID="Label13" runat="server" Text="No Selected !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label14" runat="server" Text="PLease select atleast one row, Thank you." Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button runat="server" type="button" class="btn btn-secondary" Text="Close" OnCLick="Close_NoSelectedPrompt" />
+                    </div>
+                </div>
+            </div>
+</div>
     <script type="text/javascript">
         //function highlightRow(row) {
         //    // Remove the 'highlighted-row' class from all rows
@@ -545,14 +614,31 @@
             var modal = document.getElementById("myModal2");
             modal.style.display = "block";
         }
-        function openModal(fname,lname , position , hired , startedDate) {
+        function openSingleSelectModal(existingname, existingposition, existingdatehired, existingdatestarted, existingdateended, existingrenderedhours, existingstatus) {
             var modal = document.getElementById("myModal");
+            var statusDropdown = document.getElementById('<%= ddlStatus.ClientID %>');
 
-            document.getElementById('<%=fnameLabel.ClientID%>').innerHTML = fname;
-            document.getElementById('<%=lnameLabel.ClientID%>').innerHTML = lname;
-            document.getElementById('<%=positionLabel.ClientID%>').innerHTML = position;
-            document.getElementById('<%=hiredLabel.ClientID%>').innerHTML = hired;
-            document.getElementById('<%=txtDateStarted.ClientID%>').value = startedDate;
+
+            document.getElementById('<%=fullnameLabel.ClientID%>').innerHTML = existingname;
+            document.getElementById('<%=positionLabel.ClientID%>').innerHTML = existingposition;
+            document.getElementById('<%=hiredLabel.ClientID%>').innerHTML = existingdatehired;
+            document.getElementById('<%=txtDateStarted.ClientID%>').value = existingdatestarted;
+            document.getElementById('<%=txtDateEnded.ClientID%>').value = existingdateended;
+            document.getElementById('<%=hourslbl.ClientID%>').innerHTML = existingrenderedhours;
+
+            statusDropdown.value = existingstatus;
+
+
+            if (statusDropdown.value === 'Ongoing') {
+                document.getElementById("detailsDateEnded").style.display = "none";
+                document.getElementById("detailsRenderedHours").style.display = "none";
+                document.getElementById("detailsFeedback").style.display = "none";
+            }
+            else if (statusDropdown.value === 'Done') {
+                document.getElementById("detailsRenderedHours").style.display = "flex";
+                document.getElementById("detailsDateEnded").style.display = "flex";
+                document.getElementById("detailsFeedback").style.display = "flex";
+            }
 
             modal.style.display = "block";
         }
@@ -562,6 +648,28 @@
             document.getElementById("myModal").style.display = "none";
 
         }
+        function closeEditModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+
+            var checkboxes = document.getElementsByClassName("chkSelect");
+            var row = checkbox.closest('tr');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = row.classList.remove('selectedRow');
+            }
+            
+
+        }
+        function openModalFailedEdit() {
+            var modal = document.getElementById("stillHaveNotHired");
+            modal.style.display = "block";
+        }
+        function closeModalFailedEdit() {
+            var modal = document.getElementById("stillHaveNotHired");
+            modal.style.display = "none";
+        }
+
+        
         function toggleHighlightAndCheckbox(checkbox) {
             checkbox.checked = !checkbox.checked; // Toggle the checkbox
             toggleHighlight(checkbox);
@@ -578,5 +686,21 @@
                 /*toggleButtonsVisibility(checkbox.checked);*/
             }
         }
+        function handleStatusChange() {
+            var statusDropdown = document.getElementById('<%= ddlStatus.ClientID %>');
+
+            // Hide all divs initially
+            if (statusDropdown.value === 'Ongoing'){
+            document.getElementById("detailsDateEnded").style.display = "none";
+            document.getElementById("detailsRenderedHours").style.display = "none";
+            document.getElementById("detailsFeedback").style.display = "none";
+        }
+             // Show the relevant divs based on the selected status
+           
+            if (statusDropdown.value === 'Done'){
+                document.getElementById("detailsDateEnded").style.display = "flex";
+                document.getElementById("detailsFeedback").style.display = "flex";
+        }
+             }
     </script>
 </asp:Content>

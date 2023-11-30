@@ -58,7 +58,7 @@
             
         }
        
-            a {
+            .profile-container a {
                 position:static;
                 border-radius: 10px;
                 color: black;
@@ -68,11 +68,11 @@
                 margin: 2px 15px 5px 15px ;
                 padding: 0px 0px 0px 8px;
             }
-            a.active{
+            .profile-container a.active{
                  background-color:#F6B665;
                 color:#606060;
             }
-            a:hover{
+            .profile-container a:hover{
                 background-color:#fcd49a;
                 color:#606060;
                 margin: 2px 15px 5px 15px ;
@@ -297,20 +297,21 @@
         <asp:TableRow>
             <asp:TableCell  style="vertical-align: top;">
                 <div class="profile-container">
-                    <img src="images/industrypic.png" />
+                    <asp:Image ID="CoordinatorImage" runat="server"/>   
                         <p >OJT Coordinator</p>
                             <hr class="horizontal-line" />
                             <a  href="CoordinatorProfile.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
                             <a  href="ListOfAlumni"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Alumni</a>
                             <a  href="PartneredIndustries.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Partnered Industry</a>
                             <a class="active" href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:12px; width:20px;"></i>Refer Student</a>
-                            <a  href="CourseList.aspx"> <i class="fa fa-book" aria-hidden="true" style="padding-right:12px;"></i>Course List</a>
+                            <a  href="CourseLists.aspx"> <i class="fa fa-book" aria-hidden="true" style="padding-right:12px;"></i>Course List</a>
                             <a href="Blacklist.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Blacklist Industry</a>
-                            <a  href="Applicants.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
+                            <a  href="TracerDashboard.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
                             <hr class="second" />
+                    <a href="OJTCoordinatorProfile.aspx"><i class="fa fa-user" aria-hidden="true" style="padding-right:12px;"></i>Profile</a>
                      <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
                        <i class="fa fa-sign-out" aria-hidden="true"></i>
-                        Sign-out
+                       Sign-out
                     </asp:LinkButton>                </div>
             </asp:TableCell>
             <asp:TableCell Style="padding:0px 5px 0px 40px">
