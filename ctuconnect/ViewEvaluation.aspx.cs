@@ -124,7 +124,7 @@ namespace ctuconnect
                 HtmlConverter.ConvertToPdf(htmlContent, memoryStream, converterProperties);
 
                 // Save the PDF file to the database
-                SavePdfToDatabase(memoryStream.ToArray());
+                //SavePdfToDatabase(memoryStream.ToArray());
 
                 // Save the PDF file to disk or respond to the client
                 byte[] pdfBytes = memoryStream.ToArray();
@@ -160,6 +160,7 @@ namespace ctuconnect
              return sw.ToString();
          }*/
 
+        /*
         // Helper method to save the PDF to the database
         private void SavePdfToDatabase(byte[] pdfBytes)
         {
@@ -194,7 +195,7 @@ namespace ctuconnect
                 }
             }
         }
-
+        */
 
 
         public override void VerifyRenderingInServerForm(Control control)
