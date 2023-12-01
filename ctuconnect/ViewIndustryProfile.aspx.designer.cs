@@ -15,13 +15,40 @@ namespace ctuconnect
     {
 
         /// <summary>
-        /// form1 control.
+        /// Table1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.Table Table1;
+
+        /// <summary>
+        /// industryImage1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image industryImage1;
+
+        /// <summary>
+        /// disp_industryName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label disp_industryName;
+
+        /// <summary>
+        /// disp_accID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label disp_accID;
 
         /// <summary>
         /// industryProfile control.
@@ -123,13 +150,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Repeater rptfeedback;
 
         /// <summary>
-        /// Label8 control.
+        /// lblsendfrom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label8;
+        protected global::System.Web.UI.WebControls.Label lblsendfrom;
 
         /// <summary>
         /// txtsendfrom control.
@@ -141,22 +168,22 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.TextBox txtsendfrom;
 
         /// <summary>
-        /// Label9 control.
+        /// Label2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label9;
+        protected global::System.Web.UI.WebControls.Label Label2;
 
         /// <summary>
-        /// txtsendto control.
+        /// txtjobposition control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtsendto;
+        protected global::System.Web.UI.WebControls.TextBox txtjobposition;
 
         /// <summary>
         /// Label3 control.
@@ -168,24 +195,6 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label Label3;
 
         /// <summary>
-        /// txtposition control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtposition;
-
-        /// <summary>
-        /// Label7 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label7;
-
-        /// <summary>
         /// companyRating control.
         /// </summary>
         /// <remarks>
@@ -195,13 +204,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.RadioButtonList companyRating;
 
         /// <summary>
-        /// Label13 control.
+        /// Label4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label13;
+        protected global::System.Web.UI.WebControls.Label Label4;
 
         /// <summary>
         /// txtfeedback control.
@@ -211,5 +220,23 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtfeedback;
+
+        /// <summary>
+        /// btnClose control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnClose;
+
+        /// <summary>
+        /// btnSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSave;
     }
 }

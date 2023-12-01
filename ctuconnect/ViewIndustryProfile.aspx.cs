@@ -15,28 +15,27 @@ namespace ctuconnect
     {
         string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
         private DataTable dtFeedback = new DataTable();
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                
+
                 //if (Request.QueryString["industry_accID"] != null)
                 //{
-                    // Get the value of the student_accID parameter
-                    //string industryAccID = Request.QueryString["industry_accID"];
-                    string industryAccID = "600000";
+                // Get the value of the student_accID parameter
+                //string industryAccID = Request.QueryString["industry_accID"];
+                string industryAccID = "600000";
 
 
-                    displayIndustryInfo(industryAccID);
-                    displayContactPerson(industryAccID);
+                displayIndustryInfo(industryAccID);
+                displayContactPerson(industryAccID);
 
-                    this.LoadIndustryFeedback(industryAccID);
+                this.LoadIndustryFeedback();
 
                 //}
                 //else
                 //{
-                    
+
                 //}
             }
         }
@@ -96,9 +95,9 @@ namespace ctuconnect
             }
         }
 
-        private void LoadIndustryFeedback(string industryAccID)
+        private void LoadIndustryFeedback()
         {
-
+            string industryAccID = "600000";
             using (var db = new SqlConnection(conDB))
             {
                 string query = "SELECT * FROM INDUSTRY_FEEDBACK WHERE sendto = @SendTo ORDER BY dateCreated DESC";
@@ -126,36 +125,22 @@ namespace ctuconnect
             return stars.ToString();
         }
 
-        protected void addReview_Click(object sender, EventArgs e)
+       
+        protected void btnFeedback_Click(object sender, EventArgs e)
         {
-            //string industryAccID = Request.QueryString["industry_accID"];
             string industryAccID = "600000";
-            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#AddReviewlModal').modal('show');", true);
+            // Open the modal dialog and populate it with existing values
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openModal();", true);
 
-            using (var db = new SqlConnection(conDB))
-            {
-                string query = "SELECT * FROM HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE INDUSTRY_ACCOUNT.industry_accID = '" +  industryAccID + "' ";
-                //string query = "SELECT * FROM COORDINATOR_ACCOUNT WHERE coordinator_accID = '" + coordinatorID + "' ";
-                SqlCommand command = new SqlCommand(query, db);
-                db.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    txtsendto.Text = reader["industryName"].ToString();
-
-                }
-
-
-            }
         }
 
-        protected void Submit_ButtonClick(object sender, EventArgs e)
+        protected void saveFeedback(object sender, EventArgs e)
         {
+            int sendto = 600000;
             using (SqlConnection connection = new SqlConnection(conDB))
             {
                 string sendfrom = txtsendfrom.Text;
-                string sendto = txtsendto.Text;
-                string jobtitle = txtposition.Text;
+                string jobtitle = txtjobposition.Text;
                 string rating = companyRating.SelectedValue;
                 string feedback = txtfeedback.Text;
 
@@ -172,7 +157,7 @@ namespace ctuconnect
                     dmd.Parameters.AddWithValue("@Rating", rating);
                     dmd.Parameters.AddWithValue("@Feedback", feedback);
                     dmd.Parameters.AddWithValue("@DateCreated", DateTime.Now.ToString("yyyy/MM/dd"));
-                    
+
 
                     var ctr = dmd.ExecuteNonQuery();
                     if (ctr > 0)
@@ -186,10 +171,15 @@ namespace ctuconnect
                     }
                 }
             }
-
+            this.LoadIndustryFeedback();
 
         }
 
+        protected void closeEditModal(object sender, EventArgs e)
+        {
+
+            ClientScript.RegisterStartupScript(this.GetType(), "closeModal", "closeEditModal();", true);
+        }
 
     }
 }
