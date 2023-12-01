@@ -274,7 +274,7 @@ namespace ctuconnect
         protected void Edit_Click(object sender, EventArgs e)
         {
 
-            Button btnEdit = (Button)sender;
+            LinkButton btnEdit = (LinkButton)sender;
             int checkedCount = 0;
             List<bool> isHiredList = new List<bool>();
             

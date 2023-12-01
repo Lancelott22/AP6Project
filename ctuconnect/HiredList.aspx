@@ -450,7 +450,8 @@ width:100%;
                 Date Started
             </div>
             <div class="col-9 d-flex flex-column">
-                <asp:TextBox ID="txtDateStarted" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px"></asp:TextBox>
+                <asp:TextBox ID="txtDateStarted" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px" OnTextChanged="dateStarted_TextChanged"></asp:TextBox>
+                <asp:Label ID="dateStartedlbl" runat="server" Font-Size="Medium" ForeColor="Red" Visible="false"></asp:Label><br />
             </div>
         </div>
         <br />
