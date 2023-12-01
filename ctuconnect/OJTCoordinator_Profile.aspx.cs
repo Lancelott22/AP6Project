@@ -22,7 +22,7 @@ namespace ctuconnect
 
         void displayCoordinatorInfo()
         {
-            string coordID = "400000";
+            string coordID = Session["Coor_ACC_ID"].ToString();
             using (var db = new SqlConnection(conDB))
             {
 

@@ -82,7 +82,7 @@ namespace ctuconnect
         void getTotalAlumnInIndustry()
         {
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select COUNT(alumni_accID) as TotalAlumni from ALUMNI_ACCOUNT WHERE EXISTS (SELECT alumni_accID FROM HIRED_LIST WHERE ALUMNI_ACCOUNT.alumni_accID = HIRED_LIST.alumni_accID)", conDB);
+            SqlCommand cmd = new SqlCommand("select COUNT(student_accID) as TotalAlumni from STUDENT_ACCOUNT WHERE EXISTS (SELECT student_accID FROM ALUMNI_EMPLOYMENTFORM WHERE STUDENT_ACCOUNT.student_accID = ALUMNI_EMPLOYMENTFORM.student_accID) and studentStatus = 'Alumni'", conDB);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
@@ -94,7 +94,7 @@ namespace ctuconnect
         void getTotalInternInIndustry()
         {
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select COUNT(student_accID) as TotalIntern from STUDENT_ACCOUNT WHERE EXISTS (SELECT student_accID FROM HIRED_LIST WHERE STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID) and isHired = 1", conDB);
+            SqlCommand cmd = new SqlCommand("select COUNT(student_accID) as TotalIntern from STUDENT_ACCOUNT WHERE EXISTS (SELECT student_accID FROM HIRED_LIST WHERE STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID) and isHired = 1 and studentStatus = 'Intern'", conDB);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
@@ -145,6 +145,16 @@ namespace ctuconnect
             int industry_accID = int.Parse(IndustryJob.SelectedValue);
             BindHiredPerJobInIndustry(industry_accID);
             BindHiredPerIndustry();
+        }
+
+        protected void Department_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Course_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

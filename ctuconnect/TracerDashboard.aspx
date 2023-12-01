@@ -1,13 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site2.Master" AutoEventWireup="true" CodeBehind="TracerDashboard.aspx.cs" Inherits="ctuconnect.TracerDashboard" %>
 
-<%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -66,7 +64,7 @@
     </style>
     <h2 class="opacity-75">Dashboard</h2>
     <div class="container m-auto w-75 h-100 d-flex flex-column">
-        <div class="row" style="height: 200px; margin-top: 10%;">
+        <div class="row my-5" style="height: 200px; margin-top: 10%;">
             <div class="col-sm">
                 <div class="card h-100">
                     <div class="card-body">
@@ -104,6 +102,7 @@
             </div>
         </div>
         <div class="row my-5">
+            <h2 class="text-center">Industry Graphs</h2>
             <div class="col">
                 <asp:Chart ID="Chart1" runat="server" Width="500px" BorderlineDashStyle="Solid">
                     <Titles>
@@ -124,11 +123,64 @@
                     </Legends>
                 </asp:Chart>
             </div>
-            <div class="col d-flex flex-column align-items-center">
-                 <asp:DropDownList runat="server" CssClass="selectpicker" ID="IndustryJob" AutoPostBack="true" OnSelectedIndexChanged="IndustryJob_SelectedIndexChanged">
-                    </asp:DropDownList>
+            <div class="col">
+                <asp:DropDownList runat="server" CssClass="selectpicker" ID="IndustryJob" AutoPostBack="true" OnSelectedIndexChanged="IndustryJob_SelectedIndexChanged">
+                </asp:DropDownList>
                 <asp:Label ID="NoData" Text="No data available" runat="server" Visible="false"></asp:Label>
                 <asp:Chart ID="Chart2" runat="server" Width="500px" BorderlineDashStyle="Solid">
+                    <Titles>
+                        <asp:Title Name="ChartTitle" Text="Total Hired per Job by Industry" />
+                    </Titles>
+                    <Series>
+                        <asp:Series Name="Internship" ChartType="StackedColumn" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="Internship" XValueMember="jobPosition" YValueMembers="HiredPerJob">
+                        </asp:Series>
+                        <asp:Series Name="Fulltime" ChartType="StackedColumn" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="Fulltime" XValueMember="jobPosition" YValueMembers="HiredPerJob">
+                        </asp:Series>
+                    </Series>
+                    <ChartAreas>
+                        <asp:ChartArea Name="ChartArea2"></asp:ChartArea>
+                    </ChartAreas>
+                    <Legends>
+                        <asp:Legend Name="Internship" Docking="Bottom"></asp:Legend>
+                        <asp:Legend Name="Fulltime" Docking="Bottom"></asp:Legend>
+                    </Legends>
+                </asp:Chart>
+            </div>
+        </div>
+
+        <div class="row my-5">
+            <h2 class="text-center">Alumni Graphs</h2>
+            <div class="row my-5">
+                <asp:DropDownList runat="server" CssClass="selectpicker" ID="Course" AutoPostBack="true" OnSelectedIndexChanged="Course_SelectedIndexChanged">
+                </asp:DropDownList>
+                <asp:DropDownList runat="server" CssClass="selectpicker" ID="Department" AutoPostBack="true" OnSelectedIndexChanged="Department_SelectedIndexChanged">
+                </asp:DropDownList>
+            </div>
+            <div class="col">
+
+                <asp:Chart ID="Chart3" runat="server" Width="500px" BorderlineDashStyle="Solid">
+                    <Titles>
+                        <asp:Title Name="ChartTitle" Text="Total Hired per Industry" />
+                    </Titles>
+                    <Series>
+                        <asp:Series Name="Internship" ChartType="StackedColumn" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="Internship" XValueMember="industryName" YValueMembers="hiredCount">
+                        </asp:Series>
+                        <asp:Series Name="Fulltime" ChartType="StackedColumn" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="Fulltime" XValueMember="industryName" YValueMembers="hiredCount">
+                        </asp:Series>
+                    </Series>
+                    <ChartAreas>
+                        <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
+                    </ChartAreas>
+                    <Legends>
+                        <asp:Legend Name="Internship" Docking="Bottom"></asp:Legend>
+                        <asp:Legend Name="Fulltime" Docking="Bottom"></asp:Legend>
+                    </Legends>
+                </asp:Chart>
+            </div>
+            <div class="col d-flex flex-column align-items-center">
+
+                <asp:Label ID="Label1" Text="No data available" runat="server" Visible="false"></asp:Label>
+                <asp:Chart ID="Chart4" runat="server" Width="500px" BorderlineDashStyle="Solid">
                     <Titles>
                         <asp:Title Name="ChartTitle" Text="Total Hired per Job by Industry" />
                     </Titles>

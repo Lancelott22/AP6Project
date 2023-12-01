@@ -114,57 +114,84 @@ namespace ctuconnect
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl CNumber;
 
         /// <summary>
-        /// industryLogo control.
+        /// EmploymentStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage industryLogo;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmploymentStatus;
 
         /// <summary>
-        /// JobPosition control.
+        /// CompanyOrBusinessName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl JobPosition;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CompanyOrBusinessName;
 
         /// <summary>
-        /// jobType control.
+        /// DepartmentName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl jobType;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DepartmentName;
 
         /// <summary>
-        /// IndustryName control.
+        /// Position control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndustryName;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Position;
 
         /// <summary>
-        /// IndustryAddress control.
+        /// typeOfEmployment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IndustryAddress;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl typeOfEmployment;
 
         /// <summary>
-        /// WorkStatus control.
+        /// SalaryRange control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WorkStatus;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl SalaryRange;
+
+        /// <summary>
+        /// dateHired control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dateHired;
+
+        /// <summary>
+        /// connectedToCourse control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl connectedToCourse;
+
+        /// <summary>
+        /// alignedToSkills control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl alignedToSkills;
     }
 }

@@ -37,8 +37,9 @@ namespace ctuconnect
             {
                 JobBind();
                 TotalJob();
+                DisplayStudentInfo();
             }
-            if(checkResume())
+            if (checkResume())
             {
                 resumeIcon.Attributes.Add("title", "Resume Uploaded");
                 resumeIcon.Attributes.Add("class", "fa fa-address-card-o m-1 text-success");
@@ -48,7 +49,7 @@ namespace ctuconnect
                 resumeIcon.Attributes.Add("title", "No Resume");
                 resumeIcon.Attributes.Add("class", "fa fa-address-card-o m-1 text-danger");
             }
-            DisplayStudentInfo();
+            
         }
         void JobBind()
         {
@@ -56,12 +57,19 @@ namespace ctuconnect
             string studentCourse = Session["Student_COURSE"].ToString();
             string Usertype = Session["STATUSorTYPE"].ToString();
             string jobtype = "";
+            SqlCommand cmd = new SqlCommand();
             if (Usertype == "Intern")
             {
                 jobtype = "internship";
+                cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' " +
+               "and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) ORDER BY jobPostedDate DESC", conDB);
+
+            }else if (Usertype == "Alumni")
+            {
+                cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE " +
+                "isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) ORDER BY jobPostedDate DESC", conDB);
+
             }
-            SqlCommand cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' " +
-                "and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) ORDER BY jobPostedDate DESC", conDB);
             cmd.Parameters.AddWithValue("@studentAccID", student_accId);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
@@ -156,7 +164,7 @@ namespace ctuconnect
             {
                 Response.Redirect("MyJobApplication.aspx");
             }
-            int alumni_accId = -1;
+           /* int alumni_accId = -1;*/
             int student_accId = -1;
 
             string Usertype = Session["STATUSorTYPE"].ToString();
@@ -210,7 +218,7 @@ namespace ctuconnect
                     "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID,@studentType, @isRead, @isRemove,@applicantEmail)", conDB);
 
                 cmd.Parameters.AddWithValue("@jobtype", jobtype);
-                cmd.Parameters.AddWithValue("@student_accId", alumni_accId);
+                cmd.Parameters.AddWithValue("@student_accId", student_accId);
                 cmd.Parameters.AddWithValue("@applicantFName", applicantFName);
                 cmd.Parameters.AddWithValue("@applicantLName", applicantLName);
                 cmd.Parameters.AddWithValue("@appliedPosition", position);
@@ -523,7 +531,6 @@ namespace ctuconnect
             }
             reader.Close();
             conDB.Close();
-
             JobDetailBox.Visible = true;
 
             ListViewItem currentItem = (sender as Button).NamingContainer as ListViewItem;
@@ -539,6 +546,9 @@ namespace ctuconnect
                     JobBox.Attributes["class"] = "row d-flex align-items-center jobBox";
                 }
             }
+
+            string url = "ViewIndustryProfile.aspx?industryID=" + Server.UrlEncode(IndustryID.Text);
+            viewIndustryProfileLink.HRef = url;
         }
 
         protected void JobHiring_PagePropertiesChanged(object sender, EventArgs e)

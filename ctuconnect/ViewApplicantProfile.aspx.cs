@@ -14,25 +14,25 @@ namespace ctuconnect
         string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
             if (!IsPostBack)
             {
                 if (Request.QueryString["student_accID"] != null)
                 {
-                    
+
                     string studentAccID = Request.QueryString["student_accID"];
                     DisplayStudent(studentAccID);
 
                 }
                 else
                 {
-                    
+
                 }
             }
-            
+
         }
 
-        
+
         private void DisplayStudent(string studentaccID)
         {
             using (var db = new SqlConnection(conDB))
@@ -70,6 +70,6 @@ namespace ctuconnect
                 profileImage.ImageUrl = "~/images/StudentProfiles/defaultprofile.jpg";
             }
         }
-        
+
     }
 }

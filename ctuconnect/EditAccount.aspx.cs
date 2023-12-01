@@ -39,6 +39,7 @@ namespace ctuconnect
                                 txtinitials.Text = reader["midInitials"].ToString();
                                 txtlname.Text = reader["lastName"].ToString();
                                 drpStudentStatus.Text = reader["studentStatus"].ToString();
+                                Session["ID"] = reader["studentId"].ToString();
                             }
                         }
 
@@ -199,6 +200,7 @@ namespace ctuconnect
         protected void btnSave_Click(object sender, EventArgs e)
         {
             int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
+            int studentID = Convert.ToInt32(Session["ID"].ToString());
 
             if (resumeUpload.HasFile)
             {
@@ -220,23 +222,15 @@ namespace ctuconnect
             var status = drpStudentStatus.Text;
 
             // Retrieve current values from the database
-            bool isGraduate = GetIsGraduate(studentAcctID);
+            bool isGraduate = GetIsGraduate(studentID);
             string currentStatus = GetStudentStatus(studentAcctID);
 
-
-            // Check if the status is being changed to "Alumni" and isGraduate is 0
+            // Check if the status is being changed to "Alumni" and the student is a graduate
             if (status == "Alumni" && !isGraduate)
             {
                 lblstatus.Text = "Error: Cannot change to Alumni status if not graduated.";
                 lblstatus.Visible = true;
                 return;
-            }
-
-            // Check if the status is being changed to "Alumni" and isGraduate is 1
-            if (status == "Alumni" && isGraduate)
-            {
-                lblstatus.Visible = false; // Reset the error label
-                                           // Continue with saving changes
             }
 
             // Continue with updating the database if the conditions are met
@@ -252,6 +246,7 @@ namespace ctuconnect
                         + "lastName ='" + lastname + "', "
                         + "firstName ='" + firstname + "',"
                         + "midInitials ='" + initials + "',"
+                        + "isGraduated = 1,"
                         + "studentStatus ='" + status + "' "
                         + "WHERE student_accID='" + studentAcctID + "'";
 
@@ -260,7 +255,6 @@ namespace ctuconnect
                     if (rowsAffected > 0)
                     {
                         Response.Write("<script>alert('Record Updated!');document.location='MyAccount.aspx'</script>");
-                    
                     }
                     else
                     {
@@ -270,6 +264,7 @@ namespace ctuconnect
                     }
                 }
             }
+
 
         }
 
@@ -302,28 +297,31 @@ namespace ctuconnect
             return studentStatus;
         }
 
-        private bool GetIsGraduate(int studentAcctID)
+        private bool GetIsGraduate(int studentID)
         {
+            
             bool isGraduate = false;
 
             using (var db = new SqlConnection(connDB))
             {
-                string query = "SELECT isGraduated FROM STUDENT_ACCOUNT WHERE student_accID = @studentAcctID";
-                SqlCommand cmd = new SqlCommand(query, db);
-                cmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
+                // Check if the studentID exists in the Graduates_Table
+                string checkQuery = "SELECT COUNT(*) FROM GRADUATES_TABLE WHERE studentID = @studentID";
+                SqlCommand checkCmd = new SqlCommand(checkQuery, db);
+                checkCmd.Parameters.AddWithValue("@studentID", studentID);
 
                 db.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                int count = (int)checkCmd.ExecuteScalar();
 
-                if (reader.Read())
+                if (count > 0)
                 {
-                    isGraduate = Convert.ToBoolean(reader["isGraduated"]);
+                    // If studentID exists in Graduates_Table, set isGraduate to true
+                    isGraduate = true;
                 }
 
-                reader.Close();
             }
 
             return isGraduate;
+
         }
 
         

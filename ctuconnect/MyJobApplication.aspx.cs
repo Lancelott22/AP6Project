@@ -29,6 +29,7 @@ namespace ctuconnect
                 myApplicationBind();
                 myCurrentJobBind();
             }
+            
         }
         void myApplicationBind()
         {
@@ -210,6 +211,19 @@ namespace ctuconnect
             }
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "View", "viewApplication();", true);
 
+            ListViewItem currentItem = (sender as Button).NamingContainer as ListViewItem;
+            foreach (ListViewItem item in MyApplication.Items)
+            {
+                HtmlGenericControl myApplication = item.FindControl("myApplicationList") as HtmlGenericControl;
+                if (currentItem.DataItemIndex == item.DataItemIndex)
+                {
+                    myApplication.Attributes["class"] = "row d-flex align-items-center jobBoxSelected";
+                }
+                else
+                {
+                    myApplication.Attributes["class"] = "row d-flex align-items-center jobAppliedBox";
+                }
+            }
         }
         string getApplicantStatus(int applicantID, int jobId)
         {
@@ -321,7 +335,7 @@ namespace ctuconnect
             Button reqEval = (Button)e.Item.FindControl("RequestEval");
             if (checkStatusOngoing(hired_Id))
             {
-                reqEval.Text = "Request";
+                reqEval.Text = "Request Evaluation";
             }
             if (checkRequestedEval(hired_Id))
             {
@@ -401,7 +415,7 @@ namespace ctuconnect
                 var ctr = cmd.ExecuteNonQuery();
                 if (ctr > 0)
                 {
-                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('Your evaluation request has been sent successfully.');document.location='MyJobApplication.aspx';", true);
+                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('Your evaluation request has been sent successfully.');", true);
                 }
                 else
                 {
