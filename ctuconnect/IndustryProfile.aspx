@@ -9,7 +9,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha256-rqjJMwTqpcNs7L4lL7v5Et5Et4aBnaeUpK2cnFXa4UE=" crossorigin="anonymous" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
     <style>
      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
     .profile-container {
@@ -202,7 +201,7 @@
             bottom:0;
             padding: 2% 2% 0% 2%;
             overflow: visible;
-            height:500px;
+            min-height:500px;
             min-width:70%;
         }
 
@@ -241,6 +240,105 @@
         /* Hover effect */
         .pen-icon:hover {
             color: orange;
+        }
+
+        /*
+        .feedback-name {
+            font-weight: bold;
+            margin: 0;
+            font-size:18px;
+        }
+
+        .feedback-date {
+            font-size: 14px;
+            color: #888;
+            margin: 5px 0 0 0;
+        }
+
+        .profile-icon{
+            width: 40px;
+            background: #881A30;
+            border-radius: 50%;
+            padding: 8px;
+            margin-right: 15px;
+            color: #fff;
+            font-size:12px;
+        }
+
+        .feedback-item{
+            border: 1px solid #881A30; padding: 10px; margin: auto; margin-bottom: 10px; width: 100%; height: 100%;
+            box-shadow: 0px 0px 7px -3px  #bd0606;
+            border-radius: 7px;
+            padding-left:3em;
+        }
+        */
+
+        .feedback-item {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        .profile-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover; /* Ensure the image covers the entire circle */
+        }
+
+        .feedback-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size:20px;
+            padding-left:1em;
+        }
+
+        .feedback-date {
+            font-size: 14px;
+            color: #888;
+            padding-left:1em;
+        }
+
+        .feedback-position {
+            margin-left: 10px;
+        }
+
+        .feedback-rating {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffc107; /* Yellow color for rating */
+            margin-top: 10px;
+        }
+
+        .feedback-text {
+            margin-top: 10px;
+            padding-left:7em;
+            font-size:14px;
+        }
+
+        .star-rating {
+            display: inline-block;
+            font-size: 18px; /* Adjust the font size as needed */
+            padding-left:5.5em;
+        }
+
+        .star-rating i {
+            color: #ffc107; /* Yellow color for filled stars */
+        }
+
+        /* Adjust the spacing between stars if needed */
+        .star-rating i + i {
+            margin-left: 4px;
+        }
+
+        .empty-message{
+           display: flex;
+           align-items: center;
+           height: 500px;
+           font-size:20px;
+           font-weight:bold;
+           text-align:center;
         }
          
        
@@ -355,7 +453,41 @@
                 </div>
 
                 <div class="display-review" id="reviews">
-                    <!-- Reviews content goes here -->
+                    
+                    <asp:Repeater runat="server" ID="rptfeedback">
+                        <ItemTemplate>
+                            <div class="feedback-item">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div style="display: flex; gap: 6px; padding-left: 1em;">
+                                            <img src="images/defaultprofile.jpg" style="width:60px; height:auto; border-radius: 50%;" />
+                                            <div>
+                                                <p class="feedback-name"><asp:Label ID="lblFeedbackName" runat="server" Text='<%# Eval("sendfrom") %>'></asp:Label></p>
+                                                <p class="feedback-date"><%# Eval("dateCreated", "{0:d}") %></p>
+                                            </div>
+                                        </div>
+                                        <div class="feedback-rating">
+                                            <div class="star-rating">
+                                                <%# GetStarRating(Convert.ToInt32(Eval("rating"))) %>
+                                            </div>
+                                        </div>
+                                        <div class="feedback-text">
+                                            <p><%# Eval("feedback") %></p>
+                                        </div>
+                                    </div>
+                                    <%-- Add a clearfix to prevent layout issues --%>
+                                    <div class="clearfix visible-md visible-lg"></div>
+                                </div>
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                    <% if (rptfeedback.Items.Count == 0) { %>
+                        <div class="row">
+                            <div class="empty-message">
+                                <p>No Reviews Yet</p>
+                            </div>
+                        </div>
+                    <% } %>
                 </div>
                 <br /><br />
    

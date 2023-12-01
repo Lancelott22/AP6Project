@@ -495,8 +495,10 @@
     <Content Include="TraceIndustry.aspx" />
     <Content Include="TracerDashboard.aspx" />
     <Content Include="TraceStudent.aspx" />
+    <Content Include="ViewApplicantProfile.aspx" />
     <Content Include="ViewEvaluation.aspx" />
     <Content Include="ViewEvaluation1.aspx" />
+    <Content Include="ViewIndustryProfile.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -957,6 +959,13 @@
     <Compile Include="TraceStudent.aspx.designer.cs">
       <DependentUpon>TraceStudent.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ViewApplicantProfile.aspx.cs">
+      <DependentUpon>ViewApplicantProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewApplicantProfile.aspx.designer.cs">
+      <DependentUpon>ViewApplicantProfile.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewEvaluation.aspx.cs">
       <DependentUpon>ViewEvaluation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -970,6 +979,13 @@
     </Compile>
     <Compile Include="ViewEvaluation1.aspx.designer.cs">
       <DependentUpon>ViewEvaluation1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewIndustryProfile.aspx.cs">
+      <DependentUpon>ViewIndustryProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewIndustryProfile.aspx.designer.cs">
+      <DependentUpon>ViewIndustryProfile.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

@@ -199,12 +199,6 @@ namespace ctuconnect
         protected void btnSave_Click(object sender, EventArgs e)
         {
             int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
-            //HttpPostedFile postedFile = resumeUpload.PostedFile;  /// upload file
-            //string filename = Path.GetFileName(postedFile.FileName);///to check the filename 
-
-            //int filesize = postedFile.ContentLength; //to get the filesize
-            //string logpath = "~/images/Resume/"; //creating a drive to upload or save the image
-            //string filepath = Path.Combine(logpath, filename);
 
             if (resumeUpload.HasFile)
             {
@@ -225,24 +219,56 @@ namespace ctuconnect
             var initials = txtinitials.Text;
             var status = drpStudentStatus.Text;
 
+            // Retrieve current values from the database
+            bool isGraduate = GetIsGraduate(studentAcctID);
+            string currentStatus = GetStudentStatus(studentAcctID);
+
+
+            // Check if the status is being changed to "Alumni" and isGraduate is 0
+            if (status == "Alumni" && !isGraduate)
+            {
+                lblstatus.Text = "Error: Cannot change to Alumni status if not graduated.";
+                lblstatus.Visible = true;
+                return;
+            }
+
+            // Check if the status is being changed to "Alumni" and isGraduate is 1
+            if (status == "Alumni" && isGraduate)
+            {
+                lblstatus.Visible = false; // Reset the error label
+                                           // Continue with saving changes
+            }
+
+            // Continue with updating the database if the conditions are met
             using (var db = new SqlConnection(connDB))
             {
                 db.Open();
                 using (var cmd = db.CreateCommand())
                 {
                     cmd.CommandType = CommandType.Text;
+
+                    // Update the database with the new values
                     cmd.CommandText = "UPDATE STUDENT_ACCOUNT SET "
                         + "lastName ='" + lastname + "', "
                         + "firstName ='" + firstname + "',"
                         + "midInitials ='" + initials + "',"
-                        + "studentStatus ='" + status + "'"
+                        + "studentStatus ='" + status + "' "
                         + "WHERE student_accID='" + studentAcctID + "'";
-                    var ctr = cmd.ExecuteNonQuery();
-                    if (ctr > 0)
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
                         Response.Write("<script>alert('Record Updated!');document.location='MyAccount.aspx'</script>");
-
+                    
+                    }
+                    else
+                    {
+                        // Handle the case where the update failed
+                        lblstatus.Text = "Error: Failed to update record.";
+                        lblstatus.Visible = true;
+                    }
                 }
-
             }
 
         }
@@ -251,5 +277,56 @@ namespace ctuconnect
         {
             Response.Redirect("MyAccount.aspx");
         }
+
+        private string GetStudentStatus(int studentAcctID)
+        {
+            string studentStatus = string.Empty;
+
+            using (var db = new SqlConnection(connDB))
+            {
+                string query = "SELECT studentStatus FROM STUDENT_ACCOUNT WHERE student_accID = @studentAcctID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
+
+                db.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    studentStatus = reader["studentStatus"].ToString();
+                }
+
+                reader.Close();
+            }
+
+            return studentStatus;
+        }
+
+        private bool GetIsGraduate(int studentAcctID)
+        {
+            bool isGraduate = false;
+
+            using (var db = new SqlConnection(connDB))
+            {
+                string query = "SELECT isGraduated FROM STUDENT_ACCOUNT WHERE student_accID = @studentAcctID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
+
+                db.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    isGraduate = Convert.ToBoolean(reader["isGraduated"]);
+                }
+
+                reader.Close();
+            }
+
+            return isGraduate;
+        }
+
+        
+
     }
 }

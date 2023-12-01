@@ -107,9 +107,10 @@ namespace ctuconnect
 
         void BindTable1()
         {
+            string industry_accID = Session["INDUSTRY_ACC_ID"].ToString();
             using (var db = new SqlConnection(conDB))
             {
-                string query = "SELECT lastName, firstName, dateStarted, position, resumeFile FROM HIRED_LIST WHERE jobType = 'job' ORDER BY id DESC";
+                string query = "SELECT lastName, firstName, dateStarted, position, resumeFile FROM HIRED_LIST WHERE jobType = 'job' AND  industry_accID = '"+industry_accID+"' ORDER BY id DESC";
                 SqlCommand cmd = new SqlCommand(query, db);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
@@ -126,14 +127,13 @@ namespace ctuconnect
 
         void BindTable2()
         {
-            string industry_accid = Session["INDUSTRY_ACC_ID"].ToString();
+            string industry_accID = Session["INDUSTRY_ACC_ID"].ToString();
             using (var db = new SqlConnection(conDB))
             {
 
                 string query = "SELECT student_accID,lastName, firstName, position, CONVERT(VARCHAR(10), HIRED_LIST.dateHired, 120) AS dateHired, CONVERT(VARCHAR(10), HIRED_LIST.dateStarted, 120) AS dateStarted, CONVERT(VARCHAR(10), HIRED_LIST.dateEnded, 120) AS dateEnded, internshipStatus, renderedHours, evaluationRequest " +
-                    "FROM HIRED_LIST WHERE jobType = 'internship' AND  industry_accID = @industryID ORDER BY id DESC";
+                    "FROM HIRED_LIST WHERE jobType = 'internship' AND  industry_accID = '"+industry_accID+"' ORDER BY id DESC";
                 SqlCommand cmd = new SqlCommand(query, db);
-                cmd.Parameters.AddWithValue("@industryID", industry_accid);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 da.Fill(ds);
@@ -295,75 +295,70 @@ namespace ctuconnect
 
 
             string datestarted = txtDateStarted.Text;
-            string dateended = string.IsNullOrEmpty(txtDateEnded.Text) ? null : txtDateEnded.Text;
+            object dateendedValue = string.IsNullOrEmpty(txtDateEnded.Text) ? DBNull.Value : (object)txtDateEnded.Text;
             string feedback = txtFeedback.Text;
             string stat = ddlStatus.SelectedValue;
- /*           DateTime dateEnded = Convert.ToDateTime(txtDateEnded.Text);
 
-
-
-            if (dateEnded >= DateTime.Now.Date)
-            {
-                Response.Write("<script>alert('Invalid Date!')</script>");
-                lbldate.Visible = false;
-            }
-            else
-            {*/
                 foreach (ListViewItem item in listView2.Items)
-            {
-                CheckBox chkSelect = (CheckBox)item.FindControl("chkSelect");
-                if (chkSelect.Checked)
                 {
-                    Label lblStudentID = (Label)item.FindControl("lblStudentID");
-                    string studentAccID = lblStudentID.Text;
-                    Label lblPosition = (Label)item.FindControl("lblPosition");
-                    string position = lblPosition.Text;
-
-                    if (studentAccID != null)
+                    CheckBox chkSelect = (CheckBox)item.FindControl("chkSelect");
+                    if (chkSelect.Checked)
                     {
-                        int studentaccId = Convert.ToInt32(studentAccID);
-                        using (var db = new SqlConnection(conDB))
+                        Label lblStudentID = (Label)item.FindControl("lblStudentID");
+                        string studentAccID = lblStudentID.Text;
+                        Label lblPosition = (Label)item.FindControl("lblPosition");
+                        string position = lblPosition.Text;
+
+                        if (studentAccID != null)
                         {
-                            db.Open();
-                            using (var cmd = db.CreateCommand())
+                            int studentaccId = Convert.ToInt32(studentAccID);
+                            using (var db = new SqlConnection(conDB))
                             {
-                                string sql = "UPDATE HIRED_LIST SET dateStarted = @datestarted, dateEnded = @dateended, internshipStatus = @internshipstatus WHERE student_accID = @studentID";
-                                cmd.CommandText = sql;
-                                cmd.Parameters.AddWithValue("@studentID", studentaccId);
-                                cmd.Parameters.AddWithValue("@datestarted", datestarted);
-                                cmd.Parameters.AddWithValue("@dateended", dateended);
-                                cmd.Parameters.AddWithValue("@internshipstatus", stat);
+                                db.Open();
+                                using (var cmd = db.CreateCommand())
+                                {
+                                    string sql = "UPDATE HIRED_LIST SET dateStarted = @datestarted, dateEnded = @dateended, internshipStatus = @internshipstatus WHERE student_accID = @studentID";
+                                    cmd.CommandText = sql;
+                                    cmd.Parameters.AddWithValue("@studentID", studentaccId);
+                                    cmd.Parameters.AddWithValue("@datestarted", datestarted);
+                                    cmd.Parameters.AddWithValue("@dateended", dateendedValue);
+                                    cmd.Parameters.AddWithValue("@internshipstatus", stat);
 
-                                cmd.ExecuteNonQuery();
+                                    cmd.ExecuteNonQuery();
 
+                                }
+                            }
+                        if (!string.IsNullOrEmpty(feedback))
+                        {
+                            using (var db = new SqlConnection(conDB))
+                            {
+                                db.Open();
+                                using (var cmd = db.CreateCommand())
+                                {
+                                    string sql = "INSERT INTO STUDENT_FEEDBACK (sendfrom, sendto, position,feedbackContent, dateCreated) VALUES (@sendfrom, @sendto, @position,@feedbacks, @datecreated)";
+                                    cmd.CommandText = sql;
+                                    // Provide appropriate values for sendfrom, sendto, and position
+                                    cmd.Parameters.AddWithValue("@sendfrom", industryname);
+                                    cmd.Parameters.AddWithValue("@sendto", studentaccId);
+                                    cmd.Parameters.AddWithValue("@position", position);
+                                    cmd.Parameters.AddWithValue("@feedbacks", feedback);
+                                    cmd.Parameters.AddWithValue("@datecreated", DateTime.Now);
+
+                                    cmd.ExecuteNonQuery();
+                                }
                             }
                         }
-                        using (var db = new SqlConnection(conDB))
-                        {
-                            db.Open();
-                            using (var cmd = db.CreateCommand())
-                            {
-                                string sql = "INSERT INTO STUDENT_FEEDBACK (sendfrom, sendto, position,feedbackContent, dateCreated) VALUES (@sendfrom, @sendto, @position,@feedbacks, @datecreated)";
-                                cmd.CommandText = sql;
-                                // Provide appropriate values for sendfrom, sendto, and position
-                                cmd.Parameters.AddWithValue("@sendfrom", industryname);
-                                cmd.Parameters.AddWithValue("@sendto", studentaccId);
-                                cmd.Parameters.AddWithValue("@position", position);
-                                cmd.Parameters.AddWithValue("@feedbacks", feedback);
-                                cmd.Parameters.AddWithValue("@datecreated", DateTime.Now);
-
-                                cmd.ExecuteNonQuery();
-                            }
+                            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('show');", true);
                         }
-                        ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('show');", true);
-                    }
-                    else
-                    {
-                        //
+                        else
+                        {
+                            //
+                        }
                     }
                 }
+
             }
-            }
+        
             
         
 
@@ -396,11 +391,11 @@ namespace ctuconnect
 
         protected void Close_SuccessPrompt(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('hide'); uncheckAllCheckboxes(); location.reload(true);", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('hide');document.location='HiredList.aspx'", true);
         }
         protected void Close_MultipleEditSuccessPrompt(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessMultipleEditPrompt').modal('hide'); uncheckAllCheckboxes(); location.reload(true);", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessMultipleEditPrompt').modal('hide'); document.location='HiredList.aspx'", true);
         }
         protected void Close_MultipleEdit(object sender, EventArgs e)
         {
@@ -440,6 +435,55 @@ namespace ctuconnect
 
 
         }
+        protected void dateStarted_TextChanged(object sender, EventArgs e)
+        {
+            DateTime dateHiredFromDatabase = GetDateHiredFromDatabase();
+
+            if (!string.IsNullOrEmpty(txtDateStarted.Text) && DateTime.TryParse(txtDateStarted.Text, out DateTime dateStarted))
+            {
+                if (dateStarted < dateHiredFromDatabase)
+                {
+                    dateStartedlbl.Visible = true;
+                    dateStartedlbl.Text = "Date started must be on or after the date hired.";
+                }
+                else
+                {
+                    dateStartedlbl.Visible = false;
+                }
+            }
+            else
+            {
+                // Handle the case where txtDateStarted is empty or not a valid date
+                dateStartedlbl.Visible = false;
+            }
+        }
+        private DateTime GetDateHiredFromDatabase(int studentAccountId)
+        {
+            DateTime dateHired = DateTime.MinValue; // Default value in case of an issue or no result
+
+            using (var connection = new SqlConnection("your_connection_string_here"))
+            {
+                connection.Open();
+
+                using (var command = new SqlCommand("SELECT dateHired FROM YourTableName WHERE studentAccountId = @studentAccountId", connection))
+                {
+                    command.Parameters.AddWithValue("@studentAccountId", studentAccountId);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            // Assuming 'dateHired' is a DateTime column in your database
+                            dateHired = reader.GetDateTime(reader.GetOrdinal("dateHired"));
+                        }
+                    }
+                }
+            }
+
+            return dateHired;
+        }
+
+
 
 
         private List<string> selectedStudentIds = new List<string>();
