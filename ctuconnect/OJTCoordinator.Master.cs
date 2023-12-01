@@ -57,7 +57,7 @@ namespace ctuconnect
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
-                    Session["DEPARTMENTID"] = reader["department_ID"];
+                    Session["DEPT"] = reader["department_ID"];
                     Session["COORDINATORPIC"] = reader["coordinatorPicture"];
                     lbldepartmentName.Text = reader["departmentName"].ToString();
                     lblname.Text = reader["firstName"].ToString() + " " + reader["lastName"].ToString();
@@ -117,7 +117,7 @@ namespace ctuconnect
         void LoadStudentAccount()
         {
             
-                string departmentID = Session["DEPARTMENTID"].ToString();
+                string departmentID = Session["DEPT"].ToString();
 
                 using (var db = new SqlConnection(conDB))
                 {
@@ -139,7 +139,7 @@ namespace ctuconnect
 
         protected int UnreadNotificationCount()
         {
-            string departID = Session["DEPARTMENTID"] as string;
+            string departID = Session["DEPT"] as string;
             //int departmentIDDDD = Convert.ToInt32(departID);
             //string departmentIDD = "400000";
             int count = 0;

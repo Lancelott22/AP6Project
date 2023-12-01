@@ -68,7 +68,7 @@
                     </asp:DropDownList>
                 </div>
             </div>
-            <div class="col-sm-2">
+           <%-- <div class="col-sm-2">
                 <div class="form-group">
                     <div class="form-group">
                         <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="industry" AutoPostBack="true" OnSelectedIndexChanged="industry_SelectedIndexChanged">
@@ -82,7 +82,7 @@
                     </asp:DropDownList>
 
                 </div>
-            </div>
+            </div>--%>
         </div>
         <div class="row">
             <asp:ListView ID="AlumniListView" runat="server">
@@ -93,9 +93,9 @@
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Course</th>
-                            <th>Industry Name</th>
+                            <th>Employment Status</th>
+                            <th>Company Or Business</th>
                             <th>Position</th>
-                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                         <tbody>
@@ -109,9 +109,9 @@
                         <td><%#Eval("firstName")%></td>
                         <td><%#Eval("lastName")%></td>
                         <td><%#Eval("course")%></td>
-                        <td><%#Eval("workedAt")%></td>
+                        <td><%#Eval("employmentStatus")%></td>
+                        <td><%#Eval("CompanyOrBusinessName")%></td>
                         <td><%#Eval("position")%></td>
-                        <td><%#Eval("workStatus")%></td>
                         <td>
                             <asp:LinkButton ID="viewProfile" runat="server" OnCommand="viewProfile_Command" CommandArgument='<%#Eval("id")%>'>View Details</asp:LinkButton></td>
                     </tr>

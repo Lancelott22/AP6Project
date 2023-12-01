@@ -343,6 +343,7 @@
     <Content Include="AdminProfile.aspx" />
     <Content Include="Admin_Contact.aspx" />
     <Content Include="Admin_JobPosted.aspx" />
+    <Content Include="ALUMNI_EMPLOYMENT_FORM.aspx" />
     <Content Include="Applicants.aspx" />
     <Content Include="ApplyJob.aspx" />
     <Content Include="Blacklist.aspx" />
@@ -493,8 +494,10 @@
     <Content Include="TraceIndustry.aspx" />
     <Content Include="TracerDashboard.aspx" />
     <Content Include="TraceStudent.aspx" />
+    <Content Include="ViewApplicantProfile.aspx" />
     <Content Include="ViewEvaluation.aspx" />
     <Content Include="ViewEvaluation1.aspx" />
+    <Content Include="ViewIndustryProfile.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -535,6 +538,13 @@
     </Compile>
     <Compile Include="Admin_JobPosted.aspx.designer.cs">
       <DependentUpon>Admin_JobPosted.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ALUMNI_EMPLOYMENT_FORM.aspx.cs">
+      <DependentUpon>ALUMNI_EMPLOYMENT_FORM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ALUMNI_EMPLOYMENT_FORM.aspx.designer.cs">
+      <DependentUpon>ALUMNI_EMPLOYMENT_FORM.aspx</DependentUpon>
     </Compile>
     <Compile Include="Applicants.aspx.cs">
       <DependentUpon>Applicants.aspx</DependentUpon>
@@ -941,6 +951,13 @@
     <Compile Include="TraceStudent.aspx.designer.cs">
       <DependentUpon>TraceStudent.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ViewApplicantProfile.aspx.cs">
+      <DependentUpon>ViewApplicantProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewApplicantProfile.aspx.designer.cs">
+      <DependentUpon>ViewApplicantProfile.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewEvaluation.aspx.cs">
       <DependentUpon>ViewEvaluation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -954,6 +971,13 @@
     </Compile>
     <Compile Include="ViewEvaluation1.aspx.designer.cs">
       <DependentUpon>ViewEvaluation1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewIndustryProfile.aspx.cs">
+      <DependentUpon>ViewIndustryProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewIndustryProfile.aspx.designer.cs">
+      <DependentUpon>ViewIndustryProfile.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

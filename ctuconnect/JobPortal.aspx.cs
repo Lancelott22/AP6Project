@@ -165,9 +165,10 @@ namespace ctuconnect
             if (Usertype == "Alumni")
             {
                 applicantEmail = Session["StudentEmail"].ToString();
-                alumni_accId = int.Parse(Session["Alumni_accID"].ToString());
+                
                 if (job_Type.Value != "" || job_Type.Value != string.Empty)
                 {
+                    student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
                     jobtype = job_Type.Value;
                 }
                 else
@@ -205,7 +206,7 @@ namespace ctuconnect
             conDB.Open();
             if (Usertype == "Alumni")
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,alumni_accID,applicantFName, appliedPosition, applicantLName, industry_accID, dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, isRead, isRemove,applicantEmail ) " +
+                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accId,applicantFName, appliedPosition, applicantLName, industry_accID, dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, isRead, isRemove,applicantEmail ) " +
                     "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID,@studentType, @isRead, @isRemove,@applicantEmail)", conDB);
 
                 cmd.Parameters.AddWithValue("@jobtype", jobtype);

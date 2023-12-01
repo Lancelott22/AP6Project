@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Text;
 
 namespace ctuconnect
 {
     public partial class IndustryProfile : System.Web.UI.Page
     {
         string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
+        private DataTable dtFeedback = new DataTable();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -29,6 +32,9 @@ namespace ctuconnect
                 industryImage1.ImageUrl = imagePath;
                 displayIndustryInfo();
                 displayContactPerson();
+
+                this.LoadIndustryFeedback();
+
             }
         }
 
@@ -87,6 +93,37 @@ namespace ctuconnect
             {
                 industryProfile.ImageUrl = "~/images/IndustryProfile/defaultprofile.jpg";
             }
+        }
+
+        private void LoadIndustryFeedback()
+        {
+            
+            int industryAccID = Convert.ToInt32(Session["INDUSTRY_ACC_ID"].ToString());
+            using (var db = new SqlConnection(conDB))
+            {
+                string query = "SELECT * FROM INDUSTRY_FEEDBACK WHERE sendto = @SendTo ORDER BY dateCreated DESC";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@SendTo", industryAccID);
+
+                db.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dtFeedback);
+            }
+
+            rptfeedback.DataSource = dtFeedback;
+            rptfeedback.DataBind();
+        }
+
+        protected string GetStarRating(int rating)
+        {
+            StringBuilder stars = new StringBuilder();
+
+            for (int i = 0; i < rating; i++)
+            {
+                stars.Append("<i class='fa fa-star'></i>");
+            }
+
+            return stars.ToString();
         }
 
         protected void SignOut_Click(object sender, EventArgs e)
