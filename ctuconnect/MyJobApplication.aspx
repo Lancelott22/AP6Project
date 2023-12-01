@@ -225,7 +225,21 @@
         .modal ::-webkit-scrollbar-thumb:hover {
             background: #881A30;
         }
+        .jobBoxSelected {
+    box-shadow: 0px 0px 7px -3px orange;
+    border: 1px solid orange;
+    padding: 10px;
+    margin: auto;
+    margin-bottom: 10px;
+    width: contain;
+    height: contain;
+    border-radius: 7px;
+    position: relative;
+}
 
+    .jobBoxSelected:hover {
+        box-shadow: 3px 7px 18px orange;
+    }
         .NewBadge {
             border: solid 1px #15d455;
             border-radius: 5px;
@@ -280,7 +294,7 @@
                     <div class="col-9 d-flex flex-column">
                         <br />
                         <div>
-                            <asp:DropDownList runat="server" CssClass="selectpicker" ID="SwitchView" AutoPostBack="true" OnSelectedIndexChanged="SwitchView_SelectedIndexChanged">
+                            <asp:DropDownList runat="server"  ID="SwitchView" AutoPostBack="true" OnSelectedIndexChanged="SwitchView_SelectedIndexChanged">
                                 <asp:ListItem Value="1" Selected="true">Job Application List</asp:ListItem>
                                 <asp:ListItem Value="2">Hired Job List</asp:ListItem>
                             </asp:DropDownList>

@@ -51,7 +51,7 @@ namespace ctuconnect
         void SearchByAlumniNameorID(string alumni)
         {
             SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN ALUMNI_EMPLOYMENTFORM ON STUDENT_ACCOUNT.student_accID = ALUMNI_EMPLOYMENTFORM.student_accID JOIN PROGRAM ON " +
-                "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE studentStatus = 'Alumni' &&  STUDENT_ACCOUNT.firstName LIKE '%" + alumni + "%' " +
+                "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE studentStatus = 'Alumni' and  STUDENT_ACCOUNT.firstName LIKE '%" + alumni + "%' " +
                 "or STUDENT_ACCOUNT.lastName LIKE '%" + alumni + "%' or CAST(STUDENT_ACCOUNT.studentId as varchar) = '" + alumni + "'", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
@@ -143,45 +143,48 @@ namespace ctuconnect
             ShowByIndustry();
         }*/
 
-       /* protected void position_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON " +
-                "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE HIRED_LIST.jobID = '" + position.SelectedValue + "'", conDB);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable ds = new DataTable();
-            da.Fill(ds);
-            AlumniListView.DataSource = ds;
-            AlumniListView.DataBind();
-        }*/
+        /* protected void position_SelectedIndexChanged(object sender, EventArgs e)
+         {
+             SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON " +
+                 "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE HIRED_LIST.jobID = '" + position.SelectedValue + "'", conDB);
+             SqlDataAdapter da = new SqlDataAdapter(cmd);
+             DataTable ds = new DataTable();
+             da.Fill(ds);
+             AlumniListView.DataSource = ds;
+             AlumniListView.DataBind();
+         }*/
 
-       /* void getDetails(int alumni_Id)
+        void getDetails(int studentID)
         {
             conDB.Open();
             SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN ALUMNI_EMPLOYMENTFORM ON STUDENT_ACCOUNT.student_accID = ALUMNI_EMPLOYMENTFORM.student_accID JOIN PROGRAM ON " +
-                "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE studentStatus = 'Alumni' && STUDENT_ACCOUNT.student_accID = @alumni_Id ", conDB);
-            cmd.Parameters.AddWithValue("@alumni_Id", alumni_Id);
+                "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE studentStatus = 'Alumni' and STUDENT_ACCOUNT.studentID = @studentID ", conDB);
+            cmd.Parameters.AddWithValue("@studentID", studentID);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
-                studentPic.Src = "~/images/StudentProfiles/" + reader["alumniPicture"].ToString();
+                studentPic.Src = "~/images/StudentProfiles/" + reader["studentPicture"].ToString();
                 Name.InnerText = reader["firstName"].ToString() + " " + reader["lastName"].ToString();
                 StudCourse.InnerText = reader["course"].ToString();
                 Email.InnerText = reader["email"].ToString();
                 Address.InnerText = reader["address"].ToString();
                 CNumber.InnerText = reader["contactNumber"].ToString();
-                industryLogo.Src = "~/images/IndustryProfile/" + reader["industryPicture"].ToString();
-                JobPosition.InnerText = reader["position"].ToString();
-                jobType.InnerText = reader["jobType"].ToString();
-                IndustryName.InnerText = reader["workedAt"].ToString();
-                IndustryAddress.InnerText = reader["location"].ToString();
-                WorkStatus.InnerText = reader["workStatus"].ToString();
+                EmploymentStatus.InnerText = reader["employmentStatus"].ToString();
+                CompanyOrBusinessName.InnerText = reader["CompanyOrBusinessName"].ToString();
+                DepartmentName.InnerText = reader["Department"].ToString();
+                Position.InnerText = reader["Position"].ToString();
+                typeOfEmployment.InnerText = reader["TypeOfEmployement"].ToString();
+                SalaryRange.InnerText = reader["SalaryRange"].ToString();
+                dateHired.InnerText = reader["DateHired"].ToString();
+                connectedToCourse.InnerText = reader["isConnectedToCourse"].ToString();
+                alignedToSkills.InnerText = reader["isAlignedToSkill"].ToString();
             }
-        }*/
+        }
         protected void viewProfile_Command(object sender, CommandEventArgs e)
         {         
-            int alumni_Id = int.Parse(e.CommandArgument.ToString());
+            int studentID = int.Parse(e.CommandArgument.ToString());
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAlumni();", true);
-           /* getDetails(alumni_Id);*/
+           getDetails(studentID);
         }
     }
 }

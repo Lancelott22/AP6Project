@@ -113,7 +113,7 @@
                         <td><%#Eval("CompanyOrBusinessName")%></td>
                         <td><%#Eval("position")%></td>
                         <td>
-                            <asp:LinkButton ID="viewProfile" runat="server" OnCommand="viewProfile_Command" CommandArgument='<%#Eval("id")%>'>View Details</asp:LinkButton></td>
+                            <asp:LinkButton ID="viewProfile" runat="server" OnCommand="viewProfile_Command" CommandArgument='<%#Eval("studentId")%>'>View Details</asp:LinkButton></td>
                     </tr>
                 </ItemTemplate>
             </asp:ListView>
@@ -129,7 +129,7 @@
                 <div class="modal-body">
                     <div class="container-fluid p-0">
                         <div class="row p-4 py-3" style="font-size: 15px;">
-                            <h4>Personal Details</h4>
+                            <h3>Personal Details</h3>
                             <div class="col-4">
                                 <img id="studentPic" runat="server" alt="studentPic" style="height: 130px; width: 130px; border: 1px solid #747574;" />
 
@@ -159,30 +159,43 @@
                         </div>
                         <hr style="margin: 10px 0 10px 0; border: 1px solid #a1a1a1;" />
                         <div class="row p-4 py-3" style="font-size: 15px;">
-                            <h4>Job Details</h4>
-                            <div class="col-4">
-                                <img id="industryLogo" runat="server" alt="industryLogo" style="height: 130px; width: 130px; border: 1px solid #747574;" />
-                            </div>
+                            <h3>Employment Details</h3>
                             <div class="col">
                                 <div>
-                                    <label>Job Position: </label>
-                                    <span id="JobPosition" runat="server"></span>
+                                    <label>Employment Status: </label>
+                                    <span id="EmploymentStatus" runat="server"></span>
                                 </div>
                                 <div>
-                                    <label>Job Type: </label>
-                                    <span id="jobType" runat="server"></span>
+                                    <label>Company Or Business Name: </label>
+                                    <span id="CompanyOrBusinessName" runat="server"></span>
                                 </div>
                                 <div>
-                                    <label>Industry Name: </label>
-                                    <span id="IndustryName" runat="server"></span>
+                                    <label>Department: </label>
+                                    <span id="DepartmentName" runat="server"></span>
                                 </div>
                                 <div>
-                                    <label>Address: </label>
-                                    <span id="IndustryAddress" runat="server"></span>
+                                    <label>Position: </label>
+                                    <span id="Position" runat="server"></span>
                                 </div>
                                 <div>
-                                    <label>Work Status: </label>
-                                    <span id="WorkStatus" runat="server"></span>
+                                    <label>Type of Employment: </label>
+                                    <span id="typeOfEmployment" runat="server"></span>
+                                </div>
+                                <div>
+                                    <label>Salary Range: </label>
+                                    <span id="SalaryRange" runat="server"></span>
+                                </div>
+                                <div>
+                                    <label>Date Hired: </label>
+                                    <span id="dateHired" runat="server"></span>
+                                </div>
+                                <div>
+                                    <label>Is Job Connected to your Course: </label>
+                                    <span id="connectedToCourse" runat="server"></span>
+                                </div>
+                                <div>
+                                    <label>Is Job Aligned to your skills: </label>
+                                    <span id="alignedToSkills" runat="server"></span>
                                 </div>
                             </div>
                         </div>

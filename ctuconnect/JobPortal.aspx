@@ -354,7 +354,7 @@
 
                                                 </div>
                                                 <div class="row" style="margin: 0px; margin-bottom: 2px;">
-                                                    <a href="#" style="text-decoration: underline;">
+                                                    <a href="#" id="viewIndustryProfileLink" runat="server" style="text-decoration: underline;">
                                                         <asp:Label ID="IndustryName" runat="server" Style="font-size: 17px;" /></a>
                                                 </div>
 
@@ -633,10 +633,12 @@
         function showDiv() {
             var details = document.getElementById('<%= JobDetailContent.ClientID %>');
             if (details.style.display === 'none') {
-                details.style.display = 'block';
+                details.style.display = 'block';               
             } else {
                 details.style.display = 'none';
             }
+            
         }
     </script>
+    
 </asp:Content>

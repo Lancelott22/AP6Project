@@ -17,7 +17,7 @@ namespace ctuconnect
         {
             if (!IsPostBack && Session["StudentEmail"] != null)
             {
-                Response.Redirect("Home.aspx");
+                Response.Redirect("JobPortal.aspx");
             }
             LoginErrorMessage.Visible = false;
 
@@ -54,26 +54,34 @@ namespace ctuconnect
                             command.Parameters.AddWithValue("@Email", loginEmail);
                             command.Parameters.AddWithValue("@Password", loginPassword);
                             int count = Convert.ToInt32(command.ExecuteScalar());
-                            if (count == 1)
+                        if (count == 1)
+                        {
+                            using (SqlDataReader reader = command.ExecuteReader())
                             {
-                                using (SqlDataReader reader = command.ExecuteReader())
+
+                                while (reader.Read())
                                 {
 
-                                    while (reader.Read())
-                                    {
+                                    getStudentInfo();
 
-                                        getStudentInfo();
-
-                                    }
-                                    Response.Write("<script>alert('Invalid Credentials')</script>");
-                                    conDB2.Close();
-                                    reader.Close();
                                 }
+                                Response.Write("<script>alert('Invalid Credentials')</script>");
+                                conDB2.Close();
+                                reader.Close();
+                            }
+                            if (checkStatusAndIsAnsweredAlumniForm(Session["STUDENT_ID"].ToString()))
+                            {
                                 Session["StudentEmail"] = txtemail.Text;
-                                Response.Redirect("JobPortal.aspx");// User is authenticated, you can redirect to another page
+                                Response.Redirect("Alumni_Employment_Form.aspx");
                             }
                             else
                             {
+                                Session["StudentEmail"] = txtemail.Text;
+                                Response.Redirect("JobPortal.aspx");// User is authenticated, you can redirect to another page
+                            }
+                        }
+                        else
+                        {
                             // Invalid credentials, show error message
                             LoginErrorMessage.Visible = true;
                         }
@@ -84,7 +92,27 @@ namespace ctuconnect
                 //Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
 
         }
-
+        bool checkStatusAndIsAnsweredAlumniForm(string studentID)
+        {
+            SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            conDB.Open();
+                SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT WHERE studentID = @studentID", conDB);
+                cmd.Parameters.AddWithValue("@studentID", studentID);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    if (reader["studentStatus"].ToString() == "Alumni" && bool.Parse(reader["isAnsweredAlumniForm"].ToString()) == false)
+                    {
+                        reader.Close();
+                        conDB.Close();
+                        return true;
+                    }
+                }
+                reader.Close();
+                conDB.Close();
+                return false;
+         
+        }
         protected void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (CheckBox1.Checked)
