@@ -199,10 +199,10 @@
      <asp:TableRow>
          <asp:TableCell  style="vertical-align: top;">
              <div class="profile-container">
-                <asp:Image ID="CoordinatorImage" runat="server"/>
+<asp:Image ID="CoordinatorImage" runat="server"/>
              <p >OJT Coordinator</p>
                  <hr class="horizontal-line" />
-                 <a href="Coordinator.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
+                 <a href="CoordinatorProfile.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
                  <a  href="ListOfAlumni.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Alumni</a>
                  <a  href="PartneredIndustries.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Partnered Industry</a>
                   <a href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:12px; width:32px;"></i>Refer Student</a>

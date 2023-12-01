@@ -20,6 +20,11 @@ namespace ctuconnect
             {
                 Response.Redirect("LoginOJTCoordinator.aspx");
             }
+            if (!IsPostBack)
+            {
+                string imagePath = "~/images/OJTCoordinatorProfile/" + Session["Coord_Picture"].ToString();
+                CoordinatorImage.ImageUrl = imagePath;
+            }
         }
         protected void SignOut_Click(object sender, EventArgs e)
         {
@@ -31,9 +36,9 @@ namespace ctuconnect
 
         protected void UploadInternCSV_Click(object sender, EventArgs e)
         {
-
+/*
             try
-            {
+            {*/
 
 
                 HttpPostedFile studentCSVFile = studentCSV.PostedFile;
@@ -83,7 +88,7 @@ namespace ctuconnect
                         //Set the database table name.
                         sqlBulkCopy.DestinationTableName = "dbo.STUDENT_ACCOUNT";
                         //Mapping Table column    
-                        sqlBulkCopy.ColumnMappings.Add("studentID", "studentId");
+                        sqlBulkCopy.ColumnMappings.Add("studentID", "studentID");
                         sqlBulkCopy.ColumnMappings.Add("firstName", "firstName");
                         sqlBulkCopy.ColumnMappings.Add("midInitials", "midInitials");
                         sqlBulkCopy.ColumnMappings.Add("lastName", "lastName");
@@ -105,17 +110,17 @@ namespace ctuconnect
                 {
                     Response.Write("<script>alert('The file extension of the uploaded file is not acceptable! Must be .csv file.')</script>");
                 }
-            }
-            catch
+            
+/*            catch
             {
                 Response.Write("<script>alert('The csv is not in correct format. The number of columns is not consistent or the column names are missing or invalid. Or the StudentID is already in the list or duplicated.')</script>");
-            }
+            }*/
         }
 
         protected void UploadGraduate_Click(object sender, EventArgs e)
         {
-            try
-            {
+            /*try
+            {*/
 
 
                 HttpPostedFile graduateCSVFile = graduateCSV.PostedFile;
@@ -126,7 +131,7 @@ namespace ctuconnect
                 {
                     //Upload and save the file.
                     string graduateCSVFilePath = Server.MapPath("~/STUDENT CSV FILE/") + Path.GetFileName(graduateCSVFileName);
-                    studentCSV.SaveAs(graduateCSVFilePath);
+                    graduateCSV.SaveAs(graduateCSVFilePath);
 
                     DataTable dt = new DataTable();
                     dt.Columns.AddRange(new DataColumn[7] {
@@ -162,7 +167,7 @@ namespace ctuconnect
                         //Set the database table name.
                         sqlBulkCopy.DestinationTableName = "dbo.GRADUATES_TABLE";
                         //Mapping Table column    
-                        sqlBulkCopy.ColumnMappings.Add("studentID", "studentId");
+                        sqlBulkCopy.ColumnMappings.Add("studentID", "studentID");
                         sqlBulkCopy.ColumnMappings.Add("firstName", "firstName");
                         sqlBulkCopy.ColumnMappings.Add("midInitials", "midInitials");
                         sqlBulkCopy.ColumnMappings.Add("lastName", "lastName");
@@ -179,11 +184,11 @@ namespace ctuconnect
                 {
                     Response.Write("<script>alert('The file extension of the uploaded file is not acceptable! Must be .csv file.')</script>");
                 }
-            }
-            catch
+            
+            /*catch
             {
                 Response.Write("<script>alert('The csv is not in correct format. The number of columns is not consistent or the column names are missing or invalid. Or the StudentID is already in the list or duplicated.')</script>");
-            }
+            }*/
         }
     }
 }

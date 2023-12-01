@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .profile-container{
             background-color:white;
@@ -94,6 +94,7 @@
             padding-right:2em;                  
             margin-left:3px;
         }
+        
        
     
     </style>
@@ -155,12 +156,51 @@
             <div class="col-9 d-flex flex-column">
                 <br />
                 <div class="container">
-                    <h1 class="title">List of Interns</h1>
-                     <p style="float:left;">Sort by <asp:DropDownList ID="ddlSortBy" runat="server" AutoPostBack="true"  CssClass="sort-dropdown">
-                         <asp:ListItem Text="Course" Value="ColumnName1"></asp:ListItem>
-                         <asp:ListItem Text="Status" Value="ColumnName2"></asp:ListItem>
-                     </asp:DropDownList> for BSIT , BIT-CT</p>
-                    <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
+                    <h1 class="title">Industry Verification</h1>
+                     <div class="container-fluid" >
+                    <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p><br />
+                     </div>
+                    <div class="container-fluid">
+                    <asp:ListView ID="IndustryListView" runat="server" OnItemDataBound="IndustryListView_ItemDataBound">
+                <LayoutTemplate>
+                    <table style="font-size: 18px; line-height: 30px;">
+                        <tr style="background-color: #336699; color: White; padding: 10px;">
+                            <th>Industry Name</th>
+                            <th>Address</th>
+                            <th>Email</th>
+                            <th>Mou</th>
+                            <th>Verified</th>
+                            <th>Status</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tbody>
+                            <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                        </tbody>
+                    </table>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <tr style="border-bottom: solid 1px #336699">
+                        <span visible="false" runat="server" id="industryID"><%#Eval("industry_accID")%></span>
+                        <td><%#Eval("industryName")%></td>
+                        <td><%#Eval("location")%></td>
+                         <td><%#Eval("email")%></td>
+                        <td class="my-5">
+                            <asp:LinkButton ID="ViewMou" runat="server" CssClass="btn btn-primary" OnCommand="ViewMou_Command" CommandArgument='<%#Eval("mou")%>'>View Mou</asp:LinkButton>
+                        </td>
+                         <td><%#Eval("Verify")%></td>
+                        <td><%#Eval("Deactivate")%></td>
+                        <td>
+                            <asp:LinkButton ID="Verify" runat="server" CssClass="btn btn-info" OnCommand="Verify_Command" CommandArgument='<%#Eval("industry_accID")%>'></asp:LinkButton>
+                           </td>
+                            <td> <asp:LinkButton ID="Deactivate" runat="server" OnCommand="Deactivate_Command"  CommandArguent='<%#Eval("industry_accID")%>'></asp:LinkButton>
+
+                        </td>
+                    </tr>
+                </ItemTemplate>
+                        
+            </asp:ListView>
+                        </div>
                 </div>
             </div>    
        

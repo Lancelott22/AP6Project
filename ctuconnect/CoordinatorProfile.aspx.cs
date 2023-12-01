@@ -103,7 +103,6 @@ namespace ctuconnect
                 DataSet ds = new DataSet();
                 da.Fill(ds);
 
-                // Bind the DataTable to the GridView
                 internListView.DataSource = ds;
                 internListView.DataBind();
 

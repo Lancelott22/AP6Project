@@ -4,6 +4,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-9aLThZMxx+rKTEzeibpBtJPLcA6nhcwScQJ/DV+ytI+73m9Z2ap53lr1dH5tRjS9bOwD3GH1vbAhr5ZC9fIvnQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>
 
@@ -80,14 +82,9 @@
                 bottom:0;
                 padding: 2% 2% 0% 2%;
                 overflow: auto;
-                height:550px;
+                height:800px;
                 
         }
-         @media (max-width: 790px) {
-                .display-container {
-                    max-width: 50%;
-                }
-            }
          .display-container .title{
                 font-size:25px;
                 font-weight:500;
@@ -255,6 +252,36 @@ width:100%;
         text-decoration: none;
         display: inline-block;
     }
+    .edit-button {
+    background-color: white;
+    border: 1px solid;
+    border-color: gray;
+    box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);
+    background-color: #881a30;
+    color: white;
+    padding-left: 8px;
+    padding-right: 8px; 
+    text-decoration:none;
+    }
+    .edit-button:hover {
+        color: lightgray; 
+        text-decoration: none; 
+    }
+    .delete-button {
+    background-color: white;
+    border: 1px solid;
+    border-color: gray;
+    box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);
+    color: black;
+    padding-left: 8px;
+    padding-right: 8px; 
+    text-decoration:none;
+    }
+    .delete-button:hover {
+        color: dimgray; 
+        text-decoration: none; 
+    }
+
     </style>
     <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
@@ -273,6 +300,7 @@ width:100%;
                 </div>
             </asp:TableCell>
             <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
+
                <div class="display-container">
                    <h1 class="title">Hired List</h1>
                    <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p> 
@@ -284,8 +312,12 @@ width:100%;
                             <asp:ListItem Text="done" Value="ColumnName2"></asp:ListItem>
                         </asp:DropDownList></p>
                        <div class="bulk-action">
-                   <asp:Button Text="Edit" ID="btnEdit" runat="server" style="background-color:white; border:1px solid; border-color:gray; box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);" OnClick="onEditButton_Click" />
-                   <button runat="server" style="background-color:white; border:1px solid; border-color:gray; box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);"><i class="fa fa-trash" aria-hidden="true"></i>Delete </button>
+                           <asp:LinkButton ID="btnEdit" runat="server" CssClass="edit-button" OnClick="onEditButton_Click" > 
+                               <i class="fas fa-edit"></i> Edit
+                           </asp:LinkButton>
+                           <asp:LinkButton ID="btnDelete" runat="server" CssClass="delete-button" OnClientClick="return confirmDelete();" >
+                               <i class="fas fa-trash"></i> Delete
+                           </asp:LinkButton>
                            </div>
                     </div>
                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
@@ -337,8 +369,8 @@ width:100%;
                                                 <th>Last Name</th>
                                                 <th>First Name</th>
                                                 <th>Position</th>
-                                                <th>Hired</th>
-                                                <th>Started</th>
+                                                <th >Hired <span class="sort-arrow"></span></th>
+                                                <th>Started <span class="sort-arrow"></span></th>
                                                 <th>Ended</th>
                                                 <th>Internship Status</th>
                                                 <th>Rendered Hours</th>
@@ -369,20 +401,21 @@ width:100%;
                                                             <asp:Label ID="lblDateHired" runat="server" Text='<%# Eval("dateHired") %>'></asp:Label>
 
                                                         </td>
-                                                        <td >
+                                                        <td>
                                                             <asp:Label ID="lblDateStarted" runat="server" Text='<%# Eval("dateStarted") %>'></asp:Label>
                                                         </td>
                                                         <td >
                                                             <asp:Label ID="lblDateEnded" runat="server" Text='<%# Eval("dateEnded") %>'></asp:Label>
                                                         </td>
                                                         <td >
+                                                             <i class='<%# string.Equals(Eval("internshipStatus").ToString(), "Ongoing", StringComparison.OrdinalIgnoreCase) ? "fas fa-play-circle text-warning" : "fas fa-check-circle text-success" %>'></i>
                                                              <asp:Label ID="lblInternshipStatus" runat="server" Text='<%# Eval("internshipStatus") %>'></asp:Label>
                                                         </td>
                                                         <td>
                                                             <asp:Label ID="lblRenderedHours" runat="server" Text='<%# Eval("renderedHours") %>'></asp:Label>
                                                         </td>
                                                         <td >
-                                                            <asp:Button ID="EvaluationBtn" CssClass="evaluateButton" runat="server" Text='<%# Eval("evaluationRequest") %>' CommandArgument='<%# Eval("student_accID") %>'  OnCommand="EvaluationBtn_Command"/>
+                                                            <asp:Button ID="EvaluationBtn"  runat="server" Text='<%# Eval("evaluationRequest") %>' CommandArgument='<%# Eval("student_accID") %>'  OnCommand="EvaluationBtn_Command" CssClass='<%# GetButtonCssClass(Eval("evaluationRequest")) %>'/>
                                                         </td>
                                                     </tr>
                                                 </ItemTemplate>
@@ -450,8 +483,7 @@ width:100%;
                 Date Started
             </div>
             <div class="col-9 d-flex flex-column">
-                <asp:TextBox ID="txtDateStarted" runat="server" TextMode="Date" CssClass="txtbox" Width="200px" Height="25px" OnTextChanged="dateStarted_TextChanged"></asp:TextBox>
-                <asp:Label ID="dateStartedlbl" runat="server" Font-Size="Medium" ForeColor="Red" Visible="false"></asp:Label><br />
+               <asp:Label ID="dateStartedlbl" runat="server" style="font-size:18px;"></asp:Label>
             </div>
         </div>
         <br />
@@ -577,7 +609,7 @@ width:100%;
              </div>
                  <div class="modal-body" style="padding-left:8%; text-align:center;">
                       <asp:Label ID="Label8" runat="server" Style="font-size:16px; text-align:center;">
-                        The row you selected includes intern that is already<span style="color: green;">done</span> in their internship
+                        The row you selected includes intern that is already<span style="color: green;"> done</span> in their internship
                     </asp:Label><br />
                     <asp:Label ID="Label9" runat="server" Text="Select another row. Thank you!" Style="font-size:16px; text-align:center;" ></asp:Label>
              </div>
@@ -624,6 +656,26 @@ width:100%;
                 </div>
             </div>
 </div>
+
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this record?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="deleteRow();">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
     <script type="text/javascript">
         //function highlightRow(row) {
         //    // Remove the 'highlighted-row' class from all rows
@@ -644,7 +696,7 @@ width:100%;
             document.getElementById('<%=namelabel.ClientID%>').innerHTML = formattedNames;
 
         }
-        function openSingleSelectModal(existingname, existingposition, existingdatehired, existingdatestarted, existingdateended, existingstatus) {
+        function openSingleSelectModal(existingname, existingposition, existingdatehired, existingdatestarted, existingdateended, existingstatus  ) {
             var modal = document.getElementById("myModal");
             var statusDropdown = document.getElementById('<%= ddlStatus.ClientID %>');
 
@@ -652,19 +704,20 @@ width:100%;
             document.getElementById('<%=fullnameLabel.ClientID%>').innerHTML = existingname;
             document.getElementById('<%=positionLabel.ClientID%>').innerHTML = existingposition;
             document.getElementById('<%=hiredLabel.ClientID%>').innerHTML = existingdatehired;
-            document.getElementById('<%=txtDateStarted.ClientID%>').value = existingdatestarted;
             document.getElementById('<%=txtDateEnded.ClientID%>').value = existingdateended;
+            document.getElementById('<%=dateStartedlbl.ClientID%>').innerHTML = existingdatestarted;
 
+            
             statusDropdown.value = existingstatus;
-
-
             if (statusDropdown.value === 'Ongoing') {
                 document.getElementById("detailsDateEnded").style.display = "none";
                 document.getElementById("detailsFeedback").style.display = "none";
+
             }
             else if (statusDropdown.value === 'Done') {
                 document.getElementById("detailsDateEnded").style.display = "flex";
                 document.getElementById("detailsFeedback").style.display = "flex";
+
             }
 
             modal.style.display = "block";
@@ -720,13 +773,35 @@ width:100%;
             if (statusDropdown.value === 'Ongoing'){
             document.getElementById("detailsDateEnded").style.display = "none";
             document.getElementById("detailsFeedback").style.display = "none";
-        }
+            }
              // Show the relevant divs based on the selected status
            
             if (statusDropdown.value === 'Done'){
                 document.getElementById("detailsDateEnded").style.display = "flex";
                 document.getElementById("detailsFeedback").style.display = "flex";
+            }
+            }
+        function confirmDelete() {
+        // Show the confirmation modal
+        $('#confirmDeleteModal').modal('show');
+
+        // Prevent the postback
+        return false;
+    }
+
+    function deleteRow() {
+        // Hide the modal
+        $('#confirmDeleteModal').modal('hide');
+
+        // Find the parent row of the button
+        var row = document.getElementById('<%# btnDelete.ClientID %>').closest("tr");
+
+        // Hide the row
+        if (row) {
+            row.style.display = "none";
         }
-             }
+    }
+                
+       
     </script>
 </asp:Content>
