@@ -15,10 +15,10 @@ namespace ctuconnect
             {
                 back.HRef = "CoordinatorProfile.aspx";
             }
-          /*  if(!IsPostBack && Session["AdminUsername"] != null)
+            else if(!IsPostBack && Session["AdminUsername"] != null)
             {
                 back.HRef = "AdminDashboard.aspx";
-            }*/
+            }
         }
     }
 }
