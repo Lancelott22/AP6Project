@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Student.Master" AutoEventWireup="true" CodeBehind="ViewIndustryProfile.aspx.cs" Inherits="ctuconnect.ViewIndustryProfile" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="true" CodeBehind="ViewIndustryProfile_Admin.aspx.cs" Inherits="ctuconnect.ViewIndustryProfile_Admin" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -348,8 +348,7 @@
                             <div class="student-details2">
                                 <div class="row">
                                     <div class="col-sm-12" style="font-weight:bold;">
-                                        <asp:Button ID="addreviewindustry" runat="server" Text="Send Review" AutoPostBack="false" OnClick="btnFeedback_Click" class="btn btn-primary btn-md"/>
-                                   
+                                        
                                     </div>
                                 </div>
                                 <br />
@@ -359,7 +358,10 @@
                     
                 </div>
 
+                
                 <div class="display-review" id="reviews">
+                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
                     <asp:ListView ID="listfeedback" runat="server">
                         <ItemTemplate>
                             <div class="feedback-item">
@@ -391,6 +393,8 @@
                                 <asp:Label CssClass="alert alert-light d-flex p-2 bd-highlight justify-content-sm-center" runat="server" ID="lblNoPost" Text="No Reviews Yet!"></asp:Label></h3>
                         </EmptyDataTemplate>
                     </asp:ListView>
+                
+                    
                     <asp:DataPager ID="ListViewPager" runat="server" PagedControlID="listfeedback" PageSize="2" class="btn-group btn-group-sm float-end">
                         <Fields>
                             <asp:NextPreviousPagerField ButtonType="Link" ShowFirstPageButton="true" ShowPreviousPageButton="true" ShowNextPageButton="false" RenderDisabledButtonsAsLabels="false" RenderNonBreakingSpacesBetweenControls="false" ButtonCssClass="btn btn-default" />
@@ -398,21 +402,16 @@
                             <asp:NextPreviousPagerField ButtonType="Link" ShowNextPageButton="true" ShowLastPageButton="true" ShowPreviousPageButton="false" RenderDisabledButtonsAsLabels="false" RenderNonBreakingSpacesBetweenControls="false" ButtonCssClass="btn btn-default" />
                         </Fields>
                     </asp:DataPager>
-                    </div>
+                    </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>    
+                
                 <br /><br /><br />
 
 
             
    
         <script>         
-
-            function openModal() {
-                document.getElementById("myModal").style.display = "block";
-            }
-
-            function closeEditModal() {
-                document.getElementById("myModal").style.display = "none";
-            }
 
             $(document).ready(function () {
                 // Initially, show the "display-industry" content
@@ -438,52 +437,5 @@
             });
         </script>
 
-        <!-- Modal dialog -->
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="title">Review</h2>
-                </div>
-                <div class="modal-body">
-                    <div class="row applicant-details">                                   
-                        <div class="col-12 ">
-                            <asp:Label ID="lblsendfrom" runat="server" Text="Send from" Style="font-size:20px;"></asp:Label><br />
-                            <asp:TextBox ID="txtsendfrom" runat="server" Width="700px" Height="35px" ReadOnly="true" CssClass="txtbox"></asp:TextBox>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row applicant-details">                                   
-                        <div class="col-12 ">
-                            <asp:Label ID="Label3" runat="server" Text="Job Position" Style="font-size:20px;"></asp:Label><br />
-                            <asp:TextBox ID="txtjobposition" runat="server" Width="700px" Height="35px"  CssClass="txtbox"></asp:TextBox>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row applicant-details">                                   
-                        <div class="col-12 d-flex flex-column">
-                            <asp:Label ID="Label4" runat="server" Text="Rate" Style="font-size:20px;"></asp:Label><br />
-                             <asp:RadioButtonList ID="companyRating" CssClass="Rating" runat="server" RepeatDirection="Horizontal">
-                                <asp:ListItem Text="Excellent" Value="5" />
-                                <asp:ListItem Text="Very Good" Value="4" />
-                                <asp:ListItem Text="Good" Value="3" />
-                                <asp:ListItem Text="Fair" Value="2" />
-                                <asp:ListItem Text="Poor" Value="1" />
-                            </asp:RadioButtonList>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row applicant-details">                                   
-                        <div class="col-12">
-                            <asp:Label ID="Label5" runat="server" Text="Feedback" Style="font-size:20px;"></asp:Label><br />
-                            <asp:TextBox ID="txtfeedback" runat="server" Width="700px" Height="100px" TextMode="MultiLine" CssClass="txtbox"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>           
-                <div class="modal-footer">
-                    <asp:Button ID="btnClose" runat="server" Text="Close" OnClick="closeEditModal" class="btn btn-secondary"/>
-                   <asp:Button ID="btnSave" class="buttonSubmit" runat="server" Text="Save" OnClick="saveFeedback"/>
-                </div>
-       
-            </div>
-        </div>
-</asp:Content>
+        
+</asp:Content>        

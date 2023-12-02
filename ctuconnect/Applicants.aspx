@@ -298,7 +298,7 @@
                 padding:10px; 
                 padding-left:20px;
                 padding-top:20px;
-            }
+             }
 
              .txtDate{
                 border: 1px solid #ccc; /* Add a border */

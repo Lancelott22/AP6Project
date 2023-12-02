@@ -233,6 +233,7 @@ namespace ctuconnect
                 return;
             }
 
+
             // Continue with updating the database if the conditions are met
             using (var db = new SqlConnection(connDB))
             {
@@ -247,13 +248,15 @@ namespace ctuconnect
                         + "firstName ='" + firstname + "',"
                         + "midInitials ='" + initials + "',"
                         + "isGraduated = 1,"
-                        + "studentStatus ='" + status + "' "
+                        + "studentStatus ='" + status + "', "
+                        + "yearGraduated = (SELECT yearGraduated FROM Graduates_Table WHERE studentId='" + studentID + "') "
                         + "WHERE student_accID='" + studentAcctID + "'";
 
                     int rowsAffected = cmd.ExecuteNonQuery();
 
                     if (rowsAffected > 0)
                     {
+                        
                         Response.Write("<script>alert('Record Updated!');document.location='MyAccount.aspx'</script>");
                     }
                     else
@@ -322,6 +325,14 @@ namespace ctuconnect
 
             return isGraduate;
 
+        }
+
+        void LogOut()
+        {
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+            Response.Redirect("LoginStudent.aspx");
         }
 
         

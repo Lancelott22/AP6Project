@@ -498,6 +498,8 @@
     <Content Include="ViewEvaluation.aspx" />
     <Content Include="ViewEvaluation1.aspx" />
     <Content Include="ViewIndustryProfile.aspx" />
+    <Content Include="ViewIndustryProfile_Admin.aspx" />
+    <Content Include="ViewIndustryProfile_Coord.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -978,6 +980,20 @@
     </Compile>
     <Compile Include="ViewIndustryProfile.aspx.designer.cs">
       <DependentUpon>ViewIndustryProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewIndustryProfile_Admin.aspx.cs">
+      <DependentUpon>ViewIndustryProfile_Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewIndustryProfile_Admin.aspx.designer.cs">
+      <DependentUpon>ViewIndustryProfile_Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewIndustryProfile_Coord.aspx.cs">
+      <DependentUpon>ViewIndustryProfile_Coord.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewIndustryProfile_Coord.aspx.designer.cs">
+      <DependentUpon>ViewIndustryProfile_Coord.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

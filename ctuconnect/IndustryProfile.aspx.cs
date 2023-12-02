@@ -101,7 +101,7 @@ namespace ctuconnect
             int industryAccID = Convert.ToInt32(Session["INDUSTRY_ACC_ID"].ToString());
             using (var db = new SqlConnection(conDB))
             {
-                string query = "SELECT * FROM INDUSTRY_FEEDBACK WHERE sendto = @SendTo ORDER BY dateCreated DESC";
+                string query = "SELECT * FROM INDUSTRY_FEEDBACK JOIN STUDENT_ACCOUNT ON INDUSTRY_FEEDBACK.sendfrom = STUDENT_ACCOUNT.student_accID WHERE sendto = @SendTo ORDER BY dateCreated DESC";
                 SqlCommand cmd = new SqlCommand(query, db);
                 cmd.Parameters.AddWithValue("@SendTo", industryAccID);
 

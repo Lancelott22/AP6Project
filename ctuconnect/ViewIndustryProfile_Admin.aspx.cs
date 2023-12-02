@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 
 namespace ctuconnect
 {
-    public partial class ViewIndustryProfile : System.Web.UI.Page
+    public partial class ViewIndustryProfile_Admin : System.Web.UI.Page
     {
         string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
         private DataTable dtFeedback = new DataTable();
@@ -31,7 +31,6 @@ namespace ctuconnect
                     displayContactPerson(industryAccID);
 
                     this.LoadIndustryFeedback();
-                    displaySender();
 
                 }
                 else
@@ -39,26 +38,7 @@ namespace ctuconnect
 
                 }
             }
-            
-        }
 
-        void displaySender()
-        {
-            int studentID = Convert.ToInt32(Session["Student_ACC_ID"]);
-            using (var db = new SqlConnection(conDB))
-            {
-
-                string query = "SELECT * FROM STUDENT_ACCOUNT WHERE student_accID = '" + studentID + "' ";
-                SqlCommand command = new SqlCommand(query, db);
-                db.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    txtsendfrom.Text = reader["firstName"].ToString() + " " + reader["lastName"].ToString();
-
-                }
-                reader.Close();
-            }
         }
 
         void displayIndustryInfo(string industryAccID)
@@ -162,7 +142,7 @@ namespace ctuconnect
         protected string GetStarRating(int rating)
         {
             StringBuilder stars = new StringBuilder();
-            
+
             for (int i = 0; i < rating; i++)
             {
                 stars.Append("<i class='fa fa-star'></i>");
@@ -171,63 +151,7 @@ namespace ctuconnect
             return stars.ToString();
         }
 
-        protected void btnFeedback_Click(object sender, EventArgs e)
-        {
-            
-            // Open the modal dialog and populate it with existing values
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openModal();", true);
 
-        }
-
-        protected void saveFeedback(object sender, EventArgs e)
-        {
-            
-            int sendto = Convert.ToInt32(Request.QueryString["industry_accID"]);
-            int sendfrom = Convert.ToInt32(Session["Student_ACC_ID"]);
-            string summary = "N/A";
-                using (SqlConnection connection = new SqlConnection(conDB))
-                {
-                    string jobtitle = txtjobposition.Text;
-                    string rating = companyRating.SelectedValue;
-                    string feedback = txtfeedback.Text;
-
-                    connection.Open();
-                    using (var dmd = connection.CreateCommand())
-                    { //SQL Statement
-                        dmd.CommandType = CommandType.Text;
-                        dmd.CommandText = "INSERT INTO INDUSTRY_FEEDBACK (sendfrom, sendto, jobTitle, rating, feedbackSummary, feedback, dateCreated)  "
-                                        + " VALUES (@Sendfrom,@Sendto,@JobTitle,@Rating,@FeedbackSummary,@Feedback, @DateCreated)";
-
-                        dmd.Parameters.AddWithValue("@Sendfrom", sendfrom);
-                        dmd.Parameters.AddWithValue("@Sendto", sendto);
-                        dmd.Parameters.AddWithValue("@JobTitle", jobtitle);
-                        dmd.Parameters.AddWithValue("@Rating", rating);
-                        dmd.Parameters.AddWithValue("@FeedbackSummary", summary);
-                        dmd.Parameters.AddWithValue("@Feedback", feedback);
-                        dmd.Parameters.AddWithValue("@DateCreated", DateTime.Now.ToString("yyyy/MM/dd"));
-
-
-                        var ctr = dmd.ExecuteNonQuery();
-                        if (ctr > 0)
-                        {
-                            Response.Write("<script>alert('Feedback submitted successfully! Thank you for your input.')</script>");
-                        }
-                        else
-                        {
-                            Response.Write("<script>alert('Data is not save')</script>");
-                        }
-                    }
-                }
-                this.LoadIndustryFeedback();
-            
-            
-
-        }
-
-        protected void closeEditModal(object sender, EventArgs e)
-        {
-
-            ClientScript.RegisterStartupScript(this.GetType(), "closeModal", "closeEditModal();", true);
-        }
+        
     }
 }
