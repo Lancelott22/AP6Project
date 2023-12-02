@@ -143,7 +143,6 @@ namespace ctuconnect
                     Session["STATUSorTYPE"] = reader["studentStatus"];
                     Session["Student_COURSE"] = reader["course"];
                     Session["PROFILE"] = reader["studentPicture"];
-                    Session["COR"] = reader["cor"];
                     Session["ResumeFile"] = reader["resumeFile"];
                     Session["StudentEmail"] = reader["email"];
                         Session["PASSWORD"] = reader["password"];

@@ -203,25 +203,29 @@
                 <h1 class="title">Blacklisted Industry</h1>
                  
                 <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
+
+
+                 <asp:ListView ID="blackListListView" runat="server"> 
+                       <LayoutTemplate>
                                 <table  class="table-list">
                      <tr>
-                         <th>No.</th>
                          <th>Industry Name</th>
                          <th>Reason</th>
                          <th>Date Added</th>
                      </tr>
-                     <asp:Repeater ID="dataRepeater" runat="server">
-                         <Itemtemplate>
-                             <tr class="datas">
-                                 <td><%# Container.ItemIndex + 1 %></td>
+                      <tbody>
+                          <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                      </tbody>
+                     </table>
+            </LayoutTemplate>         
+              <Itemtemplate>
+                  <tr class="datas">
                                  <td><%# Eval("industryName") %></td>
                                  <td><%# Eval("reason") %></td>
                                  <td><%# Eval("dateAdded") %></td>
                              </tr>
                          </Itemtemplate>
-     
-                     </asp:Repeater>
-                 </table>
+     </asp:ListView>
 </div>
             </div>
         </div>    

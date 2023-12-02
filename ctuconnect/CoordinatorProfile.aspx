@@ -311,37 +311,6 @@
 
                        </div>
                     </div>
-                   
-                       <%--<th>student id</th>
-                        <th>last name</th>
-                        <th>first name</th>
-                        <th>middle initial</th>
-                        <th>program enrolled</th>
-                        <th>worked at</th>
-                        <th>date started</th>
-                        <th>hours needed</th>
-                        <th>rendered hours</th>
-                        <th>evaluation</th>
-                        <th>status</th>
-                    </tr>
-                    <asp:Repeater ID="dataRepeater" runat="server">
-                        <Itemtemplate>
-                            <tr class="datas">
-                                <td><%# Eval("studentId") %></td>
-                                <td><%# Eval("lastname") %></td>
-                                <td><%# Eval("firstname") %></td>
-                                <td><%# Eval("midinitials") %></td>
-                                <td><%# Eval("course") %></td>
-                                <td><%# Eval("workedAt") %></td>
-                                <td><%# Eval("dateStarted") %></td>
-                                <td><%# Eval("hoursNeeded") %></td>
-                                <td><%# Eval("renderedHours") %></td>
-                                <td><%# Eval("evaluationRequest") %></td>
-                                <%--<td>
-                                    <asp:button id="evaluationBtn" runat="server" text="view evaluation"
-                                    oncommand="reviewletter_command" commandname="review"  
-                                    commandargument='<%# Eval("evaluationRequest") %>'/>
-                                </td>--%>
                    <asp:ListView ID="internListView" runat="server"> 
                        <LayoutTemplate>
                                <table  class="table-list">

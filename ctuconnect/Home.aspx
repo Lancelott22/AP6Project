@@ -105,8 +105,9 @@
         .suggestion-container{
             max-height: 500px; 
             overflow-y: auto;
-            background-color:plum;
-            margin-top:2%;
+            background-color:white;
+            margin-top:0%;
+            margin-bottom:1%;
             margin-left:20%;
             margin-right:20%;
             padding:20px;
@@ -173,7 +174,7 @@
 
         </div>
     </section>
-    <section class="suggestions">
+    <section class="suggestions" style="background-color:white;">
     <div class="suggestion-container ">
         
         <div class="suggestion-list">

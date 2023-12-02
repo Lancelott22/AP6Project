@@ -333,6 +333,7 @@ namespace ctuconnect
             HtmlGenericControl hiredID = (HtmlGenericControl)e.Item.FindControl("HiredID");
             int hired_Id = int.Parse(hiredID.InnerText);
             Button reqEval = (Button)e.Item.FindControl("RequestEval");
+            Button viewEval = (Button)e.Item.FindControl("ViewEvaluation");
             if (checkStatusOngoing(hired_Id))
             {
                 reqEval.Text = "Request Evaluation";
@@ -341,8 +342,46 @@ namespace ctuconnect
             {
                 reqEval.Text = "Requested";
                 reqEval.Enabled = false;
-                reqEval.CssClass = "buttonStyle";
+                reqEval.CssClass = "buttonStyle my-2";               
             }
+            if(checkEvaluated(hired_Id))
+            {
+                reqEval.Text = "Evaluated";
+                reqEval.Enabled = false;
+                reqEval.CssClass = "buttonStyle my-2";
+                viewEval.Enabled = true;
+                viewEval.CssClass = "buttonStyle my-2";
+            }
+            else
+            {
+                viewEval.Enabled = false;
+                viewEval.CssClass = "buttonStyle my-2";
+            }
+
+            if(checkIfAlumni(hired_Id))
+            {
+                viewEval.Visible = false;
+                reqEval.Visible = false;
+            }
+        }
+        bool checkIfAlumni(int hiredID)
+        {
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select * from HIRED_LIST WHERE id = @hiredID", conDB);
+            cmd.Parameters.AddWithValue("@hiredID", hiredID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (reader["studentType"].ToString() == "Alumni")
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return true;
+                }
+            }
+            reader.Close();
+            conDB.Close();
+            return false;
         }
         bool checkStatusOngoing(int hiredID)
         {
@@ -372,6 +411,25 @@ namespace ctuconnect
             if (reader.Read())
             {
                 if (reader["evaluationRequest"].ToString() == "Requested")
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return true;
+                }
+            }
+            reader.Close();
+            conDB.Close();
+            return false;
+        }
+        bool checkEvaluated(int hiredID)
+        {
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select * from HIRED_LIST WHERE id = @hiredID", conDB);
+            cmd.Parameters.AddWithValue("@hiredID", hiredID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (reader["evaluationRequest"].ToString() == "Evaluated")
                 {
                     reader.Close();
                     conDB.Close();

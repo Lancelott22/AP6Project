@@ -370,7 +370,6 @@
     <Content Include="Coordinator_Contact.aspx" />
     <Content Include="Coordinator_UploadCSV.aspx" />
     <Content Include="CourseLists.aspx" />
-    <Content Include="CSV UPLOAD FOR STUDENT ACCOUNT.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Dispute.aspx" />
     <Content Include="EditAccount.aspx" />
@@ -620,13 +619,6 @@
     </Compile>
     <Compile Include="CourseLists.aspx.designer.cs">
       <DependentUpon>CourseLists.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CSV UPLOAD FOR STUDENT ACCOUNT.aspx.cs">
-      <DependentUpon>CSV UPLOAD FOR STUDENT ACCOUNT.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CSV UPLOAD FOR STUDENT ACCOUNT.aspx.designer.cs">
-      <DependentUpon>CSV UPLOAD FOR STUDENT ACCOUNT.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
