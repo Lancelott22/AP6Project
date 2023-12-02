@@ -8,7 +8,6 @@ using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using System.Web.Configuration;
 
 
 
@@ -43,7 +42,7 @@ namespace ctuconnect
 
             if (ctr > 0)
             {
-                Response.Write("<script>confirm('Confirm verification.');</script>");
+                Response.Write("<script>alert('Industry has been successfully verified.')</script>");
             }
             else
             {
@@ -106,6 +105,7 @@ namespace ctuconnect
                 verifyBtn.Text = "Verified";
                 verifyBtn.Enabled = false;
                 verifyBtn.CssClass = "btn btn-success";
+                verifyBtn.OnClientClick = "";
             }
             else
             {
@@ -188,7 +188,7 @@ namespace ctuconnect
 
             if (ctr > 0)
             {
-                Response.Write("<script>confirm('Confirm deactivate.');</script>");
+                Response.Write("<script>alert('Industry has been successfully "+ deactivate + "d.')</script>");
             }
             else
             {
@@ -197,6 +197,4 @@ namespace ctuconnect
             conDB.Close();
         }
     }
-
-
 }
