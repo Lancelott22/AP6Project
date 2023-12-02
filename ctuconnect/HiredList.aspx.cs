@@ -1,18 +1,11 @@
-﻿using Org.BouncyCastle.Asn1.IsisMtt.Ocsp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using static iTextSharp.text.pdf.AcroFields;
-using static System.Net.WebRequestMethods;
-using File = System.IO.File;
 using Label = System.Web.UI.WebControls.Label;
 
 namespace ctuconnect
@@ -80,22 +73,22 @@ namespace ctuconnect
                     selectedInternshipStatus = (List<string>)ViewState["SelectedInternshipStatus"];
                 }
 
-                foreach (ListViewItem item in listView2.Items)
-                {
-                    Button EvaluationBtn = item.FindControl("EvaluationBtn") as Button;
+                /*                foreach (ListViewItem item in listView2.Items)
+                                {
+                                    Button EvaluationBtn = item.FindControl("EvaluationBtn") as Button;
 
-                    // Check if EvaluationBtn is found and do something with it
-                    if (EvaluationBtn != null)
-                    {
-                        // Check if the evaluation has been performed
-                        bool evaluationPerformed = CheckIfEvaluationPerformed();
+                                    // Check if EvaluationBtn is found and do something with it
+                                    if (EvaluationBtn != null)
+                                    {
+                                        // Check if the evaluation has been performed
+                                        bool evaluationPerformed = CheckIfEvaluationPerformed();
 
-                        // Update the button text based on the evaluation status
-                        EvaluationBtn.Text = evaluationPerformed ? "View Evaluation" : "Requested";
-                    }
-                }
+                                        // Update the button text based on the evaluation status
+                                        EvaluationBtn.Text = evaluationPerformed ? "View Evaluation" : "Requested";
+                                    }
+                                }*/
             }
-            
+
 
         }
 
@@ -110,11 +103,13 @@ namespace ctuconnect
             string industry_accID = Session["INDUSTRY_ACC_ID"].ToString();
             using (var db = new SqlConnection(conDB))
             {
-                string query = "SELECT lastName, firstName, dateStarted, position, resumeFile FROM HIRED_LIST WHERE jobType = 'job' AND  industry_accID = '"+industry_accID+"' ORDER BY id DESC";
+                
+                string query = "SELECT lastName, firstName, dateStarted, position, resumeFile FROM HIRED_LIST WHERE jobType = 'job' AND  industry_accID = '" + industry_accID + "' ORDER BY id DESC";
                 SqlCommand cmd = new SqlCommand(query, db);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 da.Fill(ds);
+                
 
                 // Bind the DataTable to the GridView
                 listView1.DataSource = ds;
@@ -130,9 +125,11 @@ namespace ctuconnect
             string industry_accID = Session["INDUSTRY_ACC_ID"].ToString();
             using (var db = new SqlConnection(conDB))
             {
+                
 
                 string query = "SELECT student_accID,lastName, firstName, position, CONVERT(VARCHAR(10), HIRED_LIST.dateHired, 120) AS dateHired, CONVERT(VARCHAR(10), HIRED_LIST.dateStarted, 120) AS dateStarted, CONVERT(VARCHAR(10), HIRED_LIST.dateEnded, 120) AS dateEnded, internshipStatus, renderedHours, evaluationRequest " +
-                    "FROM HIRED_LIST WHERE jobType = 'internship' AND  industry_accID = '"+industry_accID+"' ORDER BY id DESC";
+                    "FROM HIRED_LIST WHERE jobType = 'internship' AND  industry_accID = '" + industry_accID + "' ORDER BY id DESC";
+                
                 SqlCommand cmd = new SqlCommand(query, db);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
@@ -294,100 +291,71 @@ namespace ctuconnect
             List<string> studentIds = ViewState["SelectedStudentIds"] as List<string>;
 
 
-            string datestarted = txtDateStarted.Text;
+            
             object dateendedValue = string.IsNullOrEmpty(txtDateEnded.Text) ? DBNull.Value : (object)txtDateEnded.Text;
             string feedback = txtFeedback.Text;
             string stat = ddlStatus.SelectedValue;
 
-                foreach (ListViewItem item in listView2.Items)
+            foreach (ListViewItem item in listView2.Items)
+            {
+                CheckBox chkSelect = (CheckBox)item.FindControl("chkSelect");
+                if (chkSelect.Checked)
                 {
-                    CheckBox chkSelect = (CheckBox)item.FindControl("chkSelect");
-                    if (chkSelect.Checked)
-                    {
-                        Label lblStudentID = (Label)item.FindControl("lblStudentID");
-                        string studentAccID = lblStudentID.Text;
-                        Label lblPosition = (Label)item.FindControl("lblPosition");
-                        string position = lblPosition.Text;
+                    Label lblStudentID = (Label)item.FindControl("lblStudentID");
+                    string studentAccID = lblStudentID.Text;
+                    Label lblPosition = (Label)item.FindControl("lblPosition");
+                    string position = lblPosition.Text;
 
-                        if (studentAccID != null)
-                        {
-                            int studentaccId = Convert.ToInt32(studentAccID);
+
+                    if (studentAccID != null)
+                    {
+                        int studentaccId = Convert.ToInt32(studentAccID);
+                            // Proceed with saving
+
                             using (var db = new SqlConnection(conDB))
                             {
                                 db.Open();
                                 using (var cmd = db.CreateCommand())
                                 {
-                                    string sql = "UPDATE HIRED_LIST SET dateStarted = @datestarted, dateEnded = @dateended, internshipStatus = @internshipstatus WHERE student_accID = @studentID";
+                                    string sql = "UPDATE HIRED_LIST SET  dateEnded = @dateended, internshipStatus = @internshipstatus WHERE student_accID = @studentID";
                                     cmd.CommandText = sql;
                                     cmd.Parameters.AddWithValue("@studentID", studentaccId);
-                                    cmd.Parameters.AddWithValue("@datestarted", datestarted);
                                     cmd.Parameters.AddWithValue("@dateended", dateendedValue);
                                     cmd.Parameters.AddWithValue("@internshipstatus", stat);
 
                                     cmd.ExecuteNonQuery();
-
                                 }
                             }
-                        if (!string.IsNullOrEmpty(feedback))
-                        {
-                            using (var db = new SqlConnection(conDB))
+                            if (!string.IsNullOrEmpty(feedback))
                             {
-                                db.Open();
-                                using (var cmd = db.CreateCommand())
+                                using (var db = new SqlConnection(conDB))
                                 {
-                                    string sql = "INSERT INTO STUDENT_FEEDBACK (sendfrom, sendto, position,feedbackContent, dateCreated) VALUES (@sendfrom, @sendto, @position,@feedbacks, @datecreated)";
-                                    cmd.CommandText = sql;
-                                    // Provide appropriate values for sendfrom, sendto, and position
-                                    cmd.Parameters.AddWithValue("@sendfrom", industryname);
-                                    cmd.Parameters.AddWithValue("@sendto", studentaccId);
-                                    cmd.Parameters.AddWithValue("@position", position);
-                                    cmd.Parameters.AddWithValue("@feedbacks", feedback);
-                                    cmd.Parameters.AddWithValue("@datecreated", DateTime.Now);
+                                    db.Open();
+                                    using (var cmd = db.CreateCommand())
+                                    {
+                                        string sql = "INSERT INTO STUDENT_FEEDBACK (sendfrom, sendto, position,feedbackContent, dateCreated) VALUES (@sendfrom, @sendto, @position,@feedbacks, @datecreated)";
+                                        cmd.CommandText = sql;
+                                        // Provide appropriate values for sendfrom, sendto, and position
+                                        cmd.Parameters.AddWithValue("@sendfrom", industryname);
+                                        cmd.Parameters.AddWithValue("@sendto", studentaccId);
+                                        cmd.Parameters.AddWithValue("@position", position);
+                                        cmd.Parameters.AddWithValue("@feedbacks", feedback);
+                                        cmd.Parameters.AddWithValue("@datecreated", DateTime.Now);
 
-                                    cmd.ExecuteNonQuery();
+                                        cmd.ExecuteNonQuery();
+                                    }
                                 }
                             }
-                        }
                             ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('show');", true);
                         }
                         else
                         {
                             //
                         }
-                    }
                 }
-
             }
-        
-            
-        
+        }
 
-
-/*                using (var db = new SqlConnection(conDB))
-                {
-                    db.Open();
-
-                    string query = "SELECT position FROM HIRED_LIST WHERE student_accID = @studentAccID";
-
-                    using (var command = new SqlCommand(query, db))
-                    {
-                        command.Parameters.AddWithValue("@studentAccID", studentaccId);
-
-                        using (var reader = command.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                // Check if the database field is not null
-                                if (!reader.IsDBNull(0))
-                                {
-                                    position = reader.GetString(0);
-                                }
-                            }
-                        }
-                    }
-                }*/
-
-             
 
         protected void Close_SuccessPrompt(object sender, EventArgs e)
         {
@@ -435,53 +403,6 @@ namespace ctuconnect
 
 
         }
-        protected void dateStarted_TextChanged(object sender, EventArgs e)
-        {
-            DateTime dateHiredFromDatabase = GetDateHiredFromDatabase();
-
-            if (!string.IsNullOrEmpty(txtDateStarted.Text) && DateTime.TryParse(txtDateStarted.Text, out DateTime dateStarted))
-            {
-                if (dateStarted < dateHiredFromDatabase)
-                {
-                    dateStartedlbl.Visible = true;
-                    dateStartedlbl.Text = "Date started must be on or after the date hired.";
-                }
-                else
-                {
-                    dateStartedlbl.Visible = false;
-                }
-            }
-            else
-            {
-                // Handle the case where txtDateStarted is empty or not a valid date
-                dateStartedlbl.Visible = false;
-            }
-        }
-        private DateTime GetDateHiredFromDatabase(int studentAccountId)
-        {
-            DateTime dateHired = DateTime.MinValue; // Default value in case of an issue or no result
-
-            using (var connection = new SqlConnection("your_connection_string_here"))
-            {
-                connection.Open();
-
-                using (var command = new SqlCommand("SELECT dateHired FROM YourTableName WHERE studentAccountId = @studentAccountId", connection))
-                {
-                    command.Parameters.AddWithValue("@studentAccountId", studentAccountId);
-
-                    using (var reader = command.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            // Assuming 'dateHired' is a DateTime column in your database
-                            dateHired = reader.GetDateTime(reader.GetOrdinal("dateHired"));
-                        }
-                    }
-                }
-            }
-
-            return dateHired;
-        }
 
 
 
@@ -498,9 +419,11 @@ namespace ctuconnect
 
         protected void onEditButton_Click(object sender, EventArgs e)
         {
-            Button btnEdit = (Button)sender;
+            LinkButton btnEdit = (LinkButton)sender;
             int checkedCount = 0;
             string stat = string.Empty;
+
+
             foreach (ListViewItem item in listView2.Items)
             {
                 CheckBox chkSelect = (CheckBox)item.FindControl("chkSelect");
@@ -508,6 +431,7 @@ namespace ctuconnect
 
                 if (chkSelect.Checked)
                 {
+                   
 
                     Label lblStudentID = (Label)item.FindControl("lblStudentID");
                     Label lblFirstName = (Label)item.FindControl("lblFirstName");
@@ -559,9 +483,10 @@ namespace ctuconnect
 
             if (checkedCount > 1)
             {
-                bool anyIsDone = selectedInternshipStatus.Any(status => status == "Done");
+                bool anyIsDone = selectedInternshipStatus.Contains("Done");
                 if (anyIsDone)
                 {
+                    Console.WriteLine("selectedInternshipStatus: " + string.Join(", ", selectedInternshipStatus));
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "openModalFailedEdit();", true);
                 }
                 else
@@ -577,10 +502,10 @@ namespace ctuconnect
             }
             else
             {
-                bool anyIsDone = selectedInternshipStatus.Any(status => status == "Done");
+                bool anyIsDone = selectedInternshipStatus.Contains("Done");
                 if (anyIsDone)
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "openModalFailedEdit();", true);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "$('#openModalFailedEdit').modal('show');", true);
                 }
                 else
                 {
@@ -591,7 +516,8 @@ namespace ctuconnect
                     string existingdateended = string.Join(" ", selectedDateEnded);
 /*                    string existingrenderedhours = string.Join(" ", selectedHoursRendered);
 */                    string existingstatus = string.Join(" ", selectedInternshipStatus);
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openSingleSelectModal('{existingname}','{existingposition}','{existingdatehired}','{existingdatestarted}','{existingdateended}','{existingstatus}');", true);
+/*                    string existingID = string.Join(" ", selectedStudentIds);
+*/                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openSingleSelectModal('{existingname}','{existingposition}','{existingdatehired}','{existingdatestarted}','{existingdateended}','{existingstatus}');", true);
                 }
             }
         }
@@ -600,7 +526,7 @@ namespace ctuconnect
             ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#NoSelected').modal('hide');document.location='HiredList.aspx'", true);
         }
 
-        private string GetFirstNameFromDatabase(int student_accID)
+/*        private string GetFirstNameFromDatabase(int student_accID)
         {
             string firstname = string.Empty;
 
@@ -751,7 +677,7 @@ namespace ctuconnect
             }
 
             return formattedDateStarted;
-        }
+        }*/
         protected void closeEditModal(object sender, EventArgs e)
         {
 
@@ -760,7 +686,28 @@ namespace ctuconnect
 
         protected void EvaluationBtn_Command(object sender, CommandEventArgs e)
         {
-            Response.Redirect("EvaluationForm.aspx?student_accID=" + e.CommandArgument.ToString());
+            Button Evalbtn = (Button)sender;
+
+            if (Evalbtn.Text == "Requested"){
+                Response.Redirect("EvaluationForm.aspx?student_accID=" + e.CommandArgument.ToString());
+            }
+            else{
+                Evalbtn.Enabled = false;
+            }
+        }
+        protected string GetButtonCssClass(object evaluationRequest)
+        {
+            string requestStatus = evaluationRequest.ToString();
+
+            switch (requestStatus)
+            {
+                case "Requested":
+                    return "btn-danger"; // Red
+                case "Evaluated":
+                    return "btn-success"; // Green
+                default:
+                    return string.Empty; // No CSS class if no request
+            }
         }
     }
 }
