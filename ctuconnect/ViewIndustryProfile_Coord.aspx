@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Student.Master" AutoEventWireup="true" CodeBehind="ViewIndustryProfile.aspx.cs" Inherits="ctuconnect.ViewIndustryProfile" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OJTCoordinator.Master" AutoEventWireup="true" CodeBehind="ViewIndustryProfile_Coord.aspx.cs" Inherits="ctuconnect.ViewIndustryProfile_Coord" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -348,8 +348,7 @@
                             <div class="student-details2">
                                 <div class="row">
                                     <div class="col-sm-12" style="font-weight:bold;">
-                                        <asp:Button ID="addreviewindustry" runat="server" Text="Send Review" AutoPostBack="false" OnClick="btnFeedback_Click" class="btn btn-primary btn-md"/>
-                                   
+                                        
                                     </div>
                                 </div>
                                 <br />
@@ -406,14 +405,6 @@
    
         <script>         
 
-            function openModal() {
-                document.getElementById("myModal").style.display = "block";
-            }
-
-            function closeEditModal() {
-                document.getElementById("myModal").style.display = "none";
-            }
-
             $(document).ready(function () {
                 // Initially, show the "display-industry" content
                 $(".student-container").show();
@@ -438,52 +429,5 @@
             });
         </script>
 
-        <!-- Modal dialog -->
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="title">Review</h2>
-                </div>
-                <div class="modal-body">
-                    <div class="row applicant-details">                                   
-                        <div class="col-12 ">
-                            <asp:Label ID="lblsendfrom" runat="server" Text="Send from" Style="font-size:20px;"></asp:Label><br />
-                            <asp:TextBox ID="txtsendfrom" runat="server" Width="700px" Height="35px" ReadOnly="true" CssClass="txtbox"></asp:TextBox>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row applicant-details">                                   
-                        <div class="col-12 ">
-                            <asp:Label ID="Label3" runat="server" Text="Job Position" Style="font-size:20px;"></asp:Label><br />
-                            <asp:TextBox ID="txtjobposition" runat="server" Width="700px" Height="35px"  CssClass="txtbox"></asp:TextBox>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row applicant-details">                                   
-                        <div class="col-12 d-flex flex-column">
-                            <asp:Label ID="Label4" runat="server" Text="Rate" Style="font-size:20px;"></asp:Label><br />
-                             <asp:RadioButtonList ID="companyRating" CssClass="Rating" runat="server" RepeatDirection="Horizontal">
-                                <asp:ListItem Text="Excellent" Value="5" />
-                                <asp:ListItem Text="Very Good" Value="4" />
-                                <asp:ListItem Text="Good" Value="3" />
-                                <asp:ListItem Text="Fair" Value="2" />
-                                <asp:ListItem Text="Poor" Value="1" />
-                            </asp:RadioButtonList>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row applicant-details">                                   
-                        <div class="col-12">
-                            <asp:Label ID="Label5" runat="server" Text="Feedback" Style="font-size:20px;"></asp:Label><br />
-                            <asp:TextBox ID="txtfeedback" runat="server" Width="700px" Height="100px" TextMode="MultiLine" CssClass="txtbox"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>           
-                <div class="modal-footer">
-                    <asp:Button ID="btnClose" runat="server" Text="Close" OnClick="closeEditModal" class="btn btn-secondary"/>
-                   <asp:Button ID="btnSave" class="buttonSubmit" runat="server" Text="Save" OnClick="saveFeedback"/>
-                </div>
-       
-            </div>
-        </div>
-</asp:Content>
+        
+</asp:Content>    

@@ -203,6 +203,7 @@
             overflow: visible;
             min-height:500px;
             min-width:70%;
+            display:none;
         }
 
         .line{
@@ -462,7 +463,7 @@
                                         <div style="display: flex; gap: 6px; padding-left: 1em;">
                                             <img src="images/defaultprofile.jpg" style="width:60px; height:auto; border-radius: 50%;" />
                                             <div>
-                                                <p class="feedback-name"><asp:Label ID="lblFeedbackName" runat="server" Text='<%# Eval("sendfrom") %>'></asp:Label></p>
+                                                <p class="feedback-name"><asp:Label ID="lblFeedbackName" runat="server" Text='<%# Eval("firstName") + " " + Eval("lastName") %>'></asp:Label></p>
                                                 <p class="feedback-date"><%# Eval("dateCreated", "{0:d}") %></p>
                                             </div>
                                         </div>
