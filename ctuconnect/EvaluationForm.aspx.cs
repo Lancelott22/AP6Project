@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Org.BouncyCastle.Bcpg.OpenPgp;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace ctuconnect
 		{
             if (!IsPostBack)
             {
-                if (!IsPostBack && Request.QueryString["student_accID"] != null)
+                if (!IsPostBack && Request.QueryString["student_accID"] != null && Request.QueryString["hired_id"] != null)
                 {
                     // Retrieve query parameters
                     string student_accID = Request.QueryString["student_accID"];
@@ -268,7 +269,7 @@ namespace ctuconnect
             int industryAccID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
             int trainingPeriod = int.Parse(disp_trainingPeriod.Text);
             string student_accID = Request.QueryString["student_accID"];
-
+            string hired_ID = Request.QueryString["hired_id"];
             // Retrieve values from hidden fields using Request.Form
             string totalScore = Request.Form[hidden_score.UniqueID];
             string equivalentGrade = Request.Form[hidden_grade.UniqueID];
@@ -280,9 +281,9 @@ namespace ctuconnect
 
                 // Replace 'YourTable' with your actual table name and column names
                 string insertQuery = "INSERT INTO EVALUATION (student_accID, major, trainingPeriod, totalScore, gradeEquivalent, describeStrength, describeImprovement, industry_accID, cooperatingAgency, address, dateEvaluated," +
-                    " productivity, cooperation, abilityTofollow, abilityToget, initiative, attendance, qualityOfwork, appearance, dependability, overAllperformance) " +
+                    " productivity, cooperation, abilityTofollow, abilityToget, initiative, attendance, qualityOfwork, appearance, dependability, overAllperformance, hired_id) " +
                            "VALUES (@student_accID, @Course, @TrainingPeriod, @Score, @Grade, @Strengths, @Improvement,  @industry_accID, @IndustryName, @IndLocation, @dateEval, " +
-                           "@productivity, @cooperation, @abilityTofollow, @abilityToget,@initiative,@attendance,@qualityOfwork,@appearance, @dependability, @overAllperformance)";
+                           "@productivity, @cooperation, @abilityTofollow, @abilityToget,@initiative,@attendance,@qualityOfwork,@appearance, @dependability, @overAllperformance, @hired_id)";
 
                 using (SqlCommand cmd = new SqlCommand(insertQuery, conDB))
                 {
@@ -315,30 +316,32 @@ namespace ctuconnect
                             cmd.Parameters.AddWithValue("@appearance", Category8);
                             cmd.Parameters.AddWithValue("@dependability", Category9);
                             cmd.Parameters.AddWithValue("@overAllperformance", Category10);
-                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.AddWithValue("@hired_id", hired_ID);
+                            int ctr = cmd.ExecuteNonQuery();
+                            if(ctr> 0)
+                            {
+                                Response.Write("<script>alert('You have successfully evaluated the student.');document.location='HiredList.aspx'</script>");
+                                SqlCommand cmd1 = new SqlCommand("UPDATE HIRED_LIST SET evaluationRequest = 'Evaluated' WHERE id = '" + hired_ID +"'", conDB);
+                                cmd1.ExecuteNonQuery();
+                            }
+                            else
+                            {
+                                Response.Write("<script>alert('There is something wrong while submitting your evaluation form.Please try again!');</script>");
+                            }
                         }
                         else
                         {
                             // Conversion failed, handle the error
-                            Console.WriteLine("The input string is not a valid integer.");
+                            Response.Write("<script>alert('The input string is not a valid integer.');</script>");
                         }
 
                     }
                     else
                     {
-                        Response.Write("<script>alert('No score and grade Read');document.location='HiredList.aspx'</script>");
+                        Response.Write("<script>alert('No score and grade Read');</script>");
                     }
                 }
                 conDB.Close();
-                Response.Write("<script>alert('Thank you for submitting your evaluation! 🌟 Your feedback is important to us');</script>");
-                Session["EvaluationPerformed"] = true;
-                Response.Redirect("ViewEvaluation.aspx?student_accID=" + e.CommandArgument.ToString());
-
-
-
-
-
-
             }
         }
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="true" CodeBehind="AdminDashboard.aspx.cs" Inherits="ctuconnect.AdminDashboard" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="true" CodeBehind="Coordinator_CreateAccount.aspx.cs" Inherits="ctuconnect.Coordinator_CreateAccount" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -85,7 +85,7 @@
         .container {
             min-height: 100%;
             border-color: grey;
-            width: 200%;
+            width: 100%;
             border: 2px;
             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
             padding-top: 2em;
@@ -103,12 +103,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-3 d-flex flex-column">
-                <div class="nav flex-column flex-nowrap vh-100 overflow-auto p-2">
+                <div class="nav flex-column flex-nowrap overflow-auto p-2">
                     <div class="profile-container">
                         <img src="images/administratorpic.jpg" />
                         <p>Admin</p>
                         <hr class="horizontal-line" />
-                        <a class="active" href="AdminDashboard.aspx">
+                        <a href="AdminDashboard.aspx">
                             <i class="fa fa-tachometer" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Dashboard
                         </a>
@@ -163,7 +163,7 @@
                             <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Profile
                         </a>
-                        <a href="Coordinator_CreateAccount.aspx">
+                        <a class="active" href="Coordinator_CreateAccount.aspx">
                             <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Coordinator Account
                         </a>
@@ -174,41 +174,46 @@
             </div>
             <div class="col-9 d-flex flex-column">
                 <br />
-                <div class="container">
-                    <h2 class="title opacity-75">Dashboard</h2>
+                <div class="container bg-light">
+                    <h2 class="title opacity-75">Coordinator Account</h2>
                     <br />
-                    <br />
-                    <br />
-                    <div class="row">
-                        <div class="col">
-                            <div class="card text-white p-2" style="max-width: 20rem;">
-
-                                <div class="card-body">
-                                    <h4 class="card-title">Total Industry</h4>
-                                    <h2 class="card-text" id="totalIndustry" runat="server"></h2>
-                                </div>
-                            </div>
+                        <div>
+                            <h4>Upload CSV for Coordinator</h4>
+                            <asp:FileUpload ID="coordinatorCSV" runat="server" />
+                            <asp:Button Text="Upload Coordinator CSV" ID="UploadCoordinatorCSV" OnClick="UploadCoordinatorCSV_Click" runat="server" />
                         </div>
-                        <div class="col">
-                            <div class="card text-white  p-2" style="max-width: 20rem;">
-
-                                <div class="card-body">
-                                    <h4 class="card-title">Total Interns</h4>
-                                    <h2 class="card-text" id="totalInterns" runat="server"></h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card text-white  p-2" style="max-width: 20rem;">
-
-                                <div class="card-body">
-                                    <h4 class="card-title">Total Alumni</h4>
-                                    <h2 class="card-text" id="totalAlumni" runat="server"></h2>
-                                </div>
-                            </div>
+                        <div class="row m-5">
+                            <asp:ListView ID="CoordinatorListView" runat="server">
+                                <LayoutTemplate>
+                                    <table style="font-size: 18px; line-height: 30px;">
+                                        <tr style="background-color: #336699; color: White; padding: 10px;">
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Deparment</th>
+                                            <th>Date Registered</th>
+                                        </tr>
+                                        <tbody>
+                                            <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                                        </tbody>
+                                    </table>
+                                </LayoutTemplate>
+                                <ItemTemplate>
+                                    <tr style="border-bottom: solid 1px #336699">
+                                        <span visible="false" runat="server" id="coordinatorID"><%#Eval("coordinator_accID")%></span>
+                                        <td><%#Eval("Name")%></td>
+                                        <td><%#Eval("username")%></td>
+                                        <td><%#Eval("departmentName")%></td>
+                                         <td><%#Eval("dateReg")%></td>
+                                    </tr>
+                                </ItemTemplate>
+                                <EmptyDataTemplate>
+                                    <h3 style="position: relative; top: 40%;">
+                                        <asp:Label CssClass="alert alert-light d-flex p-2 bd-highlight justify-content-sm-center" runat="server" Text="No Account Listed!"></asp:Label></h3>
+                                </EmptyDataTemplate>
+                            </asp:ListView>
                         </div>
                     </div>
-                </div>
+              
             </div>
 
         </div>

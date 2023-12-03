@@ -11,34 +11,34 @@ namespace ctuconnect
 {
 
 
-    public partial class AdminDashboard
+    public partial class Coordinator_CreateAccount
     {
 
         /// <summary>
-        /// totalIndustry control.
+        /// coordinatorCSV control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalIndustry;
+        protected global::System.Web.UI.WebControls.FileUpload coordinatorCSV;
 
         /// <summary>
-        /// totalInterns control.
+        /// UploadCoordinatorCSV control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalInterns;
+        protected global::System.Web.UI.WebControls.Button UploadCoordinatorCSV;
 
         /// <summary>
-        /// totalAlumni control.
+        /// CoordinatorListView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalAlumni;
+        protected global::System.Web.UI.WebControls.ListView CoordinatorListView;
     }
 }
