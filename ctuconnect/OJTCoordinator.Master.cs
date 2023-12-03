@@ -24,6 +24,7 @@ namespace ctuconnect
                 {
 
                     getDepartmentID();
+                    getDepart();
                     int totalCounts = UnreadNotificationCount();
                     lblUnreadCount.Text = totalCounts.ToString();
 
@@ -34,7 +35,8 @@ namespace ctuconnect
                     refreshCounting();
                     disableHeader();
                     coordinatorInfo();
-     
+
+
                 }
                 else
                 {
@@ -43,7 +45,6 @@ namespace ctuconnect
             }               
             
         }
-
         
         void getDepartmentID()
         {
@@ -52,13 +53,13 @@ namespace ctuconnect
             using (var db = new SqlConnection(conDB))
             {
                 string query = "SELECT * FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE coordinator_accID = '" + coordinatorID + "' ";
-                //string query = "SELECT * FROM COORDINATOR_ACCOUNT WHERE coordinator_accID = '" + coordinatorID + "' ";
+                
                 SqlCommand command = new SqlCommand(query, db);
                 db.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
-                    Session["DEPT"] = reader["department_ID"];
+                    Session["DEPAR"] = reader["department_ID"];
                     Session["COORDINATORPIC"] = reader["coordinatorPicture"];
                     lbldepartmentName.Text = reader["departmentName"].ToString();
                     lblname.Text = reader["firstName"].ToString() + " " + reader["lastName"].ToString();
@@ -67,7 +68,27 @@ namespace ctuconnect
                 
             }
         }
-        
+
+        void getDepart()
+        {
+            string coordinatorID = Session["Coor_ACC_ID"].ToString();
+
+            using (var db = new SqlConnection(conDB))
+            {
+                string query = "SELECT * FROM COORDINATOR_ACCOUNT JOIN PROGRAM ON COORDINATOR_ACCOUNT.department_ID = PROGRAM.department_ID WHERE coordinator_accID = '" + coordinatorID + "' ";
+
+                SqlCommand command = new SqlCommand(query, db);
+                db.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    Session["COURSEID"] = reader["department_ID"];
+
+                }
+
+            }
+        }
+      
 
         void coordinatorInfo()
         {
@@ -115,21 +136,22 @@ namespace ctuconnect
 
         }
 
-        void LoadStudentAccount()
+        private void LoadStudentAccount()
         {
             
-                int departmentID = Convert.ToInt32(Session["DEPT"].ToString());
+            int departmentID = Convert.ToInt32(Session["DEPAR"].ToString());
 
-                using (var db = new SqlConnection(conDB))
-                {
-                    //and department_ID = '" + departmentID + "'
-                    string query = "SELECT * FROM STUDENT_ACCOUNT WHERE isRemove = 0 and department_ID = '" + departmentID + "' ORDER BY dateRegistered DESC";
-                    SqlCommand cmd = new SqlCommand(query, db);
+            using (var db = new SqlConnection(conDB))
+            {
+                //and department_ID = '" + departmentID + "'
+                string query = "SELECT * FROM STUDENT_ACCOUNT WHERE (isRemove = 0 OR isRemove IS NULL) and department_ID = '" + departmentID + "' ORDER BY dateRegistered DESC";
+                SqlCommand cmd = new SqlCommand(query, db);
 
-                    db.Open();
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                    adapter.Fill(dtRegisteredIntern);
-                }
+                db.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dtRegisteredIntern);
+            }
+          
 
                 rptregisteredstudent.DataSource = dtRegisteredIntern;
                 rptregisteredstudent.DataBind();
@@ -139,22 +161,16 @@ namespace ctuconnect
         }
 
         protected int UnreadNotificationCount()
-        {
-            string departID = Session["DEPT"] as string;
-            //int departmentIDDDD = Convert.ToInt32(departID);
-            //string departmentIDD = "400000";
+        { 
+            int course = Convert.ToInt32(Session["COURSEID"].ToString());
             int count = 0;
 
-            // Replace with your connection string
-            //string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
-            //using (SqlConnection connection = new SqlConnection(conDB))
             using (var db = new SqlConnection(conDB))
             {
                 //connection.Open();
                 db.Open();
 
-                string query = "SELECT COUNT(*) FROM STUDENT_ACCOUNT WHERE isRead = 0 and department_ID = '" + departID + "'";
-
+                string query = "SELECT COUNT(*) FROM STUDENT_ACCOUNT WHERE isRead = 0 and department_ID = '" + course + "'";
                 using (SqlCommand command = new SqlCommand(query, db))
                 {
                     count = (int)command.ExecuteScalar();
@@ -249,8 +265,6 @@ namespace ctuconnect
 
         private void MarkRegisteredStudentAsRemoved(int studentID)
         {
-            string departID = Session["DEPARTMENT"] as string;
-            int departmentID = Convert.ToInt32(departID);
             using (var db = new SqlConnection(conDB))
             {
 
