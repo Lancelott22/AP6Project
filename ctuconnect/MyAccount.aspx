@@ -294,10 +294,10 @@
                             <i class='bx bx-layer icon' ></i>
                             <span class="text nav-text">Application</span>
                     </a>
-                    <a href="#settings">
-                            <i class='bx bx-cog icon' ></i>
-                            <span class="text nav-text">Account Settings</span>
-                    </a>
+                    <a href="Student_AccountSetting.aspx">
+                                <i class='bx bx-cog icon'></i>
+                                <span class="text nav-text">Account Settings</span>
+                            </a>
                     <a href="Report.aspx">
                         <i class='bx bxs-flag-alt'></i>
                         <span class="text nav-text">Report</span>

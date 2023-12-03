@@ -26,7 +26,6 @@ namespace ctuconnect
                 PasswordErrorMessage.Visible = false;
                 NewpassErrorMessage.Visible = false;
             }
-            hidden.Enabled = false;
         }
 
         protected void SignOut_Click(object sender, EventArgs e)
@@ -114,73 +113,55 @@ namespace ctuconnect
             return false;
         }
 
-
-
-        bool checkIsDeactivated(int studentID)
-        {
-            int selectedStudentID = studentID;
-            conDB.Open();
-            SqlCommand cmd = new SqlCommand("Select isDeactivated from STUDENT_ACCOUNT Where student_accID = @student_accID", conDB);
-            cmd.Parameters.AddWithValue("@student_accID", selectedStudentID);
-            SqlDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                if (bool.Parse(reader["isDeactivated"].ToString()) == true)
-                {
-                    reader.Close();
-                    conDB.Close();
-                    return true;
-                }
-
-            }
-            conDB.Close();
-            return false;
-
-        }
-
-        protected void Deactivate_Command(object sender, CommandEventArgs e)
-        {
-            string deactivate = e.CommandName.ToString();
-            int num = -1;
-            int student_accID = int.Parse(e.CommandArgument.ToString());
-
-            if (deactivate == "Activate")
-            {
-                num = 0;
-            }
-            else if (deactivate == "Deactivate")
-            {
-                num = 1;
-            }
-            conDB.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE STUDENT_ACCOUNT SET isDeactivated = '" + num + "' where student_accID = '" + student_accID + "'", conDB);
-            var ctr = cmd.ExecuteNonQuery();
-
-            if (ctr > 0)
-            {
-                Response.Write("<script>confirm('Confirm deactivate.');</script>");
-            }
-            else
-            {
-                Response.Write("<script>alert('Cannot deactivate the account now! Please try again later.')</script>");
-            }
-            conDB.Close();
-        }
-
         protected void DeactivateButton_Click(object sender, EventArgs e)
         {
-            // Your deactivation logic here
-            // You can use the hidden field or other means to confirm the deactivation
+            string student_accID = Session["student_accID"].ToString();
 
-            // For example, you can set a flag in the database or perform any other necessary steps.
-            // Once the deactivation is successful, you can redirect the user to the login page or any other page.
+            if (ConfirmDeactivation())
+            {
+                if (!string.IsNullOrEmpty(student_accID))
+                {
+                    using (conDB)
+                    {
+                        conDB.Open();
+                        using (SqlCommand cmd = new SqlCommand("UPDATE STUDENT_ACCOUNT SET isDeactivated=@isDeact WHERE student_accID=@student_accID;", conDB))
+                        {
+                            if (int.TryParse(Session["student_accID"].ToString(), out int Student_accID))
+                            {
+                                cmd.Parameters.AddWithValue("@student_accID", Student_accID);
+                                cmd.Parameters.AddWithValue("@isDeactivated", true);
+                                var ctr = cmd.ExecuteNonQuery();
 
-            // After deactivation, you might want to clear the session or log the user out.
+                                if (ctr > 0)
+                                {
+                                    Response.Write("<script>confirm('Confirm deactivate.');</script>");
+                                }
+                                else
+                                {
+                                    Response.Write("<script>alert('Cannot deactivate the account now! Please try again later.')</script>");
+                                }
 
-            // Example:
-            Session.Clear(); // Clear all session variables
-            Session.Abandon(); // Abandon the session
-            Response.Redirect("Login.aspx"); // Redirect to the login page
+                            }
+                            conDB.Close();
+                        }
+                           
+                    }
+                    Session.Clear(); // Clear all session variables
+                    Session.Abandon(); // Abandon the session
+                    Response.Redirect("Login.aspx"); // Redirect to the login page
+                }
+                else
+                {
+                    Response.Write("<script>alert('No student acc detected')</script>");
+                }
+            }
+            
+            
+        }
+        private bool ConfirmDeactivation()
+        {
+            // You can place any additional server-side confirmation logic here
+            return true; // Return true if you want to proceed with deactivation
         }
     }
 }

@@ -310,11 +310,11 @@
             <asp:Button ID="cancelButton" class ="btn btn-danger" runat="server" Text="Cancel" CausesValidation="False" PostBackUrl="~/Student_AccountSetting.aspx" />
         </div>
       </div><br />
+
         <div class="form-group">
     <div style="margin-left: 20px">
-        <asp:LinkButton ID="DeactivateButton" runat="server" OnClick="DeactivateButton_Click" CssClass="btn btn-danger" Text="Deactivate Account" />
-        <asp:Label ID="hidden" runat="server" Text='<%# Eval("Deactivate") %>'></asp:Label>
-        <input type="hidden" runat="server" id="confirmValue" name="confirmValue" />
+        <asp:LinkButton ID="DeactivateButton" runat="server" CssClass="btn btn-danger" OnClientClick="return confirmDeactivation();" Text="Deactivate Account" OnClick="DeactivateButton_Click" />
+
     </div>
 </div>
                </div>
@@ -323,6 +323,11 @@
                     </div>
                 </div>
             </div>
-    
+<script type="text/javascript">
+    function confirmDeactivation() {
+        return confirm("Are you sure you want to deactivate this account?");
+    }
+</script>
+
 </asp:Content>
 
