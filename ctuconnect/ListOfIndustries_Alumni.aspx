@@ -2,6 +2,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
     .profile-container{
@@ -132,7 +134,25 @@
         width:100%;
         color:dimgray;
     }
-
+    .add-button{
+    background-color: white;
+    border: 1px solid;
+    border-color: gray;
+    box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);
+    color: black;
+    padding-left: 8px;
+    padding-right: 8px; 
+    text-decoration:none;
+    float:right;
+    }
+    
+    .custom-modal-size {
+        max-width: 800px; /* Set your desired width */
+    }
+    .modal-content{
+        padding-left: 3%;
+        padding-right:3%;
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -202,7 +222,8 @@
             <div class="container">
                 <h1 class="title">List of Partnered Industries</h1>
                  
-                <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
+                <p style="float:left;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
+                <asp:LinkButton ID="BtnAddIndustry" runat="server" CssClass="add-button" OnClick="BtnAddIndustry_Click"><i class="fa fa-plus" aria-hidden="true">Add Industry</i></asp:LinkButton>
                                 <table  class="table-list">
                      <tr>
                          <th>No.</th>
@@ -237,5 +258,90 @@
         </div>    
    
     </div>
-
+    
+    <div class="modal" id="AddIndustryModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered custom-modal-size">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="title">Create Industry Account</h2>
+                </div>
+                <div class="modal-body" style="align-items:center;">
+                        <div style="float:left; text-align:right;">
+                        <!--INDUSTRY NAME-->
+                        <asp:Label ID="Label1" runat="server" Style="font-size:18px;">
+                            IndustryName
+                        </asp:Label><span style="margin-left:11px;  font-size:18px;">*:</span><br />
+                        <!--EMAIL-->
+                        <asp:Label ID="Label2" runat="server" Style="font-size:18px;">
+                            Email
+                        </asp:Label><span style="margin-left:11px;  font-size:18px;">*:</span><br />
+                        <!--PASSWORD-->
+                        <asp:Label ID="Label3" runat="server" Style="font-size:18px;">
+                            Password
+                        </asp:Label><span style="margin-left:11px;  font-size:18px;">*:</span><br />
+                        <!--CONFIRM PASSWORD-->
+                        <asp:Label ID="Label4" runat="server" Style="font-size:18px;">
+                            Confirm Password
+                        </asp:Label><span style="margin-left:11px;  font-size:18px;">*:</span><br />
+                        <!--MOU-->
+                        <div class="column">
+                            <asp:Label ID="Label5" runat="server" Style="font-size:18px;">
+                                MOU
+                            </asp:Label><span style="margin-left:11px;  font-size:18px;">*:</span><br />
+                        </div>
+                        <!--LOCATION-->
+                        <asp:Label ID="lblocation" runat="server" Style="font-size:18px;">
+                            Location
+                        </asp:Label><span style="margin-left:11px;  font-size:18px;">*:</span>
+                        
+                    </div>
+                    <div style="float:left;">
+                        <!--INDUSTRY NAME-->
+                        <asp:TextBox ID="txtIndustryName" runat="server" CssClass="txtbox" style="width:400px; margin-left:11px;"></asp:TextBox><br />
+                        <!--EMAIL-->
+                        <asp:TextBox ID="txtemail" runat="server" CssClass="txtbox" style="width:400px; margin-left:11px;"></asp:TextBox><br />
+                        <!--PASSWORD-->
+                        <asp:TextBox ID="txtpwd" runat="server" CssClass="txtbox" TextMode="Password" style="width:400px; margin-left:11px;"></asp:TextBox><br />
+                        <asp:RegularExpressionValidator ID="revpwd" runat="server" ControlToValidate="txtpwd" ErrorMessage="Invalid Password" Display="Dynamic" CssClass="text-danger" ValidationExpression="^(?=.*\d)(?=.*[A-Z])(?=.*\W)(?!.*\s).{8,}$"></asp:RegularExpressionValidator>
+                        <!--CONFIRM PASSWORD-->
+                        <asp:TextBox ID="txtcpwd" runat="server" CssClass="txtbox" TextMode="Password" style="width:400px; margin-left:11px;"></asp:TextBox><br />
+                        <asp:CompareValidator ID="cvcpwd" runat="server" ErrorMessage="Password did not match!" ControlToCompare="txtpwd" ControlToValidate="txtcpwd"></asp:CompareValidator>
+                        <!--MOU-->
+                        <asp:FileUpload ID="mouUpload" runat="server" Width="300px"/><br />
+                        <!--LOCATION-->
+                        <asp:TextBox ID="txtLocation" runat="server" CssClass="txtbox" style="width:400px; margin-left:11px;"></asp:TextBox><br />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <asp:Button ID="BtnSubmit"  class="buttonSubmit" runat="server" Text="Submit" OnCLick="BtnSubmit_Click" autopostback="false" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="SuccessPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                         <br />
+                        <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
+                        <asp:Label ID="Label23" runat="server" Text="Program Created !" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label24" runat="server" Text="You succesfully created the account into the list" Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button runat="server" type="button" class="btn btn-secondary" Text="Close" OnCLick="close_Modal2()" />
+                    </div>
+                </div>
+            </div>
+</div>
+    <script>
+        function showModalFunction() {
+            jQuery('#AddIndustryModal').modal('show');
+        }
+        function CloseModalFunction() {
+            jQuery('#SuccessPrompt').modal('show');
+        }
+    </script>
 </asp:Content>

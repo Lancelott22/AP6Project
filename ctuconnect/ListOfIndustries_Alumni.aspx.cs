@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
@@ -87,6 +88,75 @@ namespace ctuconnect
 
                 return null; // No file found
             }
+        }
+
+        protected void BtnAddIndustry_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showModalFunction();", true);
+        }
+
+        protected void BtnSubmit_Click(object sender, EventArgs e)
+        {
+            string industryName = txtIndustryName.Text;
+            string industryEmail = txtemail.Text;
+            string industryPwd = txtpwd.Text;
+            string industryLoc = txtLocation.Text;
+            HttpPostedFile postedFile = mouUpload.PostedFile;
+            string filename = Path.GetFileName(postedFile.FileName); ///to check the filename
+            string fileExtension = Path.GetExtension(filename).ToLower(); //to get the extension filename
+            int filezise = postedFile.ContentLength; //to get the filesize
+            string logpath = Server.MapPath("~/images/MOU/"); //creating a drive to upload or save the image
+            string filepath = Path.Combine(logpath, filename);
+
+            if (fileExtension == ".bmp" || fileExtension.Equals(".jpg") || fileExtension.Equals(".png") || fileExtension.Equals(".jpeg") || fileExtension.Equals(".pdf"))
+            {
+                if (File.Exists(filepath))
+                {
+                    Response.Write("<script>alert('A file with the same name already exists. Please choose a different name.');document.location='RegisterIndustry.aspx'</script>");
+                    return; // Return to stop further execution
+                }
+                postedFile.SaveAs(filepath);
+                using (conDB)
+                {
+                    //SQL Connection
+                    conDB.Open();
+                    using (var cmd = conDB.CreateCommand())
+                    {
+                        //SQL Statement
+                        cmd.CommandType = CommandType.Text;
+
+                        cmd.CommandText = "INSERT INTO INDUSTRY_ACCOUNT (INDUSTRYNAME, LOCATION, EMAIL, PASSWORD, MOU, DATEREGISTERED, ISVERIFIED )"
+                            + "VALUES (@industryName, @location, @email, @password, @mou, @datereg, @isVerified )";
+
+
+
+
+                        cmd.Parameters.AddWithValue("@industryName", industryName);
+                        cmd.Parameters.AddWithValue("@location", industryLoc);
+                        cmd.Parameters.AddWithValue("@email", industryEmail);
+                        cmd.Parameters.AddWithValue("@password", industryPwd);
+                        cmd.Parameters.AddWithValue("@mou", filename);
+                        cmd.Parameters.AddWithValue("@datereg", DateTime.Now.ToString("yyyy/MM/dd"));
+                        cmd.Parameters.AddWithValue("@isVerified", true);
+                        cmd.ExecuteNonQuery();
+                        conDB.Close();
+
+                    }
+                    Response.Write("<script>alert('Created Successfully');document.location='ListIndustries_Alumni.aspx'</script>");
+                }
+            }
+            else
+            {
+                Response.Write("<script>alert('The file extension of the uploaded file is not acceptable')</script>");//error message after checking the file extensions
+            }
+        }
+
+        protected void BtnSignOut_Click(object sender, EventArgs e)
+        {
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+            Response.Redirect("Login.aspx");
         }
     }
 }

@@ -24,16 +24,6 @@ namespace ctuconnect
             }
         }
 
-        protected void SignOut_Click(object sender, EventArgs e)
-        {
-
-            Session.Abandon();
-            Session.Clear();
-            Session.RemoveAll();
-            Response.Redirect("Login.aspx");
-
-        }
-
         void getTotalIndustry()
         {
             
@@ -73,6 +63,14 @@ namespace ctuconnect
             }
             reader.Close();
             conDB.Close();
+        }
+
+        protected void BtnSignOut_Click(object sender, EventArgs e)
+        {
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+            Response.Redirect("Login.aspx");
         }
     }
 }

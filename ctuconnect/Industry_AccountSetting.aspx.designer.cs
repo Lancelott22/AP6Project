@@ -11,187 +11,178 @@ namespace ctuconnect
 {
 
 
-    public partial class ListOfIndustries_Alumni
+    public partial class Industry_AccountSetting
     {
 
         /// <summary>
-        /// LinkButton1 control.
+        /// Table1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
+        protected global::System.Web.UI.WebControls.Table Table1;
 
         /// <summary>
-        /// BtnAddIndustry control.
+        /// industryImage1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton BtnAddIndustry;
+        protected global::System.Web.UI.WebControls.Image industryImage1;
 
         /// <summary>
-        /// dataRepeater control.
+        /// disp_industryName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater dataRepeater;
+        protected global::System.Web.UI.WebControls.Label disp_industryName;
 
         /// <summary>
-        /// Label1 control.
+        /// disp_accID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label disp_accID;
 
         /// <summary>
-        /// Label2 control.
+        /// Oldpass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.TextBox Oldpass;
 
         /// <summary>
-        /// Label3 control.
+        /// PasswordErrorMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label PasswordErrorMessage;
 
         /// <summary>
-        /// Label4 control.
+        /// reqOldpass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqOldpass;
 
         /// <summary>
-        /// Label5 control.
+        /// Newpass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
+        protected global::System.Web.UI.WebControls.TextBox Newpass;
 
         /// <summary>
-        /// lblocation control.
+        /// NewpassErrorMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblocation;
+        protected global::System.Web.UI.WebControls.Label NewpassErrorMessage;
 
         /// <summary>
-        /// txtIndustryName control.
+        /// reqnewpassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIndustryName;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqnewpassword;
 
         /// <summary>
-        /// txtemail control.
+        /// regnewPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtemail;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator regnewPassword;
 
         /// <summary>
-        /// txtpwd control.
+        /// confirmNewPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtpwd;
+        protected global::System.Web.UI.WebControls.TextBox confirmNewPass;
 
         /// <summary>
-        /// revpwd control.
+        /// reqConfirmNewPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revpwd;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqConfirmNewPass;
 
         /// <summary>
-        /// txtcpwd control.
+        /// comNewPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtcpwd;
+        protected global::System.Web.UI.WebControls.CompareValidator comNewPassword;
 
         /// <summary>
-        /// cvcpwd control.
+        /// BtnUpdatePass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator cvcpwd;
+        protected global::System.Web.UI.WebControls.Button BtnUpdatePass;
 
         /// <summary>
-        /// mouUpload control.
+        /// cancelButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload mouUpload;
+        protected global::System.Web.UI.WebControls.Button cancelButton;
 
         /// <summary>
-        /// txtLocation control.
+        /// BtnDelete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtLocation;
+        protected global::System.Web.UI.WebControls.Button BtnDelete;
 
         /// <summary>
-        /// BtnSubmit control.
+        /// confirmValue control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnSubmit;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden confirmValue;
 
         /// <summary>
-        /// Label23 control.
+        /// SignOut control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label23;
-
-        /// <summary>
-        /// Label24 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label24;
+        protected global::System.Web.UI.WebControls.LinkButton SignOut;
     }
 }
