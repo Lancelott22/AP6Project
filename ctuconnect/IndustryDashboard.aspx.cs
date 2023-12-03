@@ -31,6 +31,52 @@ namespace ctuconnect
                 getTotalHired();
                 getTotalApplicant();
                 getTotalJob();
+
+                if (!ContactExists())
+                {
+                    // Perform the insertion
+                    InsertContactPerson();
+                }
+            }
+        }
+
+        private bool ContactExists()
+        {
+            int industryID = Convert.ToInt32(Session["INDUSTRY_ACC_ID"].ToString());
+            string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
+
+            using (var db = new SqlConnection(conDB))
+            {
+                string query = "SELECT COUNT(*) FROM CONTACT_PERSON WHERE industry_accID = @IndustryAccID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@IndustryAccID", industryID);
+
+                db.Open();
+
+                int count = (int)cmd.ExecuteScalar();
+
+                return count > 0;
+
+            }
+
+        }
+        private void InsertContactPerson()
+        {
+            int industryID = Convert.ToInt32(Session["INDUSTRY_ACC_ID"].ToString());
+            
+            using (conDB)
+            {
+                conDB.Open();
+                using (var cmd = conDB.CreateCommand())
+                {
+                    //SQL Statement
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "INSERT INTO CONTACT_PERSON (industry_accID) VALUES (@industry_accID)";
+
+                    cmd.Parameters.AddWithValue("@industry_accID", industryID);
+                    cmd.ExecuteNonQuery();
+                }
+                
             }
         }
         protected void SignOut_Click(object sender, EventArgs e)
