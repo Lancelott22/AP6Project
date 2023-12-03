@@ -135,9 +135,14 @@ namespace ctuconnect
             string address = txtAddress.Text;
             string jobLevel = drpjoblevel.Text;
 
-            string birthdate = txtbdate.Text;         
+            string birthdate = txtbdate.Text;
 
-            
+            if (Convert.ToDateTime(txtbdate.Text) >= DateTime.Now.Date)
+            {
+                Response.Write("<script>alert('Resume Updated!'); history.back();</script>");
+                return;
+            }
+
             UpdateResume(studentAcctID, lname, fname, contactNumber, email, birthdate, gender, address, jobLevel);
 
             // Update resume information in the database
@@ -598,6 +603,22 @@ namespace ctuconnect
             {
                 e.Day.IsSelectable = false;
             }
+        }
+
+        protected void txtbdate_TextChanged(object sender, EventArgs e)
+        {
+            if (Convert.ToDateTime(txtbdate.Text) >= DateTime.Now.Date)
+            {
+                labelbdate.Visible = true;
+                labelbdate.Text = "The selected birth date must be a past date.";
+            }
+
+            else
+            {
+                labelbdate.Visible = false;
+            }
+            
+            
         }
     }
 }

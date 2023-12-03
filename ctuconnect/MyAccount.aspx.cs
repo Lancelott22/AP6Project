@@ -27,6 +27,15 @@ namespace ctuconnect
                 int studentAccID = Convert.ToInt32(Session["STUDENT_ACC_ID"].ToString());
                 DisplayStudent(studentAccID);
                 this.LoadStudentfeedback();
+
+                if (disp_status.Text == "Alumni")
+                {
+                    btnEditStatus.Visible = false;
+                }
+                else
+                {
+                    btnEditStatus.Visible = true;
+                }
             }
            
         }
@@ -67,8 +76,6 @@ namespace ctuconnect
 
                     }
 
-
-
                 }
                 reader.Close();
 
@@ -107,6 +114,10 @@ namespace ctuconnect
 
             listfeedback.DataSource = dtFeedback;
             listfeedback.DataBind();
+            if (listfeedback.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
         }
 
 

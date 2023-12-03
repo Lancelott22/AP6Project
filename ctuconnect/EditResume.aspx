@@ -142,7 +142,12 @@
                         Birthdate
                     </div>
                     <div class="col-sm-9">
-                        <asp:TextBox ID="txtbdate" runat="server" TextMode="Date" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>
+                        <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional">
+                            <ContentTemplate>
+                            <asp:TextBox ID="txtbdate" runat="server" TextMode="Date" CssClass="txtbox" Width="400px" Height="30px" AutoPostBack="True" OnTextChanged="txtbdate_TextChanged"></asp:TextBox>
+                            <asp:Label ID="labelbdate" runat="server" Visible="false" Font-Size="Medium" ForeColor="Red"></asp:Label>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
                     </div>
                 </div>
                 <br />
@@ -195,7 +200,7 @@
                         <div id="skillsContainer" runat="server">
                             <asp:Repeater ID="rptSkills" runat="server" OnItemCommand="rptSkills_ItemCommand">
                                 <ItemTemplate>
-                                    <asp:TextBox runat="server" ID="txtSkills" Text='<%# Eval("skills") %>' placeholder="Skills..." CssClass="txtbox" Width="100px" Height="30px"></asp:TextBox>                                    
+                                    <asp:TextBox runat="server" ID="txtSkills" Text='<%# Eval("skills") %>' placeholder="Skills..." CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>                                    
                                     <asp:Button runat="server" Text="Remove" CommandName="RemoveSkills" CommandArgument='<%# Container.ItemIndex %>' class="btn btn-danger" Height="28px"/>
                                     <br />
                                 </ItemTemplate>

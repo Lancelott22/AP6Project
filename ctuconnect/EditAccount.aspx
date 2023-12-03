@@ -184,7 +184,7 @@
             <div class="lower-section">
                 <div class="row">
                     <div class="col-sm-3">
-                        <asp:Button ID="btnSave" class="btn btn-success" runat="server" Text="Save" OnClick="btnSave_Click"/>
+                        <asp:Button ID="btnSave" class="btn btn-success" runat="server" Text="Save" OnClick="btnSave_Click" CausesValidation="false"/>
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="col-sm-2">
