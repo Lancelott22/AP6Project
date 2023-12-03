@@ -406,6 +406,7 @@
     <Content Include="IndustryProfile.aspx" />
     <Content Include="IndustryVerification.aspx" />
     <Content Include="IndustryJobPosted.aspx" />
+    <Content Include="Industry_AccountSetting.aspx" />
     <Content Include="Industry_Contact.aspx" />
     <Content Include="JobPortal.aspx" />
     <Content Include="ListOfAlumni.aspx" />
@@ -490,6 +491,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="Student_AccountSetting.aspx" />
     <Content Include="SuggestionsAdmin.aspx" />
     <Content Include="TraceAlumni.aspx" />
     <Content Include="TraceIndustry.aspx" />
@@ -736,6 +738,13 @@
     <Compile Include="IndustryJobPosted.aspx.designer.cs">
       <DependentUpon>IndustryJobPosted.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Industry_AccountSetting.aspx.cs">
+      <DependentUpon>Industry_AccountSetting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Industry_AccountSetting.aspx.designer.cs">
+      <DependentUpon>Industry_AccountSetting.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Industry_Contact.aspx.cs">
       <DependentUpon>Industry_Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -925,6 +934,13 @@
     </Compile>
     <Compile Include="Student.Master.designer.cs">
       <DependentUpon>Student.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Student_AccountSetting.aspx.cs">
+      <DependentUpon>Student_AccountSetting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student_AccountSetting.aspx.designer.cs">
+      <DependentUpon>Student_AccountSetting.aspx</DependentUpon>
     </Compile>
     <Compile Include="SuggestionsAdmin.aspx.cs">
       <DependentUpon>SuggestionsAdmin.aspx</DependentUpon>
