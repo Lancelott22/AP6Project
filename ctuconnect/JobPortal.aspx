@@ -246,7 +246,22 @@
             box-shadow: 0px 0px 9px -1px #15d455;
             text-align: center;
         }
-
+        .MatchBadge {
+    border: solid 1px #4287f5;
+    border-radius: 5px;
+    height: 20px;
+    width: 80px;
+    background: #4287f5;
+    padding: 2px;
+    color: #ffffff;
+    font-size: 11px;
+    position: absolute;
+    top: 10px;
+    left: 18px;
+    box-shadow: 0px 0px 9px -1px #4287f5;
+    text-align: center;
+    z-index:1;
+}   
         .detailsBox {
             width: contain;
             min-width: 250px;
@@ -436,6 +451,7 @@
                                 <ItemTemplate>
                                     <div id="jobList" runat="server" class="row d-flex align-items-center jobBox">
                                         <span runat="server" id="badge" class="NewBadge" visible="false">New</span>
+                                        <span runat="server" id="MatchedBadge" class="MatchBadge" visible="false">Matched Skill</span>
                                         <div class="col-sm-2" style="text-align: center">
                                             <img id="IndstryLogo" src='<%#String.Format("../images/IndustryProfile/{0}", Eval("industryPicture"))%>' runat="server" alt="Logo" class="imgStyle" />
                                         </div>
@@ -640,5 +656,5 @@
             
         }
     </script>
-    
+ 
 </asp:Content>

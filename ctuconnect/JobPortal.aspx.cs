@@ -19,6 +19,7 @@ using System.IO;
 using static System.Net.Mime.MediaTypeNames;
 using iTextSharp.tool.xml.html;
 using Microsoft.Ajax.Utilities;
+using iText.Layout.Font;
 
 namespace ctuconnect
 {
@@ -374,7 +375,8 @@ namespace ctuconnect
                 }
 
             }
-
+            reader.Close();
+            conDB.Close();
             return false;
         }
         bool checkJobApplied(int jobID) //check if already applied to selected job
@@ -417,13 +419,25 @@ namespace ctuconnect
             DateTime postedDate = Convert.ToDateTime(jobPostedDate.Text);
             DateTime currentDate = DateTime.Now;
             TimeSpan timegap = currentDate - postedDate;
-
+            HtmlGenericControl matchBadge = (HtmlGenericControl)e.Item.FindControl("MatchedBadge");
+            HtmlGenericControl Badge = (HtmlGenericControl)e.Item.FindControl("badge");
             if (timegap.Days < 1)
             {
-                HtmlGenericControl Badge = (HtmlGenericControl)e.Item.FindControl("badge");
+               
                 Badge.Visible = true;
                 /* HtmlGenericControl JobList = (HtmlGenericControl)e.Item.FindControl("jobList");
                  JobList.Style.Add("background-color", "#f0e789");*/
+            }
+
+            if(checkMatch(JobId))
+            {
+                
+                matchBadge.Visible = true;
+            }
+
+            if (Badge.Visible == true && matchBadge.Visible == true)
+            {
+                matchBadge.Attributes["style"] = "left:55px";
             }
         }
         private void DisplayStudentInfo()
@@ -651,7 +665,32 @@ namespace ctuconnect
                 reportDetails.Value = string.Empty;
             }
         }
-
+        bool checkMatch(int jobID)
+        {
+            int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("SELECT DISTINCT skills FROM RESUME WHERE EXISTS (SELECT 1 FROM HIRING WHERE CHARINDEX(skills, jobQualifications) > 0 AND jobID = @jobID AND student_accID = student_accID);", conDB);
+            cmd.Parameters.AddWithValue("@student_accID", student_accId);
+            cmd.Parameters.AddWithValue("@jobID", jobID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (reader["skills"] == DBNull.Value)
+                {
+                    conDB.Close();
+                    reader.Close();
+                    return false;
+                }else if (reader.HasRows)
+                {
+                    conDB.Close();
+                    reader.Close();
+                    return true;
+                }
+            }
+            conDB.Close();
+            reader.Close();
+            return false;
+        }
         protected void SubmitReport_Command(object sender, CommandEventArgs e)
         {
             int reportJobId = int.Parse(report_jobID.Text);

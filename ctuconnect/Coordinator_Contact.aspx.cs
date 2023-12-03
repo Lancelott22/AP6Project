@@ -102,8 +102,9 @@ namespace ctuconnect
                 }
                 else if (selectedUser == "OJTCoordinator")
                 {
+                    int id = int.Parse(Session["Coor_ACC_ID"].ToString());
                     SendToEmail.Items.Clear();
-                    SqlCommand cmd = new SqlCommand("SELECT username, CONCAT(firstName,' ',lastName, ' (', departmentName, ')') as Name FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID", conDB);
+                    SqlCommand cmd = new SqlCommand("SELECT username, CONCAT(firstName,' ',lastName, ' (', departmentName, ')') as Name FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE NOT coordinator_accID = '"+ id +"'", conDB);
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable ds = new DataTable();
                     da.Fill(ds);
@@ -129,12 +130,12 @@ namespace ctuconnect
                 else if (selectedUser == "Student")
                 {
                     SendToEmail.Items.Clear();
-                    SqlCommand cmd = new SqlCommand("SELECT email,  CONCAT(firstName,' ',lastName) as Name FROM STUDENT_ACCOUNT WHERE department_ID = '" + CoordDepartmentId + "'", conDB);
+                    SqlCommand cmd = new SqlCommand("SELECT personalEmail,  CONCAT(firstName,' ',lastName) as Name FROM STUDENT_ACCOUNT WHERE department_ID = '" + CoordDepartmentId + "'", conDB);
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable ds = new DataTable();
                     da.Fill(ds);
                     SendToEmail.DataSource = ds;
-                    SendToEmail.DataValueField = "email";
+                    SendToEmail.DataValueField = "personalEmail";
                     SendToEmail.DataTextField = "Name";
                     SendToEmail.DataBind();
                 }

@@ -41,8 +41,9 @@ namespace ctuconnect
             if (!IsPostBack)
             {
                 fillJobDetails();
+                bindCourse();
             }
-        
+            
         }
         void fillJobDetails()
         {
@@ -232,6 +233,18 @@ namespace ctuconnect
             Session.RemoveAll();
             Response.Redirect("LoginIndustry.aspx");
 
+        }
+        void bindCourse()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT course, case when courseName IS NOT NULL or NOT courseName = '' then  CONCAT(course,' (' , courseName, ')') else course end as ProgramCourse FROM PROGRAM", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            course.DataSource = ds;
+
+            course.DataValueField = "course";
+            course.DataTextField = "ProgramCourse";
+            course.DataBind();
         }
        /* void jobPostNotify(int industryAccID)
         {
