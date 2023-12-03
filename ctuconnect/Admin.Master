@@ -459,7 +459,7 @@
                         <li class="nav-item">
                             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                                <ContentTemplate>
-                               <img src="#" runat="server" id="profileimg" Height="47" Width="45" class="user-pic" OnClick="toggleMenu()" />                                      
+                               <img src="images/administratorpic.jpg" runat="server" id="profileimg" Height="47" Width="45" class="user-pic" OnClick="toggleMenu()" />                                      
                                     <div class="sub-menu-wrap" id="subMenu">
                                         <div class="sub-menu">
                                             <div class="user-info">
