@@ -12,19 +12,15 @@
     <style>
         .display-container {
             height: 370px;
-            width: 1210px;
+            max-width: 1090px;
             background-color: #ffffff;
             padding-left: 2em;
-            padding: 2% 2% 0% 2%;
             margin-bottom:25px;
             border-radius:10px;
             font-family: 'Poppins', sans-serif;
             font-size:16px;
             top:0;
             bottom:0;
-            padding: 2% 2% 0% 2%;
-            overflow: auto;
-            /*background-color:white;*/
             margin-left:12.5em;
         }
 
@@ -48,7 +44,7 @@
             min-height: 180px;
             background-color: #ffffff;
             padding-left:2em;
-            min-width:75%;
+            min-width:50%;
             float:left;
             margin-left:3px;
             padding-top:2em;
@@ -64,8 +60,8 @@
         }
 
         .display-review{
-            height: 450px;
-            width: 1210px;
+            min-height: 50%;
+            width: 1095px;
             background-color: #ffffff;
             padding-left: 2em;
             padding: 2% 2% 0% 2%;
@@ -219,6 +215,7 @@
         list-style: none; /* Remove default list styles */
         margin: 0;
             padding: 0;
+            font-size:16px;
         }
 
         /* Style for each ListItem */
@@ -247,8 +244,9 @@
     
             
                 <div class="display-container">
+                    <div class="col-12">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-sm-12">
                                 <center>
                                 <asp:Image ID="industryProfile" CssClass="profile-pic" Width="150px" Height="150px" runat="server" />
                                 </center>
@@ -256,18 +254,19 @@
                         </div>
                         <br />
                         <div class="row">
-                            <div class="col-12 industry-name">
+                            <div class="col-sm-12 industry-name">
                                <asp:Label ID="disp_name" runat="server" Text=""></asp:Label>
                             </div>
                         </div>
                         <br /><br />
                         <div class="row">
-                            <div class="col-lg-12 order-1 order-lg-2 topnav">
+                            <div class="col-sm-12 topnav">
                                 <a class="active" href="#about">About</a>
                                 <a href="#reviews">Reviews</a>
                             </div>
                         </div>
                     </div>
+                </div>
                 
                 
                 <div class="student-container" id="about">
@@ -368,7 +367,7 @@
                                         <div style="display: flex; gap: 6px; padding-left: 1em;">
                                             <img src="images/defaultprofile.jpg" style="width:60px; height:auto; border-radius: 50%;" />
                                             <div>
-                                                <p class="feedback-name"><asp:Label ID="lblFeedbackName" runat="server" Text='<%# Eval("sendfrom") %>'></asp:Label></p>
+                                                <p class="feedback-name"><asp:Label ID="lblFeedbackName" runat="server" Text='<%# Eval("firstName") + " " + Eval("lastName") %>'></asp:Label></p>
                                                 <p class="feedback-date"><%# Eval("dateCreated", "{0:d}") %></p>
                                             </div>
                                         </div>
@@ -391,7 +390,7 @@
                                 <asp:Label CssClass="alert alert-light d-flex p-2 bd-highlight justify-content-sm-center" runat="server" ID="lblNoPost" Text="No Reviews Yet!"></asp:Label></h3>
                         </EmptyDataTemplate>
                     </asp:ListView>
-                    <asp:DataPager ID="ListViewPager" runat="server" PagedControlID="listfeedback" PageSize="2" class="btn-group btn-group-sm float-end">
+                    <asp:DataPager ID="ListViewPager" runat="server" PagedControlID="listfeedback" PageSize="10" class="btn-group btn-group-sm float-end">
                         <Fields>
                             <asp:NextPreviousPagerField ButtonType="Link" ShowFirstPageButton="true" ShowPreviousPageButton="true" ShowNextPageButton="false" RenderDisabledButtonsAsLabels="false" RenderNonBreakingSpacesBetweenControls="false" ButtonCssClass="btn btn-default" />
                             <asp:NumericPagerField ButtonType="Link" RenderNonBreakingSpacesBetweenControls="false" ButtonCount="5" NumericButtonCssClass="btn btn-default" CurrentPageLabelCssClass="btn btn-primary disabled" NextPreviousButtonCssClass="btn btn-default" />
@@ -448,14 +447,19 @@
                     <div class="row applicant-details">                                   
                         <div class="col-12 ">
                             <asp:Label ID="lblsendfrom" runat="server" Text="Send from" Style="font-size:20px;"></asp:Label><br />
-                            <asp:TextBox ID="txtsendfrom" runat="server" Width="700px" Height="35px" ReadOnly="true" CssClass="txtbox"></asp:TextBox>
+                            <asp:TextBox ID="txtsendfrom" runat="server" Width="700px" Height="35px" ReadOnly="true" CssClass="selectpicker form-control txtbox"></asp:TextBox>
                         </div>
                     </div>
                     <br />
                     <div class="row applicant-details">                                   
                         <div class="col-12 ">
-                            <asp:Label ID="Label3" runat="server" Text="Job Position" Style="font-size:20px;"></asp:Label><br />
-                            <asp:TextBox ID="txtjobposition" runat="server" Width="700px" Height="35px"  CssClass="txtbox"></asp:TextBox>
+                            <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                                <ContentTemplate>
+                                <asp:Label ID="Label3" runat="server" Text="Job Position" Style="font-size:20px;"></asp:Label><br />
+                                <asp:DropDownList runat="server" CssClass="selectpicker form-control txtbox" ID="drpposition" Width="700px" Height="35px" AutoPostBack="false">
+                                </asp:DropDownList>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
                         </div>
                     </div>
                     <br />
@@ -475,13 +479,13 @@
                     <div class="row applicant-details">                                   
                         <div class="col-12">
                             <asp:Label ID="Label5" runat="server" Text="Feedback" Style="font-size:20px;"></asp:Label><br />
-                            <asp:TextBox ID="txtfeedback" runat="server" Width="700px" Height="100px" TextMode="MultiLine" CssClass="txtbox"></asp:TextBox>
+                            <asp:TextBox ID="txtfeedback" runat="server" Width="700px" Height="100px" TextMode="MultiLine" CssClass="selectpicker form-control txtbox"></asp:TextBox>
                         </div>
                     </div>
                 </div>           
                 <div class="modal-footer">
-                    <asp:Button ID="btnClose" runat="server" Text="Close" OnClick="closeEditModal" class="btn btn-secondary"/>
-                   <asp:Button ID="btnSave" class="buttonSubmit" runat="server" Text="Save" OnClick="saveFeedback"/>
+                    <asp:Button ID="btnClose" runat="server" Text="Close" OnClick="closeEditModal" class="btn btn-success"/>
+                   <asp:Button ID="btnSave" class="btn btn-danger" runat="server" Text="Save" OnClick="saveFeedback"/>
                 </div>
        
             </div>

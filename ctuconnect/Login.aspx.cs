@@ -14,7 +14,7 @@ namespace ctuconnect
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack && Session["Email"] != null)
+            if (!IsPostBack && Session["Username"] != null)
             {
                 Response.Redirect("Home.aspx");
             }
@@ -27,9 +27,9 @@ namespace ctuconnect
 
             if (!IsPostBack)
             {
-                if (Request.Cookies["Email"] != null && Request.Cookies["Password"] != null)
+                if (Request.Cookies["Username"] != null && Request.Cookies["Password"] != null)
                 {
-                    txtemail.Text = Request.Cookies["Email"].Value;
+                    txtusername.Text = Request.Cookies["Username"].Value;
                     txtpwd.Attributes["value"] = Request.Cookies["Password"].Value;
                 }
             }
@@ -40,21 +40,21 @@ namespace ctuconnect
             try
             {
 
-                string loginEmail = txtemail.Text;
+                string loginUser = txtusername.Text;
                 string loginPassword = txtpwd.Text;
 
                 using (conDB)
                 {
                     conDB.Open();
 
-                    string query = "SELECT COUNT(1) FROM INDUSTRY_ACCOUNT WHERE email = @email AND password = @password";
+                    string query = "SELECT COUNT(1) FROM ADMIN_ACCOUNT WHERE username = @username AND password = @password";
                     SqlCommand command = new SqlCommand(query, conDB);
-                    command.Parameters.AddWithValue("@email", loginEmail);
+                    command.Parameters.AddWithValue("@username", loginUser);
                     command.Parameters.AddWithValue("@password", loginPassword);
                     int count = Convert.ToInt32(command.ExecuteScalar());
 
-                    Session["Email"] = txtemail.Text;
-                    Response.Redirect("Home.aspx");
+                    Session["Username"] = txtusername.Text;
+                    Response.Redirect("AdminDashboard.aspx");
                     conDB.Close();
                 }
             }

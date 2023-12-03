@@ -22,6 +22,7 @@ namespace ctuconnect
             {
                 if (Session["Coor_ACC_ID"] != null)
                 {
+
                     getDepartmentID();
                     int totalCounts = UnreadNotificationCount();
                     lblUnreadCount.Text = totalCounts.ToString();
@@ -50,7 +51,7 @@ namespace ctuconnect
 
             using (var db = new SqlConnection(conDB))
             {
-                string query = "SELECT * FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.DEPARTMENT_ID = DEPARTMENT.DEPARTMENT_ID WHERE coordinator_accID = '" + coordinatorID + "' ";
+                string query = "SELECT * FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE coordinator_accID = '" + coordinatorID + "' ";
                 //string query = "SELECT * FROM COORDINATOR_ACCOUNT WHERE coordinator_accID = '" + coordinatorID + "' ";
                 SqlCommand command = new SqlCommand(query, db);
                 db.Open();
@@ -117,7 +118,7 @@ namespace ctuconnect
         void LoadStudentAccount()
         {
             
-                string departmentID = Session["DEPT"].ToString();
+                int departmentID = Convert.ToInt32(Session["DEPT"].ToString());
 
                 using (var db = new SqlConnection(conDB))
                 {

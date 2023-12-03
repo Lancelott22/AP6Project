@@ -11,70 +11,79 @@ namespace ctuconnect
 {
 
 
-    public partial class Login
+    public partial class ViewApplicantProfile_Coord
     {
 
         /// <summary>
-        /// txtusername control.
+        /// profileImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtusername;
+        protected global::System.Web.UI.WebControls.Image profileImage;
 
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// disp_name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.Label disp_name;
 
         /// <summary>
-        /// txtpwd control.
+        /// disp_address control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtpwd;
+        protected global::System.Web.UI.WebControls.Label disp_address;
 
         /// <summary>
-        /// RequiredFieldValidator2 control.
+        /// disp_email control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+        protected global::System.Web.UI.WebControls.Label disp_email;
 
         /// <summary>
-        /// LoginErrorMessage control.
+        /// disp_contact control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LoginErrorMessage;
+        protected global::System.Web.UI.WebControls.Label disp_contact;
 
         /// <summary>
-        /// CheckBox1 control.
+        /// disp_status control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBox1;
+        protected global::System.Web.UI.WebControls.Label disp_status;
 
         /// <summary>
-        /// btn control.
+        /// listfeedback control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn;
+        protected global::System.Web.UI.WebControls.ListView listfeedback;
+
+        /// <summary>
+        /// ListViewPager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataPager ListViewPager;
     }
 }

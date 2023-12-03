@@ -15,9 +15,17 @@ namespace ctuconnect
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            displayCoordinatorInfo();
-            
-            
+            if (!IsPostBack && Session["Username"] == null)
+            {
+                Response.Redirect("LoginOJTCoordinator.aspx");
+            }
+            if (!IsPostBack)
+            {
+                
+                displayCoordinatorInfo();
+            }
+
+
         }
 
         void displayCoordinatorInfo()
@@ -49,10 +57,12 @@ namespace ctuconnect
             if (!string.IsNullOrEmpty(profilePicturePath))
             {
                 ojtcoordProfile.ImageUrl = "~/images/OJTCoordinatorProfile/" + profilePicturePath;
+                CoordinatorImage.ImageUrl = "~/images/OJTCoordinatorProfile/" + profilePicturePath;
             }
             else
             {
                 ojtcoordProfile.ImageUrl = "~/images/OJTCoordinatorProfile/defaultprofile.jpg";
+                CoordinatorImage.ImageUrl = "~/images/OJTCoordinatorProfile/defaultprofile.jpg";
             }
         }
 

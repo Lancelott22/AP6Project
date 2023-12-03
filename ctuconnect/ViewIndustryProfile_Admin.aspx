@@ -370,7 +370,7 @@
                                         <div style="display: flex; gap: 6px; padding-left: 1em;">
                                             <img src="images/defaultprofile.jpg" style="width:60px; height:auto; border-radius: 50%;" />
                                             <div>
-                                                <p class="feedback-name"><asp:Label ID="lblFeedbackName" runat="server" Text='<%# Eval("sendfrom") %>'></asp:Label></p>
+                                                <p class="feedback-name"><asp:Label ID="lblFeedbackName" runat="server" Text='<%# Eval("firstName") + " " + Eval("lastName") %>'></asp:Label></p>
                                                 <p class="feedback-date"><%# Eval("dateCreated", "{0:d}") %></p>
                                             </div>
                                         </div>
@@ -395,7 +395,7 @@
                     </asp:ListView>
                 
                     
-                    <asp:DataPager ID="ListViewPager" runat="server" PagedControlID="listfeedback" PageSize="2" class="btn-group btn-group-sm float-end">
+                    <asp:DataPager ID="ListViewPager" runat="server" PagedControlID="listfeedback" PageSize="10" class="btn-group btn-group-sm float-end">
                         <Fields>
                             <asp:NextPreviousPagerField ButtonType="Link" ShowFirstPageButton="true" ShowPreviousPageButton="true" ShowNextPageButton="false" RenderDisabledButtonsAsLabels="false" RenderNonBreakingSpacesBetweenControls="false" ButtonCssClass="btn btn-default" />
                             <asp:NumericPagerField ButtonType="Link" RenderNonBreakingSpacesBetweenControls="false" ButtonCount="5" NumericButtonCssClass="btn btn-default" CurrentPageLabelCssClass="btn btn-primary disabled" NextPreviousButtonCssClass="btn btn-default" />
