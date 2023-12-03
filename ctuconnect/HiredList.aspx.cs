@@ -1,7 +1,9 @@
-﻿using System;
+﻿using iText.Html2pdf.Attach;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web.Configuration;
 using System.Web.UI;
@@ -87,6 +89,7 @@ namespace ctuconnect
                                         EvaluationBtn.Text = evaluationPerformed ? "View Evaluation" : "Requested";
                                     }
                                 }*/
+
             }
 
 
@@ -178,6 +181,21 @@ namespace ctuconnect
             UpdatePanel1.Update();
 
         }
+        protected void SearchInternInfo(object sender, EventArgs e)
+        {
+            string student = searchInput.Text;
+            using (var db = new SqlConnection(conDB))
+            {
+                SqlCommand cmd = new SqlCommand("select * from HIRED_LIST WHERE firstName LIKE '%' + @studentinfo + '%' " +
+                "or lastName LIKE '%' + @studentinfo + '%' or position LIKE '%' + @studentinfo + '%' ", db);
+                cmd.Parameters.AddWithValue("@studentinfo", student);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable ds = new DataTable();
+                da.Fill(ds);
+                listView2.DataSource = ds;
+                listView2.DataBind();
+            }
+        }
         /*protected void Evaluate_BtnClick(object sender, EventArgs e)
         {
             // Find the button that triggered the event
@@ -190,6 +208,44 @@ namespace ctuconnect
                 Response.Redirect("EvaluationForm.aspx?id=" + e);
             }
         }*/
+        /*        protected void ListView_Sort(object sender, ListViewSortEventArgs e)
+                {
+                    // Specify the data source for the ListView (replace DataSourceMethod with your actual data retrieval method)
+                    listView2.DataSource = DataSourceMethod();
+
+                    // Apply sorting based on the clicked column
+                    if (e.SortDirection == SortDirection.Ascending)
+                    {
+                        // Sort ascending
+                        listView2.Sort(e.SortExpression, SortDirection.Descending);
+                        e.SortDirection = SortDirection.Descending;
+                    }
+                    else
+                    {
+                        // Sort descending
+                        listView2.Sort(e.SortExpression, SortDirection.Ascending);
+                        e.SortDirection = SortDirection.Ascending;
+                    }
+
+                    // Rebind the ListView to reflect the sorting changes
+                    listView2.DataBind();
+                }
+                public DataTable DataSourceMethod()
+                {
+                    using (var db = new SqlConnection(conDB))
+                    {
+                        // Make sure to associate the SqlCommand with the SqlConnection
+                        using (SqlCommand cmd = new SqlCommand("SELECT * FROM HIRED_LIST", db))
+                        {
+                            DataTable dataTable = new DataTable();
+                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                            adapter.Fill(dataTable);
+
+                            return dataTable;
+                        }
+                    }
+                }*/
+
         protected void ViewResume_Command(object sender, CommandEventArgs e)
         {
             if (e.CommandName == "View")
@@ -278,6 +334,7 @@ namespace ctuconnect
                     }
 
                 }
+
                 ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessMultipleEditPrompt').modal('show');", true);
             }
             else
@@ -287,7 +344,7 @@ namespace ctuconnect
         }
         protected void saveDatesDetails(object sender, EventArgs e)
         {
-            string industryname = Session["INDUSTRYNAME"].ToString();
+            string industryaccID = Session["INDUSTRY_ACC_ID"].ToString();
             List<string> studentIds = ViewState["SelectedStudentIds"] as List<string>;
 
 
@@ -336,7 +393,7 @@ namespace ctuconnect
                                         string sql = "INSERT INTO STUDENT_FEEDBACK (sendfrom, sendto, position,feedbackContent, dateCreated) VALUES (@sendfrom, @sendto, @position,@feedbacks, @datecreated)";
                                         cmd.CommandText = sql;
                                         // Provide appropriate values for sendfrom, sendto, and position
-                                        cmd.Parameters.AddWithValue("@sendfrom", industryname);
+                                        cmd.Parameters.AddWithValue("@sendfrom", industryaccID);
                                         cmd.Parameters.AddWithValue("@sendto", studentaccId);
                                         cmd.Parameters.AddWithValue("@position", position);
                                         cmd.Parameters.AddWithValue("@feedbacks", feedback);
@@ -381,31 +438,80 @@ namespace ctuconnect
                 }
             }
         }
-        protected void txtDate_TextChanged(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(txtDateEnded.Text))
-            {
 
-                if (Convert.ToDateTime(txtDateEnded.Text) >= DateTime.Now.Date)
+        protected void TxtDate_TextChanged(object sender, EventArgs e)
+        {
+            string student_id = studentID.Text;
+            
+            if (!string.IsNullOrEmpty(txtDateEnded.Text) )
+            {
+                DateTime? startDate = GetstartDate(student_id);
+                DateTime endDate = Convert.ToDateTime(txtDateEnded.Text);
+                if (endDate <= startDate)
                 {
-                    lbldate.Visible = true;
-                    lbldate.Text = "Interview date must be a recent or past date.";
+                    dateErrorlabel.Visible = true;
+                    dateErrorlabel.Text = "date must not be earlier than date started";
                 }
                 else
                 {
-                    lbldate.Visible = false;
+                    dateErrorlabel.Visible = false;
                 }
             }
             else
             {
-                lbldate.Visible = false;
+                dateErrorlabel.Visible = false;
             }
-
 
         }
 
+        private DateTime? GetstartDate(string student_id)
+        {
+            DateTime? startDate = null; // Set a default value or handle null case
+            using (var db = new SqlConnection(conDB))
+            {
+                db.Open();
+                using (var cmd = db.CreateCommand())
+                {
+                    string sql = "SELECT dateStarted from HIRED_LIST WHERE student_accID = @studsID";
+                    cmd.CommandText = sql;
+                    cmd.Parameters.AddWithValue("@studsID", student_id);
 
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            // Check if the startDate column is not null in the database
+                            if (!reader.IsDBNull(0))
+                            {
+                                startDate = reader.GetDateTime(0);
+                            }
+                        }
+                    }
+                }
+            }
+            return startDate;
+        }
+        protected void ListView2_ItemDataBound(object sender, ListViewItemEventArgs e)
+        {
+            Button editbtn = (Button)sender;
+            if (e.Item.ItemType == ListViewItemType.DataItem)
+            {
+                ListViewDataItem dataItem = (ListViewDataItem)e.Item;
 
+                // Find the controls in the ListViewItem
+                Label lblInternshipStatus = (Label)dataItem.FindControl("lblInternshipStatus");
+
+                // Check the status and hide the btnEdit accordingly
+                if (lblInternshipStatus.Text.Equals("Done", StringComparison.OrdinalIgnoreCase))
+                {
+                    editbtn.Visible = false;
+                }
+                else
+                {
+                    editbtn.Visible = true;
+                }
+            }
+        }
 
         private List<string> selectedStudentIds = new List<string>();
         private List<string> selectedInternNames = new List<string>();
@@ -483,43 +589,82 @@ namespace ctuconnect
 
             if (checkedCount > 1)
             {
-                bool anyIsDone = selectedInternshipStatus.Contains("Done");
-                if (anyIsDone)
+                /*bool anyIsDone = selectedInternshipStatus.Contains("Done");*/
+                if (selectedInternshipStatus.Distinct().Count() > 1)
                 {
-                    Console.WriteLine("selectedInternshipStatus: " + string.Join(", ", selectedInternshipStatus));
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "openModalFailedEdit();", true);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "$('#DoneInternshipSelected').modal('show');", true);
                 }
-                else
+                else if (selectedInternshipStatus.All(status => status == "Ongoing"))
                 {
                     string existingname = string.Join(",", selectedInternNames);
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript2", $"openModal2('{existingname}');", true);
-
+                }
+                else if (selectedInternshipStatus.All(status => status.Equals("Done", StringComparison.OrdinalIgnoreCase)))
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript2", "$('#AllDone').modal('show');", true);
                 }
             }
             else if (checkedCount == 0)
             {
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "showModal", "$('#NoSelected').modal('show');", true);
             }
-            else
+            else if (checkedCount == 1)
             {
-                bool anyIsDone = selectedInternshipStatus.Contains("Done");
-                if (anyIsDone)
+                if (selectedInternshipStatus[0] == "Ongoing")
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "$('#openModalFailedEdit').modal('show');", true);
+                    string existingID = string.Join(" ", selectedStudentIds);
+                    string existingname = string.Join(" ", selectedInternNames);
+                    string existingposition = string.Join(" ", selectedPosition);
+                    string existingdatehired = string.Join(" ", selectedDateHired);
+                    string existingdatestarted = string.Join(" ", selectedDateStarted);
+                    string existingdateended = string.Join(" ", selectedDateEnded);
+                    string existingstatus = string.Join(" ", selectedInternshipStatus);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openSingleSelectModal('{existingID}','{existingname}','{existingposition}','{existingdatehired}','{existingdatestarted}','{existingdateended}','{existingstatus}');", true);
                 }
-                else
+                else if (selectedInternshipStatus[0] == "Done")
                 {
                     string existingname = string.Join(" ", selectedInternNames);
                     string existingposition = string.Join(" ", selectedPosition);
                     string existingdatehired = string.Join(" ", selectedDateHired);
                     string existingdatestarted = string.Join(" ", selectedDateStarted);
                     string existingdateended = string.Join(" ", selectedDateEnded);
-/*                    string existingrenderedhours = string.Join(" ", selectedHoursRendered);
-*/                    string existingstatus = string.Join(" ", selectedInternshipStatus);
-/*                    string existingID = string.Join(" ", selectedStudentIds);
-*/                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openSingleSelectModal('{existingname}','{existingposition}','{existingdatehired}','{existingdatestarted}','{existingdateended}','{existingstatus}');", true);
+                    string existingstatus = string.Join(" ", selectedInternshipStatus);
+                    string studentfeedback = GetFeedback(selectedStudentIds);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript5", $"openSingleSelectDoneModal('{existingname}','{existingposition}','{existingdatehired}','{existingdatestarted}','{existingdateended}','{existingstatus}','{studentfeedback}');", true);
                 }
             }
+
+        }
+        protected string GetFeedback(List<string> selectedStudentIds)
+        {
+            string feedback = string.Empty;
+
+            using (var db = new SqlConnection(conDB))
+            {
+                db.Open();
+
+                // Build a parameterized SQL query to avoid SQL injection
+                string sql = "SELECT feedbackContent FROM STUDENT_FEEDBACK WHERE sendto IN (@studentIds)";
+                using (var cmd = new SqlCommand(sql, db))
+                {
+                    // Add a parameter for the list of student IDs
+                    cmd.Parameters.AddWithValue("@studentIds", string.Join("", selectedStudentIds));
+
+                    using (var reader = cmd.ExecuteReader())
+
+                    {
+                        // Iterate through the result set and concatenate feedback
+                        while (reader.Read())
+                        {
+                            string currentFeedback = reader["feedbackContent"].ToString();
+                            feedback += currentFeedback + "\n"; // Add a newline for each feedback
+                        }
+                    }
+                }
+            }
+
+            return feedback;
+
         }
         protected void Close_NoSelectedPrompt(object sender, EventArgs e)
         {
@@ -691,7 +836,8 @@ namespace ctuconnect
             if (Evalbtn.Text == "Requested"){
                 Response.Redirect("EvaluationForm.aspx?student_accID=" + e.CommandArgument.ToString());
             }
-            else{
+            else if (Evalbtn.Text == "Evaluated")
+            {
                 Evalbtn.Enabled = false;
             }
         }
