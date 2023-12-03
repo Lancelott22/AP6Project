@@ -171,10 +171,10 @@
                     <div class="row">
                       <div class="col-lg-4">
                         <div class="card shadow-sm profile-section">
-      
+                            <center>
                             <asp:Image ID="ojtcoordProfile" CssClass="profile-pic" Width="150px" Height="150px" runat="server" />
                             <h3><asp:Label ID="disp_name" runat="server" Text=""></asp:Label></h3>
-      
+                            </center>
                         </div>
                       </div>
                       <div class="col-lg-8">

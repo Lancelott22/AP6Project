@@ -142,7 +142,7 @@
                                         <div class="col-3">
                                             <label>Industry Name: </label>
                                             <br />
-                                            <a href='ViewIndustryProfile.aspx?industry_accID=<%#Eval("industry_accID")%>'>
+                                            <a href='ViewIndustryProfile_Admin.aspx?industry_accID=<%#Eval("industry_accID")%>'>
                                                 <span>
                                                     <%#Eval("industryName")%>
                                                 </span>

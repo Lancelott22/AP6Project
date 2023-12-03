@@ -11,7 +11,7 @@ namespace ctuconnect
 {
 
 
-    public partial class ViewApplicantProfile
+    public partial class ViewApplicantProfile_Coord
     {
 
         /// <summary>
