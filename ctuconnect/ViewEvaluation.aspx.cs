@@ -31,8 +31,6 @@ namespace ctuconnect
                 SetSelectedRadioButtons();
             }
         }
-
-
         private void SetSelectedRadioButtons()
         {
             Dictionary<string, string> radioButtons = new Dictionary<string, string>
@@ -84,7 +82,7 @@ namespace ctuconnect
 
                 SqlCommand command = new SqlCommand(query, conDB);
                 command.Parameters.AddWithValue("@student_accID", student_accID);
-                command.Parameters.AddWithValue("@student_accID", student_accID);
+                command.Parameters.AddWithValue("@hired_id", hired_ID);
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
