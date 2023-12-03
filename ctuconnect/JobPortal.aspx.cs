@@ -169,10 +169,10 @@ namespace ctuconnect
 
             string Usertype = Session["STATUSorTYPE"].ToString();
             string jobtype = "";
-            string applicantEmail = "";
+            string applicantEmail = getPersonalEmail();
             if (Usertype == "Alumni")
             {
-                applicantEmail = Session["StudentEmail"].ToString();
+                
                 
                 if (job_Type.Value != "" || job_Type.Value != string.Empty)
                 {
@@ -189,7 +189,7 @@ namespace ctuconnect
             }
             else if (Usertype == "Intern")
             {
-                applicantEmail = Session["StudentEmail"].ToString();
+                
                 student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
                 jobtype = job_Type.Value;
             }
@@ -214,7 +214,7 @@ namespace ctuconnect
             conDB.Open();
             if (Usertype == "Alumni")
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accId,applicantFName, appliedPosition, applicantLName, industry_accID, dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, isRead, isRemove,applicantEmail ) " +
+                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accId,applicantFName, applicantLName, appliedPosition, industry_accID, dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, isRead, isRemove,applicantEmail ) " +
                     "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID,@studentType, @isRead, @isRemove,@applicantEmail)", conDB);
 
                 cmd.Parameters.AddWithValue("@jobtype", jobtype);
@@ -280,6 +280,42 @@ namespace ctuconnect
 
 
             JobBind();
+        }
+        string getPersonalEmail()
+        {
+            int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
+            string email = "";
+           conDB.Open();
+            SqlCommand cmd = new SqlCommand("select personalEmail,email from STUDENT_ACCOUNT where student_accID = @student_accID", conDB);
+            cmd.Parameters.AddWithValue("@student_accID", student_accId);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {   
+                if (reader["personalEmail"] == DBNull.Value)
+                {
+                    email = reader["email"].ToString();
+                    conDB.Close();
+                    reader.Close(); 
+                    return email;
+                }
+                else if(reader["personalEmail"].ToString() == "")
+                {
+                    email = reader["email"].ToString();
+                    conDB.Close();
+                    reader.Close();
+                    return email;
+                }
+                else
+                {    
+                    email = reader["personalEmail"].ToString();
+                    conDB.Close();
+                    reader.Close();
+                    return email;
+                }
+            }
+            conDB.Close();
+            reader.Close();
+            return email;
         }
         private string getUploadEndorsementLetter()
         {
@@ -547,7 +583,7 @@ namespace ctuconnect
                 }
             }
 
-            string url = "ViewIndustryProfile.aspx?industryID=" + Server.UrlEncode(IndustryID.Text);
+            string url = "ViewIndustryProfile.aspx?industry_accID=" + Server.UrlEncode(IndustryID.Text);
             viewIndustryProfileLink.HRef = url;
         }
 

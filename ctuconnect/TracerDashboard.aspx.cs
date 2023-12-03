@@ -28,8 +28,21 @@ namespace ctuconnect
                 BindHiredPerIndustry();
                 BindIndustry();
                 BindHiredPerJobInIndustry(int.Parse(IndustryJob.SelectedValue));
-                
+                BindDepartment();
+                BindAlumniEmployment(int.Parse(Course.SelectedValue));
+                BindIsConnectedToCourse(int.Parse(Course.SelectedValue));
+                BindSalaryRange(int.Parse(Course.SelectedValue));
+                BindAlignedToSkill(int.Parse(Course.SelectedValue));
             }
+            else
+            {
+                BindHiredPerIndustry();
+                BindHiredPerJobInIndustry(int.Parse(IndustryJob.SelectedValue));
+                BindAlumniEmployment(int.Parse(Course.SelectedValue));
+                BindIsConnectedToCourse(int.Parse(Course.SelectedValue));
+                BindSalaryRange(int.Parse(Course.SelectedValue));
+                BindAlignedToSkill(int.Parse(Course.SelectedValue));
+            }            
         }
         private void BindHiredPerIndustry()
         {
@@ -146,15 +159,121 @@ namespace ctuconnect
             BindHiredPerJobInIndustry(industry_accID);
             BindHiredPerIndustry();
         }
-
-        protected void Department_SelectedIndexChanged(object sender, EventArgs e)
+        void BindDepartment()
         {
-
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DEPARTMENT", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            Department.DataSource = ds;
+            Department.DataValueField = "department_ID";
+            Department.DataTextField = "departmentName";
+            Department.DataBind();
+            Department.Items.Insert(0, new ListItem("All", "0"));
+        }
+        protected void Department_SelectedIndexChanged(object sender, EventArgs e)
+        { 
+            if(Department.SelectedValue == "0")
+            {
+                Response.Redirect("TracerDashboard.aspx");
+            }
+            SqlCommand cmd = new SqlCommand("SELECT * FROM PROGRAM WHERE department_ID = '" + Department.SelectedValue + "'", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            Course.DataSource = ds;
+            Course.DataValueField = "course_ID";
+            Course.DataTextField = "course";
+            Course.DataBind();
+            Course.SelectedIndex = 0;
         }
 
         protected void Course_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void BindAlumniEmployment(int course_ID)
+        {
+            Chart3.Series["EmploymentType"].Points.Clear();
+            SqlCommand cmd = new SqlCommand();
+            if (course_ID == 0)
+            {
+                cmd = new SqlCommand("SELECT employmentStatus, COUNT(id) AS employmentCount" +
+                " FROM ALUMNI_EMPLOYMENTFORM" +
+                " GROUP BY employmentStatus;", conDB);
+            }
+            else
+            {
+                cmd = new SqlCommand("SELECT employmentStatus, COUNT(id) AS employmentCount" +
+                " FROM ALUMNI_EMPLOYMENTFORM LEFT JOIN STUDENT_ACCOUNT ON ALUMNI_EMPLOYMENTFORM.student_accID = STUDENT_ACCOUNT.student_accID  " +
+                " WHERE course_ID = '" + course_ID + "'   GROUP BY employmentStatus;", conDB);
+            }
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            Chart3.Series["EmploymentType"].Points.DataBind(dt.DefaultView, "employmentStatus", "employmentCount", "");
+        }
+        private void BindIsConnectedToCourse(int course_ID)
+        {
+
+            Chart4.Series["IsConnectedCourse"].Points.Clear();
+            SqlCommand cmd = new SqlCommand();
+            if (course_ID == 0)
+            {
+               cmd = new SqlCommand("SELECT isConnectedToCourse, COUNT(id) AS isConnectedCount" +
+                " FROM ALUMNI_EMPLOYMENTFORM GROUP BY isConnectedToCourse;", conDB);
+            }else
+            {
+                cmd = new SqlCommand("SELECT isConnectedToCourse, COUNT(id) AS isConnectedCount" +
+               " FROM ALUMNI_EMPLOYMENTFORM LEFT JOIN STUDENT_ACCOUNT ON ALUMNI_EMPLOYMENTFORM.student_accID = STUDENT_ACCOUNT.student_accID " +
+               " WHERE course_ID = '" + course_ID + "' GROUP BY isConnectedToCourse;", conDB);
+            }
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            Chart4.Series["IsConnectedCourse"].Points.DataBind(dt.DefaultView, "isConnectedToCourse", "isConnectedCount", "");
+        }
+        private void BindSalaryRange(int course_ID)
+        {
+
+            Chart5.Series["SalaryRange"].Points.Clear();
+            SqlCommand cmd = new SqlCommand();
+            if (course_ID == 0)
+            {
+                cmd = new SqlCommand("SELECT SalaryRange, COUNT(id) AS SalaryCount" +
+                 " FROM ALUMNI_EMPLOYMENTFORM GROUP BY SalaryRange;", conDB);
+            }
+            else
+            {
+                cmd = new SqlCommand("SELECT SalaryRange, COUNT(id) AS SalaryCount" +
+               " FROM ALUMNI_EMPLOYMENTFORM LEFT JOIN STUDENT_ACCOUNT ON ALUMNI_EMPLOYMENTFORM.student_accID = STUDENT_ACCOUNT.student_accID " +
+               " WHERE course_ID = '" + course_ID + "' GROUP BY SalaryRange;", conDB);
+            }
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            Chart5.Series["SalaryRange"].Points.DataBind(dt.DefaultView, "SalaryRange", "SalaryCount", "");
+        }
+        private void BindAlignedToSkill(int course_ID)
+        {
+            Chart6.Series["AlignedToSkill"].Points.Clear();
+            SqlCommand cmd = new SqlCommand();
+            if (course_ID == 0)
+            {
+                cmd = new SqlCommand("SELECT isAlignedToSkill, COUNT(id) AS AlignedToSkillCount" +
+                 " FROM ALUMNI_EMPLOYMENTFORM GROUP BY isAlignedToSkill;", conDB);
+            }
+            else
+            {
+                cmd = new SqlCommand("SELECT isAlignedToSkill, COUNT(id) AS AlignedToSkillCount" +
+               " FROM ALUMNI_EMPLOYMENTFORM LEFT JOIN STUDENT_ACCOUNT ON ALUMNI_EMPLOYMENTFORM.student_accID = STUDENT_ACCOUNT.student_accID " +
+               " WHERE course_ID = '" + course_ID + "' GROUP BY isAlignedToSkill;", conDB);
+            }
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            Chart6.Series["AlignedToSkill"].Points.DataBind(dt.DefaultView, "isAlignedToSkill", "AlignedToSkillCount", "");
         }
     }
 }

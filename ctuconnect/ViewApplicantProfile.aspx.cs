@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -12,26 +13,25 @@ namespace ctuconnect
     public partial class ViewApplicantProfile : System.Web.UI.Page
     {
         string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
+        private DataTable dtFeedback = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!IsPostBack)
             {
                 if (Request.QueryString["student_accID"] != null)
                 {
-
                     string studentAccID = Request.QueryString["student_accID"];
                     DisplayStudent(studentAccID);
-
+                    this.LoadStudentfeedback();
                 }
                 else
                 {
 
                 }
+                
             }
 
         }
-
 
         private void DisplayStudent(string studentaccID)
         {
@@ -45,14 +45,12 @@ namespace ctuconnect
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    disp_name.Text = reader["firstName"].ToString() + " " + reader["midInitials"].ToString() + " " + reader["lastName"].ToString();
-                    disp_studentStatus.Text = reader["studentStatus"].ToString();
+                    disp_name.Text = reader["firstName"].ToString() + " " + reader["lastName"].ToString();
+                    disp_status.Text = reader["studentStatus"].ToString();
                     LoadProfilePicture(reader["studentPicture"].ToString());
-                    disp_course.Text = reader["course"].ToString();
                     string resume = reader["resumeFile"].ToString();
-                    disp_studentID.Text = reader["studentId"].ToString();
                     disp_address.Text = reader["address"].ToString();
-                    disp_contactNumber.Text = reader["contactNumber"].ToString();
+                    disp_email.Text = reader["email"].ToString();
 
                 }
                 reader.Close();
@@ -71,5 +69,27 @@ namespace ctuconnect
             }
         }
 
+
+        private void LoadStudentfeedback()
+        {
+            
+            string studentAccID = Request.QueryString["student_accID"];
+            using (var db = new SqlConnection(conDB))
+            {
+                string query = "SELECT * FROM STUDENT_FEEDBACK JOIN INDUSTRY_ACCOUNT ON STUDENT_FEEDBACK.sendfrom = INDUSTRY_ACCOUNT.industry_accID WHERE sendto = @SendTo ORDER BY dateCreated DESC";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@SendTo", studentAccID);
+
+                db.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dtFeedback);
+            }
+
+            listfeedback.DataSource = dtFeedback;
+            listfeedback.DataBind();
+
+            
+        }
+        
     }
 }

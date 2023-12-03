@@ -42,31 +42,31 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label disp_name;
 
         /// <summary>
-        /// disp_studentID control.
+        /// disp_address control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label disp_studentID;
+        protected global::System.Web.UI.WebControls.Label disp_address;
 
         /// <summary>
-        /// disp_studentStatus control.
+        /// disp_email control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label disp_studentStatus;
+        protected global::System.Web.UI.WebControls.Label disp_email;
 
         /// <summary>
-        /// disp_course control.
+        /// Label4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label disp_course;
+        protected global::System.Web.UI.WebControls.Label Label4;
 
         /// <summary>
         /// lblResume control.
@@ -78,30 +78,48 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label lblResume;
 
         /// <summary>
-        /// disp_contactNumber control.
+        /// btnEdit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label disp_contactNumber;
+        protected global::System.Web.UI.WebControls.Button btnEdit;
 
         /// <summary>
-        /// disp_address control.
+        /// disp_status control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label disp_address;
+        protected global::System.Web.UI.WebControls.Label disp_status;
 
         /// <summary>
-        /// Label3 control.
+        /// btnEditStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Button btnEditStatus;
+
+        /// <summary>
+        /// listfeedback control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListView listfeedback;
+
+        /// <summary>
+        /// ListViewPager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataPager ListViewPager;
     }
 }

@@ -231,21 +231,31 @@ namespace ctuconnect
             }
             return selectedValue;
         }
+        private int GetSelectedRadioButtonValue(string groupName)
+        {
+            // Use Request.Form to get the selected value of the radio button group
+            string selectedValue = Request.Form[groupName];
+            // Convert the selected value to an integer
+            if (int.TryParse(selectedValue, out int result))
+            {
+                return result;
+            }
+            return 0; // Default value if parsing fails
+        }
 
         protected void btnsubmit_Command(object sender, CommandEventArgs e)
         {
-            // Store values in session
-            Session["Productivity"] = Request.Form["productivity"];
-            Session["Cooperation"] = Request.Form["cooperation"];
-            Session["AbilityToFollow"] = Request.Form["abilityToFollow"];
-            Session["AbilityToGet"] = Request.Form["abilityToGet"];
-            Session["Category5"] = Request.Form["category5"];
-            Session["Category6"] = Request.Form["category6"];
-            Session["Category7"] = Request.Form["category7"];
-            Session["Category8"] = Request.Form["category8"];
-            Session["Category9"] = Request.Form["category9"];
-            Session["Category10"] = Request.Form["category10"];
 
+            int Productivity = int.Parse(Session["Productivity"].ToString());
+            int Cooperation = int.Parse(Session["Cooperation"].ToString());
+            int AbilityToFollow = int.Parse(Session["AbilityToFollow"].ToString());
+            int AbilityToGet = int.Parse(Session["AbilityToGet"].ToString());
+            int Category5 = int.Parse(Session["Category5"].ToString());
+            int Category6 = int.Parse(Session["Category6"].ToString());
+            int Category7 = int.Parse(Session["Category7"].ToString());
+            int Category8 = int.Parse(Session["Category8"].ToString());
+            int Category9 = int.Parse(Session["Category9"].ToString());
+            int Category10 = int.Parse(Session["Category10"].ToString());
 
 
             // Get data from form controls
@@ -269,8 +279,10 @@ namespace ctuconnect
                 conDB.Open();
 
                 // Replace 'YourTable' with your actual table name and column names
-                string insertQuery = "INSERT INTO EVALUATION (student_accID, major, trainingPeriod, totalScore, gradeEquivalent, describeStrength, describeImprovement, industry_accID, cooperatingAgency, address, dateEvaluated) " +
-                           "VALUES (@student_accID, @Course, @TrainingPeriod, @Score, @Grade, @Strengths, @Improvement,  @industry_accID, @IndustryName, @IndLocation, @dateEval)";
+                string insertQuery = "INSERT INTO EVALUATION (student_accID, major, trainingPeriod, totalScore, gradeEquivalent, describeStrength, describeImprovement, industry_accID, cooperatingAgency, address, dateEvaluated," +
+                    " productivity, cooperation, abilityTofollow, abilityToget, initiative, attendance, qualityOfwork, appearance, dependability, overAllperformance) " +
+                           "VALUES (@student_accID, @Course, @TrainingPeriod, @Score, @Grade, @Strengths, @Improvement,  @industry_accID, @IndustryName, @IndLocation, @dateEval, " +
+                           "@productivity, @cooperation, @abilityTofollow, @abilityToget,@initiative,@attendance,@qualityOfwork,@appearance, @dependability, @overAllperformance)";
 
                 using (SqlCommand cmd = new SqlCommand(insertQuery, conDB))
                 {
@@ -293,6 +305,16 @@ namespace ctuconnect
                             cmd.Parameters.AddWithValue("@IndustryName", industryName);
                             cmd.Parameters.AddWithValue("@IndLocation", indLocation);
                             cmd.Parameters.AddWithValue("@dateEval", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@productivity", Productivity);
+                            cmd.Parameters.AddWithValue("@cooperation", Cooperation);
+                            cmd.Parameters.AddWithValue("@abilityTofollow", AbilityToFollow);
+                            cmd.Parameters.AddWithValue("@abilityToget", AbilityToGet);
+                            cmd.Parameters.AddWithValue("@initiative", Category5);
+                            cmd.Parameters.AddWithValue("@attendance", Category6);
+                            cmd.Parameters.AddWithValue("@qualityOfwork", Category7);
+                            cmd.Parameters.AddWithValue("@appearance", Category8);
+                            cmd.Parameters.AddWithValue("@dependability", Category9);
+                            cmd.Parameters.AddWithValue("@overAllperformance", Category10);
                             cmd.ExecuteNonQuery();
                         }
                         else
@@ -318,6 +340,23 @@ namespace ctuconnect
 
 
             }
+        }
+
+        protected void btnnext1_Click(object sender, EventArgs e)
+        {
+            // Store values in session
+            Session["Productivity"] = GetSelectedRadioButtonValue("productivity");
+            Session["Cooperation"] = GetSelectedRadioButtonValue("cooperation");
+            Session["AbilityToFollow"] = GetSelectedRadioButtonValue("abilityToFollow");
+            Session["AbilityToGet"] = GetSelectedRadioButtonValue("abilityToGet");
+            Session["Category5"] = GetSelectedRadioButtonValue("category5");
+            Session["Category6"]  = GetSelectedRadioButtonValue("category6");
+            Session["Category7"] = GetSelectedRadioButtonValue("category7");
+            Session["Category8"] = GetSelectedRadioButtonValue("category8");
+            Session["Category9"]  = GetSelectedRadioButtonValue("category9");
+            Session["Category10"] = GetSelectedRadioButtonValue("category10");
+
+            btnsubmit.Visible = true;
         }
     }
 }

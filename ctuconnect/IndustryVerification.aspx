@@ -160,7 +160,7 @@
                      <div class="container-fluid" >
                     <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p><br />
                      </div>
-                    <div class="container-fluid">
+                    <div class="container-fluid d-flex flex-column">
                     <asp:ListView ID="IndustryListView" runat="server" OnItemDataBound="IndustryListView_ItemDataBound">
                 <LayoutTemplate>
                     <table style="font-size: 18px; line-height: 30px;">
@@ -191,9 +191,9 @@
                          <td><%#Eval("Verify")%></td>
                         <td><%#Eval("Deactivate")%></td>
                         <td>
-                            <asp:LinkButton ID="Verify" runat="server" CssClass="btn btn-info" OnCommand="Verify_Command" CommandArgument='<%#Eval("industry_accID")%>'></asp:LinkButton>
+                            <asp:LinkButton ID="Verify" runat="server" CssClass="btn btn-info" OnCommand="Verify_Command" OnClientClick="confirmVerify();" CommandArgument='<%#Eval("industry_accID")%>'></asp:LinkButton>
                            </td>
-                            <td> <asp:LinkButton ID="Deactivate" runat="server" OnCommand="Deactivate_Command"  CommandArguent='<%#Eval("industry_accID")%>'></asp:LinkButton>
+                            <td> <asp:LinkButton ID="Deactivate" runat="server" OnCommand="Deactivate_Command" OnClientClick="confirmDeactivate();"  CommandArguent='<%#Eval("industry_accID")%>'></asp:LinkButton>
 
                         </td>
                     </tr>
@@ -206,5 +206,22 @@
        
         </div>
     </div>
+    <script type="text/javascript">
+    function confirmVerify() {
+        if (confirm("Are you sure you want to verify this user?")) {
+                
+        } else {
+            __doPostBack();
+            alert("You cancelled the operation.");
+        }
+     }
+        function confirmDeactivate() {
+            if (confirm("Are you sure you want to proceed?")) {
 
+            } else {
+                __doPostBack();
+                alert("You cancelled the operation.");
+            }
+        }
+    </script>
 </asp:Content>
