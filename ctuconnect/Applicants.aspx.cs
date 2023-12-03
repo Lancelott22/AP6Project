@@ -606,7 +606,7 @@ namespace ctuconnect
                             smtp.Port = 587;
                             smtp.Send(mm);
 
-                            Response.Write("<script>alert('Data is Save.'); history.back();</script>");
+                            Response.Write("<script>alert('Data is Save.')</script>");
                         }
                     }
                 }
@@ -980,6 +980,12 @@ namespace ctuconnect
                             DateTime dateStartApplicant = Convert.ToDateTime(reader["dateStart"]);
                             string dateStart = dateStartApplicant.ToString("MM/dd/yyyy");
                             string requirementApplicant = HttpUtility.HtmlDecode(reader["requirements"].ToString());
+                            int student_accID = Convert.ToInt32(reader["student_accID"].ToString());
+                            int industryID = Convert.ToInt32(reader["industry_accID"].ToString());
+                            object isMatchTo = reader["isMatchToSkills"].ToString();
+                            bool isMatchToSkills = Convert.ToBoolean(isMatchTo);
+
+
 
                             reader.Close();
 
@@ -1009,8 +1015,39 @@ namespace ctuconnect
                             smtp.Port = 587;
                             smtp.Send(mm);
 
-                            Response.Write("<script>alert('Data is Save.')</script>");
+
+                            insertInternshipForm(student_accID, industryID, isMatchToSkills);
                         }
+                    }
+                }
+            }
+        }
+
+        void insertInternshipForm(int student_accID, int industryID, bool isMatchToSkills)
+        {
+            using (SqlConnection connection = new SqlConnection(conDB))
+            {
+                
+                connection.Open();
+                using (var dmd = connection.CreateCommand())
+                { //SQL Statement
+                    dmd.CommandType = CommandType.Text;
+                    dmd.CommandText = "INSERT INTO INTERNSHIPFORM (student_accID, industry_accID, isMatchToSkills)  "
+                                    + " VALUES (@StudentAccID,@IndustryAccID,@IsMatchToSkills)";
+
+                    dmd.Parameters.AddWithValue("@StudentAccID", student_accID);
+                    dmd.Parameters.AddWithValue("@IndustryAccID", industryID);
+                    dmd.Parameters.AddWithValue("@IsMatchToSkills", isMatchToSkills);
+                    
+
+                    var ctr = dmd.ExecuteNonQuery();
+                    if (ctr > 0)
+                    {
+                        Response.Write("<script>alert('Data is Save.')</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script>alert('Data is not save'); history.back();</script>");
                     }
                 }
             }
