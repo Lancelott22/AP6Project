@@ -65,15 +65,17 @@
                     </div>
                     <!-- Username -->
                     <div class="col-lg-12 align-self-end">       
-                        <asp:TextBox ID="txtusername" CssClass="txtbox" runat="server" placeholder="Email address" Height="40px" Width="285px"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Enter email" ControlToValidate="txtusername" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
+                        <asp:TextBox ID="txtusername" CssClass="txtbox" runat="server" placeholder="Email address" Height="40px" Width="285px"></asp:TextBox><br />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" forecolor="#F7941F" runat="server" ErrorMessage="Enter email" Display="Dynamic" ControlToValidate="txtusername" ></asp:RequiredFieldValidator>
                     </div>
+
                     <div class="col-lg-12 align-self-end">
+                        <br />
                     </div> 
                     <!-- Password -->
                     <div class="col-lg-12 align-self-end">
-                        <asp:TextBox ID="txtpwd" CssClass="txtbox" runat="server" TextMode="Password" placeholder="Password" Height="40px" Width="285px"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Enter password" ControlToValidate="txtpwd" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator><br />
+                        <asp:TextBox ID="txtpwd" CssClass="txtbox" runat="server" TextMode="Password" placeholder="Password" Height="40px" Width="285px"></asp:TextBox><br />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" forecolor="#F7941F" runat="server" ErrorMessage="Enter password" ControlToValidate="txtpwd" ></asp:RequiredFieldValidator><br />
                         <asp:Label ID="LoginErrorMessage" runat="server" Text="The password or email is incorrect!" CssClass="connect"></asp:Label>
                     </div>
                     <div>
@@ -87,11 +89,7 @@
             </div>
 
        
-        <br /><br /><br /><br /><br /><br />
-        <section class="row align-items-center justify-content-center text-center">
-            <p class="ask">Do not have an account yet? <a href="RegisterStudent.aspx" class="link">Register here</a></p>
-        </section>
-        <br /><br />
+        
        
     </main>
     

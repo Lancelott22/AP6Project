@@ -16,7 +16,7 @@ namespace ctuconnect
         {
             if (!IsPostBack && Session["Username"] != null)
             {
-                Response.Redirect("Home.aspx");
+                Response.Redirect("AdminDashboard.aspx");
             }
             LoginErrorMessage.Visible = false;
 
@@ -37,26 +37,34 @@ namespace ctuconnect
 
         protected void LogIn_Click(object sender, EventArgs e)
         {
+            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
             try
             {
 
                 string loginUser = txtusername.Text;
                 string loginPassword = txtpwd.Text;
-
-                using (conDB)
+                if (!string.IsNullOrEmpty(loginUser) && !string.IsNullOrEmpty(loginPassword))
                 {
-                    conDB.Open();
+                    using (con)
+                    {
+                        con.Open();
 
-                    string query = "SELECT COUNT(1) FROM ADMIN_ACCOUNT WHERE username = @username AND password = @password";
-                    SqlCommand command = new SqlCommand(query, conDB);
-                    command.Parameters.AddWithValue("@username", loginUser);
-                    command.Parameters.AddWithValue("@password", loginPassword);
-                    int count = Convert.ToInt32(command.ExecuteScalar());
+                        string query = "SELECT COUNT(1) FROM ADMIN_ACCOUNT WHERE username = @username AND password = @password";
+                        using(SqlCommand command = new SqlCommand(query, con))
+                        {
+                            command.Parameters.AddWithValue("@username", loginUser);
+                            command.Parameters.AddWithValue("@password", loginPassword);
+                            int count = Convert.ToInt32(command.ExecuteScalar());
 
-                    Session["Username"] = txtusername.Text;
-                    Response.Redirect("AdminDashboard.aspx");
-                    conDB.Close();
+                            Session["Username"] = txtusername.Text;
+                            Response.Redirect("AdminDashboard.aspx");
+                            con.Close();
+                        }
+                        
+                        
+                    }
                 }
+                    
             }
             catch
             {
