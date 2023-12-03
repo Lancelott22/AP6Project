@@ -41,7 +41,7 @@ namespace ctuconnect
         void BindTable()
         {
 
-            string query = "SELECT INDUSTRY_ACCOUNT.industryName, INDUSTRY_ACCOUNT.location, CONTACT_PERSON.fName + ' ' + CONTACT_PERSON.LNAme AS contactPerson, CONTACT_PERSON.contactNumber, CONTACT_PERSON.contactEmail " +
+            string query = "SELECT INDUSTRY_ACCOUNT.industry_accID, INDUSTRY_ACCOUNT.industryName, INDUSTRY_ACCOUNT.location, CONTACT_PERSON.fName + ' ' + CONTACT_PERSON.LNAme AS contactPerson, CONTACT_PERSON.contactNumber, CONTACT_PERSON.contactEmail " +
             "FROM INDUSTRY_ACCOUNT  JOIN CONTACT_PERSON ON INDUSTRY_ACCOUNT.industry_accID = CONTACT_PERSON.industry_accID ORDER BY INDUSTRY_ACCOUNT.industry_accID DESC ";
             SqlCommand cmd = new SqlCommand(query, conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -49,8 +49,8 @@ namespace ctuconnect
             da.Fill(ds);
 
             // Bind the DataTable to the GridView
-            dataRepeater.DataSource = ds;
-            dataRepeater.DataBind();
+            partneredIndustries.DataSource = ds;
+            partneredIndustries.DataBind();
 
         }
         protected void SignOut_Click(object sender, EventArgs e)

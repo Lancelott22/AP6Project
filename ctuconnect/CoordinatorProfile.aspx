@@ -299,13 +299,14 @@
             <asp:TableCell Style="padding:0px 5px 0px 40px">
                <div class="display-container">
                  <h1 class="title">List of Interns</h1>
-                   <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
+                   <p style="float:right;">Search <asp:Textbox runat="server" ID="searchInput" Style="border-color:#c1beba; border-width:1px;" OnTextChanged="SearchInternInfo" AutoPostBack="true" EnableViewState="true"/></p>
                     <div class="col-lg-5 order-1 order-lg-2 topnav">
-                        <p style="float:left;">Academic Year <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="true" Style="width:90px;" CssClass="sort-dropdown">
-     <asp:ListItem Text="2023" Value="ColumnName1"></asp:ListItem>
-     <asp:ListItem Text="2024" Value="ColumnName2"></asp:ListItem>
- </asp:DropDownList></p>
-<asp:DropDownList ID="programList" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="program_SelectedIndexChanged"></asp:DropDownList>
+                    <%-- <asp:DropDownList ID="statusList" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="status_SelectedIndexChanged">
+                         <asp:ListItem Text="Hired" Value="1" />
+                         <asp:ListItem Text="Not Hired" Value="0" />
+                     </asp:DropDownList>--%>
+
+                    <asp:DropDownList ID="programList" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="program_SelectedIndexChanged"></asp:DropDownList>
                        <div class="bulk-action">
                      <asp:LinkButton ID="btnEdit" runat="server" CssClass="edit-button" OnClick="Edit_Click">
                         <i class="fas fa-edit"></i> Edit
@@ -339,7 +340,33 @@
                                         <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
                                     </tbody>
                                    </table>
-                          </LayoutTemplate>         
+                          </LayoutTemplate> 
+                                   <EmptyDataTemplate>
+                                    <table class="table-list">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <asp:CheckBox ID="chkSelectAll" runat="server" onclick="toggleSelectAll(this);" />
+                                                </th>
+                                                <th>Student ID</th>
+                                                <th>Last name</th>
+                                                <th>First name</th>
+                                                <th>Middle initial</th>
+                                                <th>Program enrolled</th>
+                                                <th>Contact Number</th>
+                                                <th>Email</th>
+                                                <th>Status</th>
+                                                <th>Rendered Hours</th>
+                                                <th>Evaluation</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:center; font-size:18px;" colspan="10">No data available</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </EmptyDataTemplate>
                                         <Itemtemplate>
                                             <tr class="clickableRow" onclick="toggleHighlightAndCheckbox(document.getElementById('<%# ((ListViewDataItem)Container).FindControl("chkSelect").ClientID %>'));">
                                                 <td class="datas">
@@ -378,7 +405,7 @@
                                                     <asp:Label ID="hourslabel" runat="server" Text='<%# Eval("renderedHours") %>'></asp:Label>
                                                 </td>
                                                 <td class="datas">
-                                                    <asp:Button ID="EvaluationBtn" CssClass="evaluateButton" runat="server" Text='<%# Eval("evaluationRequest") %>' OnCLick="Evaluate_BtnClick" />
+                                                    <asp:Button ID="EvaluationBtn" runat="server" Text='<%# Eval("evaluationRequest") %>' CommandArgument='<%# Eval("student_accID") %>' CommandName='<%# Eval("id") %>'  OnCommand="EvaluationBtn_Command" CssClass='<%# GetButtonCssClass(Eval("evaluationRequest")) %>' />
                                                 
                                                 </td>
                                             </tr>

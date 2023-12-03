@@ -199,7 +199,7 @@
 
         .table-list{
          border-collapse: collapse;
-        font-size:15px; 
+        font-size:14px; 
         height:auto; 
         width:100%;
         color:dimgray;
@@ -493,6 +493,8 @@ width:100%;
                          <ContentTemplate>
                         <asp:TextBox ID="txtDateEnded" runat="server" TextMode="Date" CssClass="txtbox" Width="100px" Height="25px" AutoPostBack="true" OnTextChanged="TxtDate_TextChanged" ></asp:TextBox><br />
                         <asp:Label ID="dateErrorlabel" runat="server"  Font-Size="Medium" ForeColor="Red" style="font-size:11px;" ></asp:Label>
+                        <asp:Label ID="dateErrorlabel2" runat="server"  Font-Size="Medium" ForeColor="Red" style="font-size:11px;" ></asp:Label>
+
                         </ContentTemplate>
                         </asp:UpdatePanel>
                         </div>

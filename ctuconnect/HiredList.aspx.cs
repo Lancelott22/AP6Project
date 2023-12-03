@@ -107,7 +107,7 @@ namespace ctuconnect
             using (var db = new SqlConnection(conDB))
             {
                 
-                string query = "SELECT lastName, firstName, dateStarted, position, resumeFile FROM HIRED_LIST WHERE jobType = 'job' AND  industry_accID = '" + industry_accID + "' ORDER BY id DESC";
+                string query = "SELECT lastName, firstName, dateStarted, position, resumeFile FROM HIRED_LIST WHERE jobType = 'fulltime' AND  industry_accID = '" + industry_accID + "' ORDER BY id DESC";
                 SqlCommand cmd = new SqlCommand(query, db);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
@@ -452,14 +452,23 @@ namespace ctuconnect
                     dateErrorlabel.Visible = true;
                     dateErrorlabel.Text = "date must not be earlier than date started";
                 }
+                else if (endDate >= DateTime.Now)
+                {
+                    dateErrorlabel2.Visible = true;
+                   /* dateErrorlabel.Visible = true;*/
+                    dateErrorlabel2.Text = "must not be future date";
+                    /*dateErrorlabel.Text = endDate.ToString();*/
+                }
                 else
                 {
                     dateErrorlabel.Visible = false;
+                    dateErrorlabel2.Visible = false;
                 }
             }
             else
             {
                 dateErrorlabel.Visible = false;
+                dateErrorlabel2.Visible = false;
             }
 
         }
@@ -467,30 +476,35 @@ namespace ctuconnect
         private DateTime? GetstartDate(string student_id)
         {
             DateTime? startDate = null; // Set a default value or handle null case
-            using (var db = new SqlConnection(conDB))
+            if (int.TryParse(student_id, out int studentIdAsInt))
             {
-                db.Open();
-                using (var cmd = db.CreateCommand())
+                using (var db = new SqlConnection(conDB))
                 {
-                    string sql = "SELECT dateStarted from HIRED_LIST WHERE student_accID = @studsID";
-                    cmd.CommandText = sql;
-                    cmd.Parameters.AddWithValue("@studsID", student_id);
-
-                    using (var reader = cmd.ExecuteReader())
+                    db.Open();
+                    using (var cmd = db.CreateCommand())
                     {
-                        if (reader.Read())
+                        string sql = "SELECT dateStarted from HIRED_LIST WHERE student_accID = @studsID";
+                        cmd.CommandText = sql;
+                        cmd.Parameters.AddWithValue("@studsID", studentIdAsInt);
+
+                        using (var reader = cmd.ExecuteReader())
                         {
-                            // Check if the startDate column is not null in the database
-                            if (!reader.IsDBNull(0))
+                            if (reader.Read())
                             {
-                                startDate = reader.GetDateTime(0);
+                                // Check if the startDate column is not null in the database
+                                if (!reader.IsDBNull(0))
+                                {
+                                    startDate = reader.GetDateTime(0);
+                                }
                             }
                         }
                     }
                 }
+               S
             }
             return startDate;
         }
+        
         protected void ListView2_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
             Button editbtn = (Button)sender;

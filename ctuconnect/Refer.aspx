@@ -82,18 +82,13 @@
             .display-container{
                 font-family: 'Poppins', sans-serif;
                 background-color:white; 
-                width:1500px;
+                width:1550px;
                 top:0;
                 bottom:0;
                 padding: 2% ;
                 overflow: auto;
                 /*background-color:white;*/
-                height:550px;
-                /*overflow: auto;
-                float:left;
-                margin-left:25%;
-                position:relative;
-                padding: 4% 0% 0% 6%;*/
+                height:800px;
             }
             
                 .display-container {
@@ -252,20 +247,12 @@
         column-gap: 5px;
     }
     .status-pending {
-    background-color: #F9E9B7; 
-    color: #F3C129; 
-    margin-right:2px;
-    border-radius: 25px; 
-    padding: 1px 3px; 
+    color:red;
     text-align: center;
     cursor: pointer;
 }
         .status-approved {
-    background-color: #d3ffd3; 
-    color: #2c9a5d; 
-    margin-right:2px;
-    border-radius: 25px;
-    padding: 1px 3px; 
+    color:green;
     text-align: center;
     cursor: pointer;
 }
@@ -273,23 +260,32 @@
         padding:10px;
     }
     th{
-       border-collapse: collapse;
-        border-color:white;
+         border: 1px solid;
+         border-color:#c4c4c4;
         background-color:#f4f4fb;
+        padding:5px;
 
     }
+/*    td{
+        border: 1px solid;
+        border-color:dimgray;
+        padding-left:5px;
+    }*/
     .datas{
-          border: 5px solid;
-          border-color:white;
+        border: 1px solid;
+        border-color:#c4c4c4;
+        padding-left:5px;
          color:black;
+         cursor:default;
     }
-    
+
     .table-list{
-         border-collapse: collapse;
+        border-collapse: collapse;        
         font-size:13px; 
         height:auto; 
         width:100%;
         color:dimgray;
+        padding-right:4px;
     }
     
     </style>
@@ -325,31 +321,7 @@
                         </asp:DropDownList>
                         </p>
                             <asp:Button ID="addreferstudent" runat="server" Text="Add Refer Student" AutoPostBack="false" OnClick="addRefer_Click" style="float:right;"    />
-                           <%-- <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p> --%>
-                           <%-- <asp:gridview id="gridview1" runat="server" rowstyle-cssclass="gridviewrowstyle" style="color:black; " autogeneratecolumns="false"  cssclass="gridview-style"
-                                allowpaging="true"  backcolor="#ffffff" bordercolor="#c1beba" borderstyle="solid" borderwidth="1px" cellpadding="50" cellspacing="50" 
-                                font-bold="false" font-size="13px" height="100%" width="100%" showheaderwhenempty="true" onrowdatabound="gridview1_rowdatabound">  
-                            <pagerstyle  horizontalalign="center" />
-                            <headerstyle font-bold="false"  backcolor="#d3d3d3" font-size="12px" forecolor="black" height="28px"  horizontalalign="center" verticalalign="middle"/>
-                                <emptydatatemplate>
-                                     <p>no data available</p>
-                                </emptydatatemplate>
-                            <columns  >
-                                        <asp:templatefield headertext="no." itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px">
-                                            <itemtemplate>
-                                                <%# %>
-                                            </itemtemplate>
-                                        </asp:templatefield>
-                                        <asp:boundfield datafield="lastname" headertext="last name" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
-                                        <asp:boundfield datafield="firstname" headertext="first name" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
-                                        <asp:boundfield datafield="midinitials" headertext="middle initial" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
-                                        <asp:boundfield datafield="industryname" headertext="industry" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" />
-                                        <asp:boundfield datafield="referredby" headertext="referred by" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" />
-                                        <asp:boundfield datafield="endorsementletter" headertext="endorsement letter" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" />
-                                        <asp:boundfield datafield="datereferred" headertext="date" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" />
-                                        <asp:boundfield datafield="referralstatus" headertext="status" headerstyle-horizontalalign="center" itemstyle-horizontalalign="center" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"  itemstyle-cssclass="status-column" />
-                            </columns>
-                            </asp:gridview>--%>
+                           
                               <asp:ListView ID="referredListView" runat="server">
                                     <LayoutTemplate>
                                       <table  class="table-list">
@@ -369,19 +341,19 @@
                                     </table>
                                 </LayoutTemplate>
                                   <ItemTemplate>
-                                                <tr class="datas">
-                                                    <td><%# Eval("lastName") %></td>
-                                                    <td><%# Eval("firstName") %></td>
-                                                    <td><%# Eval("midInitials") %></td>
-                                                    <td><%# Eval("industryName") %></td>
-                                                    <td><%# Eval("referredBy") %></td>
-                                                    <td>
+                                                <tr >
+                                                    <td class="datas"><%# Eval("lastName") %></td>
+                                                    <td class="datas"><%# Eval("firstName") %></td>
+                                                    <td class="datas"><%# Eval("midInitials") %></td>
+                                                    <td class="datas"><%# Eval("industryName") %></td>
+                                                    <td class="datas"><%# Eval("referredBy") %></td>
+                                                    <td class="datas">
                                                         <asp:Button ID="btnEndorsementLetterButton" runat="server" Text="View Referral Letter"
                                                         OnCommand="ReviewLetter_Command" CommandName="Review"  
                                                         CommandArgument='<%# Eval("referralLetter") %>'/>
                                                     </td>
-                                                    <td><%# Eval("dateReferred") %></td>
-                                                    <td class='<%# GetStatusCssClass(Eval("ReferralStatus").ToString()) %>' ><%# Eval("ReferralStatus") %></td>
+                                                    <td class="datas"><%# Eval("dateReferred") %></td>
+                                                    <td class='datas <%# GetStatusCssClass(Eval("ReferralStatus").ToString()) %>' ><%# Eval("ReferralStatus") %></td>
                                                 </tr>
                                             </ItemTemplate>
                             </asp:ListView>
