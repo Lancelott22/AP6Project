@@ -11,7 +11,7 @@ namespace ctuconnect
 {
 
 
-    public partial class ViewEvaluation1
+    public partial class ViewEvaluation
     {
 
         /// <summary>

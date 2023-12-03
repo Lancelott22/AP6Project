@@ -10,13 +10,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.IO;
-using iTextSharp.tool.xml.html;
 using System.Text;
-using iTextSharp.text;
-using Document = iTextSharp.text.Document;
-using iTextSharp.text.html.simpleparser;
-using iTextSharp.text.pdf;
-using PdfWriter = iTextSharp.text.pdf.PdfWriter;
 using iText.Html2pdf;
 
 namespace ctuconnect
@@ -28,7 +22,7 @@ namespace ctuconnect
         {
             if (!IsPostBack)
             {
-                if (!IsPostBack && Request.QueryString["student_accID"] != null)
+                if (!IsPostBack && Request.QueryString["hired_id"] != null && Request.QueryString["student_accID"] != null)
                 {
                     string student_accID = Request.QueryString["student_accID"];
                     getEvalInfo();
@@ -37,8 +31,6 @@ namespace ctuconnect
                 SetSelectedRadioButtons();
             }
         }
-
-
         private void SetSelectedRadioButtons()
         {
             Dictionary<string, string> radioButtons = new Dictionary<string, string>
@@ -78,18 +70,19 @@ namespace ctuconnect
         void getEvalInfo()
         {
             string student_accID = Request.QueryString["student_accID"];
+            string hired_ID = Request.QueryString["hired_id"];
             using (conDB)
             {
                 conDB.Open();
-                string query = "SELECT STUDENT_ACCOUNT.firstName, STUDENT_ACCOUNT.lastName, EVALUATION.major, Evaluation.trainingPeriod, EVALUATION.totalScore, EVALUATION.gradeEquivalent, EVALUATION.describeStrength, EVALUATION.describeImprovement " +
+                string query = "SELECT *, STUDENT_ACCOUNT.firstName, STUDENT_ACCOUNT.lastName, EVALUATION.major, Evaluation.trainingPeriod, EVALUATION.totalScore, EVALUATION.gradeEquivalent, EVALUATION.describeStrength, EVALUATION.describeImprovement " +
                "FROM STUDENT_ACCOUNT " +
                "JOIN EVALUATION ON STUDENT_ACCOUNT.student_accID = EVALUATION.student_accID " +
-               "WHERE STUDENT_ACCOUNT.student_accID = @student_accID";
+               "WHERE STUDENT_ACCOUNT.student_accID = @student_accID and hired_id = @hired_id";
 
 
                 SqlCommand command = new SqlCommand(query, conDB);
                 command.Parameters.AddWithValue("@student_accID", student_accID);
-
+                command.Parameters.AddWithValue("@hired_id", hired_ID);
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -101,16 +94,21 @@ namespace ctuconnect
                     grade.Text = reader["gradeEquivalent"].ToString();
                     txtStrengths.Text = reader["describeStrength"].ToString();
                     txtImprovement.Text = reader["describeImprovement"].ToString();
-
+                    Session["Productivity"] = reader["productivity"].ToString();
+                    Session["Cooperation"] = reader["cooperation"].ToString();
+                    Session["AbilityToFollow"] = reader["abilityTofollow"].ToString();
+                    Session["AbilityToGet"] = reader["abilityToget"].ToString();
+                    Session["Category5"] = reader["initiative"].ToString();
+                    Session["Category6"] = reader["attendance"].ToString();
+                    Session["Category7"] = reader["qualityOfwork"].ToString();
+                    Session["Category8"] = reader["appearance"].ToString();
+                    Session["Category9"] = reader["dependability"].ToString();
+                    Session["Category10"] = reader["overAllperformance"].ToString();
                 }
-
                 conDB.Close();
                 reader.Close();
             }
         }
-
-
-
         protected void btnDownLoad_Click(object sender, EventArgs e)
         {
             // Get the HTML content from the ASPX page
@@ -123,8 +121,8 @@ namespace ctuconnect
                 ConverterProperties converterProperties = new ConverterProperties();
                 HtmlConverter.ConvertToPdf(htmlContent, memoryStream, converterProperties);
 
-                // Save the PDF file to the database
-                //SavePdfToDatabase(memoryStream.ToArray());
+              /*  // Save the PDF file to the database
+                SavePdfToDatabase(memoryStream.ToArray());*/
 
                 // Save the PDF file to disk or respond to the client
                 byte[] pdfBytes = memoryStream.ToArray();
@@ -152,15 +150,15 @@ namespace ctuconnect
         }
 
 
-        /* private string GetHtmlFromControl(Control control)
-         {
-             StringWriter sw = new StringWriter();
-             HtmlTextWriter writer = new HtmlTextWriter(sw);
-             control.RenderControl(writer);
-             return sw.ToString();
-         }*/
+        private string GetHtmlFromControl(Control control)
+        {
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter writer = new HtmlTextWriter(sw);
+            control.RenderControl(writer);
+            return sw.ToString();
+        }
 
-        /*
+
         // Helper method to save the PDF to the database
         private void SavePdfToDatabase(byte[] pdfBytes)
         {
@@ -195,8 +193,6 @@ namespace ctuconnect
                 }
             }
         }
-        */
-
 
         public override void VerifyRenderingInServerForm(Control control)
         {

@@ -499,7 +499,8 @@ namespace ctuconnect
         protected void ViewEvaluation_Command(object sender, CommandEventArgs e)
         {
             int student_accID = int.Parse(e.CommandArgument.ToString());
-            Response.Redirect("ViewEvaluation.aspx?student_accID=" + student_accID);
+            int hiredID = int.Parse(e.CommandName.ToString());
+            Response.Redirect("ViewEvaluation.aspx?student_accID=" + student_accID + "&hired_id=" + hiredID);
         }
     }
 }

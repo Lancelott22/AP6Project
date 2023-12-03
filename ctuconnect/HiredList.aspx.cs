@@ -130,7 +130,7 @@ namespace ctuconnect
             {
                 
 
-                string query = "SELECT student_accID,lastName, firstName, position, CONVERT(VARCHAR(10), HIRED_LIST.dateHired, 120) AS dateHired, CONVERT(VARCHAR(10), HIRED_LIST.dateStarted, 120) AS dateStarted, CONVERT(VARCHAR(10), HIRED_LIST.dateEnded, 120) AS dateEnded, internshipStatus, renderedHours, evaluationRequest " +
+                string query = "SELECT id,student_accID,lastName, firstName, position, CONVERT(VARCHAR(10), HIRED_LIST.dateHired, 120) AS dateHired, CONVERT(VARCHAR(10), HIRED_LIST.dateStarted, 120) AS dateStarted, CONVERT(VARCHAR(10), HIRED_LIST.dateEnded, 120) AS dateEnded, internshipStatus, renderedHours, evaluationRequest " +
                     "FROM HIRED_LIST WHERE jobType = 'internship' AND  industry_accID = '" + industry_accID + "' ORDER BY id DESC";
                 
                 SqlCommand cmd = new SqlCommand(query, db);
@@ -834,9 +834,13 @@ namespace ctuconnect
             Button Evalbtn = (Button)sender;
 
             if (Evalbtn.Text == "Requested"){
-                Response.Redirect("EvaluationForm.aspx?student_accID=" + e.CommandArgument.ToString());
+                Response.Redirect("EvaluationForm.aspx?student_accID=" + e.CommandArgument.ToString() + "&hired_id=" + e.CommandName.ToString());
             }
             else if (Evalbtn.Text == "Evaluated")
+            {
+                Response.Redirect("ViewEvaluation.aspx?student_accID=" + e.CommandArgument.ToString() + "&hired_id=" + e.CommandName.ToString());
+            }
+            else
             {
                 Evalbtn.Enabled = false;
             }
