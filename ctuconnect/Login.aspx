@@ -63,13 +63,12 @@
                     <div class="col-lg-12 align-self-end">
                         <p class="connect">Please Signin to continue</p>
                     </div>
-                    <!-- Email -->
+                    <!-- Username -->
                     <div class="col-lg-12 align-self-end">       
-                        <asp:TextBox ID="txtemail" CssClass="txtbox" runat="server" placeholder="Email address" Height="40px" Width="285px"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Enter email" ControlToValidate="txtemail" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
+                        <asp:TextBox ID="txtusername" CssClass="txtbox" runat="server" placeholder="Email address" Height="40px" Width="285px"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Enter email" ControlToValidate="txtusername" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
                     </div>
                     <div class="col-lg-12 align-self-end">
-                        <br />
                     </div> 
                     <!-- Password -->
                     <div class="col-lg-12 align-self-end">
