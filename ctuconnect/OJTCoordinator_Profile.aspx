@@ -130,7 +130,7 @@
     <asp:TableRow>
         <asp:TableCell  style="vertical-align: top;">
             <div class="profile-container">
-                <img src="images/industrypic.png" />
+                <asp:Image ID="CoordinatorImage" runat="server"/>
                     <p >OJT Coordinator</p>
                         <hr class="horizontal-line" />
                         <a  href="CoordinatorProfile.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
@@ -186,7 +186,7 @@
                             <td><asp:Label ID="coordLname" runat="server" Text=""></asp:Label></td>
                           </tr>
                             <tr>
-                              <th width="30%">Middle Initail</th>
+                              <th width="30%">Middle Initial</th>
                               <td width="2%">:</td>
                               <td><asp:Label ID="coordInitial" runat="server" Text=""></asp:Label></td>
                             </tr>

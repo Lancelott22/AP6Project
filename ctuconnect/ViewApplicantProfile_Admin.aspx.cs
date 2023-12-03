@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace ctuconnect
 {
-    public partial class ViewApplicantProfile : System.Web.UI.Page
+    public partial class ViewApplicantProfile_Admin : System.Web.UI.Page
     {
         string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
         private DataTable dtFeedback = new DataTable();
@@ -26,9 +26,9 @@ namespace ctuconnect
                 }
                 else
                 {
-                    Response.Redirect("LoginIndustry.aspx");
+                    Response.Redirect("Login.aspx");
                 }
-                
+
             }
 
         }
@@ -72,7 +72,7 @@ namespace ctuconnect
 
         private void LoadStudentfeedback()
         {
-            
+
             string studentAccID = Request.QueryString["student_accID"];
             using (var db = new SqlConnection(conDB))
             {
@@ -93,6 +93,5 @@ namespace ctuconnect
             }
 
         }
-        
     }
 }

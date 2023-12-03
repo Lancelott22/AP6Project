@@ -251,6 +251,30 @@
           color:#881A30;
         }
 
+        .modal {
+               display: none;
+               width:600px;
+               margin: 0 auto;
+               margin-top:80px;
+        }
+
+        .modal-content{
+            padding-left:1em;
+            padding-right:1em;
+        }
+        .modal-body{
+            font-family: 'Poppins', sans-serif;
+            font-size:16px;
+        }
+
+        .btn1{
+
+        }
+
+        .btn2{
+
+        }
+
         
     </style>
     <div class="container-fluid">
@@ -326,6 +350,20 @@
                                     <asp:Label ID="disp_email" runat="server" Text=""></asp:Label>
                                 </div>
                             </div>
+                            <div class="row" style="padding-top:1em;">
+                                <div class="col-sm-1" style="font-weight:bold;">
+                                    <i class="fa fa-mobile" aria-hidden="true"></i>
+                                </div>
+                                <div class="col-sm-8">
+                                    <asp:Label ID="disp_contact" runat="server" Text=""></asp:Label>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12">
+                                   <asp:Button ID="btnEdit" class="btn btn-primary btn-md" runat="server" Text="Edit" OnClick="btnEdit_Click"/>
+                                </div>
+                            </div>
                             <br />
                             <div class="row">
                                 <div class="col-sm-12">
@@ -336,35 +374,32 @@
                                 <div class="col-sm-1" style="font-weight:bold;">
                                     <i class="fa fa-file-text" aria-hidden="true"></i>
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-4">
                                     <asp:Label ID="lblResume" runat="server" Text=""></asp:Label>
                                 </div>
-                            </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-sm-12">
-                                   <asp:Button ID="btnEdit" class="btn btn-primary btn-md" runat="server" Text="Edit" OnClick="btnEdit_Click"/>
+                                <div class="col-sm-7" style="float:right;">
+                                    <asp:Button ID="btnViewResume" runat="server" class="btn btn-success" Text="View Resume" OnClick="btnViewResume_Click" Visible="false" />
+                                    <asp:Button ID="btnEditResume" runat="server" class="btn btn-danger" OnClick="btnEditResume_Click" Visible="false" />
                                 </div>
                             </div>
-                            <br />
-                            
+                            <br />                          
                         </div>
                         
                     </div>
                     <div class="col-6">
                         <div class="student-details2">
                             <div class="row">
-                                <div class="col-sm-4" style="font-weight:bold;">
+                                <div class="col-sm-4">
                                     Student Status
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-8" style="font-weight:bold; color:#881A30;">
                                    <asp:Label ID="disp_status" runat="server" Text=""></asp:Label>
                                 </div>
                             </div>
                             <br /><br />
                             <div class="row">
                                 <div class="col-sm-12">
-                                   <asp:Button ID="btnEditStatus" class="btn btn-primary btn-md" runat="server" Text="Edit" OnClick="btnEditStatus_Click"/>
+                                   <asp:Button ID="btnEditStatus" class="btn btn-danger" runat="server" Text="Update" OnClick="btnEditStatus_Click"/>
                                 </div>
                             </div>
                             <br />
@@ -420,27 +455,99 @@
     </div>
     <br /><br /><br /><br /><br /><br /><br /><br />
     <script>
-    $(document).ready(function () {
-        // Initially, show the "display-industry" content
-        $(".student-container").show();
+        $(document).ready(function () {
+            // Initially, show the "display-industry" content
+            $(".student-container").show();
 
-        // Handle tab click events
-        $(".topnav a").click(function () {
-            // Hide all content sections
-            $(".feedback-container, .student-container").hide();
+            // Handle tab click events
+            $(".topnav a").click(function () {
+                // Hide all content sections
+                $(".feedback-container, .student-container").hide();
 
-            // Remove the 'active' class from all tabs
-            $(".topnav a").removeClass("active");
+                // Remove the 'active' class from all tabs
+                $(".topnav a").removeClass("active");
 
-            // Add 'active' class to the clicked tab
-            $(this).addClass("active");
+                // Add 'active' class to the clicked tab
+                $(this).addClass("active");
 
-            // Show the corresponding content based on the clicked tab
-            var tabId = $(this).attr("href").substring(1);
-            $("#" + tabId).show();
+                // Show the corresponding content based on the clicked tab
+                var tabId = $(this).attr("href").substring(1);
+                $("#" + tabId).show();
 
-            return false; // Prevent default behavior of the anchor tag
+                return false; // Prevent default behavior of the anchor tag
+            });
         });
-    });
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        function closeEditModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        function openModal2() {
+            document.getElementById("myModal2").style.display = "block";
+        }
+
+        function closeEditModal2() {
+            document.getElementById("myModal2").style.display = "none";
+        }
     </script>
+    <!-- Modal dialog -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="title">Edit Resume</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row applicant-details">  
+                    <div class="col-sm-3">
+                        Resume
+                    </div>
+                    <div class="col-sm-9">
+                        <asp:FileUpload ID="resumeUpload" runat="server" Width="300px"/>
+                        <asp:Label ID="lblResumeFileName" runat="server"></asp:Label>
+
+                    </div>
+                </div>          
+            </div>           
+            <div class="modal-footer">
+                <asp:Button ID="btnClose" runat="server" Text="Close" OnClick="btnClose_Click" class="btn btn-danger"/>
+               <asp:Button ID="btnSaveResumeback" class="btn btn-success" runat="server" Text="Save" OnClick="btnSaveResumeback_Click"/>
+            </div>
+       
+        </div>
+    </div>
+
+    <div id="myModal2" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="title">Edit Resume</h2>
+        </div>
+        <div class="modal-body">
+            <div class="row applicant-details">  
+                <div class="col-sm-3">
+                    Student Status
+                </div>
+                <div class="col-sm-9">
+                    <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                        <ContentTemplate>
+                        <asp:DropDownList ID="drpStudentStatus" CssClass="txtbox" runat="server" Width="400px" Height="30px">
+                        <asp:ListItem>Intern</asp:ListItem>
+                        <asp:ListItem>Alumni</asp:ListItem>
+                        <asp:ListItem>Withdraw</asp:ListItem>
+                        </asp:DropDownList><br />
+                        <asp:Label ID="lblstatus" runat="server" Font-Size="Medium" ForeColor="Red" Visible="false"></asp:Label><br />
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+            </div>          
+        </div>           
+        <div class="modal-footer">
+            <asp:Button ID="btnCloseStatus" runat="server" Text="Close" OnClick="btnCloseStatus_Click" class="btn btn-danger"/>
+           <asp:Button ID="btnSaveStatus" class="btn btn-success" runat="server" Text="Save" OnClick="btnSaveStatus_Click"/>
+        </div>
+   
+    </div>
+</div>
 </asp:Content>

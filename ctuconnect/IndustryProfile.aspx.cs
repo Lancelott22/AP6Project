@@ -38,6 +38,7 @@ namespace ctuconnect
             }
         }
 
+        /*
         void displayIndustryInfo()
         {
             string industryID = Session["INDUSTRY_ACC_ID"].ToString();
@@ -58,6 +59,35 @@ namespace ctuconnect
 
                 }
                 reader.Close();
+            }
+        }*/
+
+        void displayIndustryInfo()
+        {
+            string industryID = Session["INDUSTRY_ACC_ID"].ToString();
+            using (var db = new SqlConnection(conDB))
+            {
+                // Retrieve the industry details
+                string industryQuery = "SELECT * FROM INDUSTRY_ACCOUNT WHERE industry_accID = @IndustryID";
+                SqlCommand industryCommand = new SqlCommand(industryQuery, db);
+                industryCommand.Parameters.AddWithValue("@IndustryID", industryID);
+                db.Open();
+                SqlDataReader industryReader = industryCommand.ExecuteReader();
+
+                if (industryReader.Read())
+                {
+                    // Load and display general information
+                    LoadProfilePicture(industryReader["industryPicture"].ToString());
+                    disp_name.Text = industryReader["industryName"].ToString();
+                    lblName.Text = industryReader["industryName"].ToString();
+                    lblLocation.Text = industryReader["location"].ToString();
+                    lblEmail.Text = industryReader["email"].ToString();
+
+                    // Calculate and display overall rating as stars
+                    lblOverallRating.Text = CalculateOverallRatingStars(industryID);
+                }
+
+                industryReader.Close();
             }
         }
 
@@ -125,6 +155,48 @@ namespace ctuconnect
 
             return stars.ToString();
         }
+
+        // Helper method to calculate overall rating and generate star icons
+        private string CalculateOverallRatingStars(string industryID)
+        {
+            int overallRating = 0;
+            int totalRatings = 0;
+
+            // Retrieve feedback ratings for the industry
+            string feedbackQuery = "SELECT rating FROM INDUSTRY_FEEDBACK WHERE sendto = @IndustryID";
+            using (var db = new SqlConnection(conDB))
+            {
+                SqlCommand feedbackCommand = new SqlCommand(feedbackQuery, db);
+                feedbackCommand.Parameters.AddWithValue("@IndustryID", industryID);
+                db.Open();
+                SqlDataReader feedbackReader = feedbackCommand.ExecuteReader();
+
+                while (feedbackReader.Read())
+                {
+                    int rating = Convert.ToInt32(feedbackReader["rating"]);
+                    overallRating += rating;
+                    totalRatings++;
+                }
+
+                feedbackReader.Close();
+            }
+
+            // Calculate the average rating (rounded to the nearest integer)
+            if (totalRatings > 0)
+            {
+                overallRating = (int)Math.Round((double)overallRating / totalRatings);
+            }
+
+            // Generate HTML for star icons based on the calculated overall rating
+            StringBuilder stars = new StringBuilder();
+            for (int i = 0; i < overallRating; i++)
+            {
+                stars.Append("<i class='fa fa-star'></i>");
+            }
+
+            return stars.ToString();
+        }
+
 
         protected void SignOut_Click(object sender, EventArgs e)
         {

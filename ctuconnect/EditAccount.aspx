@@ -2,49 +2,100 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <style>
-        .container {
-            min-height: 550px;
-            background-color: #FFFFFF;
-            width:55%;
-            border: 1px solid #FFFFFF;
-            padding-top:2em;
-            padding-left:2em;
-            padding-right:2em;
-            font-size:20px;
-  
-        }
-
-        .txtbox{
-            border-radius: 5px;
-
     
-        }
+    <style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Poppins', sans-serif;
+    }
 
-        .btn-md{
-            border: 1px #F7941F;
-            background-color: #F7941F;
-            position:center;
-            width: 120px;
-            height:45px;
-        }
+    .container-fluid {
+        margin-top: 20px;
+    }
 
-        .btn-cancel{
-            border: 1px solid #F7941F;
-            background-color: #F0EBEB;
-            position:center;
-            width: 120px;
-            height:45px;
-            color:  #F7941F;
-        }
+    .container {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 60%; /* Adjusted width */
+        margin: 0 auto; /* Center the container */
+    }
 
-        .container2{
-            min-height: 550px;
-            width:55%;
-            padding-top:2em;
-            padding-left:400px;
-            padding-right:2em;
-        }
+    .profile-picture {
+        border-radius: 50%;
+        border: 2px solid #F7941F;
+    }
+
+    .txtbox {
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        padding: 8px;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .btn-md {
+        border: 1px solid #F7941F;
+        background-color: #F7941F;
+        width: 120px;
+        height: 45px;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-md:hover {
+        background-color: #d17a00;
+    }
+
+    .btn-cancel {
+        border: 1px solid #F7941F;
+        background-color: #F0EBEB;
+        width: 120px;
+        height: 45px;
+        color: #F7941F;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .btn-cancel:hover {
+        background-color: #F7941F;
+        color: #fff;
+    }
+
+    .container2 {
+        margin-top: 20px;
+    }
+
+    .upper-section,
+    .lower-section {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        background-color: #fff;
+    }
+
+    .row {
+        margin-bottom: 15px;
+    }
+
+    .col-sm-3 {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .col-sm-9 {
+        margin-bottom: 10px;
+    }
+
+    .validation-error {
+        color: #dc3545; 
+        font-size: 14px;
+        margin-top: 5px;
+    }
     </style>
 
 
@@ -55,95 +106,96 @@
     <br />
     <div class="container">
         <div class="col-12 d-flex flex-column">
-            <div class="row">
-                <div class="col-sm-12">
-                    <asp:Label ID="lblProfilePicture" runat="server" Text="Profile Picture:"></asp:Label>
-                    <asp:FileUpload ID="fileUploadProfilePicture" runat="server" />
-                    <br />
-                    <asp:Image ID="imgProfilePicture" runat="server" CssClass="profile-picture" height="144px" Width="144px"/>
-                    <br />
-                    <asp:Button ID="btnUploadPicture" runat="server" Text="Upload" OnClick="btnUploadPicture_Click" />
-                    <br />
-                </div>   
+            <div class="upper-section">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <asp:Label ID="lblProfilePicture" runat="server" Text="Profile Picture:"></asp:Label>
+                        <asp:FileUpload ID="fileUploadProfilePicture" runat="server" />
+                        <br />
+                        <asp:Image ID="imgProfilePicture" runat="server" CssClass="profile-picture" height="144px" Width="144px"/>
+                        <br />
+                        <asp:Button ID="btnUploadPicture" runat="server" Text="Upload" OnClick="btnUploadPicture_Click" />
+                        <br />
+                    </div>   
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-4">
+                        Last Name *<br />
+                        <asp:TextBox ID="txtlname" runat="server" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>
+                    </div>
+                    <div class="col-4">
+                        First Name *<br />
+                        <asp:TextBox ID="txtfname" runat="server" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>
+                    </div>
+                    <div class="col-4">
+                        Middle Initial *<br />
+                        <asp:TextBox ID="txtinitials" runat="server" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>                    
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-4">
+                        Contact Number *<br />
+                        <asp:TextBox ID="txtcontact" runat="server" CssClass="txtbox" Width="400px" Height="30px" Text="09"></asp:TextBox><br />
+                        <asp:RequiredFieldValidator ID="rfvContactNumber" runat="server" ControlToValidate="txtcontact" InitialValue="09" ErrorMessage="Contact Number is required." Display="Dynamic" CssClass="validation-error"></asp:RequiredFieldValidator>
+                        <asp:RegularExpressionValidator ID="revContactNumber" runat="server" ControlToValidate="txtcontact" ErrorMessage="Enter a valid Philippine phone number starting with 09." Display="Dynamic" ValidationExpression="^09\d{9}$" CssClass="validation-error"></asp:RegularExpressionValidator>
+                </div>
+                    <div class="col-8">
+                        Address *<br />
+                        <asp:TextBox ID="txtaddress" runat="server" CssClass="txtbox" Width="600px" Height="30px"></asp:TextBox>                    
+                    </div>
+                </div>
+                <br />
             </div>
-            <br />
-            <div class="row">
-                <div class="col-sm-12">
-                    <b>Account Details</b>
-                </div>         
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-sm-3">
-                    Last Name
-                </div>
-                <div class="col-sm-9">
-                    <asp:TextBox ID="txtlname" runat="server" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-sm-3">
-                    First Name
-                </div>
-                <div class="col-sm-9">
-                    <asp:TextBox ID="txtfname" runat="server" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-sm-3">
-                    Middle Initial
-                </div>
-                <div class="col-sm-9">
-                    <asp:TextBox ID="txtinitials" runat="server" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>                    
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-sm-3">
-                    Student Status
-                </div>
-                <div class="col-sm-9">
-                    <asp:DropDownList ID="drpStudentStatus" CssClass="txtbox" runat="server" Width="400px" Height="30px">
-                    <asp:ListItem>Intern</asp:ListItem>
-                    <asp:ListItem>Alumni</asp:ListItem>
-                    <asp:ListItem>Withdraw</asp:ListItem>
-                    </asp:DropDownList><br />
-                    <asp:Label ID="lblstatus" runat="server" Font-Size="Medium" ForeColor="Red" Visible="false"></asp:Label><br />
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-sm-3">
-                    Resume
-                </div>
-                <div class="col-sm-9">
-                    <asp:FileUpload ID="resumeUpload" runat="server" Width="300px"/>
-                    <asp:Label ID="lblResumeFileName" runat="server"></asp:Label>
 
+            <div class="lower-section">
+                <div class="row">
+                    <div class="col-12">
+                        CTU Email *<br />
+                        <asp:TextBox ID="txtctuemail" runat="server" CssClass="txtbox" Width="700px" Height="30px"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="rfvCTUEmail" runat="server" ControlToValidate="txtctuemail" ErrorMessage="CTU Email is required." Display="Dynamic" CssClass="validation-error"></asp:RequiredFieldValidator>
+                        <asp:RegularExpressionValidator ID="revCTUEmail" runat="server" ControlToValidate="txtctuemail" ErrorMessage="Enter a valid CTU Email address (e.g., yourname@ctu.edu.ph)." Display="Dynamic" ValidationExpression="\b[A-Za-z0-9._%+-]+@ctu\.edu\.ph\b" CssClass="validation-error"></asp:RegularExpressionValidator>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        Personal Email *<br />
+                        <asp:TextBox ID="txtPersonalEmail" runat="server" CssClass="txtbox" Width="700px" Height="30px"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="rfvPersonalEmail" runat="server" ControlToValidate="txtPersonalEmail" ErrorMessage="Personal Email is required." Display="Dynamic" CssClass="validation-error"></asp:RequiredFieldValidator>
+                        <asp:RegularExpressionValidator ID="revPersonalEmail" runat="server" ControlToValidate="txtPersonalEmail" ErrorMessage="Enter a valid Gmail address (e.g., yourname@gmail.com)." Display="Dynamic" ValidationExpression="\b[A-Za-z0-9._%+-]+@gmail\.com\b" CssClass="validation-error"></asp:RegularExpressionValidator>
+                        <asp:CustomValidator ID="cvGmailValidation" runat="server" ControlToValidate="txtPersonalEmail" OnServerValidate="ValidateGmailAccount" ErrorMessage="The provided Gmail account is not valid or active." Display="Dynamic" CssClass="validation-error"></asp:CustomValidator>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        Password *<br />
+                        <asp:TextBox ID="txtpwd" runat="server" CssClass="txtbox" TextMode="Password" Width="700px" Height="30px"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="rfvPassword" runat="server" ControlToValidate="txtpwd" ErrorMessage="Password is required." Display="Dynamic" CssClass="validation-error"></asp:RequiredFieldValidator>
+                    </div>
+                    <div class="col-6">
+                        Confirm Password *<br />
+                        <asp:TextBox ID="cpwd" runat="server" CssClass="txtbox" TextMode="Password" Width="700px" Height="30px"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="rfvConfirmPassword" runat="server" ControlToValidate="cpwd" ErrorMessage="Confirm Password is required." Display="Dynamic" CssClass="validation-error"></asp:RequiredFieldValidator>
+                        <asp:CompareValidator ID="cvPasswordMatch" runat="server" ControlToCompare="txtpwd" ControlToValidate="cpwd" ErrorMessage="Passwords do not match." Display="Dynamic" CssClass="validation-error"></asp:CompareValidator>
+                    </div>
                 </div>
             </div>
-            <br />
-            
-        </div>
-    </div>
-    <br />
-    <div class="container2">
-        <div class="col-12 d-flex flex-column">
-            <div class="row">
-                <div class="col-sm-3">
-                    <asp:Button ID="btnSave" class="btn btn-primary btn-md" runat="server" Text="Save" OnClick="btnSave_Click"/>
-                </div>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="col-sm-2">
-                    <asp:Button ID="btnCancel" class="btn btn-primary btn-md btn-cancel" runat="server" Text="Back" OnClick="btnCancel_Click"/>
+            <div class="lower-section">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <asp:Button ID="btnSave" class="btn btn-success" runat="server" Text="Save" OnClick="btnSave_Click" CausesValidation="false"/>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="col-sm-2">
+                        <asp:Button ID="btnCancel" class="btn btn-danger" runat="server" Text="Cancel" OnClick="btnCancel_Click" CausesValidation="false"/>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
+    
     <br />
     <br />
-    <br />
-</div>
 </asp:Content>

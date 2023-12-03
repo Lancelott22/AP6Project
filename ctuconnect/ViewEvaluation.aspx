@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ViewEvaluation.aspx.cs" Inherits="ctuconnect.ViewEvaluation1" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ViewEvaluation.aspx.cs" Inherits="ctuconnect.ViewEvaluation" %>
 
 <!DOCTYPE html>
 
@@ -392,4 +392,40 @@
     </div>
 </div>
 </body>
+    <script>
+        var productivityValue = <%=Session["Productivity"] %>;
+        var cooperationValue = <%=Session["Cooperation"] %>;
+        var AbilityToFollowValue = <%=Session["AbilityToFollow"] %>;
+        var abilityToGetValue = <%=Session["AbilityToGet"] %>;
+        var category5Value = <%=Session["Category5"] %>;
+        var category6Value = <%=Session["Category6"] %>;
+        var category7Value = <%=Session["Category7"] %>;
+        var category8Value = <%=Session["Category8"] %>;
+        var category9Value = <%=Session["Category9"] %>;
+        var category10Value = <%=Session["Category10"] %>;
+        // Repeat for other categories
+
+        // Assuming you have unique names for your radio button groups
+        setRadioButtonCheckedStatus('productivity', productivityValue);
+        setRadioButtonCheckedStatus('cooperation', cooperationValue);
+        setRadioButtonCheckedStatus('abilityToFollow', AbilityToFollowValue);
+        setRadioButtonCheckedStatus('abilityToGet', abilityToGetValue);
+        setRadioButtonCheckedStatus('category5', category5Value);
+        setRadioButtonCheckedStatus('category6', category6Value);
+        setRadioButtonCheckedStatus('category7', category7Value);
+        setRadioButtonCheckedStatus('category8', category8Value);
+        setRadioButtonCheckedStatus('category9', category9Value);
+        setRadioButtonCheckedStatus('category10', category10Value);
+        // Repeat for other categories
+
+        function setRadioButtonCheckedStatus(groupName, value) {
+            var radioButtons = document.getElementsByName(groupName);
+            for (var i = 0; i < radioButtons.length; i++) {
+                radioButtons[i].checked = (parseInt(radioButtons[i].value) === value);
+                if (!radioButtons[i].checked) {
+                    radioButtons[i].disabled = true;
+                }
+            }
+        }
+    </script>
 </html>
