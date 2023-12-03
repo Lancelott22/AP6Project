@@ -112,94 +112,33 @@ namespace ctuconnect
             }
         }
 
-        /*
-        protected void btnsubmit_Click(object sender, EventArgs e)
+        private void isEvaluated()
         {
-
-            // Store values in session
-            Session["Productivity"] = Request.Form["productivity"];
-            Session["Cooperation"] = Request.Form["cooperation"];
-            Session["AbilityToFollow"] = Request.Form["abilityToFollow"];
-            Session["AbilityToGet"] = Request.Form["abilityToGet"];
-            Session["Category5"] = Request.Form["category5"];
-            Session["Category6"] = Request.Form["category6"];
-            Session["Category7"] = Request.Form["category7"];
-            Session["Category8"] = Request.Form["category8"];
-            Session["Category9"] = Request.Form["category9"];
-            Session["Category10"] = Request.Form["category10"];
-            
-
-            // Get data from form controls
-
-            string major = course.Text;
-            string strengths = txtStrengths.Text;
-            string improvement = txtImprovement.Text;
-            string industryName = disp_industryName.Text;
-            string indLocation = disp_Indlocation.Text;
-            int industryAccID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
-            int trainingPeriod = int.Parse(disp_trainingPeriod.Text);
             string student_accID = Request.QueryString["student_accID"];
+            string evaluated = "Evaluated";
 
-            // Retrieve values from hidden fields using Request.Form
-            string totalScore = Request.Form[hidden_score.UniqueID];
-            string equivalentGrade = Request.Form[hidden_grade.UniqueID];
+            if (string.IsNullOrEmpty(student_accID))
+            {
+                // Handle the case where student_accID is missing or invalid
+                Response.Write("<script>alert('Invalid or missing student_accID')</script>");
+                return;
+            }
 
-            // Insert data into the database
             using (conDB)
             {
                 conDB.Open();
 
-                // Replace 'YourTable' with your actual table name and column names
-                string insertQuery = "INSERT INTO EVALUATION (student_accID, major, trainingPeriod, totalScore, gradeEquivalent, describeStrength, describeImprovement, industry_accID, cooperatingAgency, address, dateEvaluated) " +
-                           "VALUES (@student_accID, @Course, @TrainingPeriod, @Score, @Grade, @Strengths, @Improvement,  @industry_accID, @IndustryName, @IndLocation, @dateEval)";
-
-                using (SqlCommand cmd = new SqlCommand(insertQuery, conDB))
+                using (SqlCommand command = new SqlCommand("UPDATE HIRED_LIST SET evaluationRequest = @evaluationRequest WHERE student_accID = @student_accID;", conDB))
                 {
-                    if (!string.IsNullOrEmpty(totalScore) && !string.IsNullOrEmpty(equivalentGrade))
-                    {
-                       
-                        if (int.TryParse(totalScore, out int score) && int.TryParse(equivalentGrade, out int grade))
-                        {
-                            // Conversion successful, 'score' now contains the integer value
-                            // Do something with the 'score' variable
-                            
-                            cmd.Parameters.AddWithValue("@student_accID", student_accID);
-                            cmd.Parameters.AddWithValue("@Course", major);
-                            cmd.Parameters.AddWithValue("@TrainingPeriod", trainingPeriod);
-                            cmd.Parameters.AddWithValue("@Score", score);
-                            cmd.Parameters.AddWithValue("@Grade", grade);
-                            cmd.Parameters.AddWithValue("@Strengths", strengths);
-                            cmd.Parameters.AddWithValue("@Improvement", improvement);
-                            cmd.Parameters.AddWithValue("@industry_accID", industryAccID);
-                            cmd.Parameters.AddWithValue("@IndustryName", industryName);
-                            cmd.Parameters.AddWithValue("@IndLocation", indLocation);
-                            cmd.Parameters.AddWithValue("@dateEval", DateTime.Now);
-                            cmd.ExecuteNonQuery();
-                        }
-                        else
-                        {
-                            // Conversion failed, handle the error
-                            Console.WriteLine("The input string is not a valid integer.");
-                        }
-                        
-                    }
-                    else
-                    {
-                        Response.Write("<script>alert('No score and grade Read');</script>");
-                        Response.Redirect("HiredList.aspx?student_accID=" );
-                    }
+                    command.Parameters.AddWithValue("@student_accID", student_accID);
+                    command.Parameters.AddWithValue("@evaluationRequest", evaluated); // Corrected parameter name
+                    int ctr = command.ExecuteNonQuery();
+
+                    // Additional code if needed after the update
                 }
-                conDB.Close();
-                Response.Write("<script>alert('Thank you for submitting your evaluation! 🌟 Your feedback is important to us');document.location='ViewEvaluation.aspx?evaluationID='</script>");
-
-
-
-
-
             }
-            
-        }*/
-
+            conDB.Close();
+        }
         private string GetSelectedRadioValue(string productivity, string cooperation, string abilityToFollow, string abilitytoGet, string category5, string category6, string category7, string category8, string category9, string category10)
         {
             string selectedValue = string.Empty;
@@ -317,6 +256,7 @@ namespace ctuconnect
                             cmd.Parameters.AddWithValue("@dependability", Category9);
                             cmd.Parameters.AddWithValue("@overAllperformance", Category10);
                             cmd.Parameters.AddWithValue("@hired_id", hired_ID);
+                            isEvaluated();
                             int ctr = cmd.ExecuteNonQuery();
                             if(ctr> 0)
                             {

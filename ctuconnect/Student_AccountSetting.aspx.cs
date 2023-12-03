@@ -115,48 +115,40 @@ namespace ctuconnect
 
         protected void DeactivateButton_Click(object sender, EventArgs e)
         {
-            string student_accID = Session["student_accID"].ToString();
+          
 
             if (ConfirmDeactivation())
             {
-                if (!string.IsNullOrEmpty(student_accID))
-                {
-                    using (conDB)
-                    {
-                        conDB.Open();
-                        using (SqlCommand cmd = new SqlCommand("UPDATE STUDENT_ACCOUNT SET isDeactivated=@isDeact WHERE student_accID=@student_accID;", conDB))
-                        {
-                            if (int.TryParse(Session["student_accID"].ToString(), out int Student_accID))
-                            {
-                                cmd.Parameters.AddWithValue("@student_accID", Student_accID);
-                                cmd.Parameters.AddWithValue("@isDeactivated", true);
-                                var ctr = cmd.ExecuteNonQuery();
-
-                                if (ctr > 0)
-                                {
-                                    Response.Write("<script>confirm('Confirm deactivate.');</script>");
-                                }
-                                else
-                                {
-                                    Response.Write("<script>alert('Cannot deactivate the account now! Please try again later.')</script>");
-                                }
-
-                            }
-                            conDB.Close();
-                        }
-                           
-                    }
-                    Session.Clear(); // Clear all session variables
-                    Session.Abandon(); // Abandon the session
-                    Response.Redirect("Login.aspx"); // Redirect to the login page
-                }
-                else
-                {
-                    Response.Write("<script>alert('No student acc detected')</script>");
-                }
+                Deactivate();
             }
             
             
+        }
+        private void Deactivate()
+        {
+            string student_accID = Session["student_accID"].ToString();
+
+            if (string.IsNullOrEmpty(student_accID))
+            {
+                // Handle the case where student_accID is missing or invalid
+                Response.Write("<script>alert('Invalid or missing student_accID')</script>");
+                return;
+            }
+
+            using (conDB)
+            {
+                conDB.Open();
+
+                using (SqlCommand command = new SqlCommand("UPDATE STUDENT_ACCOUNT SET isDeactivated=@isDeact WHERE student_accID=@student_accID;", conDB))
+                {
+                    command.Parameters.AddWithValue("@student_accID", student_accID);
+                    command.Parameters.AddWithValue("@isDeactivated", true); // Corrected parameter name
+                    int ctr = command.ExecuteNonQuery();
+
+                    // Additional code if needed after the update
+                }
+            }
+            conDB.Close();
         }
         private bool ConfirmDeactivation()
         {
