@@ -14,7 +14,7 @@ namespace ctuconnect
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack && Session["Username"] != null)
+            if (!IsPostBack && Session["AdminUsername"] != null)
             {
                 Response.Redirect("AdminDashboard.aspx");
             }
@@ -61,7 +61,7 @@ namespace ctuconnect
                             if (count > 0)
                             {
                                 // Valid credentials
-                                Session["Username"] = txtusername.Text;
+                                Session["AdminUsername"] = txtusername.Text;
                                 Response.Redirect("AdminDashboard.aspx");
                             }
                             else
