@@ -366,6 +366,8 @@
     <Content Include="TracerDashboard.aspx" />
     <Content Include="TraceStudent.aspx" />
     <Content Include="ViewApplicantProfile.aspx" />
+    <Content Include="ViewApplicantProfile_Admin.aspx" />
+    <Content Include="ViewApplicantProfile_Coord.aspx" />
     <Content Include="ViewEvaluation.aspx" />
     <Content Include="ViewIndustryProfile.aspx" />
     <Content Include="ViewIndustryProfile_Admin.aspx" />
@@ -836,6 +838,20 @@
     </Compile>
     <Compile Include="ViewApplicantProfile.aspx.designer.cs">
       <DependentUpon>ViewApplicantProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewApplicantProfile_Admin.aspx.cs">
+      <DependentUpon>ViewApplicantProfile_Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewApplicantProfile_Admin.aspx.designer.cs">
+      <DependentUpon>ViewApplicantProfile_Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewApplicantProfile_Coord.aspx.cs">
+      <DependentUpon>ViewApplicantProfile_Coord.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewApplicantProfile_Coord.aspx.designer.cs">
+      <DependentUpon>ViewApplicantProfile_Coord.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewEvaluation.aspx.cs">
       <DependentUpon>ViewEvaluation.aspx</DependentUpon>

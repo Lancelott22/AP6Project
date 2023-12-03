@@ -14,6 +14,7 @@ namespace ctuconnect
     {
         string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
         private DataTable dtRefer = new DataTable();
+        private DataTable dtFeedback = new DataTable();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,15 +23,20 @@ namespace ctuconnect
                 studentDetails();
                 displayStudentPic();
             }
-            int totalCounts = UnreadReferCount();
+            int totalCounts = UnreadReferCount() + UnreadFeedbackCount();
             lblUnreadCount.Text = totalCounts.ToString();
 
             this.LoadRefer();
             rptrefer.DataSource = dtRefer;
             rptrefer.DataBind();
 
+            this.LoadFeedback();
+            rptstudentfeedback.DataSource = dtFeedback;
+            rptstudentfeedback.DataBind();
+
             refreshCounting();
             disableHeader();
+            disableHeader1();
 
         }
 
@@ -98,6 +104,22 @@ namespace ctuconnect
 
         }
 
+        void disableHeader1()
+        {
+
+            if (rptstudentfeedback.Items.Count == 0)
+            {
+                // Find the headerTemplateContainer and set its Visible property to false
+                Control headerTemplateContainer = rptstudentfeedback.Controls[0].Controls[0].FindControl("headerTemplateContainer1");
+
+                if (headerTemplateContainer != null)
+                {
+                    headerTemplateContainer.Visible = false;
+                }
+            }
+
+        }
+
         private void LoadRefer()
         {
             string studentAccID = Session["Student_ACC_ID"].ToString();
@@ -121,6 +143,28 @@ namespace ctuconnect
 
         }
 
+        private void LoadFeedback()
+        {
+            string studentAccID = Session["Student_ACC_ID"].ToString();
+
+            using (var db = new SqlConnection(conDB))
+            {
+                string query = "SELECT * FROM STUDENT_FEEDBACK JOIN INDUSTRY_ACCOUNT ON STUDENT_FEEDBACK.sendfrom = INDUSTRY_ACCOUNT.INDUSTRY_ACCID WHERE STUDENT_FEEDBACK.isRemove = 0 and sendto = '" + studentAccID + "' ORDER BY dateCreated DESC";
+                SqlCommand cmd = new SqlCommand(query, db);
+
+                db.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dtFeedback);
+            }
+
+
+            rptstudentfeedback.DataSource = dtFeedback;
+            rptstudentfeedback.DataBind();
+            disableHeader1();
+
+
+        }
+
         protected int UnreadReferCount()
         {
             string studentAccID = Session["Student_ACC_ID"].ToString();
@@ -134,6 +178,29 @@ namespace ctuconnect
                 connection.Open();
 
                 string query = "SELECT COUNT(*) FROM REFERRAL WHERE isStudentRead = 0 and student_accID = '" + studentAccID + "'";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    count = (int)command.ExecuteScalar();
+                }
+            }
+
+            return count;
+        }
+
+        protected int UnreadFeedbackCount()
+        {
+            string studentAccID = Session["Student_ACC_ID"].ToString();
+            int count = 0;
+
+            // Replace with your connection string
+            string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(conDB))
+            {
+                connection.Open();
+
+                string query = "SELECT COUNT(*) FROM STUDENT_FEEDBACK WHERE isRead = 0 and sendto = '" + studentAccID + "'";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -176,7 +243,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadReferCount();
+                int totalCounts = UnreadReferCount() + UnreadFeedbackCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -205,7 +272,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadReferCount();
+                int totalCounts = UnreadReferCount() + UnreadFeedbackCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -240,7 +307,7 @@ namespace ctuconnect
                 db.Open();
                 cmd.ExecuteNonQuery();
 
-                int totalCounts = UnreadReferCount();
+                int totalCounts = UnreadReferCount() + UnreadFeedbackCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -249,6 +316,114 @@ namespace ctuconnect
             if (rptrefer.Items.Count == 1)
             {
                 disableHeader();
+            }
+        }
+
+        protected void readFeedback_ItemCommand(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "MarkAsRead")
+            {
+                int id = Convert.ToInt32(e.CommandArgument);
+
+                MarkFeedbackAsRead(id);
+
+
+            }
+            // Refresh the notifications
+            this.LoadFeedback();
+            this.UnreadFeedbackCount();
+
+        }
+
+        private void MarkFeedbackAsRead(int id)
+        {
+
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE STUDENT_FEEDBACK SET isRead = 1 WHERE id = @ID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@ID", id);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+
+
+                // Update the unread count
+                int totalCounts = UnreadReferCount() + UnreadFeedbackCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            this.disableHeader1();
+            RedirectToMyAccount(id);
+
+
+        }
+
+        private void RedirectToMyAccount(int id)
+        {
+            Response.Redirect("MyAccount.aspx?id=" + id);
+        }
+
+        private void FeedbackRead(int id)
+        {
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE STUDENT_FEEDBACK SET isRead = 1 WHERE id = @ID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@ID", id);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+
+
+                // Update the unread count
+                int totalCounts = UnreadReferCount() + UnreadFeedbackCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            this.disableHeader1();
+        }
+
+        protected void removeFeedback_ItemCommand(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "MarkAsRemove")
+            {
+                int id = Convert.ToInt32(e.CommandArgument);
+
+                MarkFeedbackAsRemoved(id);
+                FeedbackRead(id);
+
+
+            }
+
+            // Refresh the notifications
+            this.LoadFeedback();
+            this.UnreadFeedbackCount();
+        }
+
+        private void MarkFeedbackAsRemoved(int id)
+        {
+            // Update the isRemove property in the database
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE STUDENT_FEEDBACK SET isRemove = 1 WHERE id = @ID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@ID", id);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+                int totalCounts = UnreadReferCount() + UnreadFeedbackCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            //this.disableHeader();
+
+            if (rptstudentfeedback.Items.Count == 1)
+            {
+                disableHeader1();
             }
         }
 
