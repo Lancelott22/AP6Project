@@ -378,18 +378,40 @@ namespace ctuconnect
 
         private void UpdateResumeStatus(int applicantID)
         {
-            using (var db = new SqlConnection(conDB))
+            foreach (RepeaterItem item in rptApplicant.Items)
             {
-                string query = "UPDATE APPLICANT SET resumeStatus = 'Reviewed', resumeReviewedDate = @ResumeReviewDate WHERE applicantID = @applicantID";
-                SqlCommand cmd = new SqlCommand(query, db);
-                cmd.Parameters.AddWithValue("@applicantID", applicantID);
-                cmd.Parameters.AddWithValue("@ResumeReviewDate", DateTime.Now.ToString("yyyy/MM/dd"));
-                
-                db.Open();
-                cmd.ExecuteNonQuery();
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                {
+                    
+                    Label lblresumeStatus = (Label)item.FindControl("lblresumeStatus");
 
-                sendResumeStatus(applicantID);
+                    if (lblresumeStatus != null)
+                    {
+                        string resumeStatusText = lblresumeStatus.Text;
+
+                        if (resumeStatusText == "Reviewed")
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            using (var db = new SqlConnection(conDB))
+                            {
+                                string query = "UPDATE APPLICANT SET resumeStatus = 'Reviewed', resumeReviewedDate = @ResumeReviewDate WHERE applicantID = @applicantID";
+                                SqlCommand cmd = new SqlCommand(query, db);
+                                cmd.Parameters.AddWithValue("@applicantID", applicantID);
+                                cmd.Parameters.AddWithValue("@ResumeReviewDate", DateTime.Now.ToString("yyyy/MM/dd"));
+
+                                db.Open();
+                                cmd.ExecuteNonQuery();
+
+                                sendResumeStatus(applicantID);
+                            }
+                        }
+                    }
+                }
             }
+
         }
 
         void sendResumeStatus(int applicantID)
@@ -473,48 +495,54 @@ namespace ctuconnect
 
         protected void saveInterviewDetails(object sender, EventArgs e)
         {
-
-            int applicantID = currentApplicantID;
-            //string interviewDetails = txtInterviewDetails.Text;
-            string interviewDetails = HttpUtility.HtmlEncode(txtInterviewDetails.Text);
-            //string interviewScheduledDate = txtInterviewDate.Text;
-            DateTime ScheduledDate = Convert.ToDateTime(txtInterviewDate.Text);
-
-            //Check if the selected date is in the past
-            if (ScheduledDate <= DateTime.Now.Date)
+            try
             {
-                Response.Write("<script>alert('Invalid Date!')</script>");
-                lblinterviewdate.Visible = false;
-            }
-            else
-            {
+                int applicantID = currentApplicantID;
+                //string interviewDetails = txtInterviewDetails.Text;
+                string interviewDetails = HttpUtility.HtmlEncode(txtInterviewDetails.Text);
+                //string interviewScheduledDate = txtInterviewDate.Text;
+                DateTime ScheduledDate = Convert.ToDateTime(txtInterviewDate.Text);
 
-                string interviewScheduledDate = txtInterviewDate.Text;
-                using (var db = new SqlConnection(conDB))
+                //Check if the selected date is in the past
+                if (ScheduledDate <= DateTime.Now.Date)
                 {
-                    db.Open();
-                    using (var cmd = db.CreateCommand())
-                    {
-                        string sql = "UPDATE APPLICANT SET interviewStatus = 'Scheduled', interviewDetails = @InterviewDetails, interviewDate = @InterviewDate, interviewScheduledDate = @InterviewScheduledDate WHERE applicantID = @applicantID";
-                        cmd.CommandText = sql;
-                        cmd.Parameters.AddWithValue("@applicantID", applicantID);
-                        cmd.Parameters.AddWithValue("@InterviewDetails", interviewDetails);
-                        cmd.Parameters.AddWithValue("@InterviewDate", DateTime.Now.ToString("yyyy/MM/dd"));
-                        cmd.Parameters.AddWithValue("@InterviewScheduledDate", interviewScheduledDate);
-
-                        cmd.ExecuteNonQuery();
-
-                        sendInterviewStatus(applicantID);
-                    }
-
+                    Response.Write("<script>alert('Invalid Date!'); history.back();</script>");
+                    lblinterviewdate.Visible = false;
                 }
-            }
+                else
+                {
 
-            this.LoadApplicants();
-            ChangeReviewButtonText();
-            ChangeScheduleButtonText();
-            ChangeApplicantButton();
-            endorsementButton();
+                    string interviewScheduledDate = txtInterviewDate.Text;
+                    using (var db = new SqlConnection(conDB))
+                    {
+                        db.Open();
+                        using (var cmd = db.CreateCommand())
+                        {
+                            string sql = "UPDATE APPLICANT SET interviewStatus = 'Scheduled', interviewDetails = @InterviewDetails, interviewDate = @InterviewDate, interviewScheduledDate = @InterviewScheduledDate WHERE applicantID = @applicantID";
+                            cmd.CommandText = sql;
+                            cmd.Parameters.AddWithValue("@applicantID", applicantID);
+                            cmd.Parameters.AddWithValue("@InterviewDetails", interviewDetails);
+                            cmd.Parameters.AddWithValue("@InterviewDate", DateTime.Now.ToString("yyyy/MM/dd"));
+                            cmd.Parameters.AddWithValue("@InterviewScheduledDate", interviewScheduledDate);
+
+                            cmd.ExecuteNonQuery();
+
+                            sendInterviewStatus(applicantID);
+                        }
+
+                    }
+                }
+
+                this.LoadApplicants();
+                ChangeReviewButtonText();
+                ChangeScheduleButtonText();
+                ChangeApplicantButton();
+                endorsementButton();
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('Invalid Input!'); history.back();</script>" + ex.Message);
+            }
 
         }
 
@@ -575,6 +603,7 @@ namespace ctuconnect
                             smtp.Port = 587;
                             smtp.Send(mm);
 
+                            Response.Write("<script>alert('Data is Save.'); history.back();</script>");
                         }
                     }
                 }
@@ -590,7 +619,7 @@ namespace ctuconnect
                 if (Convert.ToDateTime(txtInterviewDate.Text) <= DateTime.Now.Date)
                 {
                     lblinterviewdate.Visible = true;
-                    lblinterviewdate.Text = "Interview date must be a future date.";
+                    lblinterviewdate.Text = "The selected start date must be a future date. Please choose a different start date.";
                 }
                 else
                 {
@@ -612,12 +641,17 @@ namespace ctuconnect
                 if (Convert.ToDateTime(txtDateStart.Text) <= DateTime.Now.Date)
                 {
                     lblerrordate.Visible = true;
-                    lblerrordate.Text = "Date start must be a future date.";
+                    lblerrordate.Text = "The selected start date must be a future date. Please choose a different start date.";
                 }
                 else if (txtDateStart.Text == GetInterviewDateFromDatabase(currentApplicantID))
                 {
                     lblerrordate.Visible = true;
                     lblerrordate.Text = "Start date conflicts with interview date. Choose a different start date.";
+                }
+                else if (Convert.ToDateTime(txtDateStart.Text) <= Convert.ToDateTime(GetInterviewDateFromDatabase(currentApplicantID)))
+                {
+                    lblerrordate.Visible = true;
+                    lblerrordate.Text = "The selected start date must be after the interview date. Please choose a different start date.";
                 }
                 else
                 {
@@ -746,114 +780,122 @@ namespace ctuconnect
         }
 
         protected void Submit_ButtonClick(object sender, EventArgs e)
-        {    
-            int applicantID = currentApplicantID;           
-            string selectedStatus = drpApplicantStatus.Text;
-
-
-            if (selectedStatus == "Reject")
+        {
+            try
             {
-                txtrequirements.Text = string.Empty;
-                txtDateStart.Text = string.Empty;
-                string status = "Rejected";
-                using (var db = new SqlConnection(conDB))
+
+                int applicantID = currentApplicantID;
+                string selectedStatus = drpApplicantStatus.Text;
+
+
+                if (selectedStatus == "Reject")
                 {
-                    string query = "UPDATE APPLICANT SET applicantStatus = @ApplicantStatus, applicationApprovalDate = @ApplicationDate WHERE applicantID = @applicantID";
-                    SqlCommand cmd = new SqlCommand(query, db);
-                    cmd.Parameters.AddWithValue("@applicantID", applicantID);
-                    cmd.Parameters.AddWithValue("@ApplicantStatus", status);
-                    cmd.Parameters.AddWithValue("@ApplicationDate", DateTime.Now.ToString("yyyy/MM/dd"));
-
-                    db.Open();
-                    cmd.ExecuteNonQuery();
-                    sendApplicationStatusReject(applicantID);
-
-                }
-            }
-            else if (selectedStatus == "Approve")
-            {
-                //string requirements = txtrequirements.Text;
-                string requirements = HttpUtility.HtmlEncode(txtrequirements.Text);
-                DateTime dateStart = Convert.ToDateTime(txtDateStart.Text);
-
-                //Check if the selected date is in the past
-                if (dateStart <= DateTime.Now.Date || txtDateStart.Text == GetInterviewDateFromDatabase(applicantID))
-                {
-                    Response.Write("<script>alert('Invalid Date!')</script>");
-                    lblerrordate.Visible = false;
-                    return;
-                }
-
-                string status = "Approved";
-                using (var db = new SqlConnection(conDB))
-                {
-                    string query = "UPDATE APPLICANT SET applicantStatus = @ApplicantStatus, applicationApprovalDate = @ApplicationDate, dateStart = @DateStart, requirements = @Requirements WHERE applicantID = @applicantID";
-                    SqlCommand cmd = new SqlCommand(query, db);
-                    cmd.Parameters.AddWithValue("@applicantID", applicantID);
-                    cmd.Parameters.AddWithValue("@ApplicantStatus", status);
-                    cmd.Parameters.AddWithValue("@ApplicationDate", DateTime.Now.ToString("yyyy/MM/dd"));
-                    cmd.Parameters.AddWithValue("@Requirements", requirements);
-                    cmd.Parameters.AddWithValue("@DateStart", dateStart);
-
-                    db.Open();
-                    cmd.ExecuteNonQuery();
-
-                    if (selectedStatus == "Approve")
+                    txtrequirements.Text = string.Empty;
+                    txtDateStart.Text = string.Empty;
+                    string status = "Rejected";
+                    using (var db = new SqlConnection(conDB))
                     {
-                        using (SqlConnection connection = new SqlConnection(conDB))
-                        {
-                            connection.Open();
-                            using (SqlCommand command = connection.CreateCommand())
-                            {
-                                command.CommandType = CommandType.Text;
-                                command.CommandText = "SELECT jobType, student_accID, applicantFname, applicantLname, appliedPosition, resume, jobID, APPLICANT.industry_accID, StudentType, INDUSTRY_ACCOUNT.industryName, dateStart FROM APPLICANT " +
-                                    "JOIN INDUSTRY_ACCOUNT ON APPLICANT.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
-                                    "WHERE applicantID = @ApplicantID";
-                                command.Parameters.AddWithValue("@ApplicantID", applicantID);
-                                using (SqlDataReader reader = command.ExecuteReader())
-                                {
-                                    if (reader.Read())
-                                    {
-                                        string jobType = reader["jobType"].ToString();
-                                        string student_accID = reader["student_accID"].ToString();
-                                        int studentID = Convert.ToInt32(student_accID);
-                                        string applicantfname = reader["applicantFname"].ToString();
-                                        string applicantlname = reader["applicantLname"].ToString();
-                                        string jobID = reader["jobID"].ToString();
-                                        int jobid = Convert.ToInt32(jobID);
-                                        string industry_accID = reader["industry_accID"].ToString();
-                                        int industryID = Convert.ToInt32(industry_accID);
-                                        string studentType = reader["StudentType"].ToString();
-                                        string WorkedAt = reader["industryName"].ToString();
-                                        string position = reader["appliedPosition"].ToString();
-                                        string resumefile = reader["resume"].ToString();
-                                        object dateStarted = reader["dateStart"].ToString();
-                                        DateTime startingDate = Convert.ToDateTime(dateStarted);
-                                        reader.Close();
+                        string query = "UPDATE APPLICANT SET applicantStatus = @ApplicantStatus, applicationApprovalDate = @ApplicationDate WHERE applicantID = @applicantID";
+                        SqlCommand cmd = new SqlCommand(query, db);
+                        cmd.Parameters.AddWithValue("@applicantID", applicantID);
+                        cmd.Parameters.AddWithValue("@ApplicantStatus", status);
+                        cmd.Parameters.AddWithValue("@ApplicationDate", DateTime.Now.ToString("yyyy/MM/dd"));
 
-                                        editStudentAccount(studentID);
-                                        InsertHiredList(jobType, studentID, applicantfname, applicantlname, jobid, industryID, studentType, WorkedAt, position, resumefile, startingDate);
-                                        sendApplicationStatusApprove(applicantID);
-                                    }
-                                }
-                            }
-                        }
+                        db.Open();
+                        cmd.ExecuteNonQuery();
+                        sendApplicationStatusReject(applicantID);
 
                     }
                 }
+                else if (selectedStatus == "Approve")
+                {
+                    //string requirements = txtrequirements.Text;
+                    string requirements = HttpUtility.HtmlEncode(txtrequirements.Text);
+                    DateTime dateStart = Convert.ToDateTime(txtDateStart.Text);
+
+                    //Check if the selected date is in the past
+                    if (dateStart <= DateTime.Now.Date || txtDateStart.Text == GetInterviewDateFromDatabase(applicantID) || dateStart <= Convert.ToDateTime(GetInterviewDateFromDatabase(applicantID)))
+                    {
+                        Response.Write("<script>alert('Invalid Date!'); history.back();</script>");
+                        lblerrordate.Visible = false;
+                        return;
+                    }
+
+                    string status = "Approved";
+                    using (var db = new SqlConnection(conDB))
+                    {
+                        string query = "UPDATE APPLICANT SET applicantStatus = @ApplicantStatus, applicationApprovalDate = @ApplicationDate, dateStart = @DateStart, requirements = @Requirements WHERE applicantID = @applicantID";
+                        SqlCommand cmd = new SqlCommand(query, db);
+                        cmd.Parameters.AddWithValue("@applicantID", applicantID);
+                        cmd.Parameters.AddWithValue("@ApplicantStatus", status);
+                        cmd.Parameters.AddWithValue("@ApplicationDate", DateTime.Now.ToString("yyyy/MM/dd"));
+                        cmd.Parameters.AddWithValue("@Requirements", requirements);
+                        cmd.Parameters.AddWithValue("@DateStart", dateStart);
+
+                        db.Open();
+                        cmd.ExecuteNonQuery();
+
+                        if (selectedStatus == "Approve")
+                        {
+                            using (SqlConnection connection = new SqlConnection(conDB))
+                            {
+                                connection.Open();
+                                using (SqlCommand command = connection.CreateCommand())
+                                {
+                                    command.CommandType = CommandType.Text;
+                                    command.CommandText = "SELECT jobType, student_accID, applicantFname, applicantLname, appliedPosition, resume, jobID, APPLICANT.industry_accID, StudentType, INDUSTRY_ACCOUNT.industryName, dateStart FROM APPLICANT " +
+                                        "JOIN INDUSTRY_ACCOUNT ON APPLICANT.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
+                                        "WHERE applicantID = @ApplicantID";
+                                    command.Parameters.AddWithValue("@ApplicantID", applicantID);
+                                    using (SqlDataReader reader = command.ExecuteReader())
+                                    {
+                                        if (reader.Read())
+                                        {
+                                            string jobType = reader["jobType"].ToString();
+                                            string student_accID = reader["student_accID"].ToString();
+                                            int studentID = Convert.ToInt32(student_accID);
+                                            string applicantfname = reader["applicantFname"].ToString();
+                                            string applicantlname = reader["applicantLname"].ToString();
+                                            string jobID = reader["jobID"].ToString();
+                                            int jobid = Convert.ToInt32(jobID);
+                                            string industry_accID = reader["industry_accID"].ToString();
+                                            int industryID = Convert.ToInt32(industry_accID);
+                                            string studentType = reader["StudentType"].ToString();
+                                            string WorkedAt = reader["industryName"].ToString();
+                                            string position = reader["appliedPosition"].ToString();
+                                            string resumefile = reader["resume"].ToString();
+                                            object dateStarted = reader["dateStart"].ToString();
+                                            DateTime startingDate = Convert.ToDateTime(dateStarted);
+                                            reader.Close();
+
+                                            editStudentAccount(studentID);
+                                            InsertHiredList(jobType, studentID, applicantfname, applicantlname, jobid, industryID, studentType, WorkedAt, position, resumefile, startingDate);
+                                            sendApplicationStatusApprove(applicantID);
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+                else
+                {
+                    Response.Write("<script>alert('Invalid Input!'); history.back();</script>");
+                    return;
+                }
+
+                this.LoadApplicants();
+                ChangeReviewButtonText();
+                ChangeScheduleButtonText();
+                ChangeApplicantButton();
+                endorsementButton();
             }
-            else
+            catch (Exception ex)
             {
-                Response.Write("<script>alert('Invalid Input!')</script>");
-                return;
+                Response.Write("<script>alert('Invalid Input!'); history.back();</script>" + ex.Message);
             }
 
-            this.LoadApplicants();
-            ChangeReviewButtonText();
-            ChangeScheduleButtonText();
-            ChangeApplicantButton();
-            endorsementButton();
-            
         }
 
         void sendApplicationStatusReject(int applicantID)
@@ -903,6 +945,8 @@ namespace ctuconnect
                             smtp.Credentials = NetworkCred;
                             smtp.Port = 587;
                             smtp.Send(mm);
+
+                            Response.Write("<script>alert('Data is Save.')</script>");
 
                         }
                     }
@@ -962,6 +1006,7 @@ namespace ctuconnect
                             smtp.Port = 587;
                             smtp.Send(mm);
 
+                            Response.Write("<script>alert('Data is Save.')</script>");
                         }
                     }
                 }
@@ -1038,12 +1083,13 @@ namespace ctuconnect
             {
                 string intershipStatus = "Ongoing";
                 string evaluationRequest = "no request";
+                string workStatus = "Ongoing";
                 connection.Open();
                 using (var dmd = connection.CreateCommand())
                 { //SQL Statement
                     dmd.CommandType = CommandType.Text;
-                    dmd.CommandText = "INSERT INTO HIRED_LIST (student_accID, firstName, lastName, jobID, workedAt, position, dateHired, dateStarted, industry_accID, studentType, jobType, internshipStatus, resumeFile, evaluationRequest)  "
-                                    + " VALUES (@StudentAccID,@Firstname,@Lastname,@JobID,@workedAt, @position,@dateHired,@dateStarted,@IndustryAccID,@StudentType,@JobType,@InternshipStatus, @ResumeFile, @EvaluationRequest)";
+                    dmd.CommandText = "INSERT INTO HIRED_LIST (student_accID, firstName, lastName, jobID, workedAt, position, dateHired, dateStarted, industry_accID, studentType, jobType, internshipStatus, resumeFile, evaluationRequest, workStatus)  "
+                                    + " VALUES (@StudentAccID,@Firstname,@Lastname,@JobID,@workedAt, @position,@dateHired,@dateStarted,@IndustryAccID,@StudentType,@JobType,@InternshipStatus, @ResumeFile, @EvaluationRequest, @WorkStatus)";
 
                     dmd.Parameters.AddWithValue("@StudentAccID", studentID);
                     dmd.Parameters.AddWithValue("@Firstname", fname);
@@ -1059,6 +1105,7 @@ namespace ctuconnect
                     dmd.Parameters.AddWithValue("@InternshipStatus", intershipStatus);
                     dmd.Parameters.AddWithValue("@ResumeFile", resumefile);
                     dmd.Parameters.AddWithValue("@EvaluationRequest", evaluationRequest);
+                    dmd.Parameters.AddWithValue("@WorkStatus", workStatus);
 
                     var ctr = dmd.ExecuteNonQuery();
                     if (ctr > 0)
@@ -1068,7 +1115,7 @@ namespace ctuconnect
                     }
                     else
                     {
-                        Response.Write("<script>alert('Data is not save')</script>");
+                        Response.Write("<script>alert('Data is not save'); history.back();</script>");
                     }
                 }
             }

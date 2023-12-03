@@ -20,9 +20,13 @@ namespace ctuconnect
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
+            if (!IsPostBack && Session["Student_ACC_ID"] == null)
+            {
+                Response.Redirect("LoginStudent.aspx");
+            }
             if (!IsPostBack)
             {
+                int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
                 if (studentAcctID > 0)
                 {
                     using (var db = new SqlConnection(connDB))
@@ -38,19 +42,40 @@ namespace ctuconnect
                                 txtfname.Text = reader["firstName"].ToString();
                                 txtinitials.Text = reader["midInitials"].ToString();
                                 txtlname.Text = reader["lastName"].ToString();
-                                drpStudentStatus.Text = reader["studentStatus"].ToString();
                                 Session["ID"] = reader["studentId"].ToString();
+                                txtaddress.Text = reader["address"].ToString();
+                                txtcontact.Text = reader["contactNumber"].ToString();
+                                txtctuemail.Text = reader["email"].ToString();
+                                txtPersonalEmail.Text = reader["personalEmail"].ToString();
+                                txtpwd.Text = reader["password"].ToString();
+                                cpwd.Text = reader["password"].ToString();
+
                             }
                         }
 
                     }
 
                     LoadProfilePicture(studentAcctID);
-                    LoadResumeFile(studentAcctID);
                 }
             }
 
         }
+
+        protected void ValidateGmailAccount(object source, ServerValidateEventArgs args)
+        {
+            // Extract the email address from the TextBox
+            string email = txtPersonalEmail.Text.Trim();
+
+            // Validate that it ends with "@gmail.com"
+            if (!email.EndsWith("@gmail.com", StringComparison.OrdinalIgnoreCase))
+            {
+                args.IsValid = false;
+                return;
+            }
+
+            args.IsValid = true;
+        }
+
 
         protected void btnUploadPicture_Click(object sender, EventArgs e)
         {
@@ -121,117 +146,22 @@ namespace ctuconnect
             }
         }
 
-        private void LoadResumeFile(int studentAcctID)
-        {
-            // Retrieve the resume file path from the database
-            string resumeFilePath = GetResumeFilePath(studentAcctID);
-
-            if (!string.IsNullOrEmpty(resumeFilePath))
-            {
-
-                // Get only the file name from the resume file path
-                string resumeFileName = resumeFilePath;
-
-                // Display the file name in the label control
-                lblResumeFileName.Text = resumeFileName;
-            }
-            else
-            {
-                // Handle the case where no resume file is found
-                lblResumeFileName.Text = "No resume file found.";
-            }
-        }
-
-        private string GetResumeFilePath(int studentAcctID)
-        {
-            string resumeFilePath = string.Empty;
-            using (var db = new SqlConnection(connDB))
-            {
-                string query = "SELECT resumeFile FROM STUDENT_ACCOUNT WHERE student_accID = @studentAcctID";
-                SqlCommand cmd = new SqlCommand(query, db);
-                cmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
-
-                db.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    resumeFilePath = reader["resumeFile"].ToString();
-                }
-                reader.Close();
-            }
-            return resumeFilePath;
-        }
-
-        /*
-        private void uploadResume()
-        {
-
-            if (resumeUpload.HasFile)
-            {
-                int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
-                string fileName = Path.GetFileName(resumeUpload.FileName);
-                string filePath = Server.MapPath("~/images/Resume/") + studentAcctID + "_" + fileName;
-
-                resumeUpload.SaveAs(filePath);
-
-                SaveResumeFilePath(studentAcctID.ToString(), studentAcctID + "_" + fileName);
-
-                LoadResumeFile(studentAcctID); // Reload the profile picture after uploading
-
-            }
-        }
-        */
-
-        private void SaveResumeFilePath(string studentAcctID, string resumeFile)
-        {
-            using (var db = new SqlConnection(connDB))
-            {
-                string query = "UPDATE STUDENT_ACCOUNT SET resumeFile = @ResumeFile WHERE student_accID = @studentAcctID";
-                SqlCommand cmd = new SqlCommand(query, db);
-                cmd.Parameters.AddWithValue("@ResumeFile", resumeFile);
-                cmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
-
-                db.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
             int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
             int studentID = Convert.ToInt32(Session["ID"].ToString());
 
-            if (resumeUpload.HasFile)
-            {
-
-                string fileName = Path.GetFileName(resumeUpload.FileName);
-                string filePath = Server.MapPath("~/images/Resume/") + studentAcctID + "_" + fileName;
-
-                resumeUpload.SaveAs(filePath);
-
-                SaveResumeFilePath(studentAcctID.ToString(), studentAcctID + "_" + fileName);
-
-                LoadResumeFile(studentAcctID);
-
-            }
 
             var lastname = txtlname.Text;
             var firstname = txtfname.Text;
             var initials = txtinitials.Text;
-            var status = drpStudentStatus.Text;
+            var contact = txtcontact.Text;
+            var address = txtaddress.Text;
+            var ctu = txtctuemail.Text;
+            var personal = txtPersonalEmail.Text;
+            var password = cpwd.Text;
 
-            // Retrieve current values from the database
-            bool isGraduate = GetIsGraduate(studentID);
-            string currentStatus = GetStudentStatus(studentAcctID);
-
-            // Check if the status is being changed to "Alumni" and the student is a graduate
-            if (status == "Alumni" && !isGraduate)
-            {
-                lblstatus.Text = "Error: Cannot change to Alumni status if not graduated.";
-                lblstatus.Visible = true;
-                return;
-            }
+            
 
 
             // Continue with updating the database if the conditions are met
@@ -247,85 +177,28 @@ namespace ctuconnect
                         + "lastName ='" + lastname + "', "
                         + "firstName ='" + firstname + "',"
                         + "midInitials ='" + initials + "',"
-                        + "isGraduated = 1,"
-                        + "studentStatus ='" + status + "', "
-                        + "yearGraduated = (SELECT yearGraduated FROM Graduates_Table WHERE studentId='" + studentID + "') "
+                        + "contactNumber ='" + contact + "',"
+                        + "address ='" + address + "',"
+                        + "email ='" + ctu + "',"
+                        + "personalEmail ='" + personal + "',"
+                        + "password ='" + password + "'"
                         + "WHERE student_accID='" + studentAcctID + "'";
 
                     int rowsAffected = cmd.ExecuteNonQuery();
 
                     if (rowsAffected > 0)
                     {
-                        
+
                         Response.Write("<script>alert('Record Updated!');document.location='MyAccount.aspx'</script>");
                     }
                     else
                     {
-                        // Handle the case where the update failed
-                        lblstatus.Text = "Error: Failed to update record.";
-                        lblstatus.Visible = true;
+                        Response.Write("<script>alert('Record Failed to Update!')</script>");
                     }
                 }
             }
 
-
-        }
-
-        protected void btnCancel_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("MyAccount.aspx");
-        }
-
-        private string GetStudentStatus(int studentAcctID)
-        {
-            string studentStatus = string.Empty;
-
-            using (var db = new SqlConnection(connDB))
-            {
-                string query = "SELECT studentStatus FROM STUDENT_ACCOUNT WHERE student_accID = @studentAcctID";
-                SqlCommand cmd = new SqlCommand(query, db);
-                cmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
-
-                db.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    studentStatus = reader["studentStatus"].ToString();
-                }
-
-                reader.Close();
-            }
-
-            return studentStatus;
-        }
-
-        private bool GetIsGraduate(int studentID)
-        {
-            
-            bool isGraduate = false;
-
-            using (var db = new SqlConnection(connDB))
-            {
-                // Check if the studentID exists in the Graduates_Table
-                string checkQuery = "SELECT COUNT(*) FROM GRADUATES_TABLE WHERE studentID = @studentID";
-                SqlCommand checkCmd = new SqlCommand(checkQuery, db);
-                checkCmd.Parameters.AddWithValue("@studentID", studentID);
-
-                db.Open();
-                int count = (int)checkCmd.ExecuteScalar();
-
-                if (count > 0)
-                {
-                    // If studentID exists in Graduates_Table, set isGraduate to true
-                    isGraduate = true;
-                }
-
-            }
-
-            return isGraduate;
-
-        }
+        }      
 
         void LogOut()
         {
@@ -335,7 +208,9 @@ namespace ctuconnect
             Response.Redirect("LoginStudent.aspx");
         }
 
-        
-
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("MyAccount.aspx");
+        }
     }
 }

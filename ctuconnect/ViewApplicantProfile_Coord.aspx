@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Industry.Master" AutoEventWireup="true" CodeBehind="ViewApplicantProfile.aspx.cs" Inherits="ctuconnect.ViewApplicantProfile" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OJTCoordinator.Master" AutoEventWireup="true" CodeBehind="ViewApplicantProfile_Coord.aspx.cs" Inherits="ctuconnect.ViewApplicantProfile_Coord" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

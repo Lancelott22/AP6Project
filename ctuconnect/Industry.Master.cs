@@ -15,6 +15,7 @@ namespace ctuconnect
         string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
         private DataTable dtApplicants = new DataTable();
         private DataTable dtReferred = new DataTable();
+        private DataTable dtFeedback = new DataTable();
         int count = 0;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -26,7 +27,7 @@ namespace ctuconnect
                     string industryID = Session["INDUSTRY_ACC_ID"].ToString();
                     // Do something with the departmentID
                 }
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
                 lblUnreadCount.Text = totalCounts.ToString();
 
                 this.LoadApplicants();
@@ -37,12 +38,17 @@ namespace ctuconnect
                 rptreferred.DataSource = dtReferred;
                 rptreferred.DataBind();
 
+                this.LoadFeedback();
+                rptindustryfeedback.DataSource = dtFeedback;
+                rptindustryfeedback.DataBind();
+
                 refreshCounting();
                 industryDetails();
                 industryPic();
 
                 disableHeader();
                 disableHeader2();
+                disableHeader3();
             }
         }
 
@@ -126,6 +132,22 @@ namespace ctuconnect
             
         }
 
+        void disableHeader3()
+        {
+
+            if (rptindustryfeedback.Items.Count == 0)
+            {
+                // Find the headerTemplateContainer and set its Visible property to false
+                Control headerTemplateContainer3 = rptindustryfeedback.Controls[0].Controls[0].FindControl("headerTemplateContainer3");
+
+                if (headerTemplateContainer3 != null)
+                {
+                    headerTemplateContainer3.Visible = false;
+                }
+            }
+
+
+        }
         private void LoadApplicants()
         {
             if (Session["INDUSTRY_ACC_ID"] != null)
@@ -173,6 +195,28 @@ namespace ctuconnect
             }
         }
 
+        private void LoadFeedback()
+        {
+            string industryID = Session["INDUSTRY_ACC_ID"].ToString();
+
+            using (var db = new SqlConnection(conDB))
+            {
+                string query = "SELECT * FROM INDUSTRY_FEEDBACK JOIN STUDENT_ACCOUNT ON INDUSTRY_FEEDBACK.sendfrom = STUDENT_ACCOUNT.STUDENT_ACCID WHERE INDUSTRY_FEEDBACK.isRemove = 0 and sendto = '" + industryID + "' ORDER BY dateCreated DESC";
+                SqlCommand cmd = new SqlCommand(query, db);
+
+                db.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dtFeedback);
+            }
+
+
+            rptindustryfeedback.DataSource = dtFeedback;
+            rptindustryfeedback.DataBind();
+            disableHeader3();
+
+
+        }
+
         protected int UnreadApplicantsCount()
         {
             string industryID = Session["INDUSTRY_ACC_ID"].ToString();
@@ -210,6 +254,29 @@ namespace ctuconnect
                 connection.Open();
 
                 string query = "SELECT COUNT(*) FROM REFERRAL WHERE isRead = 0 and industry_accID = '" + industryID + "'";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    count = (int)command.ExecuteScalar();
+                }
+            }
+
+            return count;
+        }
+
+        protected int UnreadFeedbackCount()
+        {
+            string industryID = Session["INDUSTRY_ACC_ID"].ToString();
+            int count = 0;
+
+            // Replace with your connection string
+            string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(conDB))
+            {
+                connection.Open();
+
+                string query = "SELECT COUNT(*) FROM INDUSTRY_FEEDBACK WHERE isRead = 0 and sendto = '" + industryID + "'";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -317,7 +384,7 @@ namespace ctuconnect
                 db.Open();
                 cmd.ExecuteNonQuery();
 
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -360,7 +427,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -387,7 +454,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -425,7 +492,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -437,6 +504,115 @@ namespace ctuconnect
             }
 
         }
+
+        protected void readFeedback_ItemCommand(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "MarkAsRead")
+            {
+                int id = Convert.ToInt32(e.CommandArgument);
+
+                MarkFeedbackAsRead(id);
+
+
+            }
+            // Refresh the notifications
+            this.LoadFeedback();
+            this.UnreadFeedbackCount();
+
+        }
+
+        private void MarkFeedbackAsRead(int id)
+        {
+
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE INDUSTRY_FEEDBACK SET isRead = 1 WHERE id = @ID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@ID", id);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+
+
+                // Update the unread count
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            this.disableHeader3();
+            RedirectToIndustryProfile(id);
+
+
+        }
+
+        private void RedirectToIndustryProfile(int id)
+        {
+            Response.Redirect("IndustryProfile.aspx?id=" + id);
+        }
+
+        private void FeedbackRead(int id)
+        {
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE INDUSTRY_FEEDBACK SET isRead = 1 WHERE id = @ID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@ID", id);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+
+
+                // Update the unread count
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            this.disableHeader3();
+        }
+
+        protected void removeFeedback_ItemCommand(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "MarkAsRemove")
+            {
+                int id = Convert.ToInt32(e.CommandArgument);
+
+                MarkFeedbackAsRemoved(id);
+                FeedbackRead(id);
+
+
+            }
+
+            // Refresh the notifications
+            this.LoadFeedback();
+            this.UnreadFeedbackCount();
+        }
+
+        private void MarkFeedbackAsRemoved(int id)
+        {
+            // Update the isRemove property in the database
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE INDUSTRY_FEEDBACK SET isRemove = 1 WHERE id = @ID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@ID", id);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            //this.disableHeader();
+
+            if (rptindustryfeedback.Items.Count == 1)
+            {
+                disableHeader3();
+            }
+        }
+
         protected void SignOut_Click(object sender, EventArgs e)
         {
 

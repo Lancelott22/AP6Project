@@ -142,7 +142,12 @@
                         Birthdate
                     </div>
                     <div class="col-sm-9">
-                        <asp:TextBox ID="txtbdate" runat="server" TextMode="Date" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>
+                        <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional">
+                            <ContentTemplate>
+                            <asp:TextBox ID="txtbdate" runat="server" TextMode="Date" CssClass="txtbox" Width="400px" Height="30px" AutoPostBack="True" OnTextChanged="txtbdate_TextChanged"></asp:TextBox>
+                            <asp:Label ID="labelbdate" runat="server" Visible="false" Font-Size="Medium" ForeColor="Red"></asp:Label>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
                     </div>
                 </div>
                 <br />
@@ -195,13 +200,13 @@
                         <div id="skillsContainer" runat="server">
                             <asp:Repeater ID="rptSkills" runat="server" OnItemCommand="rptSkills_ItemCommand">
                                 <ItemTemplate>
-                                    <asp:TextBox runat="server" ID="txtSkills" Text='<%# Eval("skills") %>' placeholder="Skills..." CssClass="txtbox" Width="100px" Height="30px"></asp:TextBox>                                    
-                                    <asp:Button runat="server" Text="Remove" CommandName="RemoveSkills" CommandArgument='<%# Container.ItemIndex %>' CssClass="btn1" Height="28px"/>
+                                    <asp:TextBox runat="server" ID="txtSkills" Text='<%# Eval("skills") %>' placeholder="Skills..." CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>                                    
+                                    <asp:Button runat="server" Text="Remove" CommandName="RemoveSkills" CommandArgument='<%# Container.ItemIndex %>' class="btn btn-danger" Height="28px"/>
                                     <br />
                                 </ItemTemplate>
                             </asp:Repeater>
                         </div>
-                        <asp:Button ID="btnAddSkills" runat="server" Text="Add Skill" OnClick="btnAddSkills_Click" CssClass="btn2" Height="28px"/>
+                        <asp:Button ID="btnAddSkills" runat="server" Text="Add Skill" OnClick="btnAddSkills_Click" class="btn btn-success" Height="28px"/>
                     </ContentTemplate>
                     <Triggers>
                         <asp:AsyncPostBackTrigger ControlID="btnAddSkills" EventName="Click" />
@@ -227,13 +232,13 @@
                                     <asp:TextBox runat="server" ID="txtDegree" Text='<%# Eval("edDegree") %>' placeholder="Degree" CssClass="txtbox" Width="200px" Height="30px"></asp:TextBox>
                                     <asp:TextBox runat="server" ID="txtSchool" Text='<%# Eval("edNameOfSchool") %>' placeholder="Name of School" CssClass="txtbox" Width="200px" Height="30px"></asp:TextBox>
                                     <asp:TextBox runat="server" ID="txtGradDate" Text='<%# Eval("edGraduationDate") %>' placeholder="Year" CssClass="txtbox" Width="100px" Height="30px"></asp:TextBox>
-                                    <asp:Button runat="server" Text="Remove" CommandName="RemoveEducation" CommandArgument='<%# Container.ItemIndex %>' CssClass="btn1" Height="28px"/>
+                                    <asp:Button runat="server" Text="Remove" CommandName="RemoveEducation" CommandArgument='<%# Container.ItemIndex %>' class="btn btn-danger" Height="28px"/>
                                     <br />                                
                                         
                                 </ItemTemplate>
                             </asp:Repeater>
                         </div>
-                        <asp:Button ID="btnAddEducation" runat="server" Text="Add Education" OnClick="btnAddEducation_Click" CssClass="btn2" Height="28px"/>
+                        <asp:Button ID="btnAddEducation" runat="server" Text="Add Education" OnClick="btnAddEducation_Click" class="btn btn-success" Height="28px"/>
                     </ContentTemplate>
                     <Triggers>
                         <asp:AsyncPostBackTrigger ControlID="btnAddEducation" EventName="Click" />
@@ -256,12 +261,12 @@
                             <asp:Repeater ID="rptCertificate" runat="server" OnItemCommand="rptCertificate_ItemCommand">
                                 <ItemTemplate>
                                     <asp:TextBox runat="server" ID="txtCertificates" Text='<%# Eval("certificate") %>' placeholder="Certificate" CssClass="txtbox" Width="600px" Height="30px"></asp:TextBox>                                   
-                                    <asp:Button runat="server" Text="Remove" CommandName="RemoveCertificates" CommandArgument='<%# Container.ItemIndex %>' CssClass="btn1" Height="28px"/>
+                                    <asp:Button runat="server" Text="Remove" CommandName="RemoveCertificates" CommandArgument='<%# Container.ItemIndex %>' class="btn btn-danger" Height="28px"/>
                                     <br />
                                 </ItemTemplate>
                             </asp:Repeater>
                         </div>
-                        <asp:Button ID="btnAddCertificates" runat="server" Text="Add Certificate" OnClick="btnAddCertificates_Click" CssClass="btn2" Height="28px" />
+                        <asp:Button ID="btnAddCertificates" runat="server" Text="Add Certificate" OnClick="btnAddCertificates_Click" class="btn btn-success" Height="28px" />
                     </ContentTemplate>
                     <Triggers>
                         <asp:AsyncPostBackTrigger ControlID="btnAddCertificates" EventName="Click" />
