@@ -962,7 +962,6 @@
     </Compile>
     <Compile Include="ViewEvaluation.aspx.cs">
       <DependentUpon>ViewEvaluation.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ViewEvaluation.aspx.designer.cs">
       <DependentUpon>ViewEvaluation.aspx</DependentUpon>

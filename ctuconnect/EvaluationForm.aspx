@@ -357,7 +357,7 @@
             
         </tr>
     </table>
-                  <asp:Button CommandName="NextView" ID="btnnext1" runat="server" Text = "Go To Next" />
+                  <asp:Button CommandName="NextView" ID="btnnext1" runat="server" Text = "Go To Next" UseSubmitBehavior="true" OnClick="btnnext1_Click"/>
                    
                </asp:View> 
 					
@@ -420,7 +420,7 @@
             
                
             </asp:MultiView>
-       <asp:Button ID="btnsubmit" runat="server" Text="Submit" OnCommand="btnsubmit_Command"  CssClass="btn-primary"/> 
+       <asp:Button ID="btnsubmit" runat="server" Text="Submit" OnCommand="btnsubmit_Command"  CssClass="btn-primary" Visible="false"/> 
                   <input type="hidden" runat="server" id="hidden_score" name="HiddenScore" value="" />
                   <input type="hidden" runat="server" id="hidden_grade" name="HiddenGrade" value="" />    
          
@@ -520,13 +520,6 @@
 
 
         return false; // Prevent the form from submitting
-    }
-
-
-
-    
+    }  
 </script>
-    
-    
-
 </asp:Content>

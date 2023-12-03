@@ -284,34 +284,38 @@ namespace ctuconnect
         string getPersonalEmail()
         {
             int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
-            conDB.Open();
+            string email = "";
+           conDB.Open();
             SqlCommand cmd = new SqlCommand("select personalEmail,email from STUDENT_ACCOUNT where student_accID = @student_accID", conDB);
             cmd.Parameters.AddWithValue("@student_accID", student_accId);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
-            {
+            {   
                 if (reader["personalEmail"] == DBNull.Value)
                 {
-                    reader.Close();
+                    email = reader["email"].ToString();
                     conDB.Close();
-                    return reader["email"].ToString();                 
+                    reader.Close(); 
+                    return email;
                 }
                 else if(reader["personalEmail"].ToString() == "")
                 {
-                    reader.Close();
+                    email = reader["email"].ToString();
                     conDB.Close();
-                    return reader["email"].ToString();
+                    reader.Close();
+                    return email;
                 }
                 else
-                {
-                    reader.Close();
+                {    
+                    email = reader["personalEmail"].ToString();
                     conDB.Close();
-                    return reader["personalEmail"].ToString();
+                    reader.Close();
+                    return email;
                 }
             }
-            reader.Close();
             conDB.Close();
-            return reader["personalEmail"].ToString();
+            reader.Close();
+            return email;
         }
         private string getUploadEndorsementLetter()
         {
