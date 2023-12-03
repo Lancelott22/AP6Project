@@ -114,7 +114,7 @@ namespace ctuconnect
 
         private void isEvaluated()
         {
-            string student_accID = Request.QueryString["student_accID"];
+            string student_accID = Request.QueryString["STUDENT_ID"];
             string evaluated = "Evaluated";
 
             if (string.IsNullOrEmpty(student_accID))
