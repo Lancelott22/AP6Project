@@ -22,7 +22,6 @@ namespace ctuconnect
             if (!IsPostBack && Session["IndustryEmail"] == null)
             {
                 Response.Redirect("LoginIndustry.aspx");
-
             }
             else
             {
@@ -42,6 +41,11 @@ namespace ctuconnect
             {
                 fillJobDetails();
                 bindCourse();
+
+                if(bool.Parse(Session["ISVerified"].ToString()) == false)
+                {
+                    Response.Write("<script>alert('Your account is not yet verified! You cannot post a job right now.');document.location='IndustryDashboard.aspx';</script>");
+                }
             }
             
         }
@@ -227,7 +231,6 @@ namespace ctuconnect
         }
         protected void SignOut_Click(object sender, EventArgs e)
         {
-
             Session.Abandon();
             Session.Clear();
             Session.RemoveAll();

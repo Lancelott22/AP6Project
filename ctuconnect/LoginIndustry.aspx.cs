@@ -119,6 +119,7 @@ namespace ctuconnect
                         Session["MOU"] = reader["mou"];
                         Session["INDUSTRYPIC"] = reader["industryPicture"];
                         Session["DATEREG"] = reader["dateRegistered"];
+                        Session["ISVerified"] = reader["isVerified"];
                     }
                     conDB.Close();
                     reader.Close();
