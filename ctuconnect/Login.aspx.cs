@@ -37,12 +37,13 @@ namespace ctuconnect
 
         protected void LogIn_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
+
             try
             {
-
                 string loginUser = txtusername.Text;
                 string loginPassword = txtpwd.Text;
+
                 if (!string.IsNullOrEmpty(loginUser) && !string.IsNullOrEmpty(loginPassword))
                 {
                     using (con)
@@ -50,23 +51,29 @@ namespace ctuconnect
                         con.Open();
 
                         string query = "SELECT COUNT(1) FROM ADMIN_ACCOUNT WHERE username = @username AND password = @password";
-                        using(SqlCommand command = new SqlCommand(query, con))
+                        using (SqlCommand command = new SqlCommand(query, con))
                         {
                             command.Parameters.AddWithValue("@username", loginUser);
                             command.Parameters.AddWithValue("@password", loginPassword);
+
                             int count = Convert.ToInt32(command.ExecuteScalar());
 
-                            Session["Username"] = txtusername.Text;
-                            Response.Redirect("AdminDashboard.aspx");
-                            con.Close();
+                            if (count > 0)
+                            {
+                                // Valid credentials
+                                Session["Username"] = txtusername.Text;
+                                Response.Redirect("AdminDashboard.aspx");
+                            }
+                            else
+                            {
+                                // Invalid credentials
+                                LoginErrorMessage.Visible = true;
+                            }
                         }
-                        
-                        
                     }
                 }
-                    
             }
-            catch
+            catch (Exception ex)
             {
                 Response.Write("<script>alert('Something went wrong! Please try again.');document.location='Login.aspx'</script>");
             }

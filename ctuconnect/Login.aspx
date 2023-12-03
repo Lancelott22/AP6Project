@@ -76,7 +76,7 @@
                     <div class="col-lg-12 align-self-end">
                         <asp:TextBox ID="txtpwd" CssClass="txtbox" runat="server" TextMode="Password" placeholder="Password" Height="40px" Width="285px"></asp:TextBox><br />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" forecolor="#F7941F" runat="server" ErrorMessage="Enter password" ControlToValidate="txtpwd" ></asp:RequiredFieldValidator><br />
-                        <asp:Label ID="LoginErrorMessage" runat="server" Text="The password or email is incorrect!" CssClass="connect"></asp:Label>
+                        <asp:Label ID="LoginErrorMessage" runat="server" forecolor="#F7941F" Text="The password or email is incorrect!" CssClass="connect"></asp:Label>
                     </div>
                     <div>
                         <asp:CheckBox ID="CheckBox1" style="color:#FFF5F5; font-family: Arial; font-size: 15px;opacity: 0.9;" runat="server" AutoPostBack="true" OnCheckedChanged="CheckBox1_CheckedChanged"/>
