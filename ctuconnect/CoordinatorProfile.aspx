@@ -33,7 +33,6 @@
             margin-right:auto;
             margin-top:auto;
             padding-top:10px;
-
         }
         .profile-container p{
              display:block;
@@ -86,7 +85,7 @@
                 padding: 2%;
                 overflow: auto;
                 /*background-color:white;*/
-                height:550px;
+                height:800px;
             }
                 .display-container {
                     max-width: 100%;
@@ -113,6 +112,7 @@
                  margin-left:2%; 
                  margin-right:2%;
                  padding: 0px 0px 0px 0px;
+                 border-color:white;
              }
              .gridview-style{
                  margin-top:5%;
@@ -169,25 +169,30 @@
                 background-color: #881A30;
 
     }
+
+
     th{
-       border-collapse: collapse;
-        border-color:white;
+         border: 1px solid;
+         border-color:#c4c4c4;
         background-color:#f4f4fb;
         padding:5px;
 
     }
-    td{
+/*    td{
+        border: 1px solid;
+        border-color:dimgray;
         padding-left:5px;
-    }
+    }*/
     .datas{
-          border: 5px solid;
-          border-color:white;
+        border: 1px solid;
+        border-color:#c4c4c4;
+        padding-left:5px;
          color:black;
          cursor:default;
     }
 
     .table-list{
-         border-collapse: collapse;
+        border-collapse: collapse;        
         font-size:13px; 
         height:auto; 
         width:100%;
@@ -265,12 +270,13 @@
     .action-button i {
         margin-right: 5px; /* Adjust the margin as needed */
     }
+   
     </style>
     <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
             <asp:TableCell  style="vertical-align: top;">
                 <div class="profile-container">
-<asp:Image ID="CoordinatorImage" runat="server"/>
+                    <asp:Image ID="CoordinatorImage" runat="server"/>
                     <p >OJT Coordinator</p>
                     <hr class="horizontal-line" />
                     <a class="active" href="Coordinator.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
@@ -328,7 +334,6 @@
                                         <th>Status</th>
                                         <th>Rendered Hours</th>
                                         <th>Evaluation</th>
-                                        <th></th>
                                     </tr>
                                    <tbody>
                                         <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
@@ -336,43 +341,43 @@
                                    </table>
                           </LayoutTemplate>         
                                         <Itemtemplate>
-                                            <tr class="datas clickableRow" onclick="toggleHighlightAndCheckbox(document.getElementById('<%# ((ListViewDataItem)Container).FindControl("chkSelect").ClientID %>'));">
-                                                <td>
+                                            <tr class="clickableRow" onclick="toggleHighlightAndCheckbox(document.getElementById('<%# ((ListViewDataItem)Container).FindControl("chkSelect").ClientID %>'));">
+                                                <td class="datas">
                                                     <asp:CheckBox ID="chkSelect" runat="server" onclick="event.stopPropagation(); toggleHighlight(this);"  />
                                                 </td>
                                                 <td style="display:none;"><asp:Label ID="lblStudentaccId" runat="server" Visible="false" Text='<%# Eval("student_accID") %>'></asp:Label></td>
-                                                <td>
+                                                <td class="datas">
                                                     <asp:Label ID="lblStudentId" runat="server" Text='<%# Eval("studentId") %>'></asp:Label>
 
                                                 </td>
-                                                <td>
+                                                <td class="datas">
                                                     <asp:Label ID="lblLastName" runat="server" Text='<%# Eval("lastname") %>'></asp:Label>
 
                                                 </td>
-                                                <td>
+                                                <td class="datas">
                                                     <asp:Label ID="lblFirstName" runat="server" Text='<%# Eval("firstname") %>'></asp:Label>
 
                                                 </td>
-                                                <td><%# Eval("midinitials") %></td>
-                                                <td> 
+                                                <td class="datas"><%# Eval("midinitials") %></td>
+                                                <td class="datas"> 
                                                     <asp:Label ID="courseLabel" runat="server" Text='<%# Eval("course") %>'></asp:Label>
                                                 </td>
-                                                <td>
+                                                <td class="datas">
                                                     <asp:Label ID="contactLabel" runat="server" Text='<%# Eval("contactNumber") %>'></asp:Label>
-                                                </td>
-                                                <td>
+                                                </td >
+                                                <td class="datas">
                                                     <asp:Label ID="emailLabel" runat="server" Text='<%# Eval("email") %>'></asp:Label>
                                                 </td>
-                                                <td>
+                                                <td class="datas">
                                                     <asp:Label ID="lblIsHired" runat="server" Text='<%# Convert.ToBoolean(Eval("isHired")) %>' Visible="false"></asp:Label>
                                                         <%# (Convert.ToBoolean(Eval("isHired")) ? "<i class='fa fa-check' style='color: green;'></i> Hired" : "<i class='fa fa-times' style='color: red;'></i> Not Hired") %>
                                                 </td>
 
 
-                                                <td>
+                                                <td class="datas">
                                                     <asp:Label ID="hourslabel" runat="server" Text='<%# Eval("renderedHours") %>'></asp:Label>
                                                 </td>
-                                                <td>
+                                                <td class="datas">
                                                     <asp:Button ID="EvaluationBtn" CssClass="evaluateButton" runat="server" Text='<%# Eval("evaluationRequest") %>' OnCLick="Evaluate_BtnClick" />
                                                 
                                                 </td>

@@ -510,7 +510,7 @@ namespace ctuconnect
         protected void referIntern_Click(object sender, EventArgs e)
         {
             List<bool> isHiredList = new List<bool>();
-           
+            int checkedCount = 0;
 
             foreach (ListViewItem item in internListView.Items)
             {
@@ -536,33 +536,41 @@ namespace ctuconnect
                     isHiredList.Add(isHired);
                     selectedInternNames.Add($"{firstName} {lastName}");
                     selectedStudentIds.Add(studentaccountId);
+
+                    checkedCount ++;
                 }
             }
             ViewState["SelectedStudentIds"] = selectedStudentIds;
             ViewState["SelectedFullName"] = selectedInternNames;
 
-
-
-            bool anyIsHired = isHiredList.Any(isHired => isHired);
-            if (anyIsHired)
+            if (checkedCount >= 1)
             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "openModal1();", true);
-            }
-            else
-            {
-                List<string> anyExistInReferralTable = CheckIfAnyExistInReferralTable(selectedStudentIds);
 
-                if (anyExistInReferralTable.Count > 0)
+                bool anyIsHired = isHiredList.Any(isHired => isHired);
+                if (anyIsHired)
                 {
-                    // If any selected student ID exists in the REFERRAL table, show modal3
-                    string existinginternNamesString = string.Join(", ", anyExistInReferralTable);
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript3", $"openModal3('{existinginternNamesString}');", true);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "openModal1();", true);
                 }
                 else
                 {
-                    string internNamesString = string.Join(",", selectedInternNames);
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript2", $"openModal2('{internNamesString}');", true);
+                    List<string> anyExistInReferralTable = CheckIfAnyExistInReferralTable(selectedStudentIds);
+
+                    if (anyExistInReferralTable.Count > 0)
+                    {
+                        // If any selected student ID exists in the REFERRAL table, show modal3
+                        string existinginternNamesString = string.Join(", ", anyExistInReferralTable);
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript3", $"openModal3('{existinginternNamesString}');", true);
+                    }
+                    else
+                    {
+                        string internNamesString = string.Join(",", selectedInternNames);
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript2", $"openModal2('{internNamesString}');", true);
+                    }
                 }
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "showModal", "$('#NoSelected').modal('show');", true);
             }
         }
         private List<string> CheckIfAnyExistInReferralTable(List<string> selectedStudentIds)

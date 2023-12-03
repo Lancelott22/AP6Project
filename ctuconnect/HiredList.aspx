@@ -499,11 +499,10 @@ width:100%;
                 </div><asp:Label ID="lbldate" runat="server" Font-Size="Medium" ForeColor="Red" Visible="false"></asp:Label>
                  <div style="clear: both;"></div>
                 <div  id="detailsFeedback">
-                    <asp:Label ID="Label7" runat="server" Text="Feedback" Style="font-size:18px;" ></asp:Label>
+                    <asp:Label ID="Label7" runat="server" Text="Feedback" Style="font-size:18px;" ></asp:Label><br /><br />
                     <div style="clear: both;"></div>
-                    <div>
                     <asp:TextBox ID="txtFeedback" runat="server" class="form-control" Height="200px" Width="500px" placeholder="(Optional)"></asp:TextBox>
-                    </div>
+                    
                 </div>
            </div>
         <div class="modal-footer">

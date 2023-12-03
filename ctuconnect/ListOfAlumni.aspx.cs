@@ -44,8 +44,8 @@ namespace ctuconnect
                 da.Fill(ds);
 
                 // Bind the DataTable to the GridView
-                dataRepeater1.DataSource = ds;
-                dataRepeater1.DataBind();
+                alumniListview.DataSource = ds;
+                alumniListview.DataBind();
 
             }
         }
