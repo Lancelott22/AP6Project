@@ -257,7 +257,10 @@
                         <br />
                         <div class="row">
                             <div class="col-12 industry-name">
-                               <asp:Label ID="disp_name" runat="server" Text=""></asp:Label>
+                               <asp:Label ID="disp_name" runat="server" Text=""></asp:Label><br />
+                                <span style="color: yellow;">
+                                    <asp:Literal ID="lblOverallRating" runat="server"></asp:Literal>
+                                </span>
                             </div>
                         </div>
                         <br /><br />
