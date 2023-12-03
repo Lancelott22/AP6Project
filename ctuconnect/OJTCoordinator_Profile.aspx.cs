@@ -71,7 +71,7 @@ namespace ctuconnect
             using (var db = new SqlConnection(conDB))
             {
 
-                string query = "SELECT COUNT(student_accID) as TotalInterns FROM STUDENT_ACCOUNT WHERE studentStatus = Intern and department_ID = '" + departmentID + "' ";
+                string query = "SELECT COUNT(student_accID) as TotalInterns FROM STUDENT_ACCOUNT WHERE studentStatus = 'Intern' and department_ID = '" + departmentID + "' ";
                 SqlCommand command = new SqlCommand(query, db);
                 db.Open();
                 SqlDataReader reader = command.ExecuteReader();

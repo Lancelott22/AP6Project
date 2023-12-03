@@ -465,7 +465,7 @@
                                             <div class="user-info">
                                                 <div class="row">
                                                     <div class="col-3">
-                                                        <asp:Image ID="imageProfile" runat="server" />
+                                                        <img src="images/administratorpic.jpg" />
                                                     </div>
                                                     <div class="col-9">
                                                         <h4><asp:Label ID="lblname" runat="server"></asp:Label></h4>
@@ -473,14 +473,9 @@
                                                 </div>   
                                             </div>
                                             <hr />
-                                            <a href="#" class="sub-menu-link">
+                                            <a href="AdminProfile.aspx" class="sub-menu-link">
                                                 <i class='bx bx-user-circle icon' ></i>
                                                 <p>View Profile</p>
-                                                <span>> </span>
-                                            </a>
-                                            <a href="#" class="sub-menu-link">
-                                                <i class='bx bxs-edit'></i>
-                                                <p>Edit Profile</p>
                                                 <span>> </span>
                                             </a>
                                             <asp:LinkButton class="sub-menu-link" runat="server" ID ="SignOut" OnClick="SignOut_Click">
