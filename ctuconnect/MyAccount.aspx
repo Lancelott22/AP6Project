@@ -513,7 +513,7 @@
             </div>           
             <div class="modal-footer">
                 <asp:Button ID="btnClose" runat="server" Text="Close" OnClick="btnClose_Click" class="btn btn-danger"/>
-               <asp:Button ID="btnSaveResumeback" class="btn btn-success" runat="server" Text="Save" OnClick="btnSaveResumeback_Click"/>
+               <asp:Button ID="btnSaveResumeback" class="btn btn-success" runat="server" Text="Save"  OnClick="btnSaveResumeback_Click"/>
             </div>
        
         </div>

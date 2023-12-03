@@ -23,7 +23,7 @@ namespace ctuconnect
         {
             if (!IsPostBack && Session["Username"] == null)
             {
-                Response.Redirect("LoginOJTCoordinator.aspx");
+                Response.Redirect("Login.aspx");
             }
             if (!IsPostBack)
             {

@@ -140,10 +140,20 @@
                         <asp:TextBox ID="txtcontact" runat="server" CssClass="txtbox" Width="400px" Height="30px" Text="09"></asp:TextBox><br />
                         <asp:RequiredFieldValidator ID="rfvContactNumber" runat="server" ControlToValidate="txtcontact" InitialValue="09" ErrorMessage="Contact Number is required." Display="Dynamic" CssClass="validation-error"></asp:RequiredFieldValidator>
                         <asp:RegularExpressionValidator ID="revContactNumber" runat="server" ControlToValidate="txtcontact" ErrorMessage="Enter a valid Philippine phone number starting with 09." Display="Dynamic" ValidationExpression="^09\d{9}$" CssClass="validation-error"></asp:RegularExpressionValidator>
-                </div>
+                    </div>
                     <div class="col-8">
                         Address *<br />
                         <asp:TextBox ID="txtaddress" runat="server" CssClass="txtbox" Width="600px" Height="30px"></asp:TextBox>                    
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-1">
+                        <asp:Button ID="btnSaveInfo" class="btn btn-success" runat="server" Text="Save" OnClick="btnSaveInfo_Click" CausesValidation="false"/>
+                    </div>
+                    
+                    <div class="col-sm-2">
+                        <asp:Button ID="btnCancelInfo" class="btn btn-danger" runat="server" Text="Back" OnClick="btnCancelInfo_Click" CausesValidation="false"/>
                     </div>
                 </div>
                 <br />
@@ -169,7 +179,7 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        Password *<br />
+                        Change Password *<br />
                         <asp:TextBox ID="txtpwd" runat="server" CssClass="txtbox" TextMode="Password" Width="700px" Height="30px"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvPassword" runat="server" ControlToValidate="txtpwd" ErrorMessage="Password is required." Display="Dynamic" CssClass="validation-error"></asp:RequiredFieldValidator>
                     </div>
@@ -180,18 +190,18 @@
                         <asp:CompareValidator ID="cvPasswordMatch" runat="server" ControlToCompare="txtpwd" ControlToValidate="cpwd" ErrorMessage="Passwords do not match." Display="Dynamic" CssClass="validation-error"></asp:CompareValidator>
                     </div>
                 </div>
-            </div>
-            <div class="lower-section">
+                <br />
                 <div class="row">
-                    <div class="col-sm-3">
-                        <asp:Button ID="btnSave" class="btn btn-success" runat="server" Text="Save" OnClick="btnSave_Click"/>
+                    <div class="col-sm-1">
+                        <asp:Button ID="btnSave" class="btn btn-success" runat="server" Text="Save" OnClick="btnSave_Click" CausesValidation="false"/>
                     </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    
                     <div class="col-sm-2">
-                        <asp:Button ID="btnCancel" class="btn btn-danger" runat="server" Text="Cancel" OnClick="btnCancel_Click" CausesValidation="false"/>
+                        <asp:Button ID="btnCancel" class="btn btn-danger" runat="server" Text="Back" OnClick="btnCancel_Click" CausesValidation="false"/>
                     </div>
                 </div>
             </div>
+            
 
         </div>
     </div>
