@@ -17,6 +17,9 @@ using System.Web.Configuration;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using iText.Signatures;
+using System.Web.UI.HtmlControls;
+using iText.IO.Image;
 
 namespace ctuconnect
 {
@@ -1237,6 +1240,68 @@ namespace ctuconnect
 
         }
 
+        protected void rptApplicant_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            Label jobPostID = e.Item.FindControl("JobPostID") as Label;
+            Label studentAccID = e.Item.FindControl("studentAccID") as Label;
+            Label applicantID = e.Item.FindControl("applicantID") as Label;
+            Label MatchSkillsLabel = e.Item.FindControl("matchSkillsLabel") as Label;
+            HtmlGenericControl matchBadge = (HtmlGenericControl)e.Item.FindControl("MatchedBadge");
+            HtmlGenericControl skillMatch = (HtmlGenericControl)e.Item.FindControl("skillsMatch");
+            int jobID = int.Parse(jobPostID.Text);
+            int student_accID = int.Parse(studentAccID.Text);
+            int applicant_ID = int.Parse(applicantID.Text);
+            if (checkMatchedToSkills(applicant_ID))
+            {
+                skillMatch.Visible = true;
+                matchBadge.Visible = true;
+            }
+            if(getMatchSkills(jobID, student_accID) != "")
+            {
+                MatchSkillsLabel.Text = getMatchSkills(jobID, student_accID);
+            }
+        }
+        bool checkMatchedToSkills(int applicant_ID)
+        {
+            SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("SELECT isMatchToSkills FROM APPLICANT WHERE applicantID = @applicantID", conDB);
+            cmd.Parameters.AddWithValue("@applicantID", applicant_ID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (bool.Parse(reader["isMatchToSkills"].ToString()) == true)
+                {
+                    conDB.Close();
+                    reader.Close();
+                    return true;
+                }
+            }
+            conDB.Close();
+            reader.Close();
+            return false;
+        }
+        string getMatchSkills(int jobID, int student_accID)
+        {
+            SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
+            conDB.Open();
+            string skills = "";
+            SqlCommand cmd = new SqlCommand("SELECT DISTINCT STRING_AGG(skills, ', ') AS ConcatenatedSkills FROM RESUME WHERE EXISTS (SELECT 1 FROM HIRING WHERE CHARINDEX(skills, jobQualifications) > 0 AND jobID = @jobID AND student_accID = student_accID);", conDB);
+            cmd.Parameters.AddWithValue("@student_accID", student_accID);
+            cmd.Parameters.AddWithValue("@jobID", jobID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                skills = reader["ConcatenatedSkills"].ToString();
+                conDB.Close();
+                reader.Close();
+                return skills;
+            }
+            
+            conDB.Close();
+            reader.Close();
+            return skills;
+        }
     }
         
 }
