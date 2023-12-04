@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site2.Master" AutoEventWireup="true" CodeBehind="TracerDashboard.aspx.cs" Inherits="ctuconnect.TracerDashboard" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site2.Master" AutoEventWireup="true" CodeBehind="TracerDashboard.aspx.cs" Inherits="ctuconnect.TracerDashboard" MaintainScrollPositionOnPostback="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -239,6 +239,60 @@
                     </ChartAreas>
                     <Legends>
                         <asp:Legend Name="AlignedToSkill" Docking="Bottom"></asp:Legend>
+                    </Legends>
+                </asp:Chart>
+            </div>
+        </div>
+        <div class="row my-5">
+            <h2 class="text-center">Intern Graphs</h2>
+            <div class="row my-5">
+                <div class="col-4">
+                    <span>Deparment</span>
+                    <asp:DropDownList runat="server" CssClass="selectpicker" ID="Department_1" AutoPostBack="true" OnSelectedIndexChanged="Deparment1_SelectedIndexChanged">
+                    </asp:DropDownList>
+                </div>
+                <div class="col-4">
+                    <span>Course</span>
+                    <asp:DropDownList runat="server" CssClass="selectpicker" ID="Course_1" AutoPostBack="true" OnSelectedIndexChanged="Course1_SelectedIndexChanged">
+                        <asp:ListItem Value="0" Text="All" Selected="true"></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+            </div>
+            <div class="col">
+
+                <asp:Chart ID="Chart7" runat="server" Width="500px" BorderlineDashStyle="Solid">
+                    <Titles>
+                        <asp:Title Name="ChartTitle" Text="Internship Match to Skills" />
+                    </Titles>
+                    <Series>
+                        <asp:Series Name="IsMatchToSkills" ChartType="Pie" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="IsMatchToSkills" XValueMember="MatchToSkills" YValueMembers="MatchToSkillsCount">
+                        </asp:Series>
+                    </Series>
+                    <ChartAreas>
+                        <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
+
+                    </ChartAreas>
+                    <Legends>
+                        <asp:Legend Name="IsMatchToSkills" Docking="Bottom"></asp:Legend>
+                    </Legends>
+                </asp:Chart>
+            </div>
+            <div class="col d-flex flex-column align-items-center">
+
+                <asp:Label ID="Label3" Text="No data available" runat="server" Visible="false"></asp:Label>
+                <asp:Chart ID="Chart8" runat="server" Width="500px" BorderlineDashStyle="Solid">
+                    <Titles>
+                        <asp:Title Name="ChartTitle" Text="Internship hired not or not hired" />
+                    </Titles>
+                    <Series>
+                        <asp:Series Name="InternHired" ChartType="Pie" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="InternHired" XValueMember="Hired" YValueMembers="TotalHired">
+                        </asp:Series>
+                    </Series>
+                    <ChartAreas>
+                        <asp:ChartArea Name="ChartArea2"></asp:ChartArea>
+                    </ChartAreas>
+                    <Legends>
+                        <asp:Legend Name="InternHired" Docking="Bottom"></asp:Legend>
                     </Legends>
                 </asp:Chart>
             </div>

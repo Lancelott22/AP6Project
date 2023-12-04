@@ -33,6 +33,8 @@ namespace ctuconnect
                 BindIsConnectedToCourse(int.Parse(Course.SelectedValue));
                 BindSalaryRange(int.Parse(Course.SelectedValue));
                 BindAlignedToSkill(int.Parse(Course.SelectedValue));
+                BindIsMatchToSkills(int.Parse(Course_1.SelectedValue));
+                BindInternHired(int.Parse(Course_1.SelectedValue));
             }
             else
             {
@@ -42,6 +44,8 @@ namespace ctuconnect
                 BindIsConnectedToCourse(int.Parse(Course.SelectedValue));
                 BindSalaryRange(int.Parse(Course.SelectedValue));
                 BindAlignedToSkill(int.Parse(Course.SelectedValue));
+                BindIsMatchToSkills(int.Parse(Course_1.SelectedValue));
+                BindInternHired(int.Parse(Course_1.SelectedValue));
             }            
         }
         private void BindHiredPerIndustry()
@@ -170,6 +174,11 @@ namespace ctuconnect
             Department.DataTextField = "departmentName";
             Department.DataBind();
             Department.Items.Insert(0, new ListItem("All", "0"));
+            Department_1.DataSource = ds;
+            Department_1.DataValueField = "department_ID";
+            Department_1.DataTextField = "departmentName";
+            Department_1.DataBind();
+            Department_1.Items.Insert(0, new ListItem("All", "0"));
         }
         protected void Department_SelectedIndexChanged(object sender, EventArgs e)
         { 
@@ -274,6 +283,68 @@ namespace ctuconnect
             DataTable dt = new DataTable();
             da.Fill(dt);
             Chart6.Series["AlignedToSkill"].Points.DataBind(dt.DefaultView, "isAlignedToSkill", "AlignedToSkillCount", "");
+        }
+
+        private void BindIsMatchToSkills(int course_ID)
+        {
+            Chart7.Series["IsMatchToSkills"].Points.Clear();
+            SqlCommand cmd = new SqlCommand();
+            if (course_ID == 0)
+            {
+                cmd = new SqlCommand("SELECT case when isMatchToSkills = 1 then 'Matched' else 'Not Matched' end as MatchToSkills, COUNT(formID) AS MatchToSkillsCount" +
+                 " FROM INTERNSHIPFORM GROUP BY CASE WHEN isMatchToSkills = 1 THEN 'Matched' ELSE 'Not Matched' END;", conDB);
+            }
+            else
+            {
+                cmd = new SqlCommand("SELECT case when isMatchToSkills = 1 then 'Matched' else 'Not Matched' end as MatchToSkills, COUNT(formID) AS MatchToSkillsCount" +
+                 " FROM INTERNSHIPFORM LEFT JOIN STUDENT_ACCOUNT ON INTERNSHIPFORM.student_accID = STUDENT_ACCOUNT.student_accID" +
+                 " WHERE course_ID = '" + course_ID + "' GROUP BY CASE WHEN isMatchToSkills = 1 THEN 'Matched' ELSE 'Not Matched' END;", conDB);
+            }
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            Chart7.Series["IsMatchToSkills"].Points.DataBind(dt.DefaultView, "MatchToSkills", "MatchToSkillsCount", "");
+        }
+        private void BindInternHired(int course_ID)
+        {
+            Chart8.Series["InternHired"].Points.Clear();
+            SqlCommand cmd = new SqlCommand();
+            if (course_ID == 0)
+            {
+                cmd = new SqlCommand("SELECT case when isHired = 1 then 'Hired' else 'Not hired' end as Hired, COUNT(student_accID) AS TotalHired" +
+                 " FROM STUDENT_ACCOUNT GROUP BY case when isHired = 1 then 'Hired' else 'Not hired' end;", conDB);
+            }
+            else
+            {
+                cmd = new SqlCommand("SELECT  case when isHired = 1 then 'Hired' else 'Not hired' end as Hired, COUNT(student_accID) AS TotalHired" +
+                 " FROM STUDENT_ACCOUNT WHERE course_ID = '" + course_ID + "' GROUP BY case when isHired = 1 then 'Hired' else 'Not hired' end;", conDB);
+            }
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            Chart8.Series["InternHired"].Points.DataBind(dt.DefaultView, "Hired", "TotalHired", "");
+        }
+
+        protected void Deparment1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Department_1.SelectedValue == "0")
+            {
+                Response.Redirect("TracerDashboard.aspx");
+            }
+            SqlCommand cmd = new SqlCommand("SELECT * FROM PROGRAM WHERE department_ID = '" + Department_1.SelectedValue + "'", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            Course_1.DataSource = ds;
+            Course_1.DataValueField = "course_ID";
+            Course_1.DataTextField = "course";
+            Course_1.DataBind();
+            Course_1.SelectedIndex = 0;
+        }
+
+        protected void Course1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

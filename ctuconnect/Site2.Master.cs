@@ -19,10 +19,6 @@ namespace ctuconnect
             {
                 back.HRef = "AdminDashboard.aspx";
             }
-            if (!IsPostBack && (Session["Username"] == null || Session["AdminUsername"] == null))
-            {
-                Response.Redirect("Login.aspx");
-            }
         }
     }
 }
