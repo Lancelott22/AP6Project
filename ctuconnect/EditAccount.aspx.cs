@@ -148,45 +148,7 @@ namespace ctuconnect
             }
         }
 
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
-            
-            var ctu = txtctuemail.Text;
-            var personal = txtPersonalEmail.Text;
-
-            
-
-
-            // Continue with updating the database if the conditions are met
-            using (var db = new SqlConnection(connDB))
-            {
-                db.Open();
-                using (var cmd = db.CreateCommand())
-                {
-                    cmd.CommandType = CommandType.Text;
-
-                    // Update the database with the new values
-                    cmd.CommandText = "UPDATE STUDENT_ACCOUNT SET "
-                        + "email ='" + ctu + "',"
-                        + "personalEmail ='" + personal + "'"
-                        + "WHERE student_accID='" + studentAcctID + "'";
-
-                    int rowsAffected = cmd.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-
-                        Response.Write("<script>alert('Record Updated!');document.location='MyAccount.aspx'</script>");
-                    }
-                    else
-                    {
-                        Response.Write("<script>alert('Record Failed to Update!')</script>");
-                    }
-                }
-            }
-
-        }      
+          
 
 
         protected void btnCancel_Click(object sender, EventArgs e)
@@ -194,56 +156,63 @@ namespace ctuconnect
             Response.Redirect("MyAccount.aspx");
         }
 
-        protected void btnSaveInfo_Click(object sender, EventArgs e)
+        protected void btnSave_Click(object sender, EventArgs e)
         {
-            int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
-            int studentID = Convert.ToInt32(Session["ID"].ToString());
-
-
-            var lastname = txtlname.Text;
-            var firstname = txtfname.Text;
-            var initials = txtinitials.Text;
-            var contact = txtcontact.Text;
-            var address = txtaddress.Text;
-
-
-
-
-            // Continue with updating the database if the conditions are met
-            using (var db = new SqlConnection(connDB))
+            if (Page.IsValid)
             {
-                db.Open();
-                using (var cmd = db.CreateCommand())
+
+                int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
+                int studentID = Convert.ToInt32(Session["ID"].ToString());
+
+                var ctu = txtctuemail.Text;
+                var personal = txtPersonalEmail.Text;
+                var lastname = txtlname.Text;
+                var firstname = txtfname.Text;
+                var initials = txtinitials.Text;
+                var contact = txtcontact.Text;
+                var address = txtaddress.Text;
+
+
+
+
+                // Continue with updating the database if the conditions are met
+                using (var db = new SqlConnection(connDB))
                 {
-                    cmd.CommandType = CommandType.Text;
-
-                    // Update the database with the new values
-                    cmd.CommandText = "UPDATE STUDENT_ACCOUNT SET "
-                        + "lastName ='" + lastname + "', "
-                        + "firstName ='" + firstname + "',"
-                        + "midInitials ='" + initials + "',"
-                        + "contactNumber ='" + contact + "',"
-                        + "address ='" + address + "'"
-                        + "WHERE student_accID='" + studentAcctID + "'";
-
-                    int rowsAffected = cmd.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
+                    db.Open();
+                    using (var cmd = db.CreateCommand())
                     {
+                        cmd.CommandType = CommandType.Text;
 
-                        Response.Write("<script>alert('Record Updated!');document.location='MyAccount.aspx'</script>");
-                    }
-                    else
-                    {
-                        Response.Write("<script>alert('Record Failed to Update!')</script>");
+                        // Update the database with the new values
+                        cmd.CommandText = "UPDATE STUDENT_ACCOUNT SET "
+                            + "lastName ='" + lastname + "', "
+                            + "firstName ='" + firstname + "',"
+                            + "midInitials ='" + initials + "',"
+                            + "contactNumber ='" + contact + "',"
+                            + "address ='" + address + "',"
+                            + "email ='" + ctu + "',"
+                            + "personalEmail ='" + personal + "'"
+                            + "WHERE student_accID='" + studentAcctID + "'";
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+
+                            Response.Write("<script>alert('Record Updated!');document.location='MyAccount.aspx'</script>");
+                        }
+                        else
+                        {
+                            Response.Write("<script>alert('Record Failed to Update!')</script>");
+                        }
                     }
                 }
             }
+            else
+            {
+                Response.Write("<script>alert('Record Failed to Update!')</script>");
+            }
         }
 
-        protected void btnCancelInfo_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("MyAccount.aspx");
-        }
     }
 }
