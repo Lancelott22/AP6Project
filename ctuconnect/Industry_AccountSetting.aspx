@@ -251,8 +251,8 @@
         <div><b>Delete Account</b></div><br />
         <div class="form-group">
         <div style="margin-left: 20px">
-             <asp:Button ID="BtnDelete" class ="btn btn-danger" runat="server" Text="Delete My Account" OnClick="BtnDelete_Click" OnClientClick ="confirmDelete()"/>
-             <input type="hidden" id="confirmValue" runat="server" />
+             <asp:LinkButton ID="Deactivate" CssClass="btn btn-danger" runat="server" OnCommand="Deactivate_Command" Text="Deactivate Account" OnClientClick="confirmDeactivate();" CausesValidation="false"></asp:LinkButton>
+          
         </div>
             </div>
                </div>
@@ -278,15 +278,13 @@
         </asp:TableRow>
     </asp:Table>
      <script>
-        function confirmDelete() {
-            var confirmed = confirm("Are you sure you want to delete your account?");
-            if (confirmed) {
-                // If user confirms, set a hidden field or take any other necessary actions.
-                document.getElementById("confirmValue").value = "yes";
-            } else {
-                // If user cancels, set a hidden field or take any other necessary actions.
-                document.getElementById("confirmValue").value = "no";
-            }
-        }
+         function confirmDeactivate() {
+             if (confirm("Are you sure you want to deactivate your account?")) {
+
+             } else {
+                 __doPostBack();
+                 alert("You cancelled the operation.");
+             }
+         }
      </script>
 </asp:Content>
