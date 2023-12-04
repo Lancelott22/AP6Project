@@ -278,9 +278,6 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <select runat="server" title="Choose Job Course" class="selectpicker form-control" data-actions-box="true" multiple="true" name="course" id="course">
-                                    <option value="BSIT">BSIT</option>
-                                    <option value="BIT-CT">BIT-CT</option>
-                                    <option value="BSIS">BSIS</option>
                                 </select>
                             </div>
                         </div>

@@ -42,13 +42,13 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.LinkButton SignOut;
 
         /// <summary>
-        /// DropDownList1 control.
+        /// searchInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+        protected global::System.Web.UI.WebControls.TextBox searchInput;
 
         /// <summary>
         /// programList control.

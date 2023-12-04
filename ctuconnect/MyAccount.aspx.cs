@@ -27,17 +27,22 @@ namespace ctuconnect
                 int studentAccID = Convert.ToInt32(Session["STUDENT_ACC_ID"].ToString());
                 DisplayStudent(studentAccID);
                 this.LoadStudentfeedback();
-
-                if (disp_status.Text == "Alumni")
-                {
-                    btnEditStatus.Visible = false;
-                }
-                else
-                {
-                    btnEditStatus.Visible = true;
-                }
+                refreshStatus();
+                
             }
            
+        }
+
+        void refreshStatus()
+        {
+            if (disp_status.Text == "Alumni")
+            {
+                btnEditStatus.Visible = false;
+            }
+            else
+            {
+                btnEditStatus.Visible = true;
+            }
         }
 
         private void DisplayStudent(int studentaccID)
@@ -78,7 +83,7 @@ namespace ctuconnect
 
                 }
                 reader.Close();
-
+                this.refreshStatus();
             }
         }
         private void LoadProfilePicture(string profilePicturePath)
@@ -206,6 +211,9 @@ namespace ctuconnect
 
                 db.Open();
                 cmd.ExecuteNonQuery();
+                
+                this.refreshStatus();
+                Response.Write("<script>alert('Resume uploaded successfully.')</script>");
             }
         }
 
@@ -251,6 +259,7 @@ namespace ctuconnect
                 SaveResumeFilePath(studentAcctID.ToString(), studentAcctID + "_" + fileName);
 
                 LoadResumeFile(studentAcctID);
+                
 
             }
         }

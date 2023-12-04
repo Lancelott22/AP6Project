@@ -34,7 +34,6 @@ namespace ctuconnect
                 displayContactPerson();
 
                 this.LoadIndustryFeedback();
-
             }
         }
 

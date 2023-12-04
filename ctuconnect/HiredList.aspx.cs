@@ -42,6 +42,7 @@ namespace ctuconnect
                 string imagePath = "~/images/IndustryProfile/" + Session["INDUSTRYPIC"].ToString();
                 industryImage1.ImageUrl = imagePath;
 
+
                 if (ViewState["SelectedStudentIds"] != null)
                 {
                     selectedStudentIds = (List<string>)ViewState["SelectedStudentIds"];
@@ -74,21 +75,22 @@ namespace ctuconnect
                 {
                     selectedInternshipStatus = (List<string>)ViewState["SelectedInternshipStatus"];
                 }
-
-                /*                foreach (ListViewItem item in listView2.Items)
-                                {
-                                    Button EvaluationBtn = item.FindControl("EvaluationBtn") as Button;
-
-                                    // Check if EvaluationBtn is found and do something with it
-                                    if (EvaluationBtn != null)
-                                    {
-                                        // Check if the evaluation has been performed
-                                        bool evaluationPerformed = CheckIfEvaluationPerformed();
-
-                                        // Update the button text based on the evaluation status
-                                        EvaluationBtn.Text = evaluationPerformed ? "View Evaluation" : "Requested";
-                                    }
-                                }*/
+                else if (ViewState["SelectedAlumniName"] != null)
+                {
+                    selectedAlumniName = (List<string>)ViewState["SelectedAlumniName"];
+                }
+                else if (ViewState["SelectedDateStartAlumni"] != null)
+                {
+                    selectedDateStartAlumni = (List<string>)ViewState["SelectedDateStartAlumni"];
+                }
+                else if (ViewState["SelectedDateEndAlumni"] != null)
+                {
+                    selectedDateEndAlumni = (List<string>)ViewState["SelectedDateEndAlumni"];
+                }
+                else if (ViewState["SelectedPositionAlumni"] != null)
+                {
+                    selectedPositionAlumni = (List<string>)ViewState["SelectedPositionAlumni"];
+                }
 
             }
 
@@ -107,7 +109,7 @@ namespace ctuconnect
             using (var db = new SqlConnection(conDB))
             {
                 
-                string query = "SELECT lastName, firstName, dateStarted, position, resumeFile FROM HIRED_LIST WHERE jobType = 'job' AND  industry_accID = '" + industry_accID + "' ORDER BY id DESC";
+                string query = "SELECT student_accID, lastName, firstName, dateStarted, dateEnded, position, resumeFile FROM HIRED_LIST WHERE jobType = 'fulltime' AND  industry_accID = '" + industry_accID + "' ORDER BY id DESC";
                 SqlCommand cmd = new SqlCommand(query, db);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
@@ -158,18 +160,16 @@ namespace ctuconnect
             listView1.Visible = true;
             listView2.Visible = false;
 
+
+            btnEdit.Visible = true;
+            btnEdit2.Visible = false;
+
             UpdatePanel1.Update();
         }
         protected void btnSwitchGrid_Click2(object sender, EventArgs e)
         {
-            //DataTable dataTable = new DataTable();
-            //dataTable.Columns.Add("ID", typeof(int));
-            //dataTable.Columns.Add("Name", typeof(string));
-            //dataTable.Rows.Add(01783, "Robert");
-            //dataTable.Rows.Add(0178903, "RYan");
 
-            //GridView2.DataSource = dataTable;
-            //GridView2.DataBind();
+
             myLinkButton1.CssClass = "linkbutton";
             myLinkButton2.CssClass = "linkbutton";
 
@@ -177,6 +177,9 @@ namespace ctuconnect
             myLinkButton2.CssClass += " active";
             listView1.Visible = false;
             listView2.Visible = true;
+
+            btnEdit.Visible = false;
+            btnEdit2.Visible = true;
 
             UpdatePanel1.Update();
 
@@ -412,8 +415,11 @@ namespace ctuconnect
                 }
             }
         }
-
-
+        protected void closeEditModalEmployee(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#fulltimeModalEdit').modal('hide');document.location='HiredList.aspx'", true);
+        }
+        
         protected void Close_SuccessPrompt(object sender, EventArgs e)
         {
             ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('hide');document.location='HiredList.aspx'", true);
@@ -445,52 +451,66 @@ namespace ctuconnect
             
             if (!string.IsNullOrEmpty(txtDateEnded.Text) )
             {
-                DateTime? startDate = GetstartDate(student_id);
-                DateTime endDate = Convert.ToDateTime(txtDateEnded.Text);
-                if (endDate <= startDate)
+                if (Convert.ToDateTime(txtDateEnded.Text) <= Convert.ToDateTime(GetstartDate(student_id)))
                 {
                     dateErrorlabel.Visible = true;
                     dateErrorlabel.Text = "date must not be earlier than date started";
                 }
+                else if (Convert.ToDateTime(txtDateEnded.Text) >= DateTime.Now)
+                {
+                    dateErrorlabel2.Visible = true;
+                    dateErrorlabel2.Text = "must not be future date";
+                }
                 else
                 {
                     dateErrorlabel.Visible = false;
+                    dateErrorlabel2.Visible = false;
                 }
             }
             else
             {
                 dateErrorlabel.Visible = false;
+                dateErrorlabel2.Visible = false;
             }
 
         }
 
-        private DateTime? GetstartDate(string student_id)
+        private string GetstartDate(string student_id)
         {
-            DateTime? startDate = null; // Set a default value or handle null case
-            using (var db = new SqlConnection(conDB))
-            {
-                db.Open();
-                using (var cmd = db.CreateCommand())
-                {
-                    string sql = "SELECT dateStarted from HIRED_LIST WHERE student_accID = @studsID";
-                    cmd.CommandText = sql;
-                    cmd.Parameters.AddWithValue("@studsID", student_id);
+            DateTime startDate = DateTime.MinValue;
+            string formattedStartDate = string.Empty;
 
-                    using (var reader = cmd.ExecuteReader())
+            if (int.TryParse(student_id, out int studentIdAsInt))
+            {
+                using (var db = new SqlConnection(conDB))
+                {
+                    db.Open();
+                    using (var cmd = db.CreateCommand())
                     {
-                        if (reader.Read())
+                        string sql = "SELECT dateStarted from HIRED_LIST WHERE student_accID = @studsID";
+                        cmd.CommandText = sql;
+                        cmd.Parameters.AddWithValue("@studsID", studentIdAsInt);
+
+                        using (var reader = cmd.ExecuteReader())
                         {
-                            // Check if the startDate column is not null in the database
-                            if (!reader.IsDBNull(0))
+                            if (reader.Read())
                             {
-                                startDate = reader.GetDateTime(0);
+                                // Check if the startDate column is not null in the database
+                                if (!reader.IsDBNull(0))
+                                {
+                                    startDate = reader.GetDateTime(0);
+                                    formattedStartDate = startDate.ToString("yyyy-MM-dd");
+
+                                }
                             }
                         }
                     }
                 }
+               
             }
-            return startDate;
+            return formattedStartDate;
         }
+        
         protected void ListView2_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
             Button editbtn = (Button)sender;
@@ -512,6 +532,7 @@ namespace ctuconnect
                 }
             }
         }
+        
 
         private List<string> selectedStudentIds = new List<string>();
         private List<string> selectedInternNames = new List<string>();
@@ -522,118 +543,252 @@ namespace ctuconnect
         private List<string> selectedHoursRendered = new List<string>();
         private List<string> selectedInternshipStatus = new List<string>();
 
+        private List<string> selectedAlumniName = new List<string>();
+        private List<string> selectedDateStartAlumni = new List<string>();
+        private List<string> selectedDateEndAlumni = new List<string>();
+        private List<string> selectedPositionAlumni = new List<string>();
+
 
         protected void onEditButton_Click(object sender, EventArgs e)
         {
             LinkButton btnEdit = (LinkButton)sender;
-            int checkedCount = 0;
+            int checkedCount1 = 0;
+            int checkedCount2 = 0;
             string stat = string.Empty;
+            string listViewIdentifier = btnEdit.Attributes["data-listview"];
+
+            if (listViewIdentifier == "listView2")
+            {
+
+                foreach (ListViewItem item in listView2.Items)
+                {
+                    CheckBox chkSelect = (CheckBox)item.FindControl("chkSelect");
 
 
-            foreach (ListViewItem item in listView2.Items)
+                    if (chkSelect.Checked)
+                    {
+
+
+                        Label lblStudentID = (Label)item.FindControl("lblStudentID");
+                        Label lblFirstName = (Label)item.FindControl("lblFirstName");
+                        Label lblLastName = (Label)item.FindControl("lblLastName");
+                        Label lblPosition = (Label)item.FindControl("lblPosition");
+                        Label lblDateHired = (Label)item.FindControl("lblDateHired");
+                        Label lblDateStarted = (Label)item.FindControl("lblDateStarted");
+                        Label lblDateEnded = (Label)item.FindControl("lblDateEnded");
+                        Label lblRenderedHours = (Label)item.FindControl("lblRenderedHours");
+                        Label lblInternshipStatus = (Label)item.FindControl("lblInternshipStatus");
+
+                        string studentaccountid = lblStudentID.Text;
+                        string fname = lblFirstName.Text;
+                        string lname = lblLastName.Text;
+                        string position = lblPosition.Text;
+                        string datehired = lblDateHired.Text;
+                        string datestarted = lblDateStarted.Text;
+                        string dateended = lblDateEnded.Text;
+                        string renderhours = lblRenderedHours.Text;
+                        string internshipstatus = lblInternshipStatus.Text;
+
+
+                        selectedStudentIds.Add(studentaccountid);
+                        selectedInternNames.Add($"{fname} {lname}");
+                        selectedPosition.Add(position);
+                        selectedDateHired.Add(datehired);
+                        selectedDateStarted.Add(datestarted);
+                        selectedDateEnded.Add(dateended);
+                        selectedHoursRendered.Add(renderhours);
+                        selectedInternshipStatus.Add(internshipstatus);
+
+                        stat = lblInternshipStatus.Text;
+
+
+
+                        // Pass the fname to the openModal JavaScript function
+
+                        checkedCount1++;
+                    }
+                }
+                ViewState["SelectedFullName"] = selectedInternNames;
+                ViewState["SelectedPosition"] = selectedPosition;
+                ViewState["SelectedDateHired"] = selectedDateHired;
+                ViewState["SelectedDateStarted"] = selectedDateStarted;
+                ViewState["SelectedDateEnded"] = selectedDateEnded;
+                ViewState["SelectedRenderedHours"] = selectedHoursRendered;
+                ViewState["SelectedInternshipStatus"] = selectedInternshipStatus;
+                ViewState["SelectedStudentIds"] = selectedStudentIds;
+                if (checkedCount1 > 1)
+                {
+                    /*bool anyIsDone = selectedInternshipStatus.Contains("Done");*/
+                    if (selectedInternshipStatus.Distinct().Count() > 1)
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "$('#DoneInternshipSelected').modal('show');", true);
+                    }
+                    else if (selectedInternshipStatus.All(status => status == "Ongoing"))
+                    {
+                        string existingname = string.Join(",", selectedInternNames);
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript2", $"openModal2('{existingname}');", true);
+                    }
+                    else if (selectedInternshipStatus.All(status => status.Equals("Done", StringComparison.OrdinalIgnoreCase)))
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript2", "$('#AllDone').modal('show');", true);
+                    }
+                }
+                else if (checkedCount1 == 0)
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "showModal", "$('#NoSelected').modal('show');", true);
+                }
+                else if (checkedCount1 == 1)
+                {
+                    if (selectedInternshipStatus[0] == "Ongoing")
+                    {
+                        string existingID = string.Join(" ", selectedStudentIds);
+                        string existingname = string.Join(" ", selectedInternNames);
+                        string existingposition = string.Join(" ", selectedPosition);
+                        string existingdatehired = string.Join(" ", selectedDateHired);
+                        string existingdatestarted = string.Join(" ", selectedDateStarted);
+                        string existingdateended = string.Join(" ", selectedDateEnded);
+                        string existingstatus = string.Join(" ", selectedInternshipStatus);
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openSingleSelectModal('{existingID}','{existingname}','{existingposition}','{existingdatehired}','{existingdatestarted}','{existingdateended}','{existingstatus}');", true);
+                    }
+                    else if (selectedInternshipStatus[0] == "Done")
+                    {
+                        string existingname = string.Join(" ", selectedInternNames);
+                        string existingposition = string.Join(" ", selectedPosition);
+                        string existingdatehired = string.Join(" ", selectedDateHired);
+                        string existingdatestarted = string.Join(" ", selectedDateStarted);
+                        string existingdateended = string.Join(" ", selectedDateEnded);
+                        string existingstatus = string.Join(" ", selectedInternshipStatus);
+                        string studentfeedback = GetFeedback(selectedStudentIds);
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript5", $"openSingleSelectDoneModal('{existingname}','{existingposition}','{existingdatehired}','{existingdatestarted}','{existingdateended}','{existingstatus}','{studentfeedback}');", true);
+                    }
+                }
+            }
+            else if (listViewIdentifier == "listView1")
+            {
+                foreach (ListViewItem item in listView1.Items)
+                {
+                    CheckBox chkSelect = (CheckBox)item.FindControl("chkSelect2");
+
+
+                    if (chkSelect.Checked)
+                    {
+
+                        Label lblemployeeID = (Label)item.FindControl("lblemployeeID");
+                        Label lblLastName = (Label)item.FindControl("lblLastName");
+                        Label lblFirstName = (Label)item.FindControl("lblFirstName");
+                        Label lblDateStarted = (Label)item.FindControl("lblDateStarted");
+                        Label lblDateEnded = (Label)item.FindControl("lblDateEnded");
+                        Label lblPosition = (Label)item.FindControl("lblPosition");
+
+                        string lname = lblLastName.Text;
+                        string fname = lblFirstName.Text;
+                        string start = lblDateStarted.Text;
+                        string end = lblDateEnded.Text;
+                        string position = lblPosition.Text;
+
+
+                        
+                        selectedAlumniName.Add($"{fname} {lname}");
+                        selectedDateStartAlumni.Add(start);
+                        selectedDateEndAlumni.Add(end);
+                        selectedPositionAlumni.Add(position);
+
+
+
+                        checkedCount2++;
+                    }
+                }
+                ViewState["SelectedDateEnded"] = selectedAlumniName;
+                ViewState["SelectedRenderedHours"] = selectedDateStartAlumni;
+                ViewState["SelectedInternshipStatus"] = selectedDateEndAlumni;
+                ViewState["SelectedStudentIds"] = selectedPositionAlumni;
+
+                if (checkedCount2 == 1)
+                {
+                    string existingAlumniName = string.Join(" ", selectedAlumniName);
+                    string existingAlumniStart = string.Join(" ", selectedDateStartAlumni);
+                    string existingAlumniEnd = string.Join(" ", selectedDateEndAlumni);
+                    string existingAlumniPosition = string.Join(" ", selectedPositionAlumni);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript5", $"openSingleSelectFulltimeModal('{existingAlumniName}','{existingAlumniStart}','{existingAlumniEnd}','{existingAlumniPosition}');", true);
+
+                }
+                else if (checkedCount2 == 0)
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "showModal", "$('#NoSelected').modal('show');", true);
+                }
+            }
+            UpdatePanel1.Update();
+
+        }
+        protected void listView1_ItemDataBound(object sender, ListViewItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListViewItemType.DataItem)
+            {
+                CheckBox chkSelect2 = (CheckBox)e.Item.FindControl("chkSelect2");
+                if (chkSelect2 != null)
+                {
+                    chkSelect2.Attributes["onclick"] = "event.stopPropagation(); toggleHighlight(this);";
+                }
+                else
+                {
+                    // Display a message or show a placeholder when there is no data
+                    var placeHolder = listView1.FindControl("itemPlaceHolder") as PlaceHolder;
+                    if (placeHolder != null)
+                    {
+                        placeHolder.Controls.Add(new LiteralControl("<tr><td colspan='5'>No data available</td></tr>"));
+                    }
+                }
+            }
+        }
+        protected void listView2_ItemDataBound(object sender, ListViewItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListViewItemType.DataItem)
+            {
+                CheckBox chkSelect = (CheckBox)e.Item.FindControl("chkSelect");
+                if (chkSelect != null)
+                {
+                    chkSelect.Attributes["onclick"] = "event.stopPropagation(); toggleHighlight(this);";
+                }
+            }
+        }
+        protected void saveEmployeeDetails(object sender, EventArgs e)
+        {
+            object dateendedValue = string.IsNullOrEmpty(employeeEndedtxt.Text) ? DBNull.Value : (object)employeeEndedtxt.Text;
+            string stat = "Done";
+            string type = "Alumni";
+
+            foreach (ListViewItem item in listView1.Items)
             {
                 CheckBox chkSelect = (CheckBox)item.FindControl("chkSelect");
-
-
                 if (chkSelect.Checked)
                 {
-                   
+                    Label lblemployeeID = (Label)item.FindControl("lblemployeeID");
 
-                    Label lblStudentID = (Label)item.FindControl("lblStudentID");
-                    Label lblFirstName = (Label)item.FindControl("lblFirstName");
-                    Label lblLastName = (Label)item.FindControl("lblLastName");
-                    Label lblPosition = (Label)item.FindControl("lblPosition");
-                    Label lblDateHired = (Label)item.FindControl("lblDateHired");
-                    Label lblDateStarted = (Label)item.FindControl("lblDateStarted");
-                    Label lblDateEnded = (Label)item.FindControl("lblDateEnded");
-                    Label lblRenderedHours = (Label)item.FindControl("lblRenderedHours");
-                    Label lblInternshipStatus = (Label)item.FindControl("lblInternshipStatus");
+                    string employeeID = lblemployeeID.Text;
+                    if (employeeID != null)
+                    {
+                        int employeeid = Convert.ToInt32(employeeID);
+                        // Proceed with saving
 
-                    string studentaccountid = lblStudentID.Text;
-                    string fname = lblFirstName.Text;
-                    string lname = lblLastName.Text;
-                    string position = lblPosition.Text;
-                    string datehired = lblDateHired.Text;
-                    string datestarted = lblDateStarted.Text;
-                    string dateended = lblDateEnded.Text;
-                    string renderhours = lblRenderedHours.Text;
-                    string internshipstatus = lblInternshipStatus.Text;
+                        using (var db = new SqlConnection(conDB))
+                        {
+                            db.Open();
+                            using (var cmd = db.CreateCommand())
+                            {
+                                string sql = "UPDATE HIRED_LIST SET dateEnded = @dateended, workStatus = @status  WHERE student_accID = @employeeId and studentType = @accounttype ";
+                                cmd.CommandText = sql;
+                                cmd.Parameters.AddWithValue("@employeeId", employeeid);
+                                cmd.Parameters.AddWithValue("@dateended", dateendedValue);
+                                cmd.Parameters.AddWithValue("@status", stat);
+                                cmd.Parameters.AddWithValue("@accounttype", type);
+                                cmd.ExecuteNonQuery();
+                            }
+                            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessSingleEditPrompt').modal('show');", true);
 
-
-                    selectedStudentIds.Add(studentaccountid);
-                    selectedInternNames.Add($"{fname} {lname}");
-                    selectedPosition.Add(position);
-                    selectedDateHired.Add(datehired);
-                    selectedDateStarted.Add(datestarted);
-                    selectedDateEnded.Add(dateended);
-                    selectedHoursRendered.Add(renderhours);
-                    selectedInternshipStatus.Add(internshipstatus);
-
-                    stat = lblInternshipStatus.Text;
-
-
-
-                    // Pass the fname to the openModal JavaScript function
-
-                    checkedCount++;
+                        }
+                    }
                 }
             }
-            ViewState["SelectedFullName"] = selectedInternNames;
-            ViewState["SelectedPosition"] = selectedPosition;
-            ViewState["SelectedDateHired"] = selectedDateHired;
-            ViewState["SelectedDateStarted"] = selectedDateStarted;
-            ViewState["SelectedDateEnded"] = selectedDateEnded;
-            ViewState["SelectedRenderedHours"] = selectedHoursRendered;
-            ViewState["SelectedInternshipStatus"] = selectedInternshipStatus;
-            ViewState["SelectedStudentIds"] = selectedStudentIds;
-
-            if (checkedCount > 1)
-            {
-                /*bool anyIsDone = selectedInternshipStatus.Contains("Done");*/
-                if (selectedInternshipStatus.Distinct().Count() > 1)
-                {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "$('#DoneInternshipSelected').modal('show');", true);
-                }
-                else if (selectedInternshipStatus.All(status => status == "Ongoing"))
-                {
-                    string existingname = string.Join(",", selectedInternNames);
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript2", $"openModal2('{existingname}');", true);
-                }
-                else if (selectedInternshipStatus.All(status => status.Equals("Done", StringComparison.OrdinalIgnoreCase)))
-                {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript2", "$('#AllDone').modal('show');", true);
-                }
-            }
-            else if (checkedCount == 0)
-            {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "showModal", "$('#NoSelected').modal('show');", true);
-            }
-            else if (checkedCount == 1)
-            {
-                if (selectedInternshipStatus[0] == "Ongoing")
-                {
-                    string existingID = string.Join(" ", selectedStudentIds);
-                    string existingname = string.Join(" ", selectedInternNames);
-                    string existingposition = string.Join(" ", selectedPosition);
-                    string existingdatehired = string.Join(" ", selectedDateHired);
-                    string existingdatestarted = string.Join(" ", selectedDateStarted);
-                    string existingdateended = string.Join(" ", selectedDateEnded);
-                    string existingstatus = string.Join(" ", selectedInternshipStatus);
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openSingleSelectModal('{existingID}','{existingname}','{existingposition}','{existingdatehired}','{existingdatestarted}','{existingdateended}','{existingstatus}');", true);
-                }
-                else if (selectedInternshipStatus[0] == "Done")
-                {
-                    string existingname = string.Join(" ", selectedInternNames);
-                    string existingposition = string.Join(" ", selectedPosition);
-                    string existingdatehired = string.Join(" ", selectedDateHired);
-                    string existingdatestarted = string.Join(" ", selectedDateStarted);
-                    string existingdateended = string.Join(" ", selectedDateEnded);
-                    string existingstatus = string.Join(" ", selectedInternshipStatus);
-                    string studentfeedback = GetFeedback(selectedStudentIds);
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript5", $"openSingleSelectDoneModal('{existingname}','{existingposition}','{existingdatehired}','{existingdatestarted}','{existingdateended}','{existingstatus}','{studentfeedback}');", true);
-                }
-            }
-
         }
         protected string GetFeedback(List<string> selectedStudentIds)
         {

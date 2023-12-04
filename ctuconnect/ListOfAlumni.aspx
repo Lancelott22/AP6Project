@@ -78,18 +78,13 @@
          .display-container{
              font-family: 'Poppins', sans-serif;
              background-color:white; 
-             width:1500px;
+             width:1550px;
              top:0;
              bottom:0;
              padding: 2%;
              overflow: auto;
              /*background-color:white;*/
-             height:550px;
-             /*overflow: auto;
-             float:left;
-             margin-left:25%;
-             position:relative;
-             padding: 4% 0% 0% 6%;*/
+                height:800px;
          }
              .display-container {
                  max-width: 100%;
@@ -173,28 +168,34 @@
              background-color: #881A30;
 
  }
- th{
-    border-collapse: collapse;
-     border-color:white;
-     background-color:#f4f4fb;
-     padding:5px;
+    th{
+         border: 1px solid;
+         border-color:#c4c4c4;
+        background-color:#f4f4fb;
+        padding:5px;
 
- }
- .datas{
-      padding:9px;
-       border: 8px solid;
-       border-color:white;
-      font-weight:bold;
-      color:black;
- }
+    }
+/*    td{
+        border: 1px solid;
+        border-color:dimgray;
+        padding-left:5px;
+    }*/
+    .datas{
+        border: 1px solid;
+        border-color:#c4c4c4;
+        padding-left:5px;
+         color:black;
+         cursor:default;
+    }
 
- .table-list{
-      border-collapse: collapse;
-     font-size:13px; 
-     height:auto; 
-     width:100%;
-     color:dimgray;
- }
+    .table-list{
+        border-collapse: collapse;        
+        font-size:13px; 
+        height:auto; 
+        width:100%;
+        color:dimgray;
+        padding-right:4px;
+    }
  </style>
  <asp:Table ID="Table1" runat="server"  CssClass="content">
      <asp:TableRow>
@@ -223,43 +224,65 @@
          </asp:TableCell>
          <asp:TableCell Style="padding:0px 5px 0px 40px">
             <div class="display-container">
-                <h1 class="title">List of Interns</h1>
+                <h1 class="title">List of Alumni</h1>
                  <p style="float:left;">Sort by <asp:DropDownList ID="ddlSortBy" runat="server" AutoPostBack="true"  CssClass="sort-dropdown">
                      <asp:ListItem Text="Course" Value="ColumnName1"></asp:ListItem>
                      <asp:ListItem Text="Status" Value="ColumnName2"></asp:ListItem>
                  </asp:DropDownList></p>
                 <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
                
-                            <asp:Repeater ID="dataRepeater1" runat="server">
-                             <HeaderTemplate>
+                            <asp:ListView ID="alumniListview" runat="server"> 
+                                    <LayoutTemplate>
                                      <table  class="table-list">
                                         <tr>
-                                             <th style="width: 150px;">Student ID</th>
-                                            <th style="width: 200px;">Last name</th>
-                                            <th style="width: 190px;">First name</th>
-                                            <th style="width: 190px;">Middle initial</th>
-                                            <th style="width: 200px;">Program enrolled</th>
-                                            <th style="width: 200px;">Contact Number</th>
-                                            <th style="width: 200px;">Email</th>
-                                            <th style="width: 200px;">Year Graduated</th>
+                                             <th>Student ID</th>
+                                            <th>Last name</th>
+                                            <th>First name</th>
+                                            <th>Middle initial</th>
+                                            <th>Program enrolled</th>
+                                            <th>Contact Number</th>
+                                            <th>Email</th>
+                                            <th>Year Graduated</th>
                                         </tr>
+                                         <tbody>
+                                             <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                                         </tbody>
                                       </table>
-                                </HeaderTemplate>
+                                </LayoutTemplate>
+                                    <EmptyDataTemplate>
+                                        <table class="table-list">
+                                            <thead>
+                                                <tr>
+                                                    <th>Student ID</th>
+                                                    <th>Last name</th>
+                                                    <th>First name</th>
+                                                    <th>Middle initial</th>
+                                                    <th>Program enrolled</th>
+                                                    <th>Contact Number</th>
+                                                    <th>Email</th>
+                                                    <th>Year Graduated</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="text-align:center; font-size:18px;" colspan="8">No data available</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </EmptyDataTemplate>
                                         <ItemTemplate>
-                                            <table class="table-list">
-                                            <tr class="datas">
-                                                 <td style="width: 120px;"><%# Eval("studentId") %></td>
-                                                <td style="width: 160px;"><%# Eval("lastname") %></td>
-                                                <td style="width: 170px;"><%# Eval("firstname") %></td>
-                                                <td style="width: 170px;"><%# Eval("midinitials") %></td>
-                                                <td style="width: 150px;"><%# Eval("course") %></td>
-                                                <td style="width: 150px;"><%# Eval("contactNumber") %></td>
-                                                <td style="width: 150px;"><%# Eval("email") %></td>
-                                                <td style="width: 150px;"><%# Eval("yearGraduated") %></td>
+                                            <tr>
+                                                <td class="datas"><%# Eval("studentId") %></td>
+                                                <td class="datas"><%# Eval("lastname") %></td>
+                                                <td class="datas"><%# Eval("firstname") %></td>
+                                                <td class="datas"><%# Eval("midinitials") %></td>
+                                                <td class="datas"><%# Eval("course") %></td>
+                                                <td class="datas"><%# Eval("contactNumber") %></td>
+                                                <td class="datas"><%# Eval("email") %></td>
+                                                <td class="datas"><%# Eval("yearGraduated") %></td>
                                             </tr>
-                                                </table>
                                      </ItemTemplate>
-                                 </asp:Repeater>
+                              </asp:ListView>
             </div>
          </asp:TableCell>
      </asp:TableRow>

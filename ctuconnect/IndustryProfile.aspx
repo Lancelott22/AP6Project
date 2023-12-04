@@ -89,7 +89,7 @@
             padding: 2% 2% 0% 2%;
             overflow: auto;
             /*background-color:white;*/
-            height:350px;
+            height:400px;
             /*overflow: auto;
             float:left;
             margin-left:25%;
@@ -341,6 +341,9 @@
            font-weight:bold;
            text-align:center;
         }
+        .totalRating{
+            color: #ffc107;
+        }
          
        
 </style>
@@ -370,9 +373,11 @@
                     </div>
                     <br />
                     <div class="row">
-                        <div class="col-12 industry-name">
-                           <asp:Label ID="disp_name" runat="server" Text=""></asp:Label>
-                           <asp:Literal ID="lblOverallRating" runat="server"></asp:Literal>
+                        <div class="col-12 industry-name"> 
+                            <asp:Label ID="disp_name" runat="server" Text=""></asp:Label><br />
+                            <span style="color: yellow;">
+                                <asp:Literal ID="lblOverallRating" runat="server"></asp:Literal>
+                            </span>
                         </div>
                     </div>
                     <br /><br />

@@ -48,8 +48,8 @@ namespace ctuconnect
             da.Fill(ds);
 
             // Bind the DataTable to the GridView
-            dataRepeater.DataSource = ds;
-            dataRepeater.DataBind();
+            blacklistListview.DataSource = ds;
+            blacklistListview.DataBind();
 
         }
         protected void SignOut_Click(object sender, EventArgs e)

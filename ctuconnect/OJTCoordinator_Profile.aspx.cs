@@ -23,9 +23,8 @@ namespace ctuconnect
             {
                 
                 displayCoordinatorInfo();
+                //getTotalInterns();
             }
-
-
         }
 
         void displayCoordinatorInfo()
@@ -65,6 +64,28 @@ namespace ctuconnect
                 CoordinatorImage.ImageUrl = "~/images/OJTCoordinatorProfile/defaultprofile.jpg";
             }
         }
+
+        /*
+        void getTotalInterns()
+        {
+            string departmentID = Session["DEPART"].ToString();
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "SELECT COUNT(student_accID) as TotalInterns FROM STUDENT_ACCOUNT WHERE studentStatus = 'Intern' and department_ID = '" + departmentID + "' ";
+                SqlCommand command = new SqlCommand(query, db);
+                db.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    totalInterns.InnerText = reader["TotalInterns"].ToString();
+
+                }
+                reader.Close();
+            }
+
+        }
+        */
 
         protected void SignOut_Click(object sender, EventArgs e)
         {

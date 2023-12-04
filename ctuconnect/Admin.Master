@@ -18,7 +18,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  
+    
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 
         <style>
         .navbar-custom{
@@ -459,28 +460,23 @@
                         <li class="nav-item">
                             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                                <ContentTemplate>
-                               <img src="#" runat="server" id="profileimg" Height="47" Width="45" class="user-pic" OnClick="toggleMenu()" />                                      
+                               <img src="images/administratorpic.jpg" runat="server" id="profileimg" Height="47" Width="45" class="user-pic" OnClick="toggleMenu()" />                                      
                                     <div class="sub-menu-wrap" id="subMenu">
                                         <div class="sub-menu">
                                             <div class="user-info">
                                                 <div class="row">
                                                     <div class="col-3">
-                                                        <asp:Image ID="imageProfile" runat="server" />
+                                                        <img src="images/administratorpic.jpg" />
                                                     </div>
                                                     <div class="col-9">
-                                                        <h4><asp:Label ID="lblname" runat="server"></asp:Label></h4>
+                                                        <h4><asp:Label ID="lblname" runat="server" Text="Admin"></asp:Label></h4>
                                                     </div>
                                                 </div>   
                                             </div>
                                             <hr />
-                                            <a href="#" class="sub-menu-link">
+                                            <a href="AdminProfile.aspx" class="sub-menu-link">
                                                 <i class='bx bx-user-circle icon' ></i>
                                                 <p>View Profile</p>
-                                                <span>> </span>
-                                            </a>
-                                            <a href="#" class="sub-menu-link">
-                                                <i class='bx bxs-edit'></i>
-                                                <p>Edit Profile</p>
                                                 <span>> </span>
                                             </a>
                                             <asp:LinkButton class="sub-menu-link" runat="server" ID ="SignOut" OnClick="SignOut_Click">

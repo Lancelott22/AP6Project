@@ -31,6 +31,8 @@ namespace ctuconnect
                 CoordinatorImage.ImageUrl = imagePath;
                 BindTable();
                 BindCourse();
+                /*BindStatus();*/
+
 
                 if (ViewState["SelectedStudentIds"] != null)
                 {
@@ -84,17 +86,11 @@ namespace ctuconnect
             using (var db = new SqlConnection(conDB))
             {
                 string query = "SELECT STUDENT_ACCOUNT.student_accID ,STUDENT_ACCOUNT.studentId, STUDENT_ACCOUNT.lastName, STUDENT_ACCOUNT.firstName, STUDENT_ACCOUNT.midInitials, " +
-                                "PROGRAM.course, STUDENT_ACCOUNT.contactNumber, STUDENT_ACCOUNT.email,STUDENT_ACCOUNT.isHired, HIRED_LIST.renderedHours, HIRED_LIST.evaluationRequest " +
+                                "PROGRAM.course, STUDENT_ACCOUNT.contactNumber, STUDENT_ACCOUNT.email,STUDENT_ACCOUNT.isHired, HIRED_LIST.id, HIRED_LIST.renderedHours, HIRED_LIST.evaluationRequest " +
                 "FROM STUDENT_ACCOUNT  LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
                 "LEFT JOIN HIRED_LIST  ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID " +
                 "lEFT JOIN  COORDINATOR_ACCOUNT ON STUDENT_ACCOUNT.department_ID = COORDINATOR_ACCOUNT.department_ID " +
                 "WHERE COORDINATOR_ACCOUNT.coordinator_accID = @CoordinatorID  AND STUDENT_ACCOUNT.isGraduated = 0  ";
-
-
-                /*"FROM REFERRAL  JOIN STUDENT_ACCOUNT ON REFERRAL.student_accID = STUDENT_ACCOUNT.student_accID " +
-           "JOIN INDUSTRY_ACCOUNT  ON REFERRAL.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
-           "JOIN COORDINATOR_ACCOUNT ON REFERRAL.coordinator_accID = COORDINATOR_ACCOUNT.coordinator_accID " +
-           "WHERE REFERRAL.coordinator_accID = @CoordinatorID ORDER BY referralID DESC";*/
 
 
                 SqlCommand cmd = new SqlCommand(query, db);
@@ -172,8 +168,59 @@ namespace ctuconnect
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "showModal", "$('#SuccessPrompt').modal('show');", true);
             }
         }
-        
-             protected void SaveMultipleEdit_Click(object sender, EventArgs e)
+        protected void EvaluationBtn_Command(object sender, CommandEventArgs e)
+        {
+            Button EvaluationBtn = (Button)sender;
+
+            if (EvaluationBtn.Text == "Evaluated")
+            {
+                Response.Redirect("ViewEvaluation.aspx?student_accID=" + e.CommandArgument.ToString() + "&hired_id=" + e.CommandName.ToString());
+            }
+            else
+            {
+                EvaluationBtn.Enabled = false;
+            }
+        }
+        protected string GetButtonCssClass(object evaluationRequest)
+        {
+            
+            string requestStatus = evaluationRequest.ToString();
+
+            switch (requestStatus)
+            {
+                case "no request":
+                    return "btn-danger"; // Red
+                case "Evaluated":
+                    return "btn-success"; // Green
+                default:
+                    return "d-none"; // No CSS class if no request
+            }
+        }
+        protected void SearchInternInfo(object sender, EventArgs e)
+        {
+            string student = searchInput.Text;
+            using (var db = new SqlConnection(conDB))
+            {
+                SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
+                    "LEFT JOIN HIRED_LIST  ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID " +
+                    "lEFT JOIN  COORDINATOR_ACCOUNT ON STUDENT_ACCOUNT.department_ID = COORDINATOR_ACCOUNT.department_ID " +
+                    "WHERE CAST(STUDENT_ACCOUNT.student_accID as varchar) = '" + student + "' " +
+                    "STUDENT_ACCOUNT.firstName LIKE '%' + @studentinfo + '%' " +
+                "or STUDENT_ACCOUNT.lastName LIKE '%' + @studentinfo + '%' " +
+                "or STUDENT_ACCOUNT.midInitials LIKE '%' + @studentinfo + '%' " +
+                "or PROGRAM.course LIKE '%' + @studentinfo + '%' " +
+                "or STUDENT_ACCOUNT.contactNumber LIKE '%' + @studentinfo + '%' " +
+                "or STUDENT_ACCOUNT.email LIKE '%' + @studentinfo + '%'", db);
+                cmd.Parameters.AddWithValue("@studentinfo", student);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable ds = new DataTable();
+                da.Fill(ds);
+                internListView.DataSource = ds;
+                internListView.DataBind();
+            }
+        }
+
+        protected void SaveMultipleEdit_Click(object sender, EventArgs e)
             {
             List<string> studentIds = ViewState["SelectedStudentIds"] as List<string>;
             int hoursrender = Convert.ToInt32(txtrenderedHours.Text);
@@ -510,7 +557,7 @@ namespace ctuconnect
         protected void referIntern_Click(object sender, EventArgs e)
         {
             List<bool> isHiredList = new List<bool>();
-           
+            int checkedCount = 0;
 
             foreach (ListViewItem item in internListView.Items)
             {
@@ -536,33 +583,41 @@ namespace ctuconnect
                     isHiredList.Add(isHired);
                     selectedInternNames.Add($"{firstName} {lastName}");
                     selectedStudentIds.Add(studentaccountId);
+
+                    checkedCount ++;
                 }
             }
             ViewState["SelectedStudentIds"] = selectedStudentIds;
             ViewState["SelectedFullName"] = selectedInternNames;
 
-
-
-            bool anyIsHired = isHiredList.Any(isHired => isHired);
-            if (anyIsHired)
+            if (checkedCount >= 1)
             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "openModal1();", true);
-            }
-            else
-            {
-                List<string> anyExistInReferralTable = CheckIfAnyExistInReferralTable(selectedStudentIds);
 
-                if (anyExistInReferralTable.Count > 0)
+                bool anyIsHired = isHiredList.Any(isHired => isHired);
+                if (anyIsHired)
                 {
-                    // If any selected student ID exists in the REFERRAL table, show modal3
-                    string existinginternNamesString = string.Join(", ", anyExistInReferralTable);
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript3", $"openModal3('{existinginternNamesString}');", true);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "openModal1();", true);
                 }
                 else
                 {
-                    string internNamesString = string.Join(",", selectedInternNames);
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript2", $"openModal2('{internNamesString}');", true);
+                    List<string> anyExistInReferralTable = CheckIfAnyExistInReferralTable(selectedStudentIds);
+
+                    if (anyExistInReferralTable.Count > 0)
+                    {
+                        // If any selected student ID exists in the REFERRAL table, show modal3
+                        string existinginternNamesString = string.Join(", ", anyExistInReferralTable);
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript3", $"openModal3('{existinginternNamesString}');", true);
+                    }
+                    else
+                    {
+                        string internNamesString = string.Join(",", selectedInternNames);
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript2", $"openModal2('{internNamesString}');", true);
+                    }
                 }
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "showModal", "$('#NoSelected').modal('show');", true);
             }
         }
         private List<string> CheckIfAnyExistInReferralTable(List<string> selectedStudentIds)
@@ -651,6 +706,29 @@ namespace ctuconnect
 
             }
         }
+/*        void BindStatus()
+        {
+            int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
+            string query = "SELECT isHired FROM STUDENT_ACCOUNT " +
+                "lEFT JOIN  COORDINATOR_ACCOUNT ON STUDENT_ACCOUNT.department_ID = COORDINATOR_ACCOUNT.department_ID " +
+                        "WHERE COORDINATOR_ACCOUNT.coordinator_accID = @CoordinatorID  ";
+            using (var db = new SqlConnection(conDB))
+            {
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@CoordinatorID", coordinatorID);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable ds = new DataTable();
+                da.Fill(ds);
+
+                ds.Columns["isHired"].DataType = typeof(bool);
+                statusList.DataSource = ds;
+                statusList.DataValueField = "isHired";
+                statusList.DataTextField = "isHired";  // Display the boolean values as text
+                statusList.DataBind();
+                statusList.Items.Insert(0, new ListItem("Select Status", "0"));
+
+            }
+        }*/
         protected void program_SelectedIndexChanged(object sender, EventArgs e)
         {
             ShowByCourse();
@@ -663,7 +741,8 @@ namespace ctuconnect
                 SqlCommand cmd = new SqlCommand("select * FROM STUDENT_ACCOUNT  LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
                 "LEFT JOIN HIRED_LIST  ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID " +
                 "lEFT JOIN  COORDINATOR_ACCOUNT ON STUDENT_ACCOUNT.department_ID = COORDINATOR_ACCOUNT.department_ID " +
-                " WHERE STUDENT_ACCOUNT.course_ID = '" + programList.SelectedValue + "'", db);
+                " WHERE STUDENT_ACCOUNT.course_ID = '" + programList.SelectedValue + "' ", db);
+                
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable ds = new DataTable();
                 da.Fill(ds);
@@ -671,5 +750,26 @@ namespace ctuconnect
                 internListView.DataBind();
             }
         }
+/*        protected void status_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ShowByStatus();
+
+        }
+        void ShowByStatus()
+        {
+            using (var db = new SqlConnection(conDB))
+            {
+                SqlCommand cmd = new SqlCommand("select * FROM STUDENT_ACCOUNT  LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
+                "LEFT JOIN HIRED_LIST  ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID " +
+                "lEFT JOIN  COORDINATOR_ACCOUNT ON STUDENT_ACCOUNT.department_ID = COORDINATOR_ACCOUNT.department_ID " +
+                " WHERE STUDENT_ACCOUNT.isHired = @IsHired", db);
+                cmd.Parameters.AddWithValue("@IsHired", Convert.ToBoolean(statusList.SelectedValue));
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable ds = new DataTable();
+                da.Fill(ds);
+                internListView.DataSource = ds;
+                internListView.DataBind();
+            }
+        }*/
     }
     }

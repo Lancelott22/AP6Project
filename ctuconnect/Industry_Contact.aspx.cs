@@ -122,12 +122,12 @@ namespace ctuconnect
                 {
                     SendToEmail.Items.Clear();
                     int industryAccID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
-                    SqlCommand cmd = new SqlCommand("SELECT DISTINCT STUDENT_ACCOUNT.email, CONCAT(HIRED_LIST.firstName,' ' ,  HIRED_LIST.lastName) as Name FROM HIRED_LIST JOIN STUDENT_ACCOUNT ON HIRED_LIST.student_accID = STUDENT_ACCOUNT.student_accID WHERE industry_accID = '" + industryAccID + "'", conDB);
+                    SqlCommand cmd = new SqlCommand("SELECT DISTINCT STUDENT_ACCOUNT.personalEmail, CONCAT(HIRED_LIST.firstName,' ' ,  HIRED_LIST.lastName) as Name FROM HIRED_LIST JOIN STUDENT_ACCOUNT ON HIRED_LIST.student_accID = STUDENT_ACCOUNT.student_accID WHERE industry_accID = '" + industryAccID + "'", conDB);
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable ds = new DataTable();
                     da.Fill(ds);
                     SendToEmail.DataSource = ds;
-                    SendToEmail.DataValueField = "email";
+                    SendToEmail.DataValueField = "personalEmail";
                     SendToEmail.DataTextField = "Name";
                     SendToEmail.DataBind();
                    

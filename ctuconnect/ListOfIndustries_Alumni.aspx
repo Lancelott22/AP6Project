@@ -313,8 +313,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <asp:Button ID="BtnSubmit"  class="buttonSubmit" runat="server" Text="Submit" OnCLick="BtnSubmit_Click" autopostback="false" />
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <asp:Button ID="BtnSubmit"  class="btn btn-primary" runat="server" Text="Submit" OnCLick="BtnSubmit_Click" autopostback="false" />
                 </div>
             </div>
         </div>

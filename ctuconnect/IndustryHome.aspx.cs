@@ -22,7 +22,6 @@ namespace ctuconnect
             if (!IsPostBack && Session["IndustryEmail"] == null)
             {
                 Response.Redirect("LoginIndustry.aspx");
-
             }
             else
             {
@@ -41,8 +40,14 @@ namespace ctuconnect
             if (!IsPostBack)
             {
                 fillJobDetails();
+                bindCourse();
+
+                if(bool.Parse(Session["ISVerified"].ToString()) == false)
+                {
+                    Response.Write("<script>alert('Your account is not yet verified! You cannot post a job right now.');document.location='IndustryDashboard.aspx';</script>");
+                }
             }
-        
+            
         }
         void fillJobDetails()
         {
@@ -226,12 +231,23 @@ namespace ctuconnect
         }
         protected void SignOut_Click(object sender, EventArgs e)
         {
-
             Session.Abandon();
             Session.Clear();
             Session.RemoveAll();
             Response.Redirect("LoginIndustry.aspx");
 
+        }
+        void bindCourse()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT course, case when courseName IS NOT NULL or NOT courseName = '' then  CONCAT(course,' (' , courseName, ')') else course end as ProgramCourse FROM PROGRAM", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            course.DataSource = ds;
+
+            course.DataValueField = "course";
+            course.DataTextField = "ProgramCourse";
+            course.DataBind();
         }
        /* void jobPostNotify(int industryAccID)
         {

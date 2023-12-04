@@ -182,29 +182,34 @@
           border-bottom: 2px solid black;
           color:#881A30;
          }
-        th{
-           border-collapse: collapse;
-            border-color:white;
-            background-color:#f4f4fb;
+    th{
+         border: 1px solid;
+         border-color:#c4c4c4;
+        background-color:#f4f4fb;
+        padding:5px;
 
-        }
+    }
+/*    td{
+        border: 1px solid;
+        border-color:dimgray;
+        padding-left:5px;
+    }*/
+    .datas{
+        border: 1px solid;
+        border-color:#c4c4c4;
+        padding-left:5px;
+         color:black;
+         cursor:default;
+    }
 
-        .datas{
-              border: 5px solid;
-              border-color:white;
-             color:black;
-             cursor:default;
-        }
-
-
-        .table-list{
-         border-collapse: collapse;
-        font-size:15px; 
+    .table-list{
+        border-collapse: collapse;        
+        font-size:13px; 
         height:auto; 
         width:100%;
         color:dimgray;
         padding-right:4px;
-        }
+    }
         .evaluateButton{
             background-color: #F9E9B7; 
             color: #F3C129; 
@@ -316,9 +321,12 @@ width:100%;
                             <asp:ListItem Text="done" Value="ColumnName2"></asp:ListItem>
                         </asp:DropDownList></p>
                        <div class="bulk-action">
-                           <asp:LinkButton ID="btnEdit" runat="server" CssClass="edit-button" OnClick="onEditButton_Click" > 
+                           <asp:LinkButton ID="btnEdit" runat="server" CssClass="edit-button" OnClick="onEditButton_Click" data-listview="listView1"> 
                                <i class="fas fa-edit"></i> Edit
                            </asp:LinkButton>
+                           <asp:LinkButton ID="btnEdit2" runat="server" CssClass="edit-button" OnClick="onEditButton_Click" data-listview="listView2" Visible="false"> 
+                                <i class="fas fa-edit"></i> Edit
+                            </asp:LinkButton>
                            <asp:LinkButton ID="btnDelete" runat="server" CssClass="delete-button" OnClientClick="return confirmDelete();" >
                                <i class="fas fa-trash"></i> Delete
                            </asp:LinkButton>
@@ -331,41 +339,56 @@ width:100%;
                                 <LayoutTemplate>
                                 <table  class="table-list">
                                     <tr>
-                                        <%--<th>No.</th>--%>
+                                        <th></th>
                                        <th>Last Name</th>
                                        <th >First Name</th>
                                        <th >Date Started</th>
+                                        <th>Date Ended</th>
                                        <th>Position</th>
                                        <th>Resume</th>
                                     </tr>
-                                  </table>
                                         <tbody>
                                     <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
                                         </tbody>
                                         </table>
                                     </LayoutTemplate>
                                     <ItemTemplate>
-                                        <table class="table-list">
-                                        <tr>
-                                            <%--<td><%# Container.ItemIndex + 1 %></td>--%>
-                                           <td ><%# Eval("lastName") %></td>
-                                           <td ><%# Eval("firstName") %></td>
-                                           <td><%# Eval("dateStarted") %></td>
-                                           <td><%# Eval("position") %></td>
+                                        <tr class="datas clickableRow" onclick="toggleHighlightAndCheckbox(document.getElementById('<%# ((ListViewDataItem)Container).FindControl("chkSelect2").ClientID %>'));" >
+                                            <td>
+                                                <asp:CheckBox ID="chkSelect2" runat="server" onclick="event.stopPropagation(); toggleHighlight(this);"  />
+                                            </td>
+                                           <td style="display:none;"><asp:Label ID="lblemployeeID" runat="server" Visible="false" Text='<%# Eval("student_accID") %>'></asp:Label></td>
+
+                                           <td class="datas">
+                                                   <asp:Label ID="lblLastName" runat="server" Text='<%# Eval("lastName") %>'></asp:Label>
+                                           </td>
+                                           <td class="datas" >
+                                                   <asp:Label ID="lblFirstName" runat="server" Text='<%# Eval("firstName") %>'></asp:Label>
+                                            </td>
+                                           <td class="datas">
+                                                  <asp:Label ID="lblDateStarted" runat="server" Text='<%# Eval("dateStarted") %>'></asp:Label>
+
+                                           </td>
+                                            <td class="datas">
+                                                <asp:Label ID="lblDateEnded" runat="server" Text='<%# Eval("dateEnded") %>'></asp:Label>
+</td>
+                                           <td class="datas">
+                                                  <asp:Label ID="lblPosition" runat="server" Text='<%# Eval("position") %>'></asp:Label>
+
+                                              </td>
                                             <td class="datas">
                                                 <asp:Button ID="ResumeButton"  runat="server" Text="View Resume"
                                                 OnCommand="ViewResume_Command" CommandName="View"  
                                                 CommandArgument='<%# Eval("resumeFile") %>'/>
                                             </td>
                                         </tr>
-                                            </table>
                                     </ItemTemplate>
                                    </asp:ListView>
                           
                    
                             <%--Second Gridview--%>
                                   
-                                       <asp:ListView ID="listView2" runat="server" >
+                                       <asp:ListView ID="listView2" runat="server" OnItemDataBound="listView2_ItemDataBound">
                                     <LayoutTemplate>
                                         <table  class="table-list">
                                             <tr>
@@ -387,39 +410,39 @@ width:100%;
                                             </table>
                                         </LayoutTemplate>
                                                 <ItemTemplate>
-                                                    <tr class="datas clickableRow" onclick="toggleHighlightAndCheckbox(document.getElementById('<%# ((ListViewDataItem)Container).FindControl("chkSelect").ClientID %>'));" >
-                                                        <td>
+                                                    <tr class="clickableRow" onclick="toggleHighlightAndCheckbox(document.getElementById('<%# ((ListViewDataItem)Container).FindControl("chkSelect").ClientID %>'));" >
+                                                        <td class="datas">
                                                             <asp:CheckBox ID="chkSelect" runat="server" onclick="event.stopPropagation(); toggleHighlight(this);"  />
                                                         </td>
                                                         <td style="display:none;"><asp:Label ID="lblStudentID" runat="server" Visible="false" Text='<%# Eval("student_accID") %>'></asp:Label></td>
-                                                        <td >
+                                                        <td class="datas">
                                                              <asp:Label ID="lblLastName" runat="server" Text='<%# Eval("lastName") %>'></asp:Label>
                                                         </td>
-                                                        <td>
+                                                        <td class="datas">
                                                              <asp:Label ID="lblFirstName" runat="server" Text='<%# Eval("firstName") %>'></asp:Label>
                                                         </td>
-                                                        <td >
+                                                        <td class="datas">
                                                              <asp:Label ID="lblPosition" runat="server" Text='<%# Eval("position") %>'></asp:Label>
 
                                                         </td>
-                                                        <td>
+                                                        <td class="datas">
                                                             <asp:Label ID="lblDateHired" runat="server" Text='<%# Eval("dateHired") %>'></asp:Label>
 
                                                         </td>
-                                                        <td>
+                                                        <td class="datas">
                                                             <asp:Label ID="lblDateStarted" runat="server" Text='<%# Eval("dateStarted") %>'></asp:Label>
                                                         </td>
-                                                        <td >
+                                                        <td class="datas">
                                                             <asp:Label ID="lblDateEnded" runat="server" Text='<%# Eval("dateEnded") %>'></asp:Label>
                                                         </td>
-                                                        <td >
+                                                        <td class="datas">
                                                              <i class='<%# string.Equals(Eval("internshipStatus").ToString(), "Ongoing", StringComparison.OrdinalIgnoreCase) ? "fas fa-play-circle text-warning" : "fas fa-check-circle text-success" %>'></i>
                                                              <asp:Label ID="lblInternshipStatus" runat="server" Text='<%# Eval("internshipStatus") %>'></asp:Label>
                                                         </td>
-                                                        <td>
+                                                        <td class="datas">
                                                             <asp:Label ID="lblRenderedHours" runat="server" Text='<%# Eval("renderedHours") %>'></asp:Label>
                                                         </td>
-                                                        <td >
+                                                        <td class="datas">
                                                             <asp:Button ID="EvaluationBtn"  runat="server" Text='<%# Eval("evaluationRequest") %>' CommandArgument='<%# Eval("student_accID") %>' CommandName='<%# Eval("id") %>'  OnCommand="EvaluationBtn_Command" CssClass='<%# GetButtonCssClass(Eval("evaluationRequest")) %>'/>
                                                         </td>
                                                     </tr>
@@ -494,17 +517,18 @@ width:100%;
                          <ContentTemplate>
                         <asp:TextBox ID="txtDateEnded" runat="server" TextMode="Date" CssClass="txtbox" Width="100px" Height="25px" AutoPostBack="true" OnTextChanged="TxtDate_TextChanged" ></asp:TextBox><br />
                         <asp:Label ID="dateErrorlabel" runat="server"  Font-Size="Medium" ForeColor="Red" style="font-size:11px;" ></asp:Label>
+                        <asp:Label ID="dateErrorlabel2" runat="server"  Font-Size="Medium" ForeColor="Red" style="font-size:11px;" ></asp:Label>
+
                         </ContentTemplate>
                         </asp:UpdatePanel>
                         </div>
                 </div><asp:Label ID="lbldate" runat="server" Font-Size="Medium" ForeColor="Red" Visible="false"></asp:Label>
                  <div style="clear: both;"></div>
                 <div  id="detailsFeedback">
-                    <asp:Label ID="Label7" runat="server" Text="Feedback" Style="font-size:18px;" ></asp:Label>
+                    <asp:Label ID="Label7" runat="server" Text="Feedback" Style="font-size:18px;" ></asp:Label><br /><br />
                     <div style="clear: both;"></div>
-                    <div>
                     <asp:TextBox ID="txtFeedback" runat="server" class="form-control" Height="200px" Width="500px" placeholder="(Optional)"></asp:TextBox>
-                    </div>
+                    
                 </div>
            </div>
         <div class="modal-footer">
@@ -694,6 +718,49 @@ width:100%;
         </div>
     </div>
 </div>
+
+
+        <div id="fulltimeModalEdit" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+         <div class="modal-content">
+             <asp:Label ID="Label17" runat="server" style="display:none;"></asp:Label>
+             <div class="modal-header">
+                 <h3><b>Employee Details</b></h3> 
+             </div>
+             <div class="modal-body" style="padding-left:12%;">
+                    <asp:Label ID="Label19" runat="server" Text="Employee Name" Style="font-size:18px; float:left;" ></asp:Label><span style="margin-left:40px; font-size:18px; float:left;">:</span>
+                    <div style="margin-left: 5%; float:left;">
+                        <asp:Label ID="employeeNamelbl" runat="server" style="font-size:18px;"></asp:Label>
+                    </div><br /><div style="clear: both;"></div>
+                   <asp:Label ID="Label32" runat="server" Text="Position" Style="font-size:18px; float:left;" ></asp:Label><span style="margin-left:110px; font-size:18px; float:left;">:</span>
+                  <div style="margin-left: 5%; float:left;">
+                     <asp:Label ID="employeePositionlbl" runat="server" style="font-size:18px;"></asp:Label>
+                  </div><br /><div style="clear: both;"></div>
+                     <asp:Label ID="Label26" runat="server" Text="Date Started" Style="font-size:18px; float:left;" ></asp:Label><span style="margin-left:74px; font-size:18px; float:left;">:</span>
+                    <div style="margin-left: 5%; float:left;">
+                        <asp:Label ID="employeeStartlbl" runat="server" style="font-size:18px;"></asp:Label>
+                    </div><br /><div style="clear: both;"></div>
+                    <asp:Label ID="Label30" runat="server" Text="Date Ended" Style="font-size:18px; float:left;" ></asp:Label><span style="margin-left:80px; font-size:18px; float:left;">:</span>
+                    <div style="margin-left: 5%; float:left;">
+                         <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
+                         <ContentTemplate>
+                        <asp:TextBox ID="employeeEndedtxt" runat="server" TextMode="Date" CssClass="txtbox" Width="100px" Height="25px" AutoPostBack="true" OnTextChanged="TxtDate_TextChanged" ></asp:TextBox><br />
+                        <asp:Label ID="Label37" runat="server"  Font-Size="Medium" ForeColor="Red" style="font-size:11px;" ></asp:Label>
+                        <asp:Label ID="Label38" runat="server"  Font-Size="Medium" ForeColor="Red" style="font-size:11px;" ></asp:Label>
+
+                        </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div><br /><div style="clear: both;"></div>
+           </div>
+        <div class="modal-footer">
+             <div style="float: right;">
+                <asp:Button ID="Button4" runat="server" Text="Save" OnClick="saveEmployeeDetails" class="btn btn-success" type="button"/>
+                <asp:Button ID="Button5" runat="server" Text="Close" OnClick="closeEditModalEmployee" class="btn btn-danger" />
+            </div>
+        </div>
+        </div>
+       </div>
+    </div>
     <script type="text/javascript">
         //function highlightRow(row) {
         //    // Remove the 'highlighted-row' class from all rows
@@ -713,6 +780,17 @@ width:100%;
             
             document.getElementById('<%=namelabel.ClientID%>').innerHTML = formattedNames;
 
+        }
+        function openSingleSelectFulltimeModal(existingAlumniName, existingAlumniStart, existingAlumniEnd, existingAlumniPosition) {
+            var modal = document.getElementById("fulltimeModalEdit");
+
+            document.getElementById('<%=employeeNamelbl.ClientID%>').innerHTML = existingAlumniName;
+            document.getElementById('<%=employeePositionlbl.ClientID%>').innerHTML = existingAlumniPosition;
+            document.getElementById('<%=employeeStartlbl.ClientID%>').innerHTML = existingAlumniStart;
+            document.getElementById('<%=employeeEndedtxt.ClientID%>').value = existingAlumniEnd;
+
+
+            modal.style.display = "block";
         }
         function openSingleSelectModal(existingID,existingname, existingposition, existingdatehired, existingdatestarted, existingdateended, existingstatus  ) {
             var modal = document.getElementById("myModal");
@@ -784,7 +862,7 @@ width:100%;
             checkbox.checked = !checkbox.checked; // Toggle the checkbox
             toggleHighlight(checkbox);
             /*toggleButtonsVisibility(checkbox.checked);*/
-            var lblInternshipStatus = checkbox.closest('tr').querySelector('.lblInternshipStatus'); // Adjust the class name accordingly
+/*            var lblInternshipStatus = checkbox.closest('tr').querySelector('.lblInternshipStatus'); // Adjust the class name accordingly
             var btnEdit = document.getElementById("btnEdit");
 
             if (lblInternshipStatus != null && btnEdit != null) {
@@ -794,7 +872,7 @@ width:100%;
                 } else {
                     btnEdit.style.display = "block";
                 }
-            }
+            }*/
         }
 
         function toggleHighlight(checkbox) {
