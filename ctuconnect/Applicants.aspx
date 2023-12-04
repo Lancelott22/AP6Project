@@ -197,6 +197,7 @@
                 box-shadow: 0px 0px 7px -3px  #bd0606;
                 border-radius: 7px;
                 padding-left:3em;
+                position:relative;
             }
 
             .status-area{
@@ -308,7 +309,22 @@
                 margin-top: 5px; /* Add some top margin */
                 box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
              }
-             
+                     .MatchBadge {
+    border: solid 1px #4287f5;
+    border-radius: 5px;
+    height: 20px;
+    width: 80px;
+    background: #4287f5;
+    padding: 2px;
+    color: #ffffff;
+    font-size: 11px;
+    position: absolute;
+    top: 10px;
+    left: 18px;
+    box-shadow: 0px 0px 9px -1px #4287f5;
+    text-align: center;
+    z-index:1;
+}   
            
     </style>
     
@@ -338,10 +354,14 @@
 
                     <h3 id="Job_Title" runat="server" visible="false" style="float:left; padding:10px;"></h3>
                     
-                    <asp:Repeater ID="rptApplicant" runat="server">
+                    <asp:Repeater ID="rptApplicant" runat="server" OnItemDataBound="rptApplicant_ItemDataBound">
                         <ItemTemplate>
                             <div class="container-fluid">
-                                <div class="row applicantBox">                                        
+                                <div class="row applicantBox">
+                                    <asp:Label ID="ApplicantID" runat="server" Visible="false" Text='<%#Eval("applicantID")%>'></asp:Label>
+                                    <asp:Label ID="JobPostID" runat="server" Visible="false" Text='<%#Eval("jobID")%>'></asp:Label>
+                                    <asp:Label ID="studentAccID" runat="server" Visible="false" Text='<%#Eval("student_accID")%>'></asp:Label>
+                                     <span runat="server" id="MatchedBadge" class="MatchBadge" visible="false">Matched Skill</span>
                                     <div class="col-5 d-flex flex-column">
                                         <div class="row">
                                             <div class="col-12 d-flex flex-column">
@@ -391,8 +411,16 @@
                                             <div class="col-5">
                                                 <asp:Button ID="btnEndorsement" runat="server" Text="View Endorsement Letter" Width="210px" Height="30px" CssClass="btnEndorsement" OnCommand="EndorsementButton_Command" CommandName="Endorsement" CommandArgument='<%# Eval("applicantID") %>' />
                                                 <asp:Label ID="lblendorsementStatus" runat="server" Visible="false" Text="N/A"></asp:Label>
-                                            </div>                                          
-                                        </div> 
+                                            </div>
+                                        </div>
+                                        <div class="row" runat="server" id="skillsMatch" visible="false">
+                                            <div class="col-3 d-flex flex-column applicant-info">
+                                                Matched Skills 
+                                             </div>
+                                            <div class="col-5">
+                                                <asp:Label ID="matchSkillsLabel" runat="server" Text=""></asp:Label>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-1" style="border-right: 1px solid #881A30; min-height:100px;">
                                     </div>
@@ -460,6 +488,7 @@
                     <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                     <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
                     <a href="IndustryProfile.aspx"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
+                    <a href="Industry_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right:12px;"></i>Account Settings</a>
                     <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                      Sign-out

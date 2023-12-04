@@ -50,11 +50,12 @@ namespace ctuconnect
                     using (conDB2)
                     {
                         conDB2.Open();
-                        string query = "SELECT COUNT(1) FROM INDUSTRY_ACCOUNT WHERE Email=@Email AND Password=@Password";
+                        string query = "SELECT COUNT(1) FROM INDUSTRY_ACCOUNT WHERE Email=@Email AND Password=@Password AND isDeactivated=@isDeactivated";
                         using (SqlCommand command = new SqlCommand(query, conDB2))
                         {
                             command.Parameters.AddWithValue("@Email", loginEmail);
                             command.Parameters.AddWithValue("@Password", loginPassword);
+                            command.Parameters.AddWithValue("@isDeactivated", false);
                             int count = Convert.ToInt32(command.ExecuteScalar());
                             if (count == 1)
                             {
@@ -119,6 +120,7 @@ namespace ctuconnect
                         Session["MOU"] = reader["mou"];
                         Session["INDUSTRYPIC"] = reader["industryPicture"];
                         Session["DATEREG"] = reader["dateRegistered"];
+                        Session["ISVerified"] = reader["isVerified"];
                     }
                     conDB.Close();
                     reader.Close();

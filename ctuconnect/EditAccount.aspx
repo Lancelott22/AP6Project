@@ -177,19 +177,6 @@
                         <asp:CustomValidator ID="cvGmailValidation" runat="server" ControlToValidate="txtPersonalEmail" OnServerValidate="ValidateGmailAccount" ErrorMessage="The provided Gmail account is not valid or active." Display="Dynamic" CssClass="validation-error"></asp:CustomValidator>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        Change Password *<br />
-                        <asp:TextBox ID="txtpwd" runat="server" CssClass="txtbox" TextMode="Password" Width="700px" Height="30px"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="rfvPassword" runat="server" ControlToValidate="txtpwd" ErrorMessage="Password is required." Display="Dynamic" CssClass="validation-error"></asp:RequiredFieldValidator>
-                    </div>
-                    <div class="col-6">
-                        Confirm Password *<br />
-                        <asp:TextBox ID="cpwd" runat="server" CssClass="txtbox" TextMode="Password" Width="700px" Height="30px"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="rfvConfirmPassword" runat="server" ControlToValidate="cpwd" ErrorMessage="Confirm Password is required." Display="Dynamic" CssClass="validation-error"></asp:RequiredFieldValidator>
-                        <asp:CompareValidator ID="cvPasswordMatch" runat="server" ControlToCompare="txtpwd" ControlToValidate="cpwd" ErrorMessage="Passwords do not match." Display="Dynamic" CssClass="validation-error"></asp:CompareValidator>
-                    </div>
-                </div>
                 <br />
                 <div class="row">
                     <div class="col-sm-1">

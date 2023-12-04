@@ -23,7 +23,7 @@ namespace ctuconnect
             {
                 
                 displayCoordinatorInfo();
-                getTotalInterns();
+                //getTotalInterns();
             }
         }
 
@@ -65,6 +65,7 @@ namespace ctuconnect
             }
         }
 
+        /*
         void getTotalInterns()
         {
             string departmentID = Session["DEPART"].ToString();
@@ -84,6 +85,7 @@ namespace ctuconnect
             }
 
         }
+        */
 
         protected void SignOut_Click(object sender, EventArgs e)
         {

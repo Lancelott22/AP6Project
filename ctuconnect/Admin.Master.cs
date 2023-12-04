@@ -21,7 +21,7 @@ namespace ctuconnect
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack && Session["Username"] == null)
+            if (!IsPostBack && Session["AdminUsername"] == null)
             {
                 Response.Redirect("Login.aspx");
             }

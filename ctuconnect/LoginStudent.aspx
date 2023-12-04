@@ -66,7 +66,11 @@
               border-bottom: 3px solid #F7941F;
               color:#F7941F;
             }
-            
+            .validation-error {
+        color: #dc3545; 
+        font-size: 14px;
+        margin-top: 5px;
+    }
             
         </style>
 
@@ -93,7 +97,7 @@
                     <!-- Email -->
                     <div class="col-lg-12 align-self-end">       
                         <asp:TextBox ID="txtemail" CssClass="txtbox" runat="server" placeholder="Email address" Height="40px" Width="285px"></asp:TextBox><br />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Enter email" ControlToValidate="txtemail" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
+                        <asp:RegularExpressionValidator ID="revCTUEmail" runat="server" ControlToValidate="txtemail" ErrorMessage="Enter a valid CTU Email address (e.g., yourname@ctu.edu.ph)." Display="Dynamic" ValidationExpression="\b[A-Za-z0-9._%+-]+@ctu\.edu\.ph\b" CssClass="validation-error"></asp:RegularExpressionValidator>
                     </div>
                     <div class="col-lg-12 align-self-end">
                         <br />

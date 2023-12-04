@@ -202,7 +202,7 @@ namespace ctuconnect
             int jobID = int.Parse(applyJobId.Text.ToString());
             int industry_accId = int.Parse(applyIndustryId.Text.ToString());
             string endorsementLetterFile = "";
-
+            bool isMatchSkills = checkMatch(jobID);
             if (EndorsementLetter.HasFile != false)
             {
                 endorsementLetterFile = getUploadEndorsementLetter();
@@ -215,8 +215,8 @@ namespace ctuconnect
             conDB.Open();
             if (Usertype == "Alumni")
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accId,applicantFName, applicantLName, appliedPosition, industry_accID, dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, isRead, isRemove,applicantEmail ) " +
-                    "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID,@studentType, @isRead, @isRemove,@applicantEmail)", conDB);
+                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accId,applicantFName, applicantLName, appliedPosition, industry_accID, dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, isRead, isRemove,applicantEmail, isMatchToSkills) " +
+                    "Values( @jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID,@studentType, @isRead, @isRemove,@applicantEmail, @isMatchToSkills)", conDB);
 
                 cmd.Parameters.AddWithValue("@jobtype", jobtype);
                 cmd.Parameters.AddWithValue("@student_accId", student_accId);
@@ -234,6 +234,7 @@ namespace ctuconnect
                 cmd.Parameters.AddWithValue("@isRead", 0);
                 cmd.Parameters.AddWithValue("@isRemove", 0);
                 cmd.Parameters.AddWithValue("@applicantEmail", applicantEmail);
+                cmd.Parameters.AddWithValue("@isMatchToSkills", isMatchSkills);
                 int ctr = cmd.ExecuteNonQuery();
                 if (ctr > 0)
                 {
@@ -247,8 +248,8 @@ namespace ctuconnect
             }
             else if (Usertype == "Intern")
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accID,applicantFName, applicantLName, appliedPosition, industry_accID,dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, EndorsementLetter, isRead, isRemove,applicantEmail) " +
-                  "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID, @studentType,@endorsementLetter, @isRead, @isRemove,@applicantEmail)", conDB);
+                SqlCommand cmd = new SqlCommand("INSERT INTO APPLICANT (jobType,student_accID,applicantFName, applicantLName, appliedPosition, industry_accID,dateApplied, resume,resumeStatus,interviewStatus,applicantStatus, jobID, StudentType, EndorsementLetter, isRead, isRemove,applicantEmail,isMatchToSkills) " +
+                  "Values(@jobtype, @student_accId, @applicantFName, @applicantLName,@appliedPosition,@industry_accId, @dateApplied, @resume,@resumeStatus,@interviewStatus,@applicantStatus,@jobID, @studentType,@endorsementLetter, @isRead, @isRemove,@applicantEmail, @isMatchToSkills)", conDB);
 
                 cmd.Parameters.AddWithValue("@jobtype", jobtype);
                 cmd.Parameters.AddWithValue("@student_accId", student_accId);
@@ -267,6 +268,7 @@ namespace ctuconnect
                 cmd.Parameters.AddWithValue("@isRead", 0);
                 cmd.Parameters.AddWithValue("@isRemove", 0);
                 cmd.Parameters.AddWithValue("@applicantEmail", applicantEmail);
+                cmd.Parameters.AddWithValue("@isMatchToSkills", isMatchSkills);
                 int ctr = cmd.ExecuteNonQuery();
                 if (ctr > 0)
                 {

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Industry.Master" AutoEventWireup="true" CodeBehind="ReferralList.aspx.cs" Inherits="ctuconnect.ReferralList" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Industry.Master" AutoEventWireup="true" CodeBehind="Industry_AccountSetting.aspx.cs" Inherits="ctuconnect.Industry_AccountSetting" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -219,42 +219,42 @@
             </asp:TableCell>
             <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
                <div class="display-container">
-                   <h1 class="title">Referral List</h1>
-                   <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
-                   
-                               <table  class="table-list">
-                                    <tr>
-                                        <th>referral id</th>
-                                        <th>Last Name</th>
-                                        <th>First Name</th>
-                                        <th>Referred by</th>
-                                        <th>Referral letter</th>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                        <th></th>
-                                    </tr>
-                                    <asp:Repeater ID="dataRepeater" runat="server">
-                                        <Itemtemplate>
-                                            <tr class="datas">
-                                                <td><%# Eval("referralID") %></td>
-                                                <td><%# Eval("lastName") %></td>
-                                                <td><%# Eval("firstName") %></td>
-                                                <td><%# Eval("referredBy") %></td>
-                                                <td>
-                                                    <asp:Button ID="btnreferralLetterButton" runat="server" Text="View Referral Letter" OnCommand="btnreferralLetterButton_Command"
-                                                        CommandName="Review" CommandArgument='<%# Eval("referralLetter") %>'/>
-                                                    <%--<asp:Button ID="btnEndorsementLetterButton" runat="server" Text="View Referral Letter"
-                                                    OnCommand="ReviewLetter_Command" CommandName="Review"  
-                                                    CommandArgument='<%# Eval("referralLetter") %>'/>--%>
-                                                </td>
-                                                <td><%# Eval("datereferred") %></td>
-                                                <td class='<%# GetStatusCssClass(Eval("ReferralStatus").ToString()) %>' ><%# Eval("ReferralStatus") %></td>
-                                                <td><asp:Button ID="ViewApplicants" Text="View Applicant"  runat="server"  OnCommand="ViewApplicant_Command" CommandArgument='<%#Eval("student_accID")%>' /> </td>
-                                            </tr>
-                                        </Itemtemplate>
-        
-                                    </asp:Repeater>
-                                </table>
+                   <h1 class="title">Account Setting</h1>
+                <div><b>Change Password</b></div><br />
+                <div class="form-group">
+                 <asp:Label runat="server"  style="left: 0px; top: 10px;">Old password</asp:Label>         
+               <asp:TextBox ID="Oldpass" runat="server" TextMode="Password" CssClass ="form-control" width ="250px" placeholder="Enter old password"></asp:TextBox>
+                <asp:Label ID="PasswordErrorMessage" Font-Size="15px" runat="server" Text="Invalid password! Please enter your current password!" CssClass="text-danger"></asp:Label>             
+                    <asp:RequiredFieldValidator ID="reqOldpass" Font-Size="15px" runat="server" ErrorMessage="Required Field!" ControlToValidate="Oldpass" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>  
+      </div>
+    <div class="form-group">         
+                    <asp:Label runat="server" style="left: 0px; top: 10px;">New Password</asp:Label>           
+                    <asp:TextBox ID="Newpass" runat="server" TextMode="Password" CssClass ="form-control" width ="250px" placeholder="Enter new password"></asp:TextBox>
+                    <asp:Label ID="NewpassErrorMessage" Font-Size="15px" runat="server" Text="New password must be different from current password!" CssClass="text-danger"></asp:Label>
+                    <asp:RequiredFieldValidator ID="reqnewpassword" Font-Size="15px" runat="server" ErrorMessage="Required Field!" ControlToValidate="Newpass" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>                                                                                                          <!-- "^(?=.*\d)(?=.*[A-Z])(?=.*\W)(?!.*\s).{8,}$"-->
+                    <asp:RegularExpressionValidator ID="regnewPassword" Font-Size="15px" runat="server" ErrorMessage="Password length must be minimum of 8 characters! Must be alphanumeric, atleast 1 uppercase and lowercase letter, and 1 symbol." Display="Dynamic" CssClass="text-danger" ControlToValidate="Newpass" ValidationExpression="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\w])(?!.*\s)^.{8,16}$"></asp:RegularExpressionValidator>    
+      </div>
+     <div class="form-group">         
+                <asp:Label runat="server" style="left: 0px; top: 10px;">Confirm New Password</asp:Label>
+            
+               <asp:TextBox ID="confirmNewPass" runat="server" TextMode="Password" CssClass ="form-control" width ="250px" placeholder="Enter new confirm password"></asp:TextBox>
+               <asp:RequiredFieldValidator ID="reqConfirmNewPass" Font-Size="15px" runat="server" ErrorMessage="Required Field!" ControlToValidate="confirmNewPass" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
+               <asp:CompareValidator ID="comNewPassword" Font-Size="15px" runat="server" ErrorMessage="The new password did not match!" ControlToCompare="Newpass" Display="Dynamic" ControlToValidate="confirmNewPass" CssClass="text-danger"></asp:CompareValidator>
+          
+      </div>
+      <div class="form-group">
+        <div style="margin-left: 10px">
+             <asp:Button ID="BtnUpdatePass" class ="btn btn-success" runat="server" Text="Update Password" OnClick="BtnUpdatePass_Click" />   
+            <asp:Button ID="cancelButton" class ="btn btn-danger" runat="server" Text="Cancel" CausesValidation="False" PostBackUrl="~/Industry_AccountSetting.aspx" />
+        </div>
+      </div><br />
+        <div><b>Delete Account</b></div><br />
+        <div class="form-group">
+        <div style="margin-left: 20px">
+             <asp:Button ID="BtnDelete" class ="btn btn-danger" runat="server" Text="Delete My Account" OnClick="BtnDelete_Click" OnClientClick ="confirmDelete()"/>
+             <input type="hidden" id="confirmValue" runat="server" />
+        </div>
+            </div>
                </div>
             </asp:TableCell>
         </asp:TableRow>
@@ -268,7 +268,7 @@
                      <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                      <a class="active" href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
                     <a href="IndustryProfile.aspx"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
-                    <a href="Industry_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right:12px;"></i>Account Settings</a>
+
                      <asp:LinkButton runat="server" ID ="SignOut" OnClick="SignOut_Click" >
    <i class="fa fa-sign-out" aria-hidden="true"></i>
     Sign-out
@@ -277,4 +277,16 @@
             </asp:TableCell>
         </asp:TableRow>
     </asp:Table>
+     <script>
+        function confirmDelete() {
+            var confirmed = confirm("Are you sure you want to delete your account?");
+            if (confirmed) {
+                // If user confirms, set a hidden field or take any other necessary actions.
+                document.getElementById("confirmValue").value = "yes";
+            } else {
+                // If user cancels, set a hidden field or take any other necessary actions.
+                document.getElementById("confirmValue").value = "no";
+            }
+        }
+     </script>
 </asp:Content>
