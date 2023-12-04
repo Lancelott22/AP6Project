@@ -313,7 +313,7 @@
 
         <div class="form-group">
     <div style="margin-left: 20px">
-        <asp:LinkButton ID="Deactivate" CssClass="btn btn-danger" runat="server" OnCommand="Deactivate_Command" Text="Deactivate Account" OnClientClick="confirmDeactivate();" ></asp:LinkButton>
+        <asp:LinkButton ID="Deactivate" CssClass="btn btn-danger" runat="server" OnCommand="Deactivate_Command" Text="Deactivate Account" OnClientClick="confirmDeactivate();" CausesValidation="false"></asp:LinkButton>
   
     </div>
 </div>
@@ -326,7 +326,7 @@
 <script type="text/javascript">
     
     function confirmDeactivate() {
-        if (confirm("Are you sure you want to deactivate this account?")) {
+        if (confirm("Are you sure you want to deactivate your account?")) {
 
         } else {
             __doPostBack();

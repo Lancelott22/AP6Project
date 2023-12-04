@@ -119,27 +119,22 @@ namespace ctuconnect
             string student_accID = Session["STUDENT_ACC_ID"].ToString();
 
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE STUDENT_ACCOUNT SET isDeactivated = '" + true + "' where student_accID = '" + student_accID + "'", conDB);
+            SqlCommand cmd = new SqlCommand("UPDATE STUDENT_ACCOUNT SET isDeactivated = 'true' where student_accID = '" + student_accID + "'", conDB);
             var ctr = cmd.ExecuteNonQuery();
 
             if (ctr > 0)
             {
-                Response.Write("<script>alert('Industry has been successfully Deactivated.')</script>");
+                Response.Write("<script>alert('You successfully deactivated your account. Thank you for using our website.');document.location='LoginStudent.aspx'</script>");
+                Session.Clear(); // Clear all session variables
+                Session.Abandon(); // Abandon the session
+                Session.RemoveAll();
             }
             else
             {
                 Response.Write("<script>alert('Cannot deactivate the account now! Please try again later.')</script>");
             }
             conDB.Close();
-            Session.Clear(); // Clear all session variables
-            Session.Abandon(); // Abandon the session
-            Session.RemoveAll();
-            Response.Redirect("LoginStudent.aspx"); // Redirect to the login page
-        }
-        private bool ConfirmDeactivation()
-        {
-            // You can place any additional server-side confirmation logic here
-            return true; // Return true if you want to proceed with deactivation
+            
         }
     }
 }

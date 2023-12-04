@@ -58,6 +58,9 @@ namespace ctuconnect
                     lblLocation.Text = reader["location"].ToString();
                     lblEmail.Text = reader["email"].ToString();
 
+                    // Calculate and display overall rating as stars
+                    lblOverallRating.Text = CalculateOverallRatingStars(industryAccID);
+
                 }
                 reader.Close();
             }
@@ -155,7 +158,46 @@ namespace ctuconnect
             return stars.ToString();
         }
 
+        private string CalculateOverallRatingStars(string industryID)
+        {
+            int overallRating = 0;
+            int totalRatings = 0;
 
-        
+            // Retrieve feedback ratings for the industry
+            string feedbackQuery = "SELECT rating FROM INDUSTRY_FEEDBACK WHERE sendto = @IndustryID";
+            using (var db = new SqlConnection(conDB))
+            {
+                SqlCommand feedbackCommand = new SqlCommand(feedbackQuery, db);
+                feedbackCommand.Parameters.AddWithValue("@IndustryID", industryID);
+                db.Open();
+                SqlDataReader feedbackReader = feedbackCommand.ExecuteReader();
+
+                while (feedbackReader.Read())
+                {
+                    int rating = Convert.ToInt32(feedbackReader["rating"]);
+                    overallRating += rating;
+                    totalRatings++;
+                }
+
+                feedbackReader.Close();
+            }
+
+            // Calculate the average rating (rounded to the nearest integer)
+            if (totalRatings > 0)
+            {
+                overallRating = (int)Math.Round((double)overallRating / totalRatings);
+            }
+
+            // Generate HTML for star icons based on the calculated overall rating
+            StringBuilder stars = new StringBuilder();
+            for (int i = 0; i < overallRating; i++)
+            {
+                stars.Append("<i class='fa fa-star'></i>");
+            }
+
+            return stars.ToString();
+        }
+
+
     }
 }

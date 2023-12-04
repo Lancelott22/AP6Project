@@ -78,18 +78,13 @@
          .display-container{
              font-family: 'Poppins', sans-serif;
              background-color:white; 
-             width:1500px;
+             width:1550px;
              top:0;
              bottom:0;
              padding: 2%;
              overflow: auto;
              /*background-color:white;*/
-             height:550px;
-             /*overflow: auto;
-             float:left;
-             margin-left:25%;
-             position:relative;
-             padding: 4% 0% 0% 6%;*/
+             height:800px;
          }
              .display-container {
                  max-width: 100%;
@@ -173,28 +168,34 @@
              background-color: #881A30;
 
  }
- th{
-    border-collapse: collapse;
-     border-color:white;
-     background-color:#f4f4fb;
-     padding:5px;
+    th{
+         border: 1px solid;
+         border-color:#c4c4c4;
+        background-color:#f4f4fb;
+        padding:5px;
 
- }
- .datas{
-      padding:9px;
-       border: 8px solid;
-       border-color:white;
-      font-weight:bold;
-      color:black;
- }
+    }
+/*    td{
+        border: 1px solid;
+        border-color:dimgray;
+        padding-left:5px;
+    }*/
+    .datas{
+        border: 1px solid;
+        border-color:#c4c4c4;
+        padding-left:5px;
+         color:black;
+         cursor:default;
+    }
 
- .table-list{
-      border-collapse: collapse;
-     font-size:13px; 
-     height:auto; 
-     width:100%;
-     color:dimgray;
- }
+    .table-list{
+        border-collapse: collapse;        
+        font-size:14px; 
+        height:auto; 
+        width:100%;
+        color:dimgray;
+        padding-right:4px;
+    }
  </style>
  <asp:Table ID="Table1" runat="server"  CssClass="content">
      <asp:TableRow>
@@ -224,24 +225,9 @@
                 <h1 class="title">Partnered Industries</h1>
                  
                 <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
-                <%--<asp:gridview id="gridview1" runat="server" style="color:black; " autogeneratecolumns="false"  showheaderwhenempty="true" cssclass="gridview-style"
-                                   allowpaging="true"  backcolor="#ffffff" bordercolor="#c1beba" borderstyle="solid" borderwidth="1px" cellpadding="50" cellspacing="50" 
-                                   font-bold="false" font-size="13px"  height="100%" width="100%" >  
-                     <pagerstyle  horizontalalign="center" />
-                     <headerstyle font-bold="false"  backcolor="#d3d3d3" font-size="12px" forecolor="black" height="28px"  horizontalalign="center" verticalalign="middle"/>
-                    
-                         <columns >
-                            <asp:boundfield datafield="studentid" headertext="student id"  itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
-                             <asp:boundfield datafield="lastname" headertext="last name" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
-                             <asp:boundfield datafield="firstname" headertext="first name" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
-                              <asp:boundfield datafield="course" headertext="course" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" sortexpression="columnname1"/>
-                             <asp:boundfield datafield="workedat" headertext="worked at" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" />
-                             <asp:boundfield datafield="datestarted" headertext="date started" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px"/>
-                              <asp:boundfield datafield="internshipstatus" headertext="internship status" itemstyle-bordercolor="#c1beba" itemstyle-borderstyle="solid" itemstyle-borderwidth="1px" sortexpression="columnname2"/>
-                             
-                        
-                             </columns>
-                 </asp:gridview>--%>
+                
+                <asp:ListView ID="partneredIndustries" runat="server"> 
+                     <LayoutTemplate>
                             <table  class="table-list">
                                  <tr>
                                      <th>No.</th>
@@ -251,20 +237,26 @@
                                      <th>Contact Number</th>
                                      <th>Contact Email</th>
                                  </tr>
-                                 <asp:Repeater ID="dataRepeater" runat="server">
-                                     <Itemtemplate>
-                                         <tr class="datas">
-                                             <td><%# Container.ItemIndex + 1 %></td>
-                                             <td><%# Eval("industryName") %></td>
-                                             <td><%# Eval("location") %></td>
-                                             <td><%# Eval("contactPerson") %></td>
-                                             <td><%# Eval("contactNumber") %></td>
-                                             <td><%# Eval("contactEmail") %></td>
+                                <tbody>
+                                     <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                                 </tbody>
+                                </table>
+                    </LayoutTemplate>
+                                 <Itemtemplate>
+                                         <tr>
+                                             <td class="datas"><%# Container.DataItemIndex + 1 %></td>
+                                             <td class="datas">
+                                                 <a href='<%# ResolveUrl("~/ViewIndustryProfile_Coord?industry_accID=" + Eval("industry_accID"))%>' style="text-decoration: underline;">
+                                                 <asp:Label runat="server" Text='<%# Eval("industryName") %>'></asp:Label>
+
+                                             </td>
+                                             <td class="datas"><%# Eval("location") %></td>
+                                             <td class="datas"><%# Eval("contactPerson") %></td>
+                                             <td class="datas"><%# Eval("contactNumber") %></td>
+                                             <td class="datas"><%# Eval("contactEmail") %></td>
                                          </tr>
-                                     </Itemtemplate>
-     
-                                 </asp:Repeater>
-                             </table>
+                                </Itemtemplate>
+                       </asp:ListView>
             </div>
          </asp:TableCell>
      </asp:TableRow>
