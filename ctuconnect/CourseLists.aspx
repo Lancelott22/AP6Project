@@ -215,6 +215,7 @@
                      <a  href="TracerDashboard.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
                      <hr class="second" />
                     <a href="OJTCoordinatorProfile.aspx"><i class="fa fa-user" aria-hidden="true" style="padding-right:12px;"></i>Profile</a>
+                    <a href="Coord_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right:12px;"></i>Account Settings</a>
                      <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
                        <i class="fa fa-sign-out" aria-hidden="true"></i>
                         Sign-out
