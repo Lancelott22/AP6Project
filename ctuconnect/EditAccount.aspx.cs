@@ -47,8 +47,6 @@ namespace ctuconnect
                                 txtcontact.Text = reader["contactNumber"].ToString();
                                 txtctuemail.Text = reader["email"].ToString();
                                 txtPersonalEmail.Text = reader["personalEmail"].ToString();
-                                txtpwd.Text = reader["password"].ToString();
-                                cpwd.Text = reader["password"].ToString();
 
                             }
                         }
@@ -152,7 +150,6 @@ namespace ctuconnect
             
             var ctu = txtctuemail.Text;
             var personal = txtPersonalEmail.Text;
-            var password = cpwd.Text;
 
             
 
@@ -168,8 +165,7 @@ namespace ctuconnect
                     // Update the database with the new values
                     cmd.CommandText = "UPDATE STUDENT_ACCOUNT SET "
                         + "email ='" + ctu + "',"
-                        + "personalEmail ='" + personal + "',"
-                        + "password ='" + password + "'"
+                        + "personalEmail ='" + personal + "'"
                         + "WHERE student_accID='" + studentAcctID + "'";
 
                     int rowsAffected = cmd.ExecuteNonQuery();

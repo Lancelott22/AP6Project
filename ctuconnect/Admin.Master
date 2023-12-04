@@ -468,7 +468,7 @@
                                                         <img src="images/administratorpic.jpg" />
                                                     </div>
                                                     <div class="col-9">
-                                                        <h4><asp:Label ID="lblname" runat="server"></asp:Label></h4>
+                                                        <h4><asp:Label ID="lblname" runat="server" Text="Admin"></asp:Label></h4>
                                                     </div>
                                                 </div>   
                                             </div>

@@ -205,17 +205,7 @@
                     </div>
                     <br />
                     <div class="card shadow-sm percentage">
-                        <div class="row">
-                            <div class="col">
-                                <div class="card text-white  p-2" style="max-width: 20rem;">
-
-                                    <div class="card-body">
-                                        <h4 class="card-title">Total Interns</h4>
-                                        <h2 class="card-text" id="totalInterns" runat="server"></h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
       
                   </div>
