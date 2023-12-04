@@ -148,6 +148,7 @@ namespace ctuconnect
                     Session["StudentEmail"] = reader["email"];
                         Session["PASSWORD"] = reader["password"];
                         Session["DATEREG"] = reader["dateRegistered"];
+                    Session["IsAnswered"] = reader["isAnsweredAlumniForm"];
                 }
                     conDB.Close();
                     reader.Close();

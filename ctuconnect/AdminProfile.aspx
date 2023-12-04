@@ -94,6 +94,10 @@
         margin-left:1px;
     }
    
+    .profile-pic{
+        width:150px;
+        height:150px;
+    }
     
 
 </style>
@@ -172,7 +176,7 @@
                       <div class="col-lg-4">
                         <div class="card shadow-sm profile-section">
                             <center>
-                            <asp:Image ID="ojtcoordProfile" CssClass="profile-pic" Width="150px" Height="150px" runat="server" />
+                            <img src="images/administratorpic.jpg" class="profile-pic"/>
                             <h3><asp:Label ID="disp_name" runat="server" Text=""></asp:Label></h3>
                             </center>
                         </div>
@@ -185,35 +189,14 @@
                                       <h3 class="mb-0">General Information</h3>
                                   </div>
                                   <div class="col-1" style="text-align:right;">
-                                      <a href="EditCoordinatorProfile.aspx" class="pen-icon"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+                                      <a href="#" class="pen-icon"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
                                   </div>
                               </div>
         
           
                           </div>
                           <div class="card-body pt-0">
-                            <table class="table table-bordered">
-                              <tr>
-                                <th width="30%">First Name</th>
-                                <td width="2%">:</td>
-                                <td><asp:Label ID="coordFname" runat="server" Text=""></asp:Label></td>
-                              </tr>
-                              <tr>
-                                <th width="30%">Last Name</th>
-                                <td width="2%">:</td>
-                                <td><asp:Label ID="coordLname" runat="server" Text=""></asp:Label></td>
-                              </tr>
-                                <tr>
-                                  <th width="30%">Middle Initail</th>
-                                  <td width="2%">:</td>
-                                  <td><asp:Label ID="coordInitial" runat="server" Text=""></asp:Label></td>
-                                </tr>
-                              <tr>
-                                <th width="30%">Username</th>
-                                <td width="2%">:</td>
-                                <td><asp:Label ID="coordUsername" runat="server" Text=""></asp:Label></td>
-                              </tr>
-                            </table>
+                            
                           </div>
                         </div>
                         <br />

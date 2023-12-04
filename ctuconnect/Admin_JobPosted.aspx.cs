@@ -38,6 +38,10 @@ namespace ctuconnect
             {
                 ListViewPager.Visible = false;
             }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
         protected void JobPosted_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
@@ -214,6 +218,26 @@ namespace ctuconnect
                     ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertError", "alert('Sorry! There is something wrong in deleting the job. Please try again later..');document.location='Admin_JobPosted.aspx';", true);
                 }
                 conDB.Close();
+            }
+        }
+        protected void SearchJob_Click(object sender, EventArgs e)
+        {
+
+           
+            SqlCommand cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
+                "WHERE isActive = 'true' and jobTitle LIKE '%" + txtsearchJob.Text + "%'  ORDER BY jobPostedDate DESC", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            JobPosted.DataSource = ds;
+            JobPosted.DataBind();
+            if (JobPosted.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
             }
         }
     }

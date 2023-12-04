@@ -138,7 +138,7 @@
                     <div class="col-4">
                         Contact Number *<br />
                         <asp:TextBox ID="txtcontact" runat="server" CssClass="txtbox" Width="400px" Height="30px" Text="09"></asp:TextBox><br />
-                        <asp:RequiredFieldValidator ID="rfvContactNumber" runat="server" ControlToValidate="txtcontact" InitialValue="09" ErrorMessage="Contact Number is required." Display="Dynamic" CssClass="validation-error"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="rfvContactNumber" runat="server" ValidationGroup="Group1" ControlToValidate="txtcontact" InitialValue="09" ErrorMessage="Contact Number is required." Display="Dynamic" CssClass="validation-error"></asp:RequiredFieldValidator>
                         <asp:RegularExpressionValidator ID="revContactNumber" runat="server" ControlToValidate="txtcontact" ErrorMessage="Enter a valid Philippine phone number starting with 09." Display="Dynamic" ValidationExpression="^09\d{9}$" CssClass="validation-error"></asp:RegularExpressionValidator>
                     </div>
                     <div class="col-8">
@@ -147,16 +147,7 @@
                     </div>
                 </div>
                 <br />
-                <div class="row">
-                    <div class="col-sm-1">
-                        <asp:Button ID="btnSaveInfo" class="btn btn-success" runat="server" Text="Save" OnClick="btnSaveInfo_Click" CausesValidation="false"/>
-                    </div>
-                    
-                    <div class="col-sm-2">
-                        <asp:Button ID="btnCancelInfo" class="btn btn-danger" runat="server" Text="Back" OnClick="btnCancelInfo_Click" CausesValidation="false"/>
-                    </div>
-                </div>
-                <br />
+                
             </div>
 
             <div class="lower-section">
@@ -164,7 +155,7 @@
                     <div class="col-12">
                         CTU Email *<br />
                         <asp:TextBox ID="txtctuemail" runat="server" CssClass="txtbox" Width="700px" Height="30px"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="rfvCTUEmail" runat="server" ControlToValidate="txtctuemail" ErrorMessage="CTU Email is required." Display="Dynamic" CssClass="validation-error"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="rfvCTUEmail" runat="server" ControlToValidate="txtctuemail" ValidationGroup="Group2" ErrorMessage="CTU Email is required." Display="Dynamic" CssClass="validation-error"></asp:RequiredFieldValidator>
                         <asp:RegularExpressionValidator ID="revCTUEmail" runat="server" ControlToValidate="txtctuemail" ErrorMessage="Enter a valid CTU Email address (e.g., yourname@ctu.edu.ph)." Display="Dynamic" ValidationExpression="\b[A-Za-z0-9._%+-]+@ctu\.edu\.ph\b" CssClass="validation-error"></asp:RegularExpressionValidator>
                     </div>
                 </div>
@@ -172,7 +163,7 @@
                     <div class="col-12">
                         Personal Email *<br />
                         <asp:TextBox ID="txtPersonalEmail" runat="server" CssClass="txtbox" Width="700px" Height="30px"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="rfvPersonalEmail" runat="server" ControlToValidate="txtPersonalEmail" ErrorMessage="Personal Email is required." Display="Dynamic" CssClass="validation-error"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="rfvPersonalEmail" runat="server" ControlToValidate="txtPersonalEmail" ValidationGroup="Group2" ErrorMessage="Personal Email is required." Display="Dynamic" CssClass="validation-error"></asp:RequiredFieldValidator>
                         <asp:RegularExpressionValidator ID="revPersonalEmail" runat="server" ControlToValidate="txtPersonalEmail" ErrorMessage="Enter a valid Gmail address (e.g., yourname@gmail.com)." Display="Dynamic" ValidationExpression="\b[A-Za-z0-9._%+-]+@gmail\.com\b" CssClass="validation-error"></asp:RegularExpressionValidator>
                         <asp:CustomValidator ID="cvGmailValidation" runat="server" ControlToValidate="txtPersonalEmail" OnServerValidate="ValidateGmailAccount" ErrorMessage="The provided Gmail account is not valid or active." Display="Dynamic" CssClass="validation-error"></asp:CustomValidator>
                     </div>
@@ -180,11 +171,11 @@
                 <br />
                 <div class="row">
                     <div class="col-sm-1">
-                        <asp:Button ID="btnSave" class="btn btn-success" runat="server" Text="Save" OnClick="btnSave_Click" CausesValidation="false"/>
+                        <asp:Button ID="btnSave" class="btn btn-success" runat="server" Text="Save" OnClick="btnSave_Click" />
                     </div>
     
                     <div class="col-sm-2">
-                        <asp:Button ID="btnCancel" class="btn btn-danger" runat="server" Text="Back" OnClick="btnCancel_Click" CausesValidation="false"/>
+                        <asp:Button ID="btnCancel" class="btn btn-danger" runat="server" Text="Back" OnClick="btnCancel_Click" CausesValidation="true"/>
                     </div>
                 </div>
             </div>
