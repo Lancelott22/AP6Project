@@ -117,7 +117,12 @@
         <ContentTemplate>
             <div class="container d-flex flex-column my-5">
                 <br />
-                <asp:TextBox ID="txtsearchOrder" CssClass="form-control " runat="server" placeholder="Search job title or keyword"></asp:TextBox>
+                <div class="col input-group mb-3">
+                    <asp:TextBox ID="txtsearchJob" CssClass="form-control searchbox" runat="server" placeholder="Search job title"></asp:TextBox>
+                    <div class="input-group-append">
+                        <asp:Button class="btn btn-primary" runat="server" ID="SearchJob" OnClick="SearchJob_Click" Text="Search" />
+                    </div>
+                </div>
                 <br />
                 <label id="totalJob" runat="server"></label>
                 <div class="jobs">

@@ -231,13 +231,31 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.LinkButton ReportJob;
 
         /// <summary>
-        /// txtsearchOrder control.
+        /// txtsearchJob control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtsearchOrder;
+        protected global::System.Web.UI.WebControls.TextBox txtsearchJob;
+
+        /// <summary>
+        /// SearchJob control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SearchJob;
+
+        /// <summary>
+        /// JobTypeSort control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList JobTypeSort;
 
         /// <summary>
         /// totalJob control.
