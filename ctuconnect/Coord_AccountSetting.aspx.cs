@@ -118,7 +118,7 @@ namespace ctuconnect
             return false;
         }
 
-        protected void Deactivate_Command(object sender, CommandEventArgs e)
+      /*  protected void Deactivate_Command(object sender, CommandEventArgs e)
         {
             string coordinator_accID = Session["Coor_ACC_ID"].ToString();
 
@@ -139,7 +139,7 @@ namespace ctuconnect
             }
             conDB.Close();
 
-        }
+        }*/
 
         protected void Upload(object sender, EventArgs e)
         {

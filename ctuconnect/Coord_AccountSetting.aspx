@@ -257,13 +257,7 @@
         <asp:Button runat="server" Text="Upload" OnClick="Upload" />
     </div>
 
-        <div><b>Delete Account</b></div><br />
-        <div class="form-group">
-        <div style="margin-left: 20px">
-             <asp:LinkButton ID="Deactivate" CssClass="btn btn-danger" runat="server" OnCommand="Deactivate_Command" Text="Deactivate Account" OnClientClick="confirmDeactivate();" CausesValidation="false"></asp:LinkButton> 
-            <input type="hidden" id="confirmValue" runat="server" />
-        </div>
-            </div>
+      
              </div>
          </asp:TableCell>
      </asp:TableRow>
