@@ -68,6 +68,7 @@ namespace ctuconnect
                     disp_address.Text = reader["address"].ToString();
                     disp_status.Text = reader["studentStatus"].ToString();
                     disp_contact.Text = reader["contactNumber"].ToString();
+                    disp_course.Text = reader["course"].ToString();
 
 
                     if (!string.IsNullOrEmpty(resume))

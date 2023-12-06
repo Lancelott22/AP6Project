@@ -313,11 +313,29 @@
                     </div>
                     <div class="col-6">
                         <div class="student-details2">
+                             <div class="row">
+                                 <div class="col-sm-4">
+                                     School
+                                 </div>
+                                 <div class="col-sm-8" style="font-weight:bold; color:#881A30;">
+                                    <asp:Label ID="Label1" runat="server" Text="Cebu Technological University"></asp:Label>
+                                 </div>
+                             </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    Course
+                                </div>
+                                <div class="col-sm-8">
+                                   <asp:Label ID="disp_course" runat="server" Text=""></asp:Label>
+                                </div>
+                            </div>
+                            <br />
                             <div class="row">
                                 <div class="col-sm-4" style="font-weight:bold;">
                                     Student Status
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-8" style="font-weight:bold; color:#881A30;">
                                    <asp:Label ID="disp_status" runat="server" Text=""></asp:Label>
                                 </div>
                             </div>
