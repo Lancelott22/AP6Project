@@ -330,8 +330,6 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="MyJobApplication.aspx" />
     <Content Include="Admin.Master" />
-    <Content Include="images\resume\100000_Bagahansol_COR.pdf" />
-    <Content Include="images\resume\Jade_resume.pdf" />
     <Content Include="Industry.Master" />
     <Content Include="OJTCoordinator.Master" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -926,6 +924,7 @@
     <Folder Include="images\EndorsementLetter\" />
     <Folder Include="images\MOU\" />
     <Folder Include="images\ReferralLetter\" />
+    <Folder Include="images\resume\" />
     <Folder Include="Industry\" />
     <Folder Include="Interns\" />
     <Folder Include="OjtCoordinator\" />

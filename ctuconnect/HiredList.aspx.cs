@@ -109,7 +109,7 @@ namespace ctuconnect
             using (var db = new SqlConnection(conDB))
             {
                 
-                string query = "SELECT student_accID, lastName, firstName, CONVERT(VARCHAR(10), HIRED_LIST.dateStarted, 120) AS dateStarted, CONVERT(VARCHAR(10), HIRED_LIST.dateEnded, 120) AS dateEnded, position, resumeFile FROM HIRED_LIST WHERE jobType = 'fulltime' AND  industry_accID = '" + industry_accID + "' ORDER BY id DESC";
+                string query = "SELECT student_accID, lastName, firstName, CONVERT(VARCHAR(10), HIRED_LIST.dateStarted, 120) AS dateStarted, CONVERT(VARCHAR(10), HIRED_LIST.dateEnded, 120) AS dateEnded, position, resumeFile, workStatus FROM HIRED_LIST WHERE jobType = 'fulltime' AND  industry_accID = '" + industry_accID + "' ORDER BY id DESC";
                 SqlCommand cmd = new SqlCommand(query, db);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
@@ -294,7 +294,7 @@ namespace ctuconnect
                 {
                     // Assuming that the result is a file path, read the file content
                     string fileName = result.ToString();
-                    string filePath = "~/images/Resume/" + fileName; // Construct the path
+                    string filePath = "~/images/resume/" + fileName; // Construct the path
                     byte[] fileData = System.IO.File.ReadAllBytes(Server.MapPath(filePath));
                     return fileData;
                 }
@@ -445,7 +445,7 @@ namespace ctuconnect
             }
         }
 
-        protected void TxtDate_TextChanged(object sender, EventArgs e)
+/*        protected void TxtDate_TextChanged(object sender, EventArgs e)
         {
             string student_id = studentID.Text;
             
@@ -473,9 +473,9 @@ namespace ctuconnect
                 dateErrorlabel2.Visible = false;
             }
 
-        }
+        }*/
 
-        private string GetstartDate(string student_id)
+/*        private string GetstartDate(string student_id)
         {
             DateTime startDate = DateTime.MinValue;
             string formattedStartDate = string.Empty;
@@ -509,7 +509,7 @@ namespace ctuconnect
                
             }
             return formattedStartDate;
-        }
+        }*/
         
         protected void ListView2_ItemDataBound(object sender, ListViewItemEventArgs e)
         {

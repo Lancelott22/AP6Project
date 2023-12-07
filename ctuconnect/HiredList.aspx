@@ -327,9 +327,9 @@ width:100%;
                            <asp:LinkButton ID="btnEdit2" runat="server" CssClass="edit-button" OnClick="onEditButton_Click" data-listview="listView2" Visible="false"> 
                                 <i class="fas fa-edit"></i> Edit
                             </asp:LinkButton>
-                           <asp:LinkButton ID="btnDelete" runat="server" CssClass="delete-button" OnClientClick="return confirmDelete();" >
+<%--                           <asp:LinkButton ID="btnDelete" runat="server" CssClass="delete-button" OnClientClick="return confirmDelete();" >
                                <i class="fas fa-trash"></i> Delete
-                           </asp:LinkButton>
+                           </asp:LinkButton>--%>
                            </div>
                     </div>
                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
@@ -346,12 +346,36 @@ width:100%;
                                         <th>Date Ended</th>
                                        <th>Position</th>
                                        <th>Resume</th>
+                                        <th>Status</th>
                                     </tr>
                                         <tbody>
                                     <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
                                         </tbody>
                                         </table>
                                     </LayoutTemplate>
+                                                                                                             <EmptyDataTemplate>
+                                    <table class="table-list">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <asp:CheckBox ID="chkSelectAll" runat="server" onclick="toggleSelectAll(this);" />
+                                                </th>
+                                       <th>Last Name</th>
+                                       <th >First Name</th>
+                                       <th >Date Started</th>
+                                        <th>Date Ended</th>
+                                       <th>Position</th>
+                                       <th>Resume</th>
+                                       <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:center; font-size:18px;" colspan="7">No data available</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </EmptyDataTemplate>
                                     <ItemTemplate>
                                         <tr class="datas clickableRow" onclick="toggleHighlightAndCheckbox(document.getElementById('<%# ((ListViewDataItem)Container).FindControl("chkSelect2").ClientID %>'));" >
                                             <td>
@@ -381,6 +405,10 @@ width:100%;
                                                 OnCommand="ViewResume_Command" CommandName="View"  
                                                 CommandArgument='<%# Eval("resumeFile") %>'/>
                                             </td>
+                                             <td class="datas">
+                                                <asp:Label ID="Label21" runat="server" Text='<%# Eval("workStatus") %>'></asp:Label>
+
+                                         </td>
                                         </tr>
                                     </ItemTemplate>
                                    </asp:ListView>
@@ -394,8 +422,7 @@ width:100%;
                                             <tr>
                                                 <th></th>
                                                 <th>Last Name <i class="fas fa-sort"></i></th>
-                                                <th>First Name <i class="fas fa-sort"></i>
-</th>
+                                                <th>First Name <i class="fas fa-sort"></i></th>
                                                 <th>Position</th>
                                                 <th >Hired</span></th>
                                                 <th>Started</span></th>
@@ -409,6 +436,31 @@ width:100%;
                                             </tbody>
                                             </table>
                                         </LayoutTemplate>
+                                                                              <EmptyDataTemplate>
+                                    <table class="table-list">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <asp:CheckBox ID="chkSelectAll" runat="server" onclick="toggleSelectAll(this);" />
+                                                </th>
+                                                <th>Last name</th>
+                                                <th>First name</th>
+                                                <th>Middle initial</th>
+                                                <th>Program enrolled</th>
+                                                <th>Contact Number</th>
+                                                <th>Email</th>
+                                                <th>Status</th>
+                                                <th>Rendered Hours</th>
+                                                <th>Evaluation</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:center; font-size:18px;" colspan="10">No data available</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </EmptyDataTemplate>
                                                 <ItemTemplate>
                                                     <tr class="clickableRow" onclick="toggleHighlightAndCheckbox(document.getElementById('<%# ((ListViewDataItem)Container).FindControl("chkSelect").ClientID %>'));" >
                                                         <td class="datas">
@@ -516,7 +568,7 @@ width:100%;
                     <div style="margin-left: 5%; float:left;">
                          <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
                          <ContentTemplate>
-                        <asp:TextBox ID="txtDateEnded" runat="server" TextMode="Date" CssClass="txtbox" Width="100px" Height="25px" AutoPostBack="true" OnTextChanged="TxtDate_TextChanged" ></asp:TextBox><br />
+                        <asp:TextBox ID="txtDateEnded" runat="server" TextMode="Date" CssClass="txtbox" Width="100px" Height="25px" AutoPostBack="true" ></asp:TextBox><br />
                         <asp:Label ID="dateErrorlabel" runat="server"  Font-Size="Medium" ForeColor="Red" style="font-size:11px;" ></asp:Label>
                         <asp:Label ID="dateErrorlabel2" runat="server"  Font-Size="Medium" ForeColor="Red" style="font-size:11px;" ></asp:Label>
 
@@ -745,7 +797,7 @@ width:100%;
                     <div style="margin-left: 5%; float:left;">
                          <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
                          <ContentTemplate>
-                        <asp:TextBox ID="employeeEndedtxt" runat="server" TextMode="Date" CssClass="txtbox" Width="100px" Height="25px" AutoPostBack="true" OnTextChanged="TxtDate_TextChanged" ></asp:TextBox><br />
+                        <asp:TextBox ID="employeeEndedtxt" runat="server" TextMode="Date" CssClass="txtbox" Width="100px" Height="25px" AutoPostBack="true" ></asp:TextBox><br />
                         <asp:Label ID="Label37" runat="server"  Font-Size="Medium" ForeColor="Red" style="font-size:11px;" ></asp:Label>
                         <asp:Label ID="Label38" runat="server"  Font-Size="Medium" ForeColor="Red" style="font-size:11px;" ></asp:Label>
 
@@ -913,18 +965,6 @@ width:100%;
         return false;
     }
 
-    function deleteRow() {
-        // Hide the modal
-        $('#confirmDeleteModal').modal('hide');
-
-        // Find the parent row of the button
-        var row = document.getElementById('<%# btnDelete.ClientID %>').closest("tr");
-
-        // Hide the row
-        if (row) {
-            row.style.display = "none";
-        }
-    }
   
        
     </script>
