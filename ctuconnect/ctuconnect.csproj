@@ -361,6 +361,7 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
     <Content Include="Student_AccountSetting.aspx" />
+    <Content Include="StyleSheet1.css" />
     <Content Include="SuggestionsAdmin.aspx" />
     <Content Include="TraceAlumni.aspx" />
     <Content Include="TraceIndustry.aspx" />
