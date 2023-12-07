@@ -1,75 +1,16 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ViewEvaluation.aspx.cs" Inherits="ctuconnect.ViewEvaluation" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ViewEvaluation.aspx.cs" Inherits="ctuconnect.ViewEvaluation" EnableViewState="true" EnableEventValidation="false" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link rel="stylesheet" type="text/css" href="StyleSheet1.css" />
 
 </head>
-    <style>
-    .button1 {
-        width: 80%;
-        margin: 0 auto;
-        font-family: Arial, sans-serif;
-    }
-    .evaluation-form {
-        width: 80%;
-        margin: 0 auto;
-        font-family: Arial, sans-serif;
-    }
-    table {
-    width: 100%;
-    margin: 20px auto;
-    border-bottom: 3px solid #881A30;
-    border: 1px solid;
-    background-color: #ffffff;
-    }
-
-    table, th, td {
-        border: 1px solid;
-    }
-
-    th, td {
-        padding: 10px;
-        text-align: left;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-
-    .form-input {
-        width: 100%;
-    }
-
-    .btn-md{
-        border: 1px #F7941F;
-        background-color: #F7941F;
-        position:center;
-        width: 120px;
-        height:45px;
-    }
-
-    .btn-close{
-        border: 1px solid #F7941F;
-        background-color: #F0EBEB;
-        position:center;
-        width: 120px;
-        height:45px;
-        color:  #F7941F;
-    }
-
-    .txtbox-strengths {
-        min-width: 100%;
-
-    }
-    .txtbox-improvement {
-        min-width: 100%;
-
-    }
-</style>
+    
 <body>
+    <form id="form1" runat="server">
     <div id="evaluationForm" class="evaluation-form" runat="server">
 
     <table>
@@ -92,6 +33,7 @@
             <td colspan="6">Instruction: &nbsp <p>This report is to completed by the immediate supervisor of the OJT and to be returned
         to the OJT coordinator. In the space at the left, encircle the rating that describe the OJT most accurately.
         Total the value for all responses and record in the Total Scores section.</p></td>
+        </tr>
         <tr>
         <th colspan="3">Productivity</th>
         <th colspan="3">Cooperation</th>
@@ -379,7 +321,7 @@
         </tr>
     </table>
  </div>
-   
+ 
 <div class="button1">
     <div class="row">
         <div class="col-2 d-flex flex-column">
@@ -391,6 +333,7 @@
         </div>
     </div>
 </div>
+ </form> 
 </body>
     <script>
         var productivityValue = <%=Session["Productivity"] %>;

@@ -160,7 +160,7 @@ namespace ctuconnect
 
 
         // Helper method to save the PDF to the database
-        private void SavePdfToDatabase(byte[] pdfBytes)
+        /*private void SavePdfToDatabase(byte[] pdfBytes)
         {
 
             string student_accID = Request.QueryString["student_accID"];
@@ -192,7 +192,7 @@ namespace ctuconnect
                     }
                 }
             }
-        }
+        }*/
 
         public override void VerifyRenderingInServerForm(Control control)
         {

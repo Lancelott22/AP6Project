@@ -23,7 +23,6 @@ namespace ctuconnect
             {
                 PasswordErrorMessage.Visible = false;
                 NewpassErrorMessage.Visible = false;
-                BtnDelete.CausesValidation = false;
             }
         }
 
@@ -103,38 +102,27 @@ namespace ctuconnect
             }
             return false;
         }
-
-        protected void BtnDelete_Click(object sender, EventArgs e)
+        protected void Deactivate_Command(object sender, CommandEventArgs e)
         {
-            var email = Session["IndustryEmail"].ToString();
-            string confirmDelete = Request.Form["confirmValue"];
-            if (confirmDelete == "yes")
-            {
-                using (conDB)
-                {
-                    conDB.Open();
-                    var command = conDB.CreateCommand();
-                    {
-                        command.CommandType = CommandType.Text;
-                        command.CommandText = "DELETE FROM COORDINATOR_ACCOUNT WHERE email = '" + email + "'";
-                        var ctr = command.ExecuteNonQuery();
-                        if (ctr > 0)
-                        {
+            string industry_accID = Session["INDUSTRY_ACC_ID"].ToString();
 
-                            Session.RemoveAll();
-                            Session.Clear();
-                            Session.Abandon();
-                            Response.Write("<script>alert('Account was deleted successfully!');document.location='LoginIndustry.aspx'</script>");
-                        }
-                    }
-                    conDB.Close();
-                }
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE INDUSTRY_ACCOUNT SET isDeactivated = 'true' where industry_accID = '" + industry_accID + "'", conDB);
+            var ctr = cmd.ExecuteNonQuery();
+
+            if (ctr > 0)
+            {
+                Response.Write("<script>alert('You successfully deactivated your account. Thank you for using our website.');document.location='LoginIndustry.aspx'</script>");
+                Session.Clear(); // Clear all session variables
+                Session.Abandon(); // Abandon the session
+                Session.RemoveAll();
             }
             else
             {
-                Response.Write("<script>alert('Account deletion has been cancelled!');document.location='Industry_AccountSetting.aspx'</script>");
-
+                Response.Write("<script>alert('Cannot deactivate the account now! Please try again later.')</script>");
             }
+            conDB.Close();
+
         }
 
         protected void SignOut_Click(object sender, EventArgs e)

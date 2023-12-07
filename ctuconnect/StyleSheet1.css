@@ -1,0 +1,63 @@
+﻿
+.button1 {
+    width: 80%;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+.evaluation-form {
+    width: 80%;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+table {
+    width: 100%;
+    margin: 20px auto;
+    border-bottom: 3px solid #881A30;
+    border: 1px solid;
+    background-color: #ffffff;
+}
+
+table, th, td {
+    border: 1px solid;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.form-input {
+    width: 100%;
+}
+
+.btn-md {
+    border: 1px #F7941F;
+    background-color: #F7941F;
+    position: center;
+    width: 120px;
+    height: 45px;
+}
+
+.btn-close {
+    border: 1px solid #F7941F;
+    background-color: #F0EBEB;
+    position: center;
+    width: 120px;
+    height: 45px;
+    color: #F7941F;
+}
+
+.txtbox-strengths {
+    min-width: 100%;
+}
+
+.txtbox-improvement {
+    min-width: 100%;
+}
+
