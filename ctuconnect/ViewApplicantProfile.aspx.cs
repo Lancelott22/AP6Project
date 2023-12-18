@@ -53,6 +53,7 @@ namespace ctuconnect
                     disp_email.Text = reader["email"].ToString();
                     disp_course.Text = reader["course"].ToString();
                     disp_contact.Text = reader["contactNumber"].ToString();
+                    lblinterestOrHobby.Text = HttpUtility.HtmlDecode(reader["interestOrHobby"].ToString());
 
                 }
                 reader.Close();

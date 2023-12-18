@@ -623,7 +623,7 @@
                                                     <div class="col-4 d-flex flex-column" style="float:right; padding-top:2em;">
                                                             <asp:DropDownList ID="drpApplicantStatus" runat="server" CssClass="drpbox" Width="250px" Height="40px">
                                                             <asp:ListItem Enabled="true" Text= "STATUS" Value= "-1"></asp:ListItem>
-                                                            <asp:ListItem>Approve</asp:ListItem>
+                                                            <asp:ListItem>Hire</asp:ListItem>
                                                             <asp:ListItem>Reject</asp:ListItem>
                                                             </asp:DropDownList>
                                                     </div>

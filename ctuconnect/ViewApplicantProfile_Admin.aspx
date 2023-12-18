@@ -79,6 +79,17 @@
             font-family: 'Poppins', sans-serif;
         }
 
+        .student-interest{
+            min-height: 180px;
+            background-color: #ffffff;
+            padding-left:2em;
+            min-width:97%;
+            float:left;
+            margin-left:10px;
+            padding-top:2em;
+            font-family: 'Poppins', sans-serif;
+        }
+
         .student-container{
             width:80%;
             margin-top:30px;
@@ -344,6 +355,24 @@
                         </div>
                     </div>
                 </div>
+                <br />
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="student-interest">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                       <asp:Label ID="Label2" runat="server" Text="Interest/Hobby" CssClass="name"></asp:Label>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:1em; padding-left:2em;">
+                                    <div class="col-sm-8">
+                                        <asp:Label ID="lblinterestOrHobby" runat="server" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="feedback-container" id="feedback">
