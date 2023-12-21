@@ -255,11 +255,11 @@
                                 <i class='bx bx-file-blank icon'></i>
                                 <span class="text nav-text">Resume</span>
                             </a>
-                            <a class="active" href="#">
+                            <a href="MyJobApplication.aspx">
                                 <i class='bx bx-layer icon'></i>
                                 <span class="text nav-text">Application</span>
                             </a>
-                            <a href="Student_AccountSetting.aspx">
+                            <a class="active" href="Student_AccountSetting.aspx">
                                 <i class='bx bx-cog icon'></i>
                                 <span class="text nav-text">Account Settings</span>
                             </a>

@@ -302,6 +302,10 @@
            padding-top:20px;
         }
 
+        .edit-resume{
+            margin-left:100px;
+        }
+
         
     </style>
     <div class="container-fluid">
@@ -406,7 +410,8 @@
                                 </div>
                                 <div class="col-sm-7" style="float:right;">
                                     <asp:Button ID="btnViewResume" runat="server" class="btn btn-success" Text="View Resume" OnClick="btnViewResume_Click" Visible="false" />
-                                    <asp:Button ID="btnEditResume" runat="server" class="btn btn-danger" OnClick="btnEditResume_Click" Visible="false" />
+                                    <asp:Button ID="UpdateResume" runat="server" class="btn btn-danger" Text="Update Resume" OnClick="UpdateResume_Click" />
+                                  
                                 </div>
                             </div>
                             <br />                          
@@ -564,6 +569,21 @@
             document.getElementById("myModal").style.display = "none";
         }
 
+        function openModal4() {
+            document.getElementById("myModal4").style.display = "block";
+        }
+        function closeEditModal4() {
+            document.getElementById("myModal4").style.display = "none";
+        }
+
+        function openModal3() {
+            document.getElementById("myModal3").style.display = "block";
+        }
+
+        function closeEditModal3() {
+            document.getElementById("myModal3").style.display = "none";
+        }
+
         $(document).ready(function () {
             $('.summernote1').summernote({
                 height: 300,
@@ -586,7 +606,7 @@
     <div id="myModal2" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2 class="title">Edit Resume</h2>
+            <h2 class="title">Edit Status</h2>
         </div>
         <div class="modal-body">
             <div class="row applicant-details">  
@@ -616,22 +636,73 @@
 </div>
 
     <div id="myModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2 class="title">Hobby/Interest</h2>
-        </div>
-        <div class="modal-body">
-            <div class="row applicant-details"> 
-                <div class="col-sm-12">
-                    <asp:TextBox ID="txtInterestHobby" runat="server" Width="400px" Height="100px" ValidateRequestMode="Disabled" Rows="10" TextMode="MultiLine" CssClass="form-control txtbox-description summernote1" Placeholder="Add some interest/hobby"></asp:TextBox>
-                </div>
-            </div>          
-        </div>           
-        <div class="modal-footer">
-            <asp:Button ID="btnCloseHobby" runat="server" Text="Close" OnClick="btnCloseHobby_Click" class="btn btn-danger"/>
-           <asp:Button ID="btnSaveHobby" class="btn btn-success" runat="server" Text="Save" OnClick="btnSaveHobby_Click"/>
-        </div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="title">Hobby/Interest</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row applicant-details"> 
+                    <div class="col-sm-12">
+                        <asp:TextBox ID="txtInterestHobby" runat="server" Width="400px" Height="100px" ValidateRequestMode="Disabled" Rows="10" TextMode="MultiLine" CssClass="form-control txtbox-description summernote1" Placeholder="Add some interest/hobby"></asp:TextBox>
+                    </div>
+                </div>          
+            </div>           
+            <div class="modal-footer">
+                <asp:Button ID="btnCloseHobby" runat="server" Text="Close" OnClick="btnCloseHobby_Click" class="btn btn-danger"/>
+               <asp:Button ID="btnSaveHobby" class="btn btn-success" runat="server" Text="Save" OnClick="btnSaveHobby_Click"/>
+            </div>
    
+        </div>
     </div>
-</div>
+
+
+    <!-- Modal dialog -->
+    <div id="myModal4" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="title">Resume</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row edit-resume">  
+                    <div class="col-sm-12">
+                        <asp:Button ID="btnUploadResume" class="btn btn-success" runat="server" Text="Upload Resume"  OnClick="btnUploadResume_Click"/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <asp:Button ID="btnEditResume" runat="server" class="btn btn-success" Text="Build Resume" OnClick="btnEditResume_Click"/>
+                    </div>
+                </div>          
+            </div>           
+            <div class="modal-footer">
+                <asp:Button ID="btnClose4" runat="server" Text="Close" OnClick="btnClose4_Click" class="btn btn-danger"/>
+  
+            </div>
+   
+        </div>
+    </div>
+
+    <!-- Modal dialog -->
+    <div id="myModal3" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="title">Edit Resume</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row applicant-details">  
+                    <div class="col-sm-3">
+                        Resume
+                    </div>
+                    <div class="col-sm-9">
+                        <asp:FileUpload ID="resumeUpload" runat="server" Width="300px"/>
+                        <asp:Label ID="lblResumeFileName" runat="server"></asp:Label>
+
+                    </div>
+                </div>          
+            </div>           
+            <div class="modal-footer">
+                <asp:Button ID="btnCloseResume" runat="server" Text="Close" OnClick="btnCloseResume_Click" class="btn btn-danger"/>
+               <asp:Button ID="btnSaveResumeback" class="btn btn-success" runat="server" Text="Save"  OnClick="btnSaveResumeback_Click"/>
+            </div>
+       
+        </div>
+    </div>
+
 </asp:Content>

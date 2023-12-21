@@ -171,11 +171,6 @@ namespace ctuconnect
                     Button btnSchedule = (Button)item.FindControl("btnSchedule");
                     Button btnApplication = (Button)item.FindControl("btnApplication");
 
-                    //TextBox requirements = (TextBox)e.Item.FindControl("txtrequirements");
-                    //TextBox DateStart = (TextBox)e.Item.FindControl("txtDateStart");
-                    //DropDownList ApplicantStatus = (DropDownList)e.Item.FindControl("drpApplicantStatus");
-                    //Button Submit = (Button)e.Item.FindControl("btnSubmit");
-
                     if (lblapplicantStatus != null)
                     {
 
@@ -183,18 +178,11 @@ namespace ctuconnect
 
                         if (applicantStatusText == "Hired")
                         {
-                            //txtrequirements.Enabled = false;
-                            //txtDateStart.Enabled = false;
-                            //drpApplicantStatus.Visible = false;
-                            //btnSubmit.Visible = false;
-
-                            //btnApplication.Text = "View";
-                            //btnApplication.Style["width"] = "70px";
                             btnApplication.Visible = false;
                             btnSchedule.Visible = false;
                             lblapplicantStatus.BackColor = System.Drawing.Color.GreenYellow;
                             lblapplicantStatus.Style["width"] = "100px";
-                            lblapplicantStatus.Style["padding-left"] = "0.5em";
+                            lblapplicantStatus.Style["padding-left"] = "1.5em";
                             lblapplicantStatus.Style["height"] = "20px";
                             lblapplicantStatus.Style["border-radius"] = "15px";
 
