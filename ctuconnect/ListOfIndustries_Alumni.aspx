@@ -2,9 +2,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 <style>
     .profile-container{
         background-color:white;
@@ -223,7 +223,10 @@
                 <h1 class="title">List of Partnered Industries</h1>
                  
                 <p style="float:left;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
-                <asp:LinkButton ID="BtnAddIndustry" runat="server" CssClass="add-button" OnClick="BtnAddIndustry_Click"><i class="fa fa-plus" aria-hidden="true">Add Industry</i></asp:LinkButton>
+                <asp:LinkButton ID="BtnAddIndustry" runat="server" CssClass="add-button" OnClick="BtnAddIndustry_Click">
+                    <i class="fa fa-plus"></i>Add Industry
+
+                </asp:LinkButton>
                                 <table  class="table-list">
                      <tr>
                          <th>No.</th>
@@ -258,8 +261,9 @@
         </div>    
    
     </div>
-    
-    <div class="modal" id="AddIndustryModal" tabindex="-1" role="dialog">
+   
+
+    <div class="modal" id="AddIndustryModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered custom-modal-size">
             <div class="modal-content">
                 <div class="modal-header">
@@ -269,30 +273,30 @@
                         <div style="float:left; text-align:right;">
                         <!--INDUSTRY NAME-->
                         <asp:Label ID="Label1" runat="server" Style="font-size:18px;">
-                            IndustryName
-                        </asp:Label><span style="margin-left:11px;  font-size:18px;">*:</span><br />
+                            IndustryName<span style="color:red;">*</span>
+                        </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
                         <!--EMAIL-->
                         <asp:Label ID="Label2" runat="server" Style="font-size:18px;">
-                            Email
-                        </asp:Label><span style="margin-left:11px;  font-size:18px;">*:</span><br />
+                            Email<span style="color:red;">*</span>
+                        </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
                         <!--PASSWORD-->
                         <asp:Label ID="Label3" runat="server" Style="font-size:18px;">
-                            Password
-                        </asp:Label><span style="margin-left:11px;  font-size:18px;">*:</span><br />
+                            Password<span style="color:red;">*</span>
+                        </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
                         <!--CONFIRM PASSWORD-->
                         <asp:Label ID="Label4" runat="server" Style="font-size:18px;">
-                            Confirm Password
-                        </asp:Label><span style="margin-left:11px;  font-size:18px;">*:</span><br />
+                            Confirm Password<span style="color:red;">*</span>
+                        </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
                         <!--MOU-->
                         <div class="column">
                             <asp:Label ID="Label5" runat="server" Style="font-size:18px;">
-                                MOU
-                            </asp:Label><span style="margin-left:11px;  font-size:18px;">*:</span><br />
+                                MOU<span style="color:red;">*</span>
+                            </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
                         </div>
                         <!--LOCATION-->
                         <asp:Label ID="lblocation" runat="server" Style="font-size:18px;">
-                            Location
-                        </asp:Label><span style="margin-left:11px;  font-size:18px;">*:</span>
+                            Location<span style="color:red;">*</span>
+                        </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span>
                         
                     </div>
                     <div style="float:left;">
@@ -313,12 +317,13 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                    <asp:Button ID="BtnSubmit"  class="btn btn-primary" runat="server" Text="Submit" OnCLick="BtnSubmit_Click" autopostback="false" />
+                    <asp:Button runat="server" CssClass="btn btn-danger" data-dismiss="modal" Text="Close" OnClick="CloseIndustryModal" />
+                    <asp:Button ID="BtnSubmit"  class="btn btn-primary" runat="server" Text="Submit" OnCLick="BtnSubmit_Click" autopostback="true" />
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="SuccessPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content rounded-0">
@@ -331,17 +336,20 @@
                     </div>
                     </div>
                     <div class="modal-footer">
-                        <button runat="server" type="button" class="btn btn-secondary" Text="Close" OnCLick="close_Modal2()" />
+                        <button runat="server" type="button" class="btn btn-success" Text="Close" OnCLick="close_Modal" />
                     </div>
                 </div>
             </div>
 </div>
-    <script>
-        function showModalFunction() {
-            jQuery('#AddIndustryModal').modal('show');
+    <script type="text/javascript">
+        function closeModal1() {
+            var modal = document.getElementById("AddIndustryModal");
+            modal.style.display = "none";
         }
-        function CloseModalFunction() {
-            jQuery('#SuccessPrompt').modal('show');
+        function close_Modal2() {
+            var modal = document.getElementById("SuccessPrompt");
+            modal.style.display = "none";
         }
     </script>
+    
 </asp:Content>

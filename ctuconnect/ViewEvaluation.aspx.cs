@@ -74,7 +74,7 @@ namespace ctuconnect
             using (conDB)
             {
                 conDB.Open();
-                string query = "SELECT *, STUDENT_ACCOUNT.firstName, STUDENT_ACCOUNT.lastName, EVALUATION.major, Evaluation.trainingPeriod, EVALUATION.totalScore, EVALUATION.gradeEquivalent, EVALUATION.describeStrength, EVALUATION.describeImprovement " +
+                string query = "SELECT *, STUDENT_ACCOUNT.firstName, STUDENT_ACCOUNT.lastName, EVALUATION.major, Evaluation.trainingPeriod, EVALUATION.totalScore, EVALUATION.gradeEquivalent, EVALUATION.describeStrength, EVALUATION.describeImprovement,EVALUATION.cooperatingAgency,EVALUATION.address, EVALUATION.dateEvaluated " +
                "FROM STUDENT_ACCOUNT " +
                "JOIN EVALUATION ON STUDENT_ACCOUNT.student_accID = EVALUATION.student_accID " +
                "WHERE STUDENT_ACCOUNT.student_accID = @student_accID and hired_id = @hired_id";
@@ -94,6 +94,9 @@ namespace ctuconnect
                     grade.Text = reader["gradeEquivalent"].ToString();
                     txtStrengths.Text = reader["describeStrength"].ToString();
                     txtImprovement.Text = reader["describeImprovement"].ToString();
+                    disp_industryName.Text = reader["cooperatingAgency"].ToString();
+                    disp_Indlocation.Text = reader["address"].ToString();
+                    disp_dateEval.Text = reader["dateEvaluated"].ToString();
                     Session["Productivity"] = reader["productivity"].ToString();
                     Session["Cooperation"] = reader["cooperation"].ToString();
                     Session["AbilityToFollow"] = reader["abilityTofollow"].ToString();
@@ -112,7 +115,7 @@ namespace ctuconnect
         protected void btnDownLoad_Click(object sender, EventArgs e)
         {
             // Get the HTML content from the ASPX page
-            string htmlContent = RenderControlToHtml(evaluationForm);
+            string htmlContent = GetHtmlFromControl(evaluationForm);
 
             // Create a MemoryStream to hold the PDF bytes
             using (MemoryStream memoryStream = new MemoryStream())
@@ -121,8 +124,8 @@ namespace ctuconnect
                 ConverterProperties converterProperties = new ConverterProperties();
                 HtmlConverter.ConvertToPdf(htmlContent, memoryStream, converterProperties);
 
-              /*  // Save the PDF file to the database
-                SavePdfToDatabase(memoryStream.ToArray());*/
+                /*  // Save the PDF file to the database
+                  SavePdfToDatabase(memoryStream.ToArray());*/
 
                 // Save the PDF file to disk or respond to the client
                 byte[] pdfBytes = memoryStream.ToArray();
@@ -136,18 +139,7 @@ namespace ctuconnect
         }
 
         // Helper method to render the ASPX control to HTML
-        private string RenderControlToHtml(Control control)
-        {
-            StringBuilder sb = new StringBuilder();
-            using (StringWriter sw = new StringWriter(sb))
-            {
-                using (HtmlTextWriter writer = new HtmlTextWriter(sw))
-                {
-                    control.RenderControl(writer);
-                }
-            }
-            return sb.ToString();
-        }
+
 
 
         private string GetHtmlFromControl(Control control)

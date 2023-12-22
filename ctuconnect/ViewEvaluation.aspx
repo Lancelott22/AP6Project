@@ -319,6 +319,12 @@
                 <asp:Label ID="disp_Indlocation" runat="server" Text=""></asp:Label>
             </td>
         </tr>
+        <tr>
+            <td>Date Evaluated:</td>
+            <td>
+                <asp:Label ID="disp_dateEval" runat="server" Text=""></asp:Label>
+            </td>
+        </tr>
     </table>
  </div>
  
