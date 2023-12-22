@@ -4,6 +4,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <style>
         
         .nav{
@@ -58,6 +62,17 @@
         }
 
         .student-details{
+            min-height: 180px;
+            background-color: #ffffff;
+            padding-left:2em;
+            min-width:97%;
+            float:left;
+            margin-left:10px;
+            padding-top:2em;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .student-interest{
             min-height: 180px;
             background-color: #ffffff;
             padding-left:2em;
@@ -275,6 +290,22 @@
 
         }
 
+        .txtbox-description{
+           border-radius: 10px;
+           width: 50%;
+           min-height:80px;
+           height:auto;
+           margin-bottom:2%;
+           border: 1px solid gray;
+           padding:10px; 
+           padding-left:20px;
+           padding-top:20px;
+        }
+
+        .edit-resume{
+            margin-left:100px;
+        }
+
         
     </style>
     <div class="container-fluid">
@@ -379,7 +410,8 @@
                                 </div>
                                 <div class="col-sm-7" style="float:right;">
                                     <asp:Button ID="btnViewResume" runat="server" class="btn btn-success" Text="View Resume" OnClick="btnViewResume_Click" Visible="false" />
-                                    <asp:Button ID="btnEditResume" runat="server" class="btn btn-danger" OnClick="btnEditResume_Click" Visible="false" />
+                                    <asp:Button ID="UpdateResume" runat="server" class="btn btn-danger" Text="Update Resume" OnClick="UpdateResume_Click" />
+                                  
                                 </div>
                             </div>
                             <br />                          
@@ -388,6 +420,24 @@
                     </div>
                     <div class="col-6">
                         <div class="student-details2">
+                             <div class="row">
+                                 <div class="col-sm-4">
+                                     School
+                                 </div>
+                                 <div class="col-sm-8" style="font-weight:bold; color:#881A30;">
+                                    <asp:Label ID="Label1" runat="server" Text="Cebu Technological University"></asp:Label>
+                                 </div>
+                             </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    Course
+                                </div>
+                                <div class="col-sm-8" style="font-weight:bold; color:#881A30;">
+                                   <asp:Label ID="disp_course" runat="server" Text=""></asp:Label>
+                                </div>
+                            </div>
+                            <br />
                             <div class="row">
                                 <div class="col-sm-4">
                                     Student Status
@@ -404,6 +454,30 @@
                             </div>
                             <br />
                             
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-6">
+                        <div class="student-interest">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                   <asp:Label ID="Label2" runat="server" Text="Interest/Hobby" CssClass="name"></asp:Label>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top:1em; padding-left:2em;">
+                                <div class="col-sm-8">
+                                    <asp:Label ID="lblinterestOrHobby" runat="server" Text=""></asp:Label>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12">
+                                   <asp:Button ID="btnEditInterest" class="btn btn-danger" runat="server" Text="Update" OnClick="btnEditInterest_Click"/>
+                                </div>
+                            </div>
+                            <br />
                         </div>
                     </div>
                 </div>
@@ -477,13 +551,6 @@
                 return false; // Prevent default behavior of the anchor tag
             });
         });
-        function openModal() {
-            document.getElementById("myModal").style.display = "block";
-        }
-
-        function closeEditModal() {
-            document.getElementById("myModal").style.display = "none";
-        }
 
         function openModal2() {
             document.getElementById("myModal2").style.display = "block";
@@ -492,37 +559,54 @@
         function closeEditModal2() {
             document.getElementById("myModal2").style.display = "none";
         }
+
+        function openModal(interestHooby) {
+            document.getElementById("myModal").style.display = "block";
+            document.getElementById('<%=txtInterestHobby.ClientID%>').value = interestHooby;
+        }
+
+        function closeEditModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        function openModal4() {
+            document.getElementById("myModal4").style.display = "block";
+        }
+        function closeEditModal4() {
+            document.getElementById("myModal4").style.display = "none";
+        }
+
+        function openModal3() {
+            document.getElementById("myModal3").style.display = "block";
+        }
+
+        function closeEditModal3() {
+            document.getElementById("myModal3").style.display = "none";
+        }
+
+        $(document).ready(function () {
+            $('.summernote1').summernote({
+                height: 300,
+                placeholder: 'Enter Interview Details...',
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font'],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+
+                    ['height', ['height']]
+
+                ]
+            });
+        });
     </script>
     <!-- Modal dialog -->
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="title">Edit Resume</h2>
-            </div>
-            <div class="modal-body">
-                <div class="row applicant-details">  
-                    <div class="col-sm-3">
-                        Resume
-                    </div>
-                    <div class="col-sm-9">
-                        <asp:FileUpload ID="resumeUpload" runat="server" Width="300px"/>
-                        <asp:Label ID="lblResumeFileName" runat="server"></asp:Label>
-
-                    </div>
-                </div>          
-            </div>           
-            <div class="modal-footer">
-                <asp:Button ID="btnClose" runat="server" Text="Close" OnClick="btnClose_Click" class="btn btn-danger"/>
-               <asp:Button ID="btnSaveResumeback" class="btn btn-success" runat="server" Text="Save"  OnClick="btnSaveResumeback_Click"/>
-            </div>
-       
-        </div>
-    </div>
 
     <div id="myModal2" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2 class="title">Edit Resume</h2>
+            <h2 class="title">Edit Status</h2>
         </div>
         <div class="modal-body">
             <div class="row applicant-details">  
@@ -550,4 +634,75 @@
    
     </div>
 </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="title">Hobby/Interest</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row applicant-details"> 
+                    <div class="col-sm-12">
+                        <asp:TextBox ID="txtInterestHobby" runat="server" Width="400px" Height="100px" ValidateRequestMode="Disabled" Rows="10" TextMode="MultiLine" CssClass="form-control txtbox-description summernote1" Placeholder="Add some interest/hobby"></asp:TextBox>
+                    </div>
+                </div>          
+            </div>           
+            <div class="modal-footer">
+                <asp:Button ID="btnCloseHobby" runat="server" Text="Close" OnClick="btnCloseHobby_Click" class="btn btn-danger"/>
+               <asp:Button ID="btnSaveHobby" class="btn btn-success" runat="server" Text="Save" OnClick="btnSaveHobby_Click"/>
+            </div>
+   
+        </div>
+    </div>
+
+
+    <!-- Modal dialog -->
+    <div id="myModal4" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="title">Resume</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row edit-resume">  
+                    <div class="col-sm-12">
+                        <asp:Button ID="btnUploadResume" class="btn btn-success" runat="server" Text="Upload Resume"  OnClick="btnUploadResume_Click"/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <asp:Button ID="btnEditResume" runat="server" class="btn btn-success" Text="Build Resume" OnClick="btnEditResume_Click"/>
+                    </div>
+                </div>          
+            </div>           
+            <div class="modal-footer">
+                <asp:Button ID="btnClose4" runat="server" Text="Close" OnClick="btnClose4_Click" class="btn btn-danger"/>
+  
+            </div>
+   
+        </div>
+    </div>
+
+    <!-- Modal dialog -->
+    <div id="myModal3" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="title">Edit Resume</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row applicant-details">  
+                    <div class="col-sm-3">
+                        Resume
+                    </div>
+                    <div class="col-sm-9">
+                        <asp:FileUpload ID="resumeUpload" runat="server" Width="300px"/>
+                        <asp:Label ID="lblResumeFileName" runat="server"></asp:Label>
+
+                    </div>
+                </div>          
+            </div>           
+            <div class="modal-footer">
+                <asp:Button ID="btnCloseResume" runat="server" Text="Close" OnClick="btnCloseResume_Click" class="btn btn-danger"/>
+               <asp:Button ID="btnSaveResumeback" class="btn btn-success" runat="server" Text="Save"  OnClick="btnSaveResumeback_Click"/>
+            </div>
+       
+        </div>
+    </div>
+
 </asp:Content>

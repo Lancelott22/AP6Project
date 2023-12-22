@@ -36,6 +36,10 @@ namespace ctuconnect
                 Response.Redirect("LoginStudent.aspx");
 
             }
+            else if (!IsPostBack && Session["StudentEmail"] != null && Session["STATUSorTYPE"].ToString() == "Alumni" && bool.Parse(Session["IsAnswered"].ToString()) == false)
+            {
+                Response.Redirect("Alumni_Employment_Form.aspx");
+            }
             if (!IsPostBack)
             {
 
@@ -452,7 +456,6 @@ namespace ctuconnect
                 return ms.ToArray();
             }
         }
-
 
         protected void btnEdit_Click(object sender, EventArgs e)
         {

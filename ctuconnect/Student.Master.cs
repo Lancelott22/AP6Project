@@ -38,6 +38,10 @@ namespace ctuconnect
             disableHeader();
             disableHeader1();
 
+            if(!IsPostBack && Session["StudentEmail"] != null && Session["STATUSorTYPE"].ToString() == "Alumni")
+            {
+                alumniForm.Visible = true;
+            }
         }
 
         private void displayStudentPic()

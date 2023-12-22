@@ -27,8 +27,13 @@ namespace ctuconnect
             {
                 PasswordErrorMessage.Visible = false;
                 NewpassErrorMessage.Visible = false;
+
+                string imagePath = "~/images/OJTCoordinatorProfile/" + Session["Coord_Picture"].ToString();
+                CoordinatorImage.ImageUrl = imagePath;
             }
         }
+
+
         protected void SignOut_Click(object sender, EventArgs e)
         {
             Session.Abandon();

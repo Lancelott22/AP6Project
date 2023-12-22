@@ -359,6 +359,7 @@
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between" >
                     <ul class="navbar-nav flex-grow-1 navbar-right" id="navvbar" runat="server">
+                        <li class="nav-item"><a class="nav-link" id="alumniForm" visible="false" runat="server" href="~/ALUMNI_EMPLOYMENT_FORM">Employment Form</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Home">Home</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/MyJobApplication">Application</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/JobPortal">Job Portal</a></li>

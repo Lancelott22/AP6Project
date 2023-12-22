@@ -4,7 +4,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <style>
         .box {
             min-width: 250px;
@@ -441,7 +442,24 @@
 
                     <div class="col-7 d-flex flex-column ">
                         <br />
-                        <asp:TextBox ID="txtsearchOrder" CssClass="form-control searchbox" runat="server" placeholder="Search job title or keyword"></asp:TextBox>
+                        <div class="row">
+
+                            <div class="col input-group mb-3">
+                                <asp:TextBox ID="txtsearchJob" CssClass="form-control searchbox" runat="server" placeholder="Search job title"></asp:TextBox>
+                                <div class="input-group-append">
+                                    <asp:Button class="btn btn-primary" runat="server" ID="SearchJob" OnClick="SearchJob_Click" Text="Search" />
+                                </div>
+                            </div>
+                            <div class="col ">
+                                <asp:DropDownList runat="server" CssClass="form-control" ID="JobTypeSort" AutoPostBack="true" OnSelectedIndexChanged="JobType_SelectedIndexChanged">
+                                    <asp:ListItem Value="0" Disabled="true">Select Type</asp:ListItem>
+                                    <asp:ListItem Value="All" >All</asp:ListItem>
+                                    <asp:ListItem Value="Internship" >Internship</asp:ListItem>
+                                    <asp:ListItem Value="Fulltime" >Fulltime</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+
+                        </div>
                         <br />
                         <label id="totalJob" runat="server"></label>
                         <div class="jobs">
