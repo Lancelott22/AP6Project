@@ -8,8 +8,12 @@ using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
+using System.Net.Mail;
+using System.Net;
+using System.Web.Services.Description;
+
 namespace ctuconnect
-{
+{ 
     public partial class Coordinator_UploadCSV : System.Web.UI.Page
     {
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
@@ -24,7 +28,10 @@ namespace ctuconnect
             {
                 string imagePath = "~/images/OJTCoordinatorProfile/" + Session["Coord_Picture"].ToString();
                 CoordinatorImage.ImageUrl = imagePath;
+                BindDepartment();
+                BindSemCode();
             }
+           
         }
         protected void SignOut_Click(object sender, EventArgs e)
         {
@@ -57,19 +64,39 @@ namespace ctuconnect
                 new DataColumn("studentStatus",typeof(string)),
                 new DataColumn("email",typeof(string)),
                 new DataColumn("password",typeof(string)),
-                new DataColumn("dateRegistered", typeof(DateTime)),
+                new DataColumn("personalEmail", typeof(string)),
+                new DataColumn("semCode", typeof(int)),
                 new DataColumn("department_ID", typeof(int)),
-                new DataColumn("course_ID", typeof(int)),
-                new DataColumn("personalEmail", typeof(string))
+                new DataColumn("course_ID", typeof(int))               
                 });
 
-                    string csvData = File.ReadAllText(studentCSVFilePath);
+                    /*string csvData = File.ReadAllText(studentCSVFilePath);
                     foreach (string row in csvData.Split('\n'))
                     {
                         if (!string.IsNullOrEmpty(row))
                         {
                             dt.Rows.Add();
                             int i = 0;
+                            foreach (string cell in row.Split(','))
+                            {
+                                dt.Rows[dt.Rows.Count - 1][i] = cell;
+                                i++;
+                            }
+                        }
+                    }*/
+
+                    string csvData = File.ReadAllText(studentCSVFilePath);
+                    string[] rows = csvData.Split('\n');
+                   
+                    for (int rowIndex = 1; rowIndex < rows.Length; rowIndex++)
+                    {
+                        string row = rows[rowIndex];
+
+                        if (!string.IsNullOrEmpty(row))
+                        {
+                            dt.Rows.Add();
+                            int i = 0;
+
                             foreach (string cell in row.Split(','))
                             {
                                 dt.Rows[dt.Rows.Count - 1][i] = cell;
@@ -91,17 +118,27 @@ namespace ctuconnect
                         sqlBulkCopy.ColumnMappings.Add("studentStatus", "studentStatus");
                         sqlBulkCopy.ColumnMappings.Add("email", "email");
                         sqlBulkCopy.ColumnMappings.Add("password", "password");
-                        sqlBulkCopy.ColumnMappings.Add("dateRegistered", "dateRegistered");
+                        sqlBulkCopy.ColumnMappings.Add("personalEmail", "personalEmail");
+                        sqlBulkCopy.ColumnMappings.Add("semCode", "semCode");
                         sqlBulkCopy.ColumnMappings.Add("department_ID", "department_ID");
                         sqlBulkCopy.ColumnMappings.Add("course_ID", "course_ID");
-                        sqlBulkCopy.ColumnMappings.Add("personalEmail", "personalEmail");
+                        
                         conDB.Open();
                         sqlBulkCopy.WriteToServer(dt);
                         sqlBulkCopy.Close();
                         conDB.Close();
                         Response.Write("<script>alert('The file has been uploaded successfully.');document.location='Coordinator_UploadCSV.aspx';</script>");
+                                               
                     }
-
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        string studentEmail = row["personalEmail"].ToString();
+                        string studentPassword = row["password"].ToString();
+                        string Name = row["firstName"].ToString() + " " + row["lastName"].ToString();
+                        string username = row["email"].ToString();
+                        // Send email to each student
+                        SendEmail(studentEmail, studentPassword, username, Name);
+                    }
                 }
                 else
                 {
@@ -114,10 +151,49 @@ namespace ctuconnect
             }
         }
 
-        protected void UploadGraduate_Click(object sender, EventArgs e)
+        private void SendEmail(string studentEmail, string password,string username, string studentName)
         {
             try
             {
+                string sendToEmail = studentEmail;
+                string sendFrom = "ctuconnect00@gmail.com";
+                string sendMessage = $"Hello {studentName}, <br/><br/>" +
+                    $"Your email is: {username} <br/>" +
+                    $"Your password is: {password}<br/>" +
+                    $"<br/><br/><h4>Note: This is a confidential information. Please do not share this message to anyone.</h4>";
+                string subject = "New Created Account";
+                using (MailMessage mm = new MailMessage())
+                {
+                    mm.From = new MailAddress(sendFrom, "CTU Connect");
+                    mm.To.Add(sendToEmail);
+                    mm.Subject = subject;
+                    mm.Body = sendMessage;
+                    mm.IsBodyHtml = true;
+                    mm.ReplyToList.Add(new MailAddress(sendFrom));
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.EnableSsl = true;
+                        NetworkCredential NetworkCred = new NetworkCredential();
+                        NetworkCred.UserName = "ctuconnect00@gmail.com";
+                        NetworkCred.Password = "diwvlfhaanwwfsid";
+                        smtp.UseDefaultCredentials = true;
+                        smtp.Credentials = NetworkCred;
+                        smtp.Port = 587;
+                        smtp.Send(mm);
+                    }
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='Coordinator_UploadCSV.aspx'</script>");
+            }
+        }
+
+        protected void UploadGraduate_Click(object sender, EventArgs e)
+        {
+           /* try
+            {*/
                 HttpPostedFile graduateCSVFile = graduateCSV.PostedFile;
                 string graduateCSVFileName = Path.GetFileName(graduateCSVFile.FileName);
                 string graduateCSVFileEx = Path.GetExtension(graduateCSVFileName).ToLower();
@@ -136,12 +212,11 @@ namespace ctuconnect
                 new DataColumn("lastName", typeof(string)),
                 new DataColumn("department",typeof(string)),
                 new DataColumn("course",typeof(string)),
-                new DataColumn("yearGraduated",typeof(string)),
-
+                new DataColumn("yearGraduated",typeof(string))
                 });
 
 
-                    string csvData = File.ReadAllText(graduateCSVFilePath);
+                    /*string csvData = File.ReadAllText(graduateCSVFilePath);
                     foreach (string row in csvData.Split('\n'))
                     {
                         if (!string.IsNullOrEmpty(row))
@@ -154,10 +229,29 @@ namespace ctuconnect
                                 i++;
                             }
                         }
+                    }*/
+
+                string csvData = File.ReadAllText(graduateCSVFilePath);
+                string[] rows = csvData.Split('\n');
+
+                for (int rowIndex = 1; rowIndex < rows.Length; rowIndex++)
+                {
+                    string row = rows[rowIndex];
+
+                    if (!string.IsNullOrEmpty(row))
+                    {
+                        dt1.Rows.Add();
+                        int i = 0;
+
+                        foreach (string cell in row.Split(','))
+                        {
+                            dt1.Rows[dt1.Rows.Count - 1][i] = cell;
+                            i++;
+                        }
                     }
+                }
 
-
-                    using (SqlBulkCopy sqlBulkCopy1 = new SqlBulkCopy(conDB))
+                using (SqlBulkCopy sqlBulkCopy1 = new SqlBulkCopy(conDB))
                     {
                         //Set the database table name.
                         sqlBulkCopy1.DestinationTableName = "dbo.GRADUATES_TABLE";
@@ -180,11 +274,129 @@ namespace ctuconnect
                 {
                     Response.Write("<script>alert('The file extension of the uploaded file is not acceptable! Must be .csv file.');document.location='Coordinator_UploadCSV.aspx';</script>");
                 }
-            }
-            catch
+           /* }
+            catch 
             {
                 Response.Write("<script>alert('The csv is not in correct format. The number of columns is not consistent or the column names are missing or invalid. Or the StudentID is already in the list or duplicated.');document.location='Coordinator_UploadCSV.aspx';</script>");
+            }*/
+        }
+
+        protected void AddIntern_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAddIntern();", true);
+            addError.Visible= false;
+            StudentID.Value = string.Empty;
+            FirstName.Value = string.Empty;
+            MidInitial.Value = string.Empty;
+            LastName.Value = string.Empty;
+            StudEmail.Value = string.Empty;
+            StudPassword.Value = string.Empty;
+            StudPersonalEmail.Value = string.Empty;
+            Sem_Code.SelectedValue = "0";
+            DepartmentID.SelectedValue = "0";
+            CourseID.SelectedValue = "0";
+            CourseID.Items.Clear();
+            CourseID.Items.Insert(0, new ListItem("Select Course", "0"));
+        }
+
+        protected void Save_Command(object sender, CommandEventArgs e)
+        {
+            if (string.IsNullOrEmpty(StudentID.Value) || string.IsNullOrEmpty(FirstName.Value) || string.IsNullOrEmpty(MidInitial.Value) || string.IsNullOrEmpty(LastName.Value)
+                || string.IsNullOrEmpty(StudEmail.Value) || string.IsNullOrEmpty(StudPassword.Value) || string.IsNullOrEmpty(StudPersonalEmail.Value) || Sem_Code.SelectedValue.Equals("0")
+                || DepartmentID.SelectedValue.Equals("0") || CourseID.SelectedValue.Equals("0"))
+            {
+                addError.Visible = true;
+                ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Popup1", "$('.modal-backdrop').removeClass('modal-backdrop');", true);
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAddIntern();", true);
+                return;
             }
+            else
+            {
+                int studentID = int.Parse(StudentID.Value);
+                string firstName = FirstName.Value;
+                string midInit = MidInitial.Value;
+                string lastName = LastName.Value;
+                string studentStats = StudentStatus.Value;
+                string username = StudEmail.Value;
+                string password = StudPassword.Value;
+                string personalEmail = StudPersonalEmail.Value;
+                string semCode = Sem_Code.SelectedValue;
+                string departmentID = DepartmentID.SelectedValue;
+                string courseID = CourseID.SelectedValue;
+
+                conDB.Open();
+                SqlCommand cmd = new SqlCommand("INSERT INTO STUDENT_ACCOUNT (studentId, firstName, midInitials, lastName, studentStatus, email, password, personalEmail, semCode, department_ID, course_ID) " +
+                  "Values(@studentId, @firstName, @midInitials, @lastName, @studentStatus,  @email, @password, @personalEmail,@semCode, @department_ID, @course_ID)", conDB);
+
+                cmd.Parameters.AddWithValue("@studentId", studentID);
+                cmd.Parameters.AddWithValue("@firstName", firstName);
+                cmd.Parameters.AddWithValue("@midInitials", midInit);
+                cmd.Parameters.AddWithValue("@lastName", lastName);
+                cmd.Parameters.AddWithValue("@studentStatus", studentStats);
+                cmd.Parameters.AddWithValue("@email", username);
+                cmd.Parameters.AddWithValue("@password", password);
+                cmd.Parameters.AddWithValue("@personalEmail", personalEmail);
+                cmd.Parameters.AddWithValue("@semCode", semCode);
+                cmd.Parameters.AddWithValue("@department_ID", departmentID);
+                cmd.Parameters.AddWithValue("@course_ID", courseID);
+                int ctr = cmd.ExecuteNonQuery();
+                if (ctr > 0)
+                {
+                    string studentEmail = personalEmail;
+                    string studentPassword = password;
+                    string Name = firstName + " " + lastName;
+                    string usernameEmail = username;
+                    // Send email to each student
+                    SendEmail(studentEmail, studentPassword, usernameEmail, Name);
+                    Response.Write("<script>alert('Student account has been saved successfully.');document.location='Coordinator_UploadCSV.aspx';</script>");
+                }
+                else
+                {
+                    Response.Write("<script>alert('Student account has not been saved. Please try again later!');document.location='Coordinator_UploadCSV.aspx';</script>");
+                }
+                conDB.Close();
+            }
+        }
+
+        void BindDepartment()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DEPARTMENT", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            DepartmentID.DataSource = ds;
+            DepartmentID.DataValueField = "department_ID";
+            DepartmentID.DataTextField = "departmentName";
+            DepartmentID.DataBind();
+            DepartmentID.Items.Insert(0, new ListItem("Select Department", "0"));
+            CourseID.Items.Clear();
+            CourseID.Items.Insert(0, new ListItem("Select Course", "0"));
+        }
+        void BindSemCode()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT *, CONCAT(semDescription,' (',semCode,')') as sem_Description FROM ACADEMIC_YEAR", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            Sem_Code.DataSource = ds;
+            Sem_Code.DataValueField = "semCode";
+            Sem_Code.DataTextField = "sem_Description";
+            Sem_Code.DataBind();
+            Sem_Code.Items.Insert(0, new ListItem("Select Semester Code", "0"));
+        }
+        protected void DepartmentID_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM PROGRAM WHERE department_ID = '" + DepartmentID.SelectedValue + "'", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);           
+            CourseID.DataSource = ds;
+            CourseID.DataValueField = "course_ID";
+            CourseID.DataTextField = "course";
+            CourseID.DataBind();
+            CourseID.Items.Insert(0, new ListItem("Select Course", "0"));
+            ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Popup1", "$('.modal-backdrop').removeClass('modal-backdrop');", true);
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAddIntern();", true);
         }
     }
 }

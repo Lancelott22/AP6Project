@@ -114,7 +114,7 @@ namespace ctuconnect
             if (reader.Read())
             {
                 string applicantStatus = reader["applicantStatus"].ToString();
-                if (applicantStatus == "Approved" || applicantStatus == "Rejected")
+                if (applicantStatus == "Hired" || applicantStatus == "Rejected")
                 {
                     conDB.Close();
                     return true;
@@ -177,10 +177,10 @@ namespace ctuconnect
                 applicantStatus.Visible = true;
                 if (checkApplicantStatus(applicantID, jobId) == true)
                 {
-                    if (getApplicantStatus(applicantID, jobId) == "Approved")
+                    if (getApplicantStatus(applicantID, jobId) == "Hired")
                     {
-                        statusApplication.InnerText = "Approved";
-                        applicationStatusCheck.Text = "Congratulations! Your application has been approved.";
+                        statusApplication.InnerText = "Hired";
+                        applicationStatusCheck.Text = "Congratulations! Your application has been approved. You're hired!";
                         statusApplication.Visible = true;
                         statusApplication.Attributes.Add("class", "statusStyle");
                         requirementDetails.Visible = true;

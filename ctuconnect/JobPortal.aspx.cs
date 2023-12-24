@@ -55,7 +55,7 @@ namespace ctuconnect
                 resumeIcon.Attributes.Add("title", "No Resume");
                 resumeIcon.Attributes.Add("class", "fa fa-address-card-o m-1 text-danger");
             }
-            
+           
         }
         void JobBind()
         {
@@ -131,7 +131,7 @@ namespace ctuconnect
                         AlreadyApplied.Visible = false;
                     }
                     ApplyForJob.Value = e.CommandName.ToString();
-                    Name.Value = Session["FNAME"].ToString() + " " + Session["LNAME"].ToString();
+                    Name.Value = Session["STUD_FNAME"].ToString() + " " + Session["STUD_LNAME"].ToString();
                     Resume.Value = getResume();
                     applyJobId.Text = jobId.ToString();
                     applyIndustryId.Text = getApplyIndustryId(jobId).ToString();
@@ -204,10 +204,10 @@ namespace ctuconnect
                 jobtype = job_Type.Value;
             }
             string position = ApplyForJob.Value.ToString();
-            string applicantFName = Session["FNAME"].ToString();
-            string applicantLName = Session["LNAME"].ToString();
+            string applicantFName = Session["STUD_FNAME"].ToString();
+            string applicantLName = Session["STUD_LNAME"].ToString();
             DateTime dateApplied = DateTime.Now;
-            string resume = Session["ResumeFile"].ToString();
+            string resume = getResume();
             int jobID = int.Parse(applyJobId.Text.ToString());
             int industry_accId = int.Parse(applyIndustryId.Text.ToString());
             string endorsementLetterFile = "";
@@ -461,9 +461,23 @@ namespace ctuconnect
             {
                 profileImage.ImageUrl = "~/images/StudentProfiles/defaultprofile.jpg";
             }
+           
+            int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select firstName, lastName from STUDENT_ACCOUNT where student_accID = @student_accID", conDB);
+            cmd.Parameters.AddWithValue("@student_accID", student_accId);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                Session["STUD_FNAME"] = reader["firstName"];
+                Session["STUD_LNAME"] = reader["lastName"];
+            }
+            conDB.Close();
+            reader.Close();
 
-            StudentName.Text = Session["FNAME"].ToString() + " " + Session["LNAME"].ToString();
+            StudentName.Text = Session["STUD_FNAME"].ToString() + " " + Session["STUD_LNAME"].ToString();
             StudentID.Text = Session["STUDENT_ID"].ToString();
+
         }
         private bool isCurrentlyHired()
         {
@@ -680,7 +694,7 @@ namespace ctuconnect
         {
             int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("SELECT DISTINCT skills FROM RESUME WHERE EXISTS (SELECT 1 FROM HIRING WHERE CHARINDEX(skills, jobQualifications) > 0 AND jobID = @jobID AND student_accID = student_accID);", conDB);
+            SqlCommand cmd = new SqlCommand("SELECT DISTINCT skills FROM RESUME WHERE student_accID = @student_accID AND EXISTS (SELECT 1 FROM HIRING WHERE CHARINDEX(skills, jobQualifications) > 0 AND jobID = @jobID);", conDB);
             cmd.Parameters.AddWithValue("@student_accID", student_accId);
             cmd.Parameters.AddWithValue("@jobID", jobID);
             SqlDataReader reader = cmd.ExecuteReader();
