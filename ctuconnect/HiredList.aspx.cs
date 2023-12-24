@@ -109,7 +109,7 @@ namespace ctuconnect
             using (var db = new SqlConnection(conDB))
             {
                 
-                string query = "SELECT student_accID, lastName, firstName, dateStarted, dateEnded, position, resumeFile FROM HIRED_LIST WHERE jobType = 'fulltime' AND  industry_accID = '" + industry_accID + "' ORDER BY id DESC";
+                string query = "SELECT student_accID, lastName, firstName, CONVERT(VARCHAR(10), HIRED_LIST.dateStarted, 120) AS dateStarted, CONVERT(VARCHAR(10), HIRED_LIST.dateEnded, 120) AS dateEnded, position, resumeFile FROM HIRED_LIST WHERE jobType = 'fulltime' AND  industry_accID = '" + industry_accID + "' ORDER BY id DESC";
                 SqlCommand cmd = new SqlCommand(query, db);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
@@ -759,7 +759,7 @@ namespace ctuconnect
 
             foreach (ListViewItem item in listView1.Items)
             {
-                CheckBox chkSelect = (CheckBox)item.FindControl("chkSelect");
+                CheckBox chkSelect = (CheckBox)item.FindControl("chkSelect2");
                 if (chkSelect.Checked)
                 {
                     Label lblemployeeID = (Label)item.FindControl("lblemployeeID");
@@ -783,7 +783,7 @@ namespace ctuconnect
                                 cmd.Parameters.AddWithValue("@accounttype", type);
                                 cmd.ExecuteNonQuery();
                             }
-                            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessSingleEditPrompt').modal('show');", true);
+                            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('show');", true);
 
                         }
                     }

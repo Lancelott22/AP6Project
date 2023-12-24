@@ -50,7 +50,10 @@ namespace ctuconnect
                     LoadProfilePicture(reader["studentPicture"].ToString());
                     string resume = reader["resumeFile"].ToString();
                     disp_address.Text = reader["address"].ToString();
-                    disp_email.Text = reader["email"].ToString();
+                    disp_email.Text = reader["personalEmail"].ToString();
+                    disp_course.Text = reader["course"].ToString();
+                    disp_contact.Text = reader["contactNumber"].ToString();
+                    lblinterestOrHobby.Text = HttpUtility.HtmlDecode(reader["interestOrHobby"].ToString());
 
                 }
                 reader.Close();

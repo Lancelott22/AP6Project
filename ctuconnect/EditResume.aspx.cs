@@ -12,6 +12,12 @@ using System.Configuration;
 using System.Xml.Linq;
 using System.Net.NetworkInformation;
 using System.Globalization;
+using iTextSharp.tool.xml;
+using System.Text;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Image = iTextSharp.text.Image;
+using iTextSharp.text.html.simpleparser;
 
 namespace ctuconnect
 {
@@ -23,6 +29,10 @@ namespace ctuconnect
             if (!IsPostBack && Session["StudentEmail"] == null)
             {
                 Response.Redirect("LoginStudent.aspx");
+            }
+            else if (!IsPostBack && Session["StudentEmail"] != null && Session["STATUSorTYPE"].ToString() == "Alumni" && bool.Parse(Session["IsAnswered"].ToString()) == false)
+            {
+                Response.Redirect("Alumni_Employment_Form.aspx");
             }
             if (!IsPostBack)
             {
@@ -139,7 +149,12 @@ namespace ctuconnect
 
             if (Convert.ToDateTime(txtbdate.Text) >= DateTime.Now.Date)
             {
-                Response.Write("<script>alert('Resume Updated!'); history.back();</script>");
+                Response.Write("<script>alert('Invalid input!'); history.back();</script>");
+                return;
+            }
+            else if ((DateTime.Now.Date - Convert.ToDateTime(txtbdate.Text)).TotalDays < 365.25 * 20)
+            {
+                Response.Write("<script>alert('Invalid input'); history.back();</script>");
                 return;
             }
 
@@ -292,7 +307,7 @@ namespace ctuconnect
                     var ctr = cmd.ExecuteNonQuery();
                     if (ctr > 0)
                         Response.Write("<script>alert('Resume Updated!');document.location='Resume.aspx'</script>");
-
+                    SaveResume();
 
                 }
             }
@@ -612,13 +627,290 @@ namespace ctuconnect
                 labelbdate.Visible = true;
                 labelbdate.Text = "The selected birth date must be a past date.";
             }
-
+            else if ((DateTime.Now - Convert.ToDateTime(txtbdate.Text)).TotalDays < 365.25 * 20)
+            {
+                labelbdate.Visible = true;
+                labelbdate.Text = "Your age must be at least 20 years old.";
+            }
             else
             {
-                labelbdate.Visible = false;
+                labelbdate.Visible = false; 
             }
             
             
+        }
+
+        protected void SaveResume()
+        {
+            int studentaccID = Convert.ToInt32(Session["STUDENT_ACC_ID"].ToString());
+
+            // Generate the resume content as a PDF.
+            byte[] resumePDF = GenerateResumePDF(studentaccID);
+
+            string fullname = txtfname.Text + "_" + txtlname.Text;
+            // Save the PDF file to the resume folder
+            string fileName = $"{fullname.Replace(" ", "_")}_resume.pdf";
+            string filePath = Path.Combine(Server.MapPath("~/images/resume"), fileName);
+            File.WriteAllBytes(filePath, resumePDF);
+
+            // Update the database with the new file path
+            UpdateResumeFilePath(studentaccID, fileName);
+
+        }
+
+        private byte[] GenerateResumePDF(int studentaccID)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                //Document document = new Document(PageSize.A4, 50, 50, 25, 25);
+                Document document = new Document(PageSize.LETTER, 50, 50, 25, 25);
+                PdfWriter writer = PdfWriter.GetInstance(document, ms);
+                document.Open();
+
+                // Initialize a StringBuilder to store the HTML content
+                StringBuilder htmlContent = new StringBuilder();
+
+                htmlContent.Append(@"
+                <html>
+                <head>
+                    <style>                      
+                        .personal-info{ padding-left:7em; display: flex;
+                                flex-wrap: wrap; }
+                        .resume-section {
+                                padding-left:7em;
+                                display: flex;
+                                flex-wrap: wrap;
+                            }
+                            .personal-three {
+                                width: 40%; 
+                                padding-left:110px;
+                                font-weight: normal;
+                            }
+                            .personal-nine {
+                                width: 60%; 
+                                padding-left:7em;
+                                font-weight: normal;
+                               
+                            }
+
+                            .education-three {
+                                width: 20%; 
+                                padding-left:110px;
+                                font-weight: normal;
+                            }
+                            .education-nine {
+                                width: 80%; 
+                                padding-left:35px;
+                                font-weight: normal;
+                               
+                            }
+                    </style>  
+                    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet' />
+                </head>
+                
+                <body>");
+
+                string profilePicturePath = imgProfilePicture.ImageUrl; // Get the profile picture URL from the ASP.NET Image control
+                if (!string.IsNullOrEmpty(profilePicturePath))
+                {
+                    Image profileImage = Image.GetInstance(Server.MapPath(profilePicturePath)); // Map the image path
+                    profileImage.ScaleAbsolute(90, 90); // Set image size
+                    document.Add(profileImage); // Add the image to the PDF
+                }
+
+                htmlContent.Append(@"<hr />");
+
+                htmlContent.Append(@"
+                    
+                            <b>PERSONAL INFORMATION</b>
+                            <br />
+                            <table class='personal-info'>
+                                <tr>
+                                    <th class='personal-three'>
+                                        Name:
+                                    </th>
+                                    <th class='personal-nine'>"
+                                        + txtfname.Text + " " + txtlname.Text +
+                                    @"</th>
+                                </tr>
+                                <tr>
+                                    <th class='personal-three'>
+                                        Contact Number:
+                                    </th>
+                                    <th class='personal-nine'>"
+                                        + txtContact.Text +
+                                    @"</th>
+                                </tr>
+                                <tr>
+                                    <th class='personal-three'>
+                                        Email:
+                                    </th>
+                                    <th class='personal-nine'>"
+                                        + txtEmail.Text +
+                                    @"</th>
+                                </tr>
+                                <tr>
+                                    <th class='personal-three'>
+                                        Birthdate:
+                                    </th>
+                                    <th class='personal-nine'>"
+                                        + txtbdate.Text +
+                                    @"</th>
+                                </tr>
+                                <tr>
+                                    <th class='personal-three'>
+                                        Gender:
+                                    </th>
+                                    <th class='personal-nine'>"
+                                        + drpgender.Text +
+                                    @"</th>
+                                </tr>
+                                <tr>
+                                    <th class='personal-three'>
+                                        Address:
+                                    </th>
+                                    <th class='personal-nine'>"
+                                        + txtAddress.Text +
+                                    @"</th>
+                                </tr>
+                                <tr>
+                                    <th class='personal-three'>
+                                        Job Level:
+                                    </th>
+                                    <th class='personal-nine'>"
+                                        + drpjoblevel.Text +
+                                    @"</th>
+                                </tr>
+                            </table>
+                                    
+                    ");
+
+                htmlContent.Append(@"<br />");
+                htmlContent.Append(@"<hr />");
+
+                htmlContent.Append(@"<b>SKILLS</b><br />");
+                foreach (RepeaterItem item in rptSkills.Items)
+                {
+                    TextBox txtSkills = (TextBox)item.FindControl("txtSkills");
+                    htmlContent.Append(@"
+                    <div class='row'>
+                        <div class='col-12 d-flex flex-column'>
+                            <asp:Repeater ID='rptSkills' runat='server'>
+                                <ItemTemplate>
+                                    <div class='row resume-section'>                                        
+                                            <div class='col-3 d-flex flex-column'>"
+                                               + txtSkills.Text +
+                                            @"</div>      
+                                    </div>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
+                    </div>
+                    
+                    ");
+                }
+
+                htmlContent.Append(@"<br />");
+                htmlContent.Append(@"<hr />");
+
+                htmlContent.Append(@"<b>EDUCATION</b><br /><br />");
+                foreach (RepeaterItem item in rptEducation.Items)
+                {
+                    //Label lblEdDegree = (Label)item.FindControl("lblDegree");
+                    //Label lblEdNameOfSchool = (Label)item.FindControl("lblSchool");
+                    //Label lblEdGraduationDate = (Label)item.FindControl("lblGrad");
+                    TextBox txtDegree = (TextBox)item.FindControl("txtDegree");
+                    TextBox txtSchool = (TextBox)item.FindControl("txtSchool");
+                    TextBox txtGradDate = (TextBox)item.FindControl("txtGradDate");
+
+                    htmlContent.Append(@"
+                    < div class='row'>
+                        <div class='col-12'>
+                            <asp:Repeater ID='rptEducation' runat='server'>
+                                <ItemTemplate>
+                                    <table>
+                                        <tr class='row resume-section'>                                             
+                                            <th class='education-three'>
+                                                <b>" + txtDegree.Text + @"</b>
+                                            </th>
+                                            <th class='education-nine'>
+                                                <b>" + txtSchool.Text + @"</b>
+                                            </th>
+                                        </tr>
+                                        <tr class='row resume-section'> 
+                                            <th class='education-three'>
+                                                        
+                                            </th>
+                                            <th class='education-nine'>"
+                                                + txtGradDate.Text +
+                                                @"<br />
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
+                    </div>
+                    
+                    ");
+
+                }
+                htmlContent.Append(@"<br />");
+                htmlContent.Append(@"<hr />");
+
+                htmlContent.Append(@"<b>CERTIFICATES OR AWARDS</b><br />");
+                foreach (RepeaterItem item in rptCertificate.Items)
+                {
+                    //Label lblCertificate = (Label)item.FindControl("lblCertificates");
+                    TextBox txtCertificates = (TextBox)item.FindControl("txtCertificates");
+                    htmlContent.Append(@"
+                    <div class='row'>
+                        <div class='col-12 d-flex flex-column'>
+                            <asp:Repeater ID='rptCertificates' runat='server'>
+                                <ItemTemplate>
+                                    <div class='row resume-section'>
+                                        <div class='col-12 d-flex flex-column'>"
+                                            + txtCertificates.Text +
+                                        @"</div>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
+                    </div>
+                    ");
+                }
+                htmlContent.Append(@"<br />");
+                // Close the HTML and body tags
+                htmlContent.Append(@"
+                </body>
+                </html>");
+
+                // Use XMLWorker to parse and add the HTML content to the PDF
+                XMLWorkerHelper.GetInstance().ParseXHtml(writer, document, new StringReader(htmlContent.ToString()));
+
+                document.Close();
+                return ms.ToArray();
+            }
+        }
+
+        private void UpdateResumeFilePath(int studentAcctID, string fileName)
+        {
+            using (var db = new SqlConnection(connDB))
+            {
+                db.Open();
+
+                // Update the resumeFile column in the STUDENT_ACCOUNT table
+                string query = "UPDATE STUDENT_ACCOUNT SET resumeFile = @resumeFile WHERE student_accID = @studentAccID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@resumeFile", fileName);
+                cmd.Parameters.AddWithValue("@studentAccID", studentAcctID);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    // Resume file path updated successfully
+                }
+            }
         }
     }
 }

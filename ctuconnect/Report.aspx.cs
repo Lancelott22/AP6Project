@@ -21,7 +21,11 @@ namespace ctuconnect
                 Response.Redirect("LoginStudent.aspx");
 
             }
-            if(!IsPostBack)
+            else if (!IsPostBack && Session["StudentEmail"] != null && Session["STATUSorTYPE"].ToString() == "Alumni" && bool.Parse(Session["IsAnswered"].ToString()) == false)
+            {
+                Response.Redirect("Alumni_Employment_Form.aspx");
+            }
+            if (!IsPostBack)
             {
                 BindIndustry();
             }

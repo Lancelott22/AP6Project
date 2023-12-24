@@ -144,7 +144,7 @@
                     <div class="col-sm-9">
                         <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
-                            <asp:TextBox ID="txtbdate" runat="server" TextMode="Date" CssClass="txtbox" Width="400px" Height="30px" AutoPostBack="True" OnTextChanged="txtbdate_TextChanged"></asp:TextBox>
+                            <asp:TextBox ID="txtbdate" runat="server" TextMode="Date" CssClass="txtbox" Width="400px" Height="30px" AutoPostBack="true" OnTextChanged="txtbdate_TextChanged"></asp:TextBox>
                             <asp:Label ID="labelbdate" runat="server" Visible="false" Font-Size="Medium" ForeColor="Red"></asp:Label>
                             </ContentTemplate>
                         </asp:UpdatePanel>
