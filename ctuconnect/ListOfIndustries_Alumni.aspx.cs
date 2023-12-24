@@ -92,7 +92,7 @@ namespace ctuconnect
 
         protected void BtnAddIndustry_Click(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showModalFunction();", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#AddIndustryModal').modal('show');", true);
         }
 
         protected void BtnSubmit_Click(object sender, EventArgs e)
@@ -142,7 +142,8 @@ namespace ctuconnect
                         conDB.Close();
 
                     }
-                    Response.Write("<script>alert('Created Successfully');document.location='ListIndustries_Alumni.aspx'</script>");
+                    ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('show');", true);
+                    //Response.Write("<script>alert('Created Successfully');document.location='ListIndustries_Alumni.aspx'</script>");
                 }
             }
             else
@@ -157,6 +158,14 @@ namespace ctuconnect
             Session.Clear();
             Session.RemoveAll();
             Response.Redirect("Login.aspx");
+        }
+        protected void CloseIndustryModal(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#AddIndustryModal').modal('hide');document.location='ListOfIndustry_Alumni.aspx'", true);
+        }
+        protected void close_Modal(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('hide');document.location='ListOfIndustry_Alumni.aspx'", true);
         }
     }
 }

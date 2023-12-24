@@ -78,13 +78,13 @@
             <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center">
                 <!-- Industry Name -->
                 <div class="col-sm-6 d-flex flex-column justify-content-center">      
-                    Industry Name*<br />
+                    Industry Name<span style="color:red;">*</span><br />
                     <asp:TextBox ID="txtindustry" CssClass="txtbox" runat="server" Width="500px" Height="30px"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" forecolor="#F7941F" ControlToValidate="txtindustry" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
                 </div>
                 <!-- Location -->
                 <div class="col-sm-6 d-flex flex-column justify-content-center ">
-                    Location*<br />
+                    Location<span style="color:red;">*</span><br />
                     <asp:TextBox ID="txtlocation" CssClass="txtbox" runat="server" Width="500px" Height="30px"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" forecolor="#F7941F" ControlToValidate="txtlocation" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
                 </div>
@@ -93,14 +93,14 @@
             <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center">
                 <!-- Email -->
                 <div class="col-sm-6 d-flex flex-column justify-content-center">      
-                    Email*<br />
+                    Email<span style="color:red;">*</span><br />
                     <asp:TextBox ID="txtemail" CssClass="txtbox" runat="server" Width="500px" Height="30px"></asp:TextBox>
                     <asp:RegularExpressionValidator ID="chkemail" runat="server" ControlToValidate="txtemail" ErrorMessage="Invalid Email" Display="Dynamic" CssClass="text-danger" ValidationExpression="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"></asp:RegularExpressionValidator>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" forecolor="#F7941F" ControlToValidate="txtemail" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
                 </div>
                 <!-- MOA -->
                 <div class="col-sm-6 d-flex flex-column justify-content-center ">
-                    Attach Memorandum of Understanding*<br />
+                    Attach Memorandum of Understanding<span style="color:red;">*</span><br />
                     <asp:FileUpload ID="mouUpload" runat="server" Width="300px"/>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator4" forecolor="#F7941F" ControlToValidate="mouUpload" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
                     <asp:Label ID="StatusLabel" runat="server" CssClass="text-danger"></asp:Label>
@@ -110,7 +110,7 @@
             <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center">
                 <!-- Password -->
                 <div class="col-sm-6 d-flex flex-column justify-content-center">      
-                    Password*<br />
+                    Password<span style="color:red;">*</span><br />
                     <asp:TextBox ID="txtpwd" CssClass="txtbox" runat="server" Width="500px" Height="30px" TextMode="Password"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" forecolor="#F7941F" ControlToValidate="txtpwd" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
 
@@ -119,7 +119,7 @@
                 <!-- Profile Picture -->
 
                 <div class="col-sm-6 d-flex flex-column justify-content-center ">
-                    Attach Profile Picture*<br />
+                    Attach Profile Picture<span style="color:red;">*</span><br />
                     <asp:FileUpload ID="profileUpload" runat="server" Width="300px"/>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator7" forecolor="#F7941F" ControlToValidate="profileUpload" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
                 </div>
@@ -128,7 +128,7 @@
             <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center">
                 <!-- Confirm Password -->
                 <div class="col-sm-6 d-flex flex-column justify-content-center">
-                    Confirm Password*<br />
+                    Confirm Password<span style="color:red;">*</span><br />
                     <asp:TextBox ID="txtcpwd" CssClass="txtbox" runat="server" Width="500px" Height="30px" TextMode="Password"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator6" forecolor="#F7941F" ControlToValidate="txtcpwd" runat="server" ErrorMessage="this field is required!"></asp:RequiredFieldValidator>
                     <asp:CompareValidator ID="cvcpwd" runat="server" ErrorMessage="Password did not match!" ControlToCompare="txtpwd" ControlToValidate="txtcpwd"></asp:CompareValidator>
