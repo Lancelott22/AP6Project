@@ -192,8 +192,8 @@ namespace ctuconnect
 
         protected void UploadGraduate_Click(object sender, EventArgs e)
         {
-           /* try
-            {*/
+           try
+            {
                 HttpPostedFile graduateCSVFile = graduateCSV.PostedFile;
                 string graduateCSVFileName = Path.GetFileName(graduateCSVFile.FileName);
                 string graduateCSVFileEx = Path.GetExtension(graduateCSVFileName).ToLower();
@@ -274,17 +274,18 @@ namespace ctuconnect
                 {
                     Response.Write("<script>alert('The file extension of the uploaded file is not acceptable! Must be .csv file.');document.location='Coordinator_UploadCSV.aspx';</script>");
                 }
-           /* }
+           }
             catch 
             {
                 Response.Write("<script>alert('The csv is not in correct format. The number of columns is not consistent or the column names are missing or invalid. Or the StudentID is already in the list or duplicated.');document.location='Coordinator_UploadCSV.aspx';</script>");
-            }*/
+            }
         }
 
         protected void AddIntern_Click(object sender, EventArgs e)
         {
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAddIntern();", true);
-            addError.Visible= false;
+            addError.Visible = false;
+            studentIdError.Visible = false;
             StudentID.Value = string.Empty;
             FirstName.Value = string.Empty;
             MidInitial.Value = string.Empty;
@@ -293,71 +294,103 @@ namespace ctuconnect
             StudPassword.Value = string.Empty;
             StudPersonalEmail.Value = string.Empty;
             Sem_Code.SelectedValue = "0";
-            DepartmentID.SelectedValue = "0";
+            DepartmentID.SelectedValue = Session["DEPART"].ToString();                      
+            BindCourse();
             CourseID.SelectedValue = "0";
-            CourseID.Items.Clear();
-            CourseID.Items.Insert(0, new ListItem("Select Course", "0"));
         }
 
         protected void Save_Command(object sender, CommandEventArgs e)
         {
-            if (string.IsNullOrEmpty(StudentID.Value) || string.IsNullOrEmpty(FirstName.Value) || string.IsNullOrEmpty(MidInitial.Value) || string.IsNullOrEmpty(LastName.Value)
-                || string.IsNullOrEmpty(StudEmail.Value) || string.IsNullOrEmpty(StudPassword.Value) || string.IsNullOrEmpty(StudPersonalEmail.Value) || Sem_Code.SelectedValue.Equals("0")
-                || DepartmentID.SelectedValue.Equals("0") || CourseID.SelectedValue.Equals("0"))
+            try
             {
-                addError.Visible = true;
-                ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Popup1", "$('.modal-backdrop').removeClass('modal-backdrop');", true);
-                ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAddIntern();", true);
-                return;
-            }
-            else
-            {
-                int studentID = int.Parse(StudentID.Value);
-                string firstName = FirstName.Value;
-                string midInit = MidInitial.Value;
-                string lastName = LastName.Value;
-                string studentStats = StudentStatus.Value;
-                string username = StudEmail.Value;
-                string password = StudPassword.Value;
-                string personalEmail = StudPersonalEmail.Value;
-                string semCode = Sem_Code.SelectedValue;
-                string departmentID = DepartmentID.SelectedValue;
-                string courseID = CourseID.SelectedValue;
 
-                conDB.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO STUDENT_ACCOUNT (studentId, firstName, midInitials, lastName, studentStatus, email, password, personalEmail, semCode, department_ID, course_ID) " +
-                  "Values(@studentId, @firstName, @midInitials, @lastName, @studentStatus,  @email, @password, @personalEmail,@semCode, @department_ID, @course_ID)", conDB);
-
-                cmd.Parameters.AddWithValue("@studentId", studentID);
-                cmd.Parameters.AddWithValue("@firstName", firstName);
-                cmd.Parameters.AddWithValue("@midInitials", midInit);
-                cmd.Parameters.AddWithValue("@lastName", lastName);
-                cmd.Parameters.AddWithValue("@studentStatus", studentStats);
-                cmd.Parameters.AddWithValue("@email", username);
-                cmd.Parameters.AddWithValue("@password", password);
-                cmd.Parameters.AddWithValue("@personalEmail", personalEmail);
-                cmd.Parameters.AddWithValue("@semCode", semCode);
-                cmd.Parameters.AddWithValue("@department_ID", departmentID);
-                cmd.Parameters.AddWithValue("@course_ID", courseID);
-                int ctr = cmd.ExecuteNonQuery();
-                if (ctr > 0)
+                if (string.IsNullOrEmpty(StudentID.Value) || string.IsNullOrEmpty(FirstName.Value) || string.IsNullOrEmpty(MidInitial.Value) || string.IsNullOrEmpty(LastName.Value)
+                    || string.IsNullOrEmpty(StudEmail.Value) || string.IsNullOrEmpty(StudPassword.Value) || string.IsNullOrEmpty(StudPersonalEmail.Value) || Sem_Code.SelectedValue.Equals("0")
+                    || DepartmentID.SelectedValue.Equals("0") || CourseID.SelectedValue.Equals("0"))
                 {
-                    string studentEmail = personalEmail;
-                    string studentPassword = password;
-                    string Name = firstName + " " + lastName;
-                    string usernameEmail = username;
-                    // Send email to each student
-                    SendEmail(studentEmail, studentPassword, usernameEmail, Name);
-                    Response.Write("<script>alert('Student account has been saved successfully.');document.location='Coordinator_UploadCSV.aspx';</script>");
+                    addError.Visible = true;
+                    studentIdError.Visible = false;
+                    ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Popup1", "$('.modal-backdrop').removeClass('modal-backdrop');", true);
+                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAddIntern();", true);
+                    return;
+                }
+                else if(checkStudentID(int.Parse(StudentID.Value)))
+                {
+                    studentIdError.Visible = true;
+                    addError.Visible = false;
+                    ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Popup1", "$('.modal-backdrop').removeClass('modal-backdrop');", true);
+                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAddIntern();", true);
+                    return;
                 }
                 else
                 {
-                    Response.Write("<script>alert('Student account has not been saved. Please try again later!');document.location='Coordinator_UploadCSV.aspx';</script>");
+                    int studentID = int.Parse(StudentID.Value);
+                    string firstName = FirstName.Value;
+                    string midInit = MidInitial.Value;
+                    string lastName = LastName.Value;
+                    string studentStats = StudentStatus.Value;
+                    string username = StudEmail.Value;
+                    string password = StudPassword.Value;
+                    string personalEmail = StudPersonalEmail.Value;
+                    string semCode = Sem_Code.SelectedValue;
+                    string departmentID = DepartmentID.SelectedValue;
+                    string courseID = CourseID.SelectedValue;
+
+                    conDB.Open();
+                    SqlCommand cmd = new SqlCommand("INSERT INTO STUDENT_ACCOUNT (studentId, firstName, midInitials, lastName, studentStatus, email, password, personalEmail, semCode, department_ID, course_ID) " +
+                      "Values(@studentId, @firstName, @midInitials, @lastName, @studentStatus,  @email, @password, @personalEmail,@semCode, @department_ID, @course_ID)", conDB);
+
+                    cmd.Parameters.AddWithValue("@studentId", studentID);
+                    cmd.Parameters.AddWithValue("@firstName", firstName);
+                    cmd.Parameters.AddWithValue("@midInitials", midInit);
+                    cmd.Parameters.AddWithValue("@lastName", lastName);
+                    cmd.Parameters.AddWithValue("@studentStatus", studentStats);
+                    cmd.Parameters.AddWithValue("@email", username);
+                    cmd.Parameters.AddWithValue("@password", password);
+                    cmd.Parameters.AddWithValue("@personalEmail", personalEmail);
+                    cmd.Parameters.AddWithValue("@semCode", semCode);
+                    cmd.Parameters.AddWithValue("@department_ID", departmentID);
+                    cmd.Parameters.AddWithValue("@course_ID", courseID);
+                    int ctr = cmd.ExecuteNonQuery();
+                    if (ctr > 0)
+                    {
+                        string studentEmail = personalEmail;
+                        string studentPassword = password;
+                        string Name = firstName + " " + lastName;
+                        string usernameEmail = username;
+                        // Send email to each student
+                        SendEmail(studentEmail, studentPassword, usernameEmail, Name);
+                        Response.Write("<script>alert('Student account has been saved successfully.');document.location='Coordinator_UploadCSV.aspx';</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script>alert('Student account has not been saved. Please try again later!');document.location='Coordinator_UploadCSV.aspx';</script>");
+                    }
+                    conDB.Close();
                 }
-                conDB.Close();
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='Coordinator_UploadCSV.aspx'</script>");
             }
         }
-
+        bool checkStudentID(int studentID)
+        {
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("Select studentId from STUDENT_ACCOUNT Where studentId = @studentId", conDB);
+            cmd.Parameters.AddWithValue("@studentId", studentID);
+            
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                reader.Close();
+                conDB.Close();
+                return true;
+            }
+            reader.Close();
+            conDB.Close();
+            return false;
+        }
         void BindDepartment()
         {
             SqlCommand cmd = new SqlCommand("SELECT * FROM DEPARTMENT", conDB);
@@ -368,9 +401,7 @@ namespace ctuconnect
             DepartmentID.DataValueField = "department_ID";
             DepartmentID.DataTextField = "departmentName";
             DepartmentID.DataBind();
-            DepartmentID.Items.Insert(0, new ListItem("Select Department", "0"));
-            CourseID.Items.Clear();
-            CourseID.Items.Insert(0, new ListItem("Select Course", "0"));
+            DepartmentID.Items.Insert(0, new ListItem("Select Department", "0"));          
         }
         void BindSemCode()
         {
@@ -386,17 +417,22 @@ namespace ctuconnect
         }
         protected void DepartmentID_SelectedIndexChanged(object sender, EventArgs e)
         {
+            BindCourse();
+            ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Popup1", "$('.modal-backdrop').removeClass('modal-backdrop');", true);
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAddIntern();", true);
+        }
+
+        void BindCourse()
+        {
             SqlCommand cmd = new SqlCommand("SELECT * FROM PROGRAM WHERE department_ID = '" + DepartmentID.SelectedValue + "'", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
-            da.Fill(ds);           
+            da.Fill(ds);
             CourseID.DataSource = ds;
             CourseID.DataValueField = "course_ID";
             CourseID.DataTextField = "course";
             CourseID.DataBind();
             CourseID.Items.Insert(0, new ListItem("Select Course", "0"));
-            ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Popup1", "$('.modal-backdrop').removeClass('modal-backdrop');", true);
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAddIntern();", true);
         }
     }
 }

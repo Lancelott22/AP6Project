@@ -242,7 +242,7 @@
                     <div>
                         <h3>Add Intern</h3>
 
-                        <asp:Button Text="Add Intern Account" CssClass="btn btn-info" ID="AddIntern" OnClick="AddIntern_Click" runat="server" />
+                        <asp:Button Text="Add Intern Account" CssClass="btn btn-info" ID="AddIntern" OnClick="AddIntern_Click" runat="server"/>
                         <h3 class="my-1 text-danger">or</h3>
                         <h3 class="my-2">Upload CSV for Intern</h3>
                         <asp:FileUpload ID="studentCSV" runat="server" />
@@ -273,6 +273,7 @@
                         <label for="StudentID" class="col-sm-3 col-form-label">Student ID:</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="StudentID" runat="server" placeholder="Student ID">
+                            <span id="studentIdError" runat="server" visible="false" class="text-danger">Student ID already exists</span>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -315,6 +316,9 @@
                         <label for="StudPersonalEmail" class="col-sm-3 col-form-label">Personal Email:</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="StudPersonalEmail" runat="server" placeholder="Personal Email">
+                            <asp:RegularExpressionValidator runat="server" ID="EmailValidator" ControlToValidate="StudPersonalEmail" 
+                                ErrorMessage="Please enter a valid Gmail address." ValidationExpression="^[a-zA-Z0-9._%+-]+@gmail\.com$" 
+                                Display="Dynamic" CssClass="text-danger"></asp:RegularExpressionValidator>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -349,6 +353,7 @@
         </div>
     </div>
     <script type="text/javascript">
+        jQuery.noConflict();
         function showAddIntern() {
             $('#AddInternModal').modal('show');
         }

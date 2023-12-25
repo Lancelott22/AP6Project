@@ -105,6 +105,15 @@ namespace ctuconnect
         protected global::System.Web.UI.HtmlControls.HtmlInputText StudentID;
 
         /// <summary>
+        /// studentIdError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl studentIdError;
+
+        /// <summary>
         /// FirstName control.
         /// </summary>
         /// <remarks>
@@ -166,6 +175,15 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText StudPersonalEmail;
+
+        /// <summary>
+        /// EmailValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailValidator;
 
         /// <summary>
         /// Sem_Code control.
