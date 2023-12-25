@@ -135,35 +135,44 @@ namespace ctuconnect
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
-            string fname = txtfname.Text;
-            string lname = txtlname.Text;
-            string contactNumber = txtContact.Text;
-            string email = txtEmail.Text;
-
-            string gender = drpgender.Text;
-            string address = txtAddress.Text;
-            string jobLevel = drpjoblevel.Text;
-
-            string birthdate = txtbdate.Text;
-
-            if (Convert.ToDateTime(txtbdate.Text) >= DateTime.Now.Date)
+            try
             {
-                Response.Write("<script>alert('Invalid input!'); history.back();</script>");
-                return;
+
+
+                int studentAcctID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
+                string fname = txtfname.Text;
+                string lname = txtlname.Text;
+                string contactNumber = txtContact.Text;
+                string email = txtEmail.Text;
+
+                string gender = drpgender.Text;
+                string address = txtAddress.Text;
+                string jobLevel = drpjoblevel.Text;
+
+                string birthdate = txtbdate.Text;
+
+                if (Convert.ToDateTime(txtbdate.Text) >= DateTime.Now.Date)
+                {
+                    Response.Write("<script>alert('Invalid input!'); history.back();</script>");
+                    return;
+                }
+                else if ((DateTime.Now.Date - Convert.ToDateTime(txtbdate.Text)).TotalDays < 365.25 * 20)
+                {
+                    Response.Write("<script>alert('Invalid input'); history.back();</script>");
+                    return;
+                }
+
+                UpdateResume(studentAcctID, lname, fname, contactNumber, email, birthdate, gender, address, jobLevel);
+
+                // Update resume information in the database
+                SaveEducation(studentAcctID, GetEducationTableFromRepeater());
+                SaveSkills(studentAcctID, GetSkillsTableFromRepeater());
+                SaveCertificate(studentAcctID, GetCertificateTableFromRepeater());
             }
-            else if ((DateTime.Now.Date - Convert.ToDateTime(txtbdate.Text)).TotalDays < 365.25 * 20)
+            catch
             {
-                Response.Write("<script>alert('Invalid input'); history.back();</script>");
-                return;
+                Response.Write("<script>alert('Invalid input!')</script>");
             }
-
-            UpdateResume(studentAcctID, lname, fname, contactNumber, email, birthdate, gender, address, jobLevel);
-
-            // Update resume information in the database
-            SaveEducation(studentAcctID, GetEducationTableFromRepeater());
-            SaveSkills(studentAcctID, GetSkillsTableFromRepeater());
-            SaveCertificate(studentAcctID, GetCertificateTableFromRepeater());
                  
 
         }
