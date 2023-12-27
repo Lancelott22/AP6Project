@@ -30,7 +30,7 @@ namespace ctuconnect
                      ShowByCourse();
                  }*/
             }
-           
+
         }
         void BindInternList()
         {
@@ -42,7 +42,7 @@ namespace ctuconnect
             InternListView.DataBind();
             if (InternListView.Items.Count == 0)
             {
-              /*  ListViewPager.Visible = false;*/
+                /*  ListViewPager.Visible = false;*/
             }
         }
         void SearchByStudentNameOrID(string student)
@@ -99,7 +99,7 @@ namespace ctuconnect
             ShowByCourse();
             /*ViewState["selectedCourse"] = course.SelectedValue;*/
         }
-        
+
         void BindIndustry()
         {
             SqlCommand cmd = new SqlCommand("SELECT * FROM INDUSTRY_ACCOUNT", conDB);

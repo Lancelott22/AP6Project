@@ -78,15 +78,6 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.LinkButton myLinkButton2;
 
         /// <summary>
-        /// academicYear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList academicYear;
-
-        /// <summary>
         /// btnEdit control.
         /// </summary>
         /// <remarks>
@@ -283,15 +274,6 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label dateErrorlabel;
-
-        /// <summary>
-        /// dateErrorlabel2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label dateErrorlabel2;
 
         /// <summary>
         /// lbldate control.
@@ -636,6 +618,24 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label employeePositionlbl;
 
         /// <summary>
+        /// Label28 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label28;
+
+        /// <summary>
+        /// employeeHiredlbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label employeeHiredlbl;
+
+        /// <summary>
         /// Label26 control.
         /// </summary>
         /// <remarks>
@@ -697,6 +697,24 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label38;
+
+        /// <summary>
+        /// Label31 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label31;
+
+        /// <summary>
+        /// reasonOfEnd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList reasonOfEnd;
 
         /// <summary>
         /// Button4 control.

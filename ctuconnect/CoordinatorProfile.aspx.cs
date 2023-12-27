@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -85,12 +86,13 @@ namespace ctuconnect
 
             using (var db = new SqlConnection(conDB))
             {
-                string query = "SELECT STUDENT_ACCOUNT.student_accID ,STUDENT_ACCOUNT.studentId, STUDENT_ACCOUNT.lastName, STUDENT_ACCOUNT.firstName, STUDENT_ACCOUNT.midInitials, " +
-                                "PROGRAM.course, STUDENT_ACCOUNT.contactNumber, STUDENT_ACCOUNT.email,STUDENT_ACCOUNT.isHired, HIRED_LIST.id, HIRED_LIST.renderedHours, HIRED_LIST.evaluationRequest " +
-                "FROM STUDENT_ACCOUNT  LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
+                string query = "SELECT  DISTINCT STUDENT_ACCOUNT.student_accID ,STUDENT_ACCOUNT.studentId, STUDENT_ACCOUNT.lastName, STUDENT_ACCOUNT.firstName, STUDENT_ACCOUNT.midInitials, " +
+                                "PROGRAM.course_ID, PROGRAM.course, STUDENT_ACCOUNT.semCode, ACADEMIC_YEAR.semdescription, STUDENT_ACCOUNT.contactNumber, STUDENT_ACCOUNT.email,STUDENT_ACCOUNT.isHired, HIRED_LIST.id, HIRED_LIST.renderedHours, HIRED_LIST.evaluationRequest " +
+                "FROM STUDENT_ACCOUNT LEFT JOIN ACADEMIC_YEAR ON STUDENT_ACCOUNT.semCode = ACADEMIC_YEAR.semCode " +
+                "LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
                 "LEFT JOIN HIRED_LIST  ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID " +
-                "lEFT JOIN  COORDINATOR_ACCOUNT ON STUDENT_ACCOUNT.department_ID = COORDINATOR_ACCOUNT.department_ID " +
-                "WHERE COORDINATOR_ACCOUNT.coordinator_accID = @CoordinatorID  AND STUDENT_ACCOUNT.isGraduated = 0  ";
+                "LEFT JOIN  COORDINATOR_ACCOUNT ON STUDENT_ACCOUNT.department_ID = COORDINATOR_ACCOUNT.department_ID " +
+                "WHERE COORDINATOR_ACCOUNT.coordinator_accID = @CoordinatorID AND (HIRED_LIST.jobType = 'internship' OR HIRED_LIST.jobType IS NULL)";
 
 
                 SqlCommand cmd = new SqlCommand(query, db);
@@ -112,18 +114,52 @@ namespace ctuconnect
             Response.Redirect("LoginOJTCoordinator.aspx");
         }
 
-        protected void Evaluate_BtnClick(object sender, EventArgs e)
-        {
-            // Find the button that triggered the event
-            Button EvaluationBtn = (Button)sender;
 
-            // Check if the button's text is "Requested"
-            if (EvaluationBtn.Text == "Requested")
+
+        protected void ddlSemester_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ShowListView();
+        }
+        void ShowListView()
+        {
+            int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
+            int selectedSemesterValue = Convert.ToInt32(ddlSemester.SelectedValue);
+
+            using (var db = new SqlConnection(conDB))
             {
-                // Redirect to another ASPX page
-                Response.Redirect("Home.aspx");
+                SqlCommand cmd = new SqlCommand("SELECT * FROM STUDENT_ACCOUNT " +
+                    "LEFT JOIN ACADEMIC_YEAR ON STUDENT_ACCOUNT.semCode = ACADEMIC_YEAR.semCode " +
+                    "LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
+                    "LEFT JOIN HIRED_LIST  ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID " +
+                    "LEFT JOIN COORDINATOR_ACCOUNT ON STUDENT_ACCOUNT.department_ID = COORDINATOR_ACCOUNT.department_ID " +
+                    "WHERE COORDINATOR_ACCOUNT.coordinator_accID = @CoordinatorID " +
+                    "AND (HIRED_LIST.jobType = 'internship' OR HIRED_LIST.jobType IS NULL)", db);
+
+                cmd.Parameters.AddWithValue("@CoordinatorID", coordinatorID);
+
+                // Optional: Filter by semester if a specific semester is selected
+                if (selectedSemesterValue != 0)
+                {
+                    cmd.CommandText += " AND STUDENT_ACCOUNT.semCode = @SemesterValue";
+                    cmd.Parameters.AddWithValue("@SemesterValue", selectedSemesterValue);
+                }
+
+                // Optional: Filter by course if a specific course is selected
+                if (programList.SelectedValue != "0")
+                {
+                    cmd.CommandText += " AND STUDENT_ACCOUNT.course_ID = @CourseID";
+                    cmd.Parameters.AddWithValue("@CourseID", programList.SelectedValue);
+                }
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable ds = new DataTable();
+                da.Fill(ds);
+                internListView.DataSource = ds;
+                internListView.DataBind();
             }
         }
+
+
         protected void SaveRefer_Click(object sender, EventArgs e)
         {
             List<string> studentIds = ViewState["SelectedStudentIds"] as List<string>;
@@ -181,6 +217,10 @@ namespace ctuconnect
                 EvaluationBtn.Enabled = false;
             }
         }
+        protected void TraceIntern_Command(object sender, CommandEventArgs e)
+        {
+            Response.Redirect("TraceStudent.aspx?student_accID=" + e.CommandArgument.ToString());
+        }
         protected string GetButtonCssClass(object evaluationRequest)
         {
             
@@ -198,20 +238,24 @@ namespace ctuconnect
         }
         protected void SearchInternInfo(object sender, EventArgs e)
         {
+            int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
             string student = searchInput.Text;
             using (var db = new SqlConnection(conDB))
             {
                 SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
+                    "LEFT JOIN ACADEMIC_YEAR ON STUDENT_ACCOUNT.semCode = ACADEMIC_YEAR.semCode " +
                     "LEFT JOIN HIRED_LIST  ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID " +
                     "lEFT JOIN  COORDINATOR_ACCOUNT ON STUDENT_ACCOUNT.department_ID = COORDINATOR_ACCOUNT.department_ID " +
-                    "WHERE CAST(STUDENT_ACCOUNT.student_accID as varchar) = '" + student + "' " +
-                    "STUDENT_ACCOUNT.firstName LIKE '%' + @studentinfo + '%' " +
+                    "WHERE COORDINATOR_ACCOUNT.coordinator_accID = @CoordinatorID AND (HIRED_LIST.jobType = 'internship' OR HIRED_LIST.jobType IS NULL) " +
+                    "or CAST(STUDENT_ACCOUNT.student_accID as varchar) = '" + student + "' " +
+                    "or STUDENT_ACCOUNT.firstName LIKE '%' + @studentinfo + '%' " +
                 "or STUDENT_ACCOUNT.lastName LIKE '%' + @studentinfo + '%' " +
                 "or STUDENT_ACCOUNT.midInitials LIKE '%' + @studentinfo + '%' " +
                 "or PROGRAM.course LIKE '%' + @studentinfo + '%' " +
                 "or STUDENT_ACCOUNT.contactNumber LIKE '%' + @studentinfo + '%' " +
                 "or STUDENT_ACCOUNT.email LIKE '%' + @studentinfo + '%'", db);
                 cmd.Parameters.AddWithValue("@studentinfo", student);
+                cmd.Parameters.AddWithValue("@CoordinatorID", coordinatorID);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable ds = new DataTable();
                 da.Fill(ds);
@@ -386,31 +430,46 @@ namespace ctuconnect
             /* ViewState["SelectedProgram"] = studentprogram;*/
             if (checkedCount > 1)
             {
-                bool anyIsNotHired = isHiredList.Any(isHired => !isHired);
-                if (anyIsNotHired)
+                bool allAreNotHired = isHiredList.All(isHired => !isHired);
+
+                if (allAreNotHired)
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "openModalFailedEdit();", true);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript5", "openFailedEditAllNotHired();", true);
                 }
                 else
                 {
-                    string existingname = string.Join(",", selectedInternNames);
-                    ViewState["SelectedStudentIds"] = selectedStudentIds;
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", $"openModalMultipleEdit('{existingname}');", true);
+                    bool anyIsNotHired = isHiredList.Any(isHired => !isHired);
+                    if (anyIsNotHired)
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", "openModalFailedEdit();", true);
+                    }
+                    else
+                    {
+                        string existingname = string.Join(",", selectedInternNames);
+                        ViewState["SelectedStudentIds"] = selectedStudentIds;
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript1", $"openModalMultipleEdit('{existingname}');", true);
+                    }
                 }
             }
             else if (checkedCount == 0)
             {
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "showModal", "$('#NoSelected').modal('show');", true);
             }
-            else {
-                string existingname = string.Join(" ", selectedInternNames);
-                string existingprogram = string.Join(" ", selectedProgram);
-                string existingcontact = string.Join(" ", selectedContactNumber);
-                string existingemail = string.Join(" ", selectedEmail);
-                string existingrenderedhours = string.Join(" ", selectedHoursRendered);
-                // Multiple checkboxes are checked, display myModal2
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openEditModal('{existingname}','{existingprogram}','{existingcontact}','{existingemail}','{existingrenderedhours}');", true);
-
+            else if (checkedCount == 1) {
+                bool isHired = isHiredList.First();
+                if (isHired)
+                {
+                    string existingname = string.Join(" ", selectedInternNames);
+                    string existingprogram = string.Join(" ", selectedProgram);
+                    string existingcontact = string.Join(" ", selectedContactNumber);
+                    string existingemail = string.Join(" ", selectedEmail);
+                    string existingrenderedhours = string.Join(" ", selectedHoursRendered);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openEditModal('{existingname}','{existingprogram}','{existingcontact}','{existingemail}','{existingrenderedhours}');", true);
+                }
+                else
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript5", "openFailedEditAllNotHired();", true);
+                }
             }
 
         }
@@ -706,70 +765,74 @@ namespace ctuconnect
 
             }
         }
-/*        void BindStatus()
-        {
-            int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
-            string query = "SELECT isHired FROM STUDENT_ACCOUNT " +
-                "lEFT JOIN  COORDINATOR_ACCOUNT ON STUDENT_ACCOUNT.department_ID = COORDINATOR_ACCOUNT.department_ID " +
-                        "WHERE COORDINATOR_ACCOUNT.coordinator_accID = @CoordinatorID  ";
-            using (var db = new SqlConnection(conDB))
-            {
-                SqlCommand cmd = new SqlCommand(query, db);
-                cmd.Parameters.AddWithValue("@CoordinatorID", coordinatorID);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable ds = new DataTable();
-                da.Fill(ds);
+        /*        void BindStatus()
+                {
+                    int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
+                    string query = "SELECT isHired FROM STUDENT_ACCOUNT " +
+                        "lEFT JOIN  COORDINATOR_ACCOUNT ON STUDENT_ACCOUNT.department_ID = COORDINATOR_ACCOUNT.department_ID " +
+                                "WHERE COORDINATOR_ACCOUNT.coordinator_accID = @CoordinatorID  ";
+                    using (var db = new SqlConnection(conDB))
+                    {
+                        SqlCommand cmd = new SqlCommand(query, db);
+                        cmd.Parameters.AddWithValue("@CoordinatorID", coordinatorID);
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable ds = new DataTable();
+                        da.Fill(ds);
 
-                ds.Columns["isHired"].DataType = typeof(bool);
-                statusList.DataSource = ds;
-                statusList.DataValueField = "isHired";
-                statusList.DataTextField = "isHired";  // Display the boolean values as text
-                statusList.DataBind();
-                statusList.Items.Insert(0, new ListItem("Select Status", "0"));
+                        ds.Columns["isHired"].DataType = typeof(bool);
+                        statusList.DataSource = ds;
+                        statusList.DataValueField = "isHired";
+                        statusList.DataTextField = "isHired";  // Display the boolean values as text
+                        statusList.DataBind();
+                        statusList.Items.Insert(0, new ListItem("Select Status", "0"));
 
-            }
-        }*/
+                    }
+                }*/
         protected void program_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ShowByCourse();
-                
+            ShowListView();
+
         }
         void ShowByCourse()
         {
+            int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
             using (var db = new SqlConnection(conDB))
             {
-                SqlCommand cmd = new SqlCommand("select * FROM STUDENT_ACCOUNT  LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
+                SqlCommand cmd = new SqlCommand("select * FROM STUDENT_ACCOUNT " +
+                    "LEFT JOIN ACADEMIC_YEAR ON STUDENT_ACCOUNT.semCode = ACADEMIC_YEAR.semCode " +
+                    "LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
                 "LEFT JOIN HIRED_LIST  ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID " +
                 "lEFT JOIN  COORDINATOR_ACCOUNT ON STUDENT_ACCOUNT.department_ID = COORDINATOR_ACCOUNT.department_ID " +
-                " WHERE STUDENT_ACCOUNT.course_ID = '" + programList.SelectedValue + "' ", db);
-                
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable ds = new DataTable();
-                da.Fill(ds);
-                internListView.DataSource = ds;
-                internListView.DataBind();
-            }
-        }
-/*        protected void status_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ShowByStatus();
+                " WHERE COORDINATOR_ACCOUNT.coordinator_accID = @CoordinatorID AND (HIRED_LIST.jobType = 'internship' OR HIRED_LIST.jobType IS NULL) AND STUDENT_ACCOUNT.course_ID = '" + programList.SelectedValue + "' ", db);
 
-        }
-        void ShowByStatus()
-        {
-            using (var db = new SqlConnection(conDB))
-            {
-                SqlCommand cmd = new SqlCommand("select * FROM STUDENT_ACCOUNT  LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
-                "LEFT JOIN HIRED_LIST  ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID " +
-                "lEFT JOIN  COORDINATOR_ACCOUNT ON STUDENT_ACCOUNT.department_ID = COORDINATOR_ACCOUNT.department_ID " +
-                " WHERE STUDENT_ACCOUNT.isHired = @IsHired", db);
-                cmd.Parameters.AddWithValue("@IsHired", Convert.ToBoolean(statusList.SelectedValue));
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
+                cmd.Parameters.AddWithValue("@CoordinatorID", coordinatorID);
                 DataTable ds = new DataTable();
                 da.Fill(ds);
                 internListView.DataSource = ds;
                 internListView.DataBind();
             }
-        }*/
+        }
+        /*        protected void status_SelectedIndexChanged(object sender, EventArgs e)
+                {
+                    ShowByStatus();
+
+                }
+                void ShowByStatus()
+                {
+                    using (var db = new SqlConnection(conDB))
+                    {
+                        SqlCommand cmd = new SqlCommand("select * FROM STUDENT_ACCOUNT  LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
+                        "LEFT JOIN HIRED_LIST  ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID " +
+                        "lEFT JOIN  COORDINATOR_ACCOUNT ON STUDENT_ACCOUNT.department_ID = COORDINATOR_ACCOUNT.department_ID " +
+                        " WHERE STUDENT_ACCOUNT.isHired = @IsHired", db);
+                        cmd.Parameters.AddWithValue("@IsHired", Convert.ToBoolean(statusList.SelectedValue));
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable ds = new DataTable();
+                        da.Fill(ds);
+                        internListView.DataSource = ds;
+                        internListView.DataBind();
+                    }
+                }*/
     }
     }
