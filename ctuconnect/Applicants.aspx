@@ -32,19 +32,20 @@
             }
         }
 
-        .profile-container img{
-            display:block;
-            width:60%;
-            margin-left:auto;
-            margin-right:auto;
+        .profile-container img {
+            display: block;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
+        .profile-container p {
+            display: block;
+            text-align: center;
+            font-size: 19px;
+            margin-top: 7%;
         }
-        .profile-container p{
-             display:block;
-             text-align:center;
-             font-size: 19px;
-            margin-top:7%;
-        }
+
         .sidemenu-container{
             font-family: 'Poppins', sans-serif;
             width:253px;
@@ -309,22 +310,23 @@
                 margin-top: 5px; /* Add some top margin */
                 box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
              }
-                     .MatchBadge {
-    border: solid 1px #4287f5;
-    border-radius: 5px;
-    height: 20px;
-    width: 80px;
-    background: #4287f5;
-    padding: 2px;
-    color: #ffffff;
-    font-size: 11px;
-    position: absolute;
-    top: 10px;
-    left: 18px;
-    box-shadow: 0px 0px 9px -1px #4287f5;
-    text-align: center;
-    z-index:1;
-}   
+             
+             .MatchBadge {
+                border: solid 1px #4287f5;
+                border-radius: 5px;
+                height: 20px;
+                width: 80px;
+                background: #4287f5;
+                padding: 2px;
+                color: #ffffff;
+                font-size: 11px;
+                position: absolute;
+                top: 10px;
+                left: 18px;
+                box-shadow: 0px 0px 9px -1px #4287f5;
+                text-align: center;
+                z-index:1;
+            }   
            
     </style>
     
@@ -623,7 +625,7 @@
                                                     <div class="col-4 d-flex flex-column" style="float:right; padding-top:2em;">
                                                             <asp:DropDownList ID="drpApplicantStatus" runat="server" CssClass="drpbox" Width="250px" Height="40px">
                                                             <asp:ListItem Enabled="true" Text= "STATUS" Value= "-1"></asp:ListItem>
-                                                            <asp:ListItem>Approve</asp:ListItem>
+                                                            <asp:ListItem>Hire</asp:ListItem>
                                                             <asp:ListItem>Reject</asp:ListItem>
                                                             </asp:DropDownList>
                                                     </div>

@@ -64,25 +64,22 @@ namespace ctuconnect
                     disp_name.Text = reader["firstName"].ToString() + " " + reader["lastName"].ToString();
                     LoadProfilePicture(reader["studentPicture"].ToString());
                     string resume = reader["resumeFile"].ToString();
-                    disp_email.Text = reader["email"].ToString();
+                    disp_email.Text = reader["personalEmail"].ToString();
                     disp_address.Text = reader["address"].ToString();
                     disp_status.Text = reader["studentStatus"].ToString();
                     disp_contact.Text = reader["contactNumber"].ToString();
                     disp_course.Text = reader["course"].ToString();
+                    lblinterestOrHobby.Text = HttpUtility.HtmlDecode(reader["interestOrHobby"].ToString());
 
 
                     if (!string.IsNullOrEmpty(resume))
                     {
                         lblResume.Text = "Uploaded";
                         btnViewResume.Visible = true;
-                        btnEditResume.Visible = true;
-                        btnEditResume.Text = "Edit Resume";
                     }
                     else
                     {
                         lblResume.Text = "No attached file";
-                        btnEditResume.Visible = true;
-                        btnEditResume.Text = "Upload Resume";
 
                     }
 
@@ -183,95 +180,13 @@ namespace ctuconnect
 
                 return null; // No file found
             }
-        }
-
-        private void LoadResumeFile(int studentAcctID)
-        {
-            // Retrieve the resume file path from the database
-            string resumeFilePath = GetResumeFilePath(studentAcctID);
-
-            if (!string.IsNullOrEmpty(resumeFilePath))
-            {
-
-                // Get only the file name from the resume file path
-                string resumeFileName = resumeFilePath;
-
-                // Display the file name in the label control
-                lblResumeFileName.Text = resumeFileName;
-            }
-            else
-            {
-                // Handle the case where no resume file is found
-                lblResumeFileName.Text = "No resume file found.";
-            }
-        }
-        private void SaveResumeFilePath(string studentAcctID, string resumeFile)
-        {
-            using (var db = new SqlConnection(conDB))
-            {
-                string query = "UPDATE STUDENT_ACCOUNT SET resumeFile = @ResumeFile WHERE student_accID = @studentAcctID";
-                SqlCommand cmd = new SqlCommand(query, db);
-                cmd.Parameters.AddWithValue("@ResumeFile", resumeFile);
-                cmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
-
-                db.Open();
-                cmd.ExecuteNonQuery();
-                
-                this.refreshStatus();
-                Response.Write("<script>alert('Resume uploaded successfully.')</script>");
-            }
-        }
-
-        private string GetResumeFilePath(int studentAcctID)
-        {
-            string resumeFilePath = string.Empty;
-            using (var db = new SqlConnection(conDB))
-            {
-                string query = "SELECT resumeFile FROM STUDENT_ACCOUNT WHERE student_accID = @studentAcctID";
-                SqlCommand cmd = new SqlCommand(query, db);
-                cmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
-
-                db.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    resumeFilePath = reader["resumeFile"].ToString();
-                }
-                reader.Close();
-            }
-            return resumeFilePath;
+            
         }
 
         protected void btnEditResume_Click(object sender, EventArgs e)
         {
-            int studentAccID = Convert.ToInt32(Session["STUDENT_ACC_ID"].ToString());
-            // Open the modal dialog and populate it with existing values
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openModal();", true);
-            LoadResumeFile(studentAccID);
-        }
-
-        protected void btnSaveResumeback_Click(object sender, EventArgs e)
-        {
-            int studentAcctID = Convert.ToInt32(Session["STUDENT_ACC_ID"].ToString());
-            if (resumeUpload.HasFile)
-            {
-
-                string fileName = Path.GetFileName(resumeUpload.FileName);
-                string filePath = Server.MapPath("~/images/Resume/") + studentAcctID + "_" + fileName;
-
-                resumeUpload.SaveAs(filePath);
-
-                SaveResumeFilePath(studentAcctID.ToString(), studentAcctID + "_" + fileName);
-
-                LoadResumeFile(studentAcctID);
-                
-
-            }
-        }
-
-        protected void btnClose_Click(object sender, EventArgs e)
-        {
-            ClientScript.RegisterStartupScript(this.GetType(), "closeModal", "closeEditModal();", true);
+            
+            Response.Redirect("Resume.aspx");
         }
 
         protected void btnCloseStatus_Click(object sender, EventArgs e)
@@ -446,6 +361,186 @@ namespace ctuconnect
             Session.Clear();
             Session.RemoveAll();
             Response.Write("<script>alert('Student status changed to Alumni. Please log in as Alumni');document.location='LoginStudent.aspx'</script>");
+        }
+
+        protected void btnCloseHobby_Click(object sender, EventArgs e)
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "closeModal", "closeEditModal();", true);
+        }
+
+        protected void btnSaveHobby_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int studentAccID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
+                //string interviewDetails = txtInterviewDetails.Text;
+                string interestOrhobby = HttpUtility.HtmlEncode(txtInterestHobby.Text);
+
+                using (var db = new SqlConnection(conDB))
+                {
+                    db.Open();
+                    using (var cmd = db.CreateCommand())
+                    {
+                        string sql = "UPDATE STUDENT_ACCOUNT SET interestOrHobby = @InterestOrHooby WHERE student_accID = @StudentAcctID";
+                        cmd.CommandText = sql;
+                        cmd.Parameters.AddWithValue("@StudentAcctID", studentAccID);
+                        cmd.Parameters.AddWithValue("@InterestOrHooby", interestOrhobby);
+
+                        cmd.ExecuteNonQuery();
+
+                        Response.Write("<script>alert('Updated Successfully')</script>");
+
+                    }
+                }
+                this.DisplayStudent(studentAccID);
+                    
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('Invalid Input!'); history.back();</script>" + ex.Message);
+            }
+        }
+
+        protected void btnEditInterest_Click(object sender, EventArgs e)
+        {
+            int studentAccID = Convert.ToInt32(Session["Student_ACC_ID"].ToString());
+            string interestOrHobby = HttpUtility.HtmlDecode(GetInterestOrhobbyFromDatabase(studentAccID));
+
+
+
+            // Open the modal dialog and populate it with existing values
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openModal('{interestOrHobby}');", true);
+
+        }
+
+        private string GetInterestOrhobbyFromDatabase(int student_accID)
+        {
+            string interestOrHooby = string.Empty;
+
+            using (var connection = new SqlConnection(conDB))
+            {
+                connection.Open();
+
+                string query = "SELECT interestOrHobby FROM STUDENT_ACCOUNT WHERE student_accID = @StudentAcctID";
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@StudentAcctID", student_accID);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            // Check if the database field is not null
+                            if (!reader.IsDBNull(0))
+                            {
+                                interestOrHooby = reader.GetString(0);
+
+                            }
+                        }
+                    }
+                }
+            }
+
+            return interestOrHooby;
+        }
+
+        protected void UpdateResume_Click(object sender, EventArgs e)
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openModal4();", true);
+        }
+
+        protected void btnClose4_Click(object sender, EventArgs e)
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "closeModal", "closeEditModal4();", true);
+        }
+
+        protected void btnUploadResume_Click(object sender, EventArgs e)
+        {
+            int studentAcctID = Convert.ToInt32(Session["STUDENT_ACC_ID"].ToString());
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript", $"openModal3();", true);
+            LoadResumeFile(studentAcctID);
+        }
+
+        protected void btnCloseResume_Click(object sender, EventArgs e)
+        {
+            ClientScript.RegisterStartupScript(this.GetType(), "closeModal", "closeEditModal3();", true);
+        }
+
+        protected void btnSaveResumeback_Click(object sender, EventArgs e)
+        {
+            int studentAcctID = Convert.ToInt32(Session["STUDENT_ACC_ID"].ToString());
+            if (resumeUpload.HasFile)
+            {
+
+                string fileName = Path.GetFileName(resumeUpload.FileName);
+                string filePath = Server.MapPath("~/images/Resume/") + fileName;
+
+                resumeUpload.SaveAs(filePath);
+
+                SaveResumeFilePath(studentAcctID.ToString(), fileName);
+
+                LoadResumeFile(studentAcctID);
+
+
+            }
+        }
+
+        private void LoadResumeFile(int studentAcctID)
+        {
+            // Retrieve the resume file path from the database
+            string resumeFilePath = GetResumeFilePath(studentAcctID);
+
+            if (!string.IsNullOrEmpty(resumeFilePath))
+            {
+
+                // Get only the file name from the resume file path
+                string resumeFileName = resumeFilePath;
+
+                // Display the file name in the label control
+                lblResumeFileName.Text = resumeFileName;
+            }
+            else
+            {
+                // Handle the case where no resume file is found
+                lblResumeFileName.Text = "No resume file found.";
+            }
+        }
+
+        private void SaveResumeFilePath(string studentAcctID, string resumeFile)
+        {
+            using (var db = new SqlConnection(conDB))
+            {
+                string query = "UPDATE STUDENT_ACCOUNT SET resumeFile = @ResumeFile WHERE student_accID = @studentAcctID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@ResumeFile", resumeFile);
+                cmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
+
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+                this.refreshStatus();
+                Response.Write("<script>alert('Resume uploaded successfully.')</script>");
+            }
+        }
+        private string GetResumeFilePath(int studentAcctID)
+        {
+            string resumeFilePath = string.Empty;
+            using (var db = new SqlConnection(conDB))
+            {
+                string query = "SELECT resumeFile FROM STUDENT_ACCOUNT WHERE student_accID = @studentAcctID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@studentAcctID", studentAcctID);
+
+                db.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    resumeFilePath = reader["resumeFile"].ToString();
+                }
+                reader.Close();
+            }
+            return resumeFilePath;
         }
 
     }

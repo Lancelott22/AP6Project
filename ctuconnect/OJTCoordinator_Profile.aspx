@@ -77,6 +77,37 @@
                 padding: 0px 0px 0px 8px;
                 text-decoration: none;
             }
+
+            .display-container{
+                font-family: 'Poppins', sans-serif;
+                background-color:white; 
+                width:1550px;
+                top:0;
+                bottom:0;
+                padding: 2%;
+                overflow: auto;
+                /*background-color:white;*/
+                   height:800px;
+            }
+                .display-container {
+                    max-width: 100%;
+                }
+            .display-container .title{
+                font-size:25px;
+                font-weight:500;
+                position:relative;
+                margin-bottom:3%;
+                padding-bottom:4px;
+            }
+            .display-container .title:before{
+                content:'';
+                position:absolute;
+                height:2px;
+                width:40px;
+                bottom:0;
+                background-color: #881A30;
+
+            }
             
 
             .form-control:focus {
@@ -125,6 +156,24 @@
                 color: orange;
             }
 
+            .content{
+                height:100%; 
+                width:97%; 
+                margin-left:2%; 
+                margin-right:2%;
+                padding: 0px 0px 0px 0px;
+            }
+
+            .horizontal-line {
+                 border: none;
+                 border-top: 1.5px solid black;
+                 width: 90%;
+                 margin-left:auto;
+                 margin-right:auto;
+                 margin-top:1%;
+                 margin-bottom:0%;
+             }
+
     </style>
 <asp:Table ID="Table1" runat="server"  CssClass="content">
     <asp:TableRow>
@@ -134,14 +183,17 @@
                     <p >OJT Coordinator</p>
                         <hr class="horizontal-line" />
                         <a  href="CoordinatorProfile.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
-                        <a  href="ListOfAlumni"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Alumni</a>
+                        <a  href="ListOfAlumni.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Alumni</a>
                         <a  href="PartneredIndustries.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Partnered Industry</a>
-                        <a  href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:12px;"></i>Refer Student</a>
-                        <a  href="CourseList.aspx"> <i class="fa fa-book" aria-hidden="true" style="padding-right:12px;"></i>Course List</a>
-                        <a href="Blacklist.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Blacklist Industry</a>
-                        <a  href="Applicants.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
+                        <a  href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:12px; width:32px;"></i>Refer Student</a>
+                        <a  href="CourseLists.aspx"> <i class="fa fa-book" aria-hidden="true" style="padding-right:12px;"></i>Course List</a>
+                        <a  href="Blacklist.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Blacklist Industry</a>
+                        <a  href="Coordinator_Contact.aspx"><i class="fa fa-comments" aria-hidden="true" style="padding-right:12px;"></i>Contact</a>
+                        <a  href="Coordinator_UploadCSV.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Upload CSV</a>
+                        <a  href="TracerDashboard.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
                         <hr class="second" />
                         <a class="active" href="#"><i class="fa fa-user" aria-hidden="true" style="padding-right:12px;"></i>Profile</a>
+                        <a href="Coord_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right:12px;"></i>Account Settings</a>
                         <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
                            <i class="fa fa-sign-out" aria-hidden="true"></i>
                             Sign-out

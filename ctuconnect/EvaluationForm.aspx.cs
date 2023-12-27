@@ -114,7 +114,8 @@ namespace ctuconnect
 
         private void isEvaluated()
         {
-            string student_accID = Request.QueryString["STUDENT_ID"];
+            SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            string student_accID = Request.QueryString["student_accID"];
             string evaluated = "Evaluated";
 
             if (string.IsNullOrEmpty(student_accID))
@@ -260,7 +261,7 @@ namespace ctuconnect
                             int ctr = cmd.ExecuteNonQuery();
                             if(ctr> 0)
                             {
-                                Response.Write("<script>alert('You have successfully evaluated the student.');document.location='HiredList.aspx'</script>");
+                                Response.Write("<script>alert('You have successfully evaluated the student! 🌟 Your feedback is important to us');document.location='HiredList.aspx'</script>");
                                 SqlCommand cmd1 = new SqlCommand("UPDATE HIRED_LIST SET evaluationRequest = 'Evaluated' WHERE id = '" + hired_ID +"'", conDB);
                                 cmd1.ExecuteNonQuery();
                             }

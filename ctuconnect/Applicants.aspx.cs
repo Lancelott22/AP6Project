@@ -171,30 +171,18 @@ namespace ctuconnect
                     Button btnSchedule = (Button)item.FindControl("btnSchedule");
                     Button btnApplication = (Button)item.FindControl("btnApplication");
 
-                    //TextBox requirements = (TextBox)e.Item.FindControl("txtrequirements");
-                    //TextBox DateStart = (TextBox)e.Item.FindControl("txtDateStart");
-                    //DropDownList ApplicantStatus = (DropDownList)e.Item.FindControl("drpApplicantStatus");
-                    //Button Submit = (Button)e.Item.FindControl("btnSubmit");
-
                     if (lblapplicantStatus != null)
                     {
 
                         string applicantStatusText = lblapplicantStatus.Text;
 
-                        if (applicantStatusText == "Approved")
+                        if (applicantStatusText == "Hired")
                         {
-                            //txtrequirements.Enabled = false;
-                            //txtDateStart.Enabled = false;
-                            //drpApplicantStatus.Visible = false;
-                            //btnSubmit.Visible = false;
-
-                            //btnApplication.Text = "View";
-                            //btnApplication.Style["width"] = "70px";
                             btnApplication.Visible = false;
                             btnSchedule.Visible = false;
                             lblapplicantStatus.BackColor = System.Drawing.Color.GreenYellow;
                             lblapplicantStatus.Style["width"] = "100px";
-                            lblapplicantStatus.Style["padding-left"] = "0.5em";
+                            lblapplicantStatus.Style["padding-left"] = "1.5em";
                             lblapplicantStatus.Style["height"] = "20px";
                             lblapplicantStatus.Style["border-radius"] = "15px";
 
@@ -381,39 +369,35 @@ namespace ctuconnect
 
         private void UpdateResumeStatus(int applicantID)
         {
-            foreach (RepeaterItem item in rptApplicant.Items)
+            using (var db = new SqlConnection(conDB))
             {
-                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                string query = "SELECT resumeStatus FROM APPLICANT WHERE applicantID = @applicantID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@applicantID", applicantID);
+
+                db.Open();
+                string result = cmd.ExecuteScalar().ToString();
+
+                if (result == "Reviewed")
                 {
-                    
-                    Label lblresumeStatus = (Label)item.FindControl("lblresumeStatus");
-
-                    if (lblresumeStatus != null)
+                    return;
+                }
+                else if (result == "Pending")
+                {
+                    using (var db1 = new SqlConnection(conDB))
                     {
-                        string resumeStatusText = lblresumeStatus.Text;
+                        string query1 = "UPDATE APPLICANT SET resumeStatus = 'Reviewed', resumeReviewedDate = @ResumeReviewDate WHERE applicantID = @applicantID";
+                        SqlCommand cmd1 = new SqlCommand(query1, db1);
+                        cmd1.Parameters.AddWithValue("@applicantID", applicantID);
+                        cmd1.Parameters.AddWithValue("@ResumeReviewDate", DateTime.Now.ToString("yyyy/MM/dd"));
 
-                        if (resumeStatusText == "Reviewed")
-                        {
-                            return;
-                        }
-                        else
-                        {
-                            using (var db = new SqlConnection(conDB))
-                            {
-                                string query = "UPDATE APPLICANT SET resumeStatus = 'Reviewed', resumeReviewedDate = @ResumeReviewDate WHERE applicantID = @applicantID";
-                                SqlCommand cmd = new SqlCommand(query, db);
-                                cmd.Parameters.AddWithValue("@applicantID", applicantID);
-                                cmd.Parameters.AddWithValue("@ResumeReviewDate", DateTime.Now.ToString("yyyy/MM/dd"));
+                        db1.Open();
+                        cmd1.ExecuteNonQuery();
 
-                                db.Open();
-                                cmd.ExecuteNonQuery();
-
-                                sendResumeStatus(applicantID);
-                            }
-                        }
+                        sendResumeStatus(applicantID);
                     }
                 }
-            }
+            }          
 
         }
 
@@ -606,7 +590,7 @@ namespace ctuconnect
                             smtp.Port = 587;
                             smtp.Send(mm);
 
-                            Response.Write("<script>alert('Data is Save.')</script>");
+                            Response.Write("<script>alert('Interview is successfully scheduled..')</script>");
                         }
                     }
                 }
@@ -810,7 +794,7 @@ namespace ctuconnect
 
                     }
                 }
-                else if (selectedStatus == "Approve")
+                else if (selectedStatus == "Hire")
                 {
                     //string requirements = txtrequirements.Text;
                     string requirements = HttpUtility.HtmlEncode(txtrequirements.Text);
@@ -824,7 +808,7 @@ namespace ctuconnect
                         return;
                     }
 
-                    string status = "Approved";
+                    string status = "Hired";
                     using (var db = new SqlConnection(conDB))
                     {
                         string query = "UPDATE APPLICANT SET applicantStatus = @ApplicantStatus, applicationApprovalDate = @ApplicationDate, dateStart = @DateStart, requirements = @Requirements WHERE applicantID = @applicantID";
@@ -838,7 +822,7 @@ namespace ctuconnect
                         db.Open();
                         cmd.ExecuteNonQuery();
 
-                        if (selectedStatus == "Approve")
+                        if (selectedStatus == "Hire")
                         {
                             using (SqlConnection connection = new SqlConnection(conDB))
                             {
@@ -949,7 +933,7 @@ namespace ctuconnect
                             smtp.Port = 587;
                             smtp.Send(mm);
 
-                            Response.Write("<script>alert('Data is Save.')</script>");
+                            Response.Write("<script>alert('Applicant is Rejected.')</script>");
 
                         }
                     }
@@ -1043,7 +1027,7 @@ namespace ctuconnect
                     var ctr = dmd.ExecuteNonQuery();
                     if (ctr > 0)
                     {
-                        Response.Write("<script>alert('Data is Save.')</script>");
+                        Response.Write("<script>alert('Applicant is successfully Hired.')</script>");
                     }
                     else
                     {

@@ -88,7 +88,7 @@
 
 <div class="evaluation-form" runat="server">
     <h1>OJT PERFORMANCE EVALUATION FORM</h1>
-    <p>(for BSIT, BSICT, BSGD and BSMx)</p>
+    <p>for&nbsp <asp:Label ID="Label1" runat="server" ></asp:Label></p>
     
     
         <table id="table1" runat="server" >
