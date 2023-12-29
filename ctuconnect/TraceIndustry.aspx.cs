@@ -26,6 +26,8 @@ namespace ctuconnect
             }          
             if (!IsPostBack && Request.QueryString["IndustryID"] != null && Request.QueryString["IndustryName"] != null)
             {
+                NameOfIndustry.InnerText = "All job posts from " + Request.QueryString["IndustryName"].ToString();
+                NameOfIndustry.Visible = true;
                 showIndustryList.Visible = false;
                 showIndustryList.Attributes["class"] = "d-none";
                 showJobPosted.Visible = true;

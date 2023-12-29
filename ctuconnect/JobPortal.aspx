@@ -342,6 +342,8 @@
 
                                 <br />
                                 <asp:Label ID="StudentID" CssClass="accountid" runat="server"></asp:Label>
+                                <br />
+                                <asp:Label ID="StudentCourse" CssClass="accountid text-dark fw-light" style="font-size:15px;"  runat="server"></asp:Label>
                             </div>
                             <div class="detailsBox" id="JobDetailBox" runat="server" visible="false">
                                 <asp:UpdateProgress ID="LoadDetails" class="align-items-center h-100" runat="server" AssociatedUpdatePanelID="UpdatePanel1" DynamicLayout="true">

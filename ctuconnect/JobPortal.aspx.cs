@@ -158,6 +158,19 @@ namespace ctuconnect
                 ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertResume", "alert('Please upload or create resume first before applying job.');document.location='Resume.aspx';", true);
             }
 
+            ListViewItem currentItem = (sender as Button).NamingContainer as ListViewItem;
+            foreach (ListViewItem item in JobHiring.Items)
+            {
+                HtmlGenericControl JobBox = item.FindControl("jobList") as HtmlGenericControl;
+                if (currentItem.DataItemIndex == item.DataItemIndex)
+                {
+                    JobBox.Attributes["class"] = "row d-flex align-items-center jobBoxSelected";
+                }
+                else
+                {
+                    JobBox.Attributes["class"] = "row d-flex align-items-center jobBox";
+                }
+            }
         }
         private int getApplyIndustryId(int jobId)
         {
@@ -458,6 +471,25 @@ namespace ctuconnect
         }
         private void DisplayStudentInfo()
         {
+                       
+            int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select firstName, lastName, studentPicture, course from STUDENT_ACCOUNT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID where student_accID = @student_accID", conDB);
+            cmd.Parameters.AddWithValue("@student_accID", student_accId);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                Session["STUD_FNAME"] = reader["firstName"];
+                Session["STUD_LNAME"] = reader["lastName"];
+                Session["PROFILE"] = reader["studentPicture"];
+                StudentCourse.Text = reader["course"].ToString();
+            }
+            conDB.Close();
+            reader.Close();
+
+            StudentName.Text = Session["STUD_FNAME"].ToString() + " " + Session["STUD_LNAME"].ToString();
+            StudentID.Text = Session["STUDENT_ID"].ToString();
+
             if (!string.IsNullOrEmpty(Session["PROFILE"].ToString()))
             {
                 profileImage.ImageUrl = "~/images/StudentProfiles/" + Session["PROFILE"].ToString();
@@ -466,23 +498,6 @@ namespace ctuconnect
             {
                 profileImage.ImageUrl = "~/images/StudentProfiles/defaultprofile.jpg";
             }
-           
-            int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
-            conDB.Open();
-            SqlCommand cmd = new SqlCommand("select firstName, lastName from STUDENT_ACCOUNT where student_accID = @student_accID", conDB);
-            cmd.Parameters.AddWithValue("@student_accID", student_accId);
-            SqlDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                Session["STUD_FNAME"] = reader["firstName"];
-                Session["STUD_LNAME"] = reader["lastName"];
-            }
-            conDB.Close();
-            reader.Close();
-
-            StudentName.Text = Session["STUD_FNAME"].ToString() + " " + Session["STUD_LNAME"].ToString();
-            StudentID.Text = Session["STUDENT_ID"].ToString();
-
         }
         private bool isCurrentlyHired()
         {

@@ -9,6 +9,8 @@ using System.Web.UI.WebControls;
 using System.Web.Configuration;
 using Antlr.Runtime.Tree;
 using System.Drawing;
+using System.Net.Mail;
+using System.Net;
 
 namespace ctuconnect
 {
@@ -75,6 +77,9 @@ namespace ctuconnect
                 int ctr = cmd.ExecuteNonQuery();
                 if (ctr > 0)
                 {
+                    string email = getIndustryEmail(industryID);
+                    SendEmail(industryName, email, reason);
+                    DeactivateAccount(industryID);
                     ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('You have successfully added the industry to blacklist.');document.location='Blacklist_Admin.aspx';", true);
                 }
                 else
@@ -84,7 +89,76 @@ namespace ctuconnect
                 conDB.Close();
             }
         }
+        void DeactivateAccount(int industryID)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand("UPDATE INDUSTRY_ACCOUNT SET isDeactivated = 'True' where industry_accID = '" + industryID + "'", conDB);
+                cmd.ExecuteNonQuery();
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='Dispute.aspx'</script>");
+            }
 
+        }
+        string getIndustryEmail(int industryID)
+        {
+            SqlCommand cmd = new SqlCommand("Select email from INDUSTRY_ACCOUNT Where industry_accID = @industry_accID", conDB);
+            cmd.Parameters.AddWithValue("@industry_accID", industryID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                string industryEmail = reader["email"].ToString();
+                reader.Close();
+                return industryEmail;
+
+            }
+            reader.Close();
+            return "";
+        }
+        private void SendEmail(string industryName, string email, string reason)
+        {
+            try
+            { 
+                string sendToEmail = email;
+                string sendFrom = "ctuconnect00@gmail.com";
+                string sendMessage = $"Dear <b>{industryName}</b>, <br/><br/>" +
+                    $"Unfortunately, we regret to inform you that your account with CTU Connect has been blacklisted due to specific reasons.<br/>" +
+                    $"Your account will be deactivated and you can no longer use it to sign in.<br/><br/>" +
+                    $"Reason: {reason}<br/>" +
+                    $"Date: {DateTime.Now}<br/><br/>" +
+                    $"We appreciate your understanding in this matter and thank you for your cooperation.<br/><br/>" +
+                    $"Best regards,<br/><br/>" +
+                    $"<b>CTU Connect</b>";
+                string subject = "Notification of Account Blacklisting";
+                using (MailMessage mm = new MailMessage())
+                {
+                    mm.From = new MailAddress(sendFrom, "CTU Connect");
+                    mm.To.Add(sendToEmail);
+                    mm.Subject = subject;
+                    mm.Body = sendMessage;
+                    mm.IsBodyHtml = true;
+                    mm.ReplyToList.Add(new MailAddress(sendFrom));
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.EnableSsl = true;
+                        NetworkCredential NetworkCred = new NetworkCredential();
+                        NetworkCred.UserName = "ctuconnect00@gmail.com";
+                        NetworkCred.Password = "diwvlfhaanwwfsid";
+                        smtp.UseDefaultCredentials = true;
+                        smtp.Credentials = NetworkCred;
+                        smtp.Port = 587;
+                        smtp.Send(mm);
+                    }
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='Dispute.aspx'</script>");
+            }
+        }
         protected void Save_Command(object sender, CommandEventArgs e)
         {
             

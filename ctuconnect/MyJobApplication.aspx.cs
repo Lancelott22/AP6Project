@@ -128,10 +128,12 @@ namespace ctuconnect
             conDB.Close();
             return false;
         }
+        
         protected void ViewApplication_Command(object sender, CommandEventArgs e)
         {
             int jobId = int.Parse(e.CommandName.ToString());
             int applicantID = int.Parse(e.CommandArgument.ToString());
+            Job_Title.InnerText = getJobDetails(applicantID);
             if (checkResumeStatus(applicantID, jobId) == true)
             {
                 resumeStatusCheck.Text = "Your resume has been reviewed.";
@@ -288,6 +290,23 @@ namespace ctuconnect
             }
             conDB.Close();
             return interviewDetail;
+        }
+        string getJobDetails(int applicantID)
+        {
+            int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString());
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select appliedPosition from APPLICANT Where student_accID = @Student_accID and applicantID = @applicantId", conDB);
+            cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
+            cmd.Parameters.AddWithValue("@applicantId", applicantID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                string jobTitle = reader["appliedPosition"].ToString();
+                conDB.Close();
+                return jobTitle;
+            }
+            conDB.Close();
+            return "";
         }
         protected void SignOut_Click(object sender, EventArgs e)
         {
@@ -448,7 +467,8 @@ namespace ctuconnect
         {
             int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString());
 
-            SqlCommand cmd = new SqlCommand("select *, CONVERT(nvarchar, dateHired,1) as date_Hired from HIRED_LIST JOIN INDUSTRY_ACCOUNT ON HIRED_LIST.industry_accID = INDUSTRY_ACCOUNT.industry_accID Where student_accID = @Student_accID ORDER BY dateHired DESC", conDB);
+            SqlCommand cmd = new SqlCommand("select *, CONVERT(nvarchar, dateHired,1) as date_Hired,CONVERT(nvarchar, dateStarted,1) as date_Started, CONVERT(nvarchar, dateEnded,1) as date_Ended from HIRED_LIST " +
+                "JOIN INDUSTRY_ACCOUNT ON HIRED_LIST.industry_accID = INDUSTRY_ACCOUNT.industry_accID Where student_accID = @Student_accID ORDER BY dateHired DESC", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();

@@ -85,7 +85,7 @@
 
 
         .box {
-            width: 85%;
+            width: 95%;
             min-height: 300px;
             background-color: #ffffff;
             padding-left: 2em;
@@ -306,10 +306,10 @@
                                 <ItemTemplate>
                                     <div id="MyHiredJob" runat="server" class="row d-flex align-items-center jobAppliedBox">
                                         <span runat="server" id="HiredBadge" class="NewBadge" visible="false">New</span>
-                                        <div class="col-sm-2" style="text-align: center">
-                                            <img id="IndstryLogo" src='<%#String.Format("images/IndustryProfile/{0}", Eval("industryPicture"))%>' runat="server" alt="Logo" class="imgStyle" />
+                                        <div class="col-sm-1" style="text-align: center">
+                                            <img id="IndstryLogo" src='<%#String.Format("images/IndustryProfile/{0}", Eval("industryPicture"))%>' runat="server" alt="Logo" style="width:80px; height:80px;" class="imgStyle" />
                                         </div>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-9">
                                             <div class="row" style="border-right: 1px solid #881A30;">
                                                 <label id="JobID" runat="server" hidden="hidden"><%#Eval("jobID")%></label>
                                                 <label id="HiredID" runat="server" hidden="hidden"><%#Eval("id")%></label>
@@ -342,6 +342,16 @@
                                                     <label>Date Hired: </label>
                                                     <br />
                                                     <span><%#Eval("date_Hired") %></span>
+                                                </div>
+                                                <div class="col">
+                                                    <label>Date Started: </label>
+                                                    <br />
+                                                    <span><%#Eval("date_Started") %></span>
+                                                </div>
+                                                <div class="col">
+                                                    <label>Date Ended: </label>
+                                                    <br />
+                                                    <span><%#Eval("date_Ended") %></span>
                                                 </div>
                                                 <div class="col">
                                                     <label>
@@ -465,8 +475,9 @@
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <div class="row">
+                            <div class="row text-center my-1">
                                 <h2><b>Application Process</b></h2>
+                                <h4 class="m-0" id="Job_Title" runat="server" style="color:#881A30"></h4>
                             </div>
                         </div>
                         <div class="modal-body">

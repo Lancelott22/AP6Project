@@ -276,7 +276,8 @@
                     <asp:Image ID="industryImage1" runat="server" />
                     <center>
                         <b>
-                            <asp:Label ID="disp_industryName" CssClass="disp_industryName" runat="server" Text=""></asp:Label></b></center>
+                            <asp:Label ID="disp_industryName" CssClass="disp_industryName" runat="server" Text=""></asp:Label></b>
+                        <span><i class="fa fa-check-circle" id="verifiedIcon" runat="server" aria-hidden="true" data-toggle="tooltip" data-placement="auto"></i></span></center>
                     <center>
                         <p style="font-size: 14px;">
                             Account ID: <b>

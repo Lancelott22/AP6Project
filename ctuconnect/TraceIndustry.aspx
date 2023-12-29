@@ -71,6 +71,7 @@
                 <LayoutTemplate>
                     <table style="font-size: 18px; line-height: 30px;">
                         <tr style="background-color: #336699; color: White; padding: 10px;">
+                            <th>Account ID</th>
                             <th>Industry Name</th>
                             <th>Location</th>
                             <th>Total Job Posts</th>
@@ -84,6 +85,7 @@
                 </LayoutTemplate>
                 <ItemTemplate>
                     <tr style="border-bottom: solid 1px #336699">
+                        <td><%#Eval("industry_accID")%></td>
                         <td><%#Eval("industryName")%></td>
                         <td><%#Eval("location")%></td>
                         <td><%#Eval("totalJobPosted")%></td>
@@ -99,10 +101,12 @@
         </div>
 
         <div class="row d-none" id="showJobPosted" runat="server" visible="false">
+            <h3 runat="server" id="NameOfIndustry" visible="false" class="mb-4"></h3>
             <asp:ListView ID="JobPostListView" runat="server">
                 <LayoutTemplate>
                     <table style="font-size: 18px; line-height: 30px;">
                         <tr style="background-color: #336699; color: White; padding: 10px;">
+                            <th>Job ID</th>
                             <th>Job Title</th>
                             <th>Job Type</th>
                             <th>Job Course</th>
@@ -118,6 +122,7 @@
                 </LayoutTemplate>
                 <ItemTemplate>
                     <tr style="border-bottom: solid 1px #336699">
+                        <td><%#Eval("jobID")%></td>
                         <td><%#Eval("jobTitle")%></td>
                         <td><%#Eval("jobType")%></td>
                         <td><%#Eval("jobCourse")%></td>
