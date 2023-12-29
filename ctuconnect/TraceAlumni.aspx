@@ -56,19 +56,25 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <div class="form-group">
-                    <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="department" AutoPostBack="true" OnSelectedIndexChanged="department_SelectedIndexChanged">
-                    </asp:DropDownList>
+                    <label for="department" class="col-sm-4 col-form-label">Department</label>
+                    <div class="col-sm-8">
+                        <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="department" AutoPostBack="true" OnSelectedIndexChanged="department_SelectedIndexChanged">
+                        </asp:DropDownList>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <div class="form-group">
-                    <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="course" AutoPostBack="true" OnSelectedIndexChanged="course_SelectedIndexChanged">
-                    </asp:DropDownList>
+                    <label for="department" class="col-sm-3 col-form-label">Course</label>
+                    <div class="col-sm-8">
+                        <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="course" AutoPostBack="true" OnSelectedIndexChanged="course_SelectedIndexChanged">
+                        </asp:DropDownList>
+                    </div>
                 </div>
             </div>
-           <%-- <div class="col-sm-2">
+            <%-- <div class="col-sm-2">
                 <div class="form-group">
                     <div class="form-group">
                         <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="industry" AutoPostBack="true" OnSelectedIndexChanged="industry_SelectedIndexChanged">
@@ -92,6 +98,7 @@
                             <th>Student ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
+                            <th>Department</th>
                             <th>Course</th>
                             <th>Employment Status</th>
                             <th>Company Or Business</th>
@@ -108,6 +115,7 @@
                         <td><%#Eval("studentId")%></td>
                         <td><%#Eval("firstName")%></td>
                         <td><%#Eval("lastName")%></td>
+                        <td><%#Eval("departmentName")%></td>
                         <td><%#Eval("course")%></td>
                         <td><%#Eval("employmentStatus")%></td>
                         <td><%#Eval("CompanyOrBusinessName")%></td>

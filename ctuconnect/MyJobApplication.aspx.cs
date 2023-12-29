@@ -38,7 +38,7 @@ namespace ctuconnect
         void myApplicationBind()
         {
             int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString());
-            SqlCommand cmd = new SqlCommand("select * from APPLICANT JOIN INDUSTRY_ACCOUNT ON APPLICANT.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN HIRING ON APPLICANT.jobID = HIRING.jobID Where student_accID = @Student_accID ORDER BY dateApplied DESC", conDB);
+            SqlCommand cmd = new SqlCommand("select *, CONVERT(nvarchar, dateApplied,1) as date_Applied from APPLICANT JOIN INDUSTRY_ACCOUNT ON APPLICANT.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN HIRING ON APPLICANT.jobID = HIRING.jobID Where student_accID = @Student_accID ORDER BY dateApplied DESC", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
@@ -448,7 +448,7 @@ namespace ctuconnect
         {
             int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString());
 
-            SqlCommand cmd = new SqlCommand("select * from HIRED_LIST JOIN INDUSTRY_ACCOUNT ON HIRED_LIST.industry_accID = INDUSTRY_ACCOUNT.industry_accID Where student_accID = @Student_accID ORDER BY dateHired DESC", conDB);
+            SqlCommand cmd = new SqlCommand("select *, CONVERT(nvarchar, dateHired,1) as date_Hired from HIRED_LIST JOIN INDUSTRY_ACCOUNT ON HIRED_LIST.industry_accID = INDUSTRY_ACCOUNT.industry_accID Where student_accID = @Student_accID ORDER BY dateHired DESC", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();

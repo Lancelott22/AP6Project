@@ -339,6 +339,11 @@
                                                     <span><%#Eval("jobType") %></span>
                                                 </div>
                                                 <div class="col">
+                                                    <label>Date Hired: </label>
+                                                    <br />
+                                                    <span><%#Eval("date_Hired") %></span>
+                                                </div>
+                                                <div class="col">
                                                     <label>
                                                         Job Status: 
                                                     </label>
@@ -403,11 +408,20 @@
                                                     <span id="jobCourse" runat="server"><%#Eval("jobCourse") %></span>
                                                 </div>
                                                 <div class="col">
+                                                    <label>Job Type: </label>
+                                                    <br />
+                                                    <span><%#Eval("jobType") %></span>
+                                                </div>
+                                                <div class="col">
                                                     <label>Job Location: </label>
                                                     <br />
                                                     <span><%#Eval("jobLocation") %></span>
                                                 </div>
-
+                                                <div class="col">
+                                                    <label>Date Applied: </label>
+                                                    <br />
+                                                    <span><%#Eval("date_Applied") %></span>
+                                                </div>
                                             </div>
                                         </div>
 

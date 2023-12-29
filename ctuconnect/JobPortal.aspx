@@ -454,8 +454,8 @@
                                 <asp:DropDownList runat="server" CssClass="form-control" ID="JobTypeSort" AutoPostBack="true" OnSelectedIndexChanged="JobType_SelectedIndexChanged">
                                     <asp:ListItem Value="0" Disabled="true">Select Type</asp:ListItem>
                                     <asp:ListItem Value="All" >All</asp:ListItem>
-                                    <asp:ListItem Value="Internship" >Internship</asp:ListItem>
-                                    <asp:ListItem Value="Fulltime" >Fulltime</asp:ListItem>
+                                    <asp:ListItem Value="internship" >Internship</asp:ListItem>
+                                    <asp:ListItem Value="fulltime" >Fulltime</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
 
@@ -501,9 +501,9 @@
                                                     <span id="jobCourse" runat="server"><%#Eval("jobCourse") %></span>
                                                 </div>
                                                 <div class="col-3">
-                                                    <label>Job Location: </label>
+                                                    <label>Job Type: </label>
                                                     <br />
-                                                    <span><%#Eval("jobLocation") %></span>
+                                                    <span><%#Eval("jobType") %></span>
                                                 </div>
                                                 <div class="col-3">
                                                     <label>Date: </label>

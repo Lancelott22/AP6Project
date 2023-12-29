@@ -303,7 +303,10 @@
                     <div class="form-group row">
                         <label for="StudEmail" class="col-sm-3 col-form-label">Email/Username:</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="StudEmail" runat="server" placeholder="CTU Email/Username">
+                            <input type="text" class="form-control" id="StudEmail" runat="server" placeholder="CTU Email/Username" onfocus="displayEmail()">
+                            <asp:RegularExpressionValidator runat="server" ID="RegularExpressionValidator1" ControlToValidate="StudEmail"
+                                ErrorMessage="Please enter a valid CTU email address." ValidationExpression="^[a-zA-Z0-9._%+-]+@ctu\.edu\.ph$"
+                                Display="Dynamic" CssClass="text-danger"></asp:RegularExpressionValidator>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -331,7 +334,7 @@
                     <div class="form-group row">
                         <label for="DepartmentID" class="col-sm-3 col-form-label">Department:</label>
                         <div class="col-sm-9">
-                            <asp:DropDownList ID="DepartmentID" runat="server" CssClass="form-control" OnSelectedIndexChanged="DepartmentID_SelectedIndexChanged" AutoPostBack="true">
+                            <asp:DropDownList ID="DepartmentID" runat="server" CssClass="form-control" OnSelectedIndexChanged="DepartmentID_SelectedIndexChanged" AutoPostBack="true" Enabled="false">
                             </asp:DropDownList>
                         </div>
                     </div>
@@ -360,11 +363,20 @@
         function displayPassword() {
 
             var inputBox = document.getElementById('<%= StudPassword.ClientID %>');
-            var firstName = document.getElementById('<%= FirstName.ClientID %>').value;
+            var firstName = document.getElementById('<%= FirstName.ClientID %>').value.replace(/\s/g, '');
             var currentDate = new Date();
             var currentYear = currentDate.getFullYear();
             if (firstName != '') {
                 inputBox.value = '@' + firstName + currentYear;
+            }
+        }
+        function displayEmail() {
+
+            var firstName = document.getElementById('<%= FirstName.ClientID %>').value.replace(/\s/g, '');
+            var lastName = document.getElementById('<%= LastName.ClientID %>').value;
+            var emailBox = document.getElementById('<%= StudEmail.ClientID %>');
+            if (firstName != '' && lastName != '') {
+                emailBox.value = firstName.toLowerCase() + '.' + lastName.toLowerCase() + '@ctu.edu.ph';
             }
         }
     </script>

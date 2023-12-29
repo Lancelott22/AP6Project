@@ -162,9 +162,9 @@
                                             <span id="jobCourse" runat="server"><%#Eval("jobCourse") %></span>
                                         </div>
                                         <div class="col-3">
-                                            <label>Job Location: </label>
+                                            <label>Job Type: </label>
                                             <br />
-                                            <span><%#Eval("jobLocation") %></span>
+                                            <span><%#Eval("jobType") %></span>
                                         </div>
                                         <div class="col-3">
                                             <label>Date: </label>

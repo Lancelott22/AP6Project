@@ -283,20 +283,29 @@ namespace ctuconnect
 
         protected void AddIntern_Click(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAddIntern();", true);
-            addError.Visible = false;
-            studentIdError.Visible = false;
-            StudentID.Value = string.Empty;
-            FirstName.Value = string.Empty;
-            MidInitial.Value = string.Empty;
-            LastName.Value = string.Empty;
-            StudEmail.Value = string.Empty;
-            StudPassword.Value = string.Empty;
-            StudPersonalEmail.Value = string.Empty;
-            Sem_Code.SelectedValue = "0";
-            DepartmentID.SelectedValue = Session["DEPART"].ToString();                      
-            BindCourse();
-            CourseID.SelectedValue = "0";
+            try
+            {
+
+
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAddIntern();", true);
+                addError.Visible = false;
+                studentIdError.Visible = false;
+                StudentID.Value = string.Empty;
+                FirstName.Value = string.Empty;
+                MidInitial.Value = string.Empty;
+                LastName.Value = string.Empty;
+                StudEmail.Value = string.Empty;
+                StudPassword.Value = string.Empty;
+                StudPersonalEmail.Value = string.Empty;
+                Sem_Code.SelectedValue = "0";
+                DepartmentID.SelectedValue = Session["DEPART"].ToString();
+                BindCourse();
+                CourseID.SelectedValue = "0";
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='Coordinator_UploadCSV.aspx'</script>");
+            }
         }
 
         protected void Save_Command(object sender, CommandEventArgs e)

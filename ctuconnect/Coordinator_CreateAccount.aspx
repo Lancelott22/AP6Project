@@ -178,15 +178,19 @@
                     <h2 class="title opacity-75">Coordinator Account</h2>
                     <br />
                         <div>
+                            <h3>Add Coordinator</h3>
+                            <asp:Button Text="Add Coordinator Account" CssClass="btn btn-info" ID="AddCoordinator" OnClick="AddCoordinator_Click" runat="server" />
+                            <h3 class="my-1 text-danger">or</h3>
                             <h4>Upload CSV for Coordinator</h4>
                             <asp:FileUpload ID="coordinatorCSV" runat="server" />
-                            <asp:Button Text="Upload Coordinator CSV" ID="UploadCoordinatorCSV" OnClick="UploadCoordinatorCSV_Click" runat="server" />
+                            <asp:Button Text="Upload Coordinator CSV" ID="UploadCoordinatorCSV" CssClass="btn btn-success"  OnClick="UploadCoordinatorCSV_Click" runat="server" />
                         </div>
-                        <div class="row m-5">
+                        <div class="row m-2 my-5">
                             <asp:ListView ID="CoordinatorListView" runat="server">
                                 <LayoutTemplate>
                                     <table style="font-size: 18px; line-height: 30px;">
                                         <tr style="background-color: #336699; color: White; padding: 10px;">
+                                            <th>Account ID</th>
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Deparment</th>
@@ -200,6 +204,7 @@
                                 <ItemTemplate>
                                     <tr style="border-bottom: solid 1px #336699">
                                         <span visible="false" runat="server" id="coordinatorID"><%#Eval("coordinator_accID")%></span>
+                                         <td><%#Eval("coordinator_accID")%></td>
                                         <td><%#Eval("Name")%></td>
                                         <td><%#Eval("username")%></td>
                                         <td><%#Eval("departmentName")%></td>
@@ -218,5 +223,82 @@
 
         </div>
     </div>
+    <div class="modal" id="AddCoordinatorModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><b>Add Coordinator</b></h3>
+            </div>
+            <div class="modal-body" style="padding: 20px;">
+                <div class="row my-2">
+                    <span id="addError" runat="server" visible="false" class="text-danger">*Please fill all the fields</span>
+                </div>
+                <div class="form-group row">
+                    <label for="CoordFirstName" class="col-sm-3 col-form-label">First Name:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="CoordFirstName" runat="server" placeholder="Coordinator First Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="CoordMidInitial" class="col-sm-3 col-form-label">Middle Initial:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="CoordMidInitial" runat="server" placeholder="Coordinator Middle Initial">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="CoordLastName" class="col-sm-3 col-form-label">Last Name:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="CoordLastName" runat="server" placeholder="Coordinator Last Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="CoordEmail" class="col-sm-3 col-form-label">Email/Username:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="CoordEmail" runat="server" placeholder="Email Address">
+                        <span id="EmailError" runat="server" visible="false" class="text-danger">*Email is already taken</span>
+                        <asp:RegularExpressionValidator runat="server" ID="RegularExpressionValidator1" ControlToValidate="CoordEmail"
+                            ErrorMessage="Please enter a valid email address." ValidationExpression="^[a-zA-Z0-9._%+-]+@gmail\.com$"
+                            Display="Dynamic" CssClass="text-danger"></asp:RegularExpressionValidator>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="CoordPassword" class="col-sm-3 col-form-label">Password:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="CoordPassword" runat="server" placeholder="Password" readonly onfocus="displayPassword()">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="DepartmentID" class="col-sm-3 col-form-label">Department:</label>
+                    <div class="col-sm-9">
+                        <asp:DropDownList ID="DepartmentID" runat="server" CssClass="form-control">
+                        </asp:DropDownList>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="float: right;">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <asp:LinkButton ID="Save" class="btn btn-success" runat="server" OnCommand="Save_Command">Save</asp:LinkButton>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script type="text/javascript">
+        jQuery.noConflict();
+        function showAddCoordinator() {
+            $('#AddCoordinatorModal').modal('show');
+        }
+        function displayPassword() {
+
+            var inputBox = document.getElementById('<%= CoordPassword.ClientID %>');
+            var firstName = document.getElementById('<%= CoordFirstName.ClientID %>').value.replace(/\s/g, '');
+            var currentDate = new Date();
+            var currentYear = currentDate.getFullYear();
+            if (firstName != '') {
+                inputBox.value = '@' + firstName + currentYear;
+            }
+        }
+    </script>
 
 </asp:Content>
