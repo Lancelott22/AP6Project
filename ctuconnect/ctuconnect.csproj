@@ -250,6 +250,9 @@
     <Content Include="EditResume.aspx" />
     <Content Include="EvaluationForm.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="ForgotPassword_Coordinator.aspx" />
+    <Content Include="ForgotPassword_Industry.aspx" />
+    <Content Include="ForgotPassword_Student.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HiredList.aspx" />
     <Content Include="Home.aspx" />
@@ -556,6 +559,27 @@
     </Compile>
     <Compile Include="EvaluationForm.aspx.designer.cs">
       <DependentUpon>EvaluationForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ForgotPassword_Coordinator.aspx.cs">
+      <DependentUpon>ForgotPassword_Coordinator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgotPassword_Coordinator.aspx.designer.cs">
+      <DependentUpon>ForgotPassword_Coordinator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ForgotPassword_Industry.aspx.cs">
+      <DependentUpon>ForgotPassword_Industry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgotPassword_Industry.aspx.designer.cs">
+      <DependentUpon>ForgotPassword_Industry.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ForgotPassword_Student.aspx.cs">
+      <DependentUpon>ForgotPassword_Student.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgotPassword_Student.aspx.designer.cs">
+      <DependentUpon>ForgotPassword_Student.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
