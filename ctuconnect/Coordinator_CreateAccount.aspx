@@ -185,6 +185,31 @@
                             <asp:FileUpload ID="coordinatorCSV" runat="server" />
                             <asp:Button Text="Upload Coordinator CSV" ID="UploadCoordinatorCSV" CssClass="btn btn-success"  OnClick="UploadCoordinatorCSV_Click" runat="server" />
                         </div>
+                        <br /><br /><br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Coordinator Name</label>
+                                <div class="input-group mb-3">                    
+                                    <asp:TextBox ID="CoordinatorName" runat="server" class="form-control" Placeholder="Industry name" Width="200px"></asp:TextBox>
+                                    <div class="input-group-append">
+                                        <asp:LinkButton runat="server" ID="SearchCoordinator" OnClick="SearchCoordinator_Click" CssClass="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></asp:LinkButton>
+                                    </div>
+                                </div>
+                            </div>      
+    
+                            <div class="col-sm-6">
+                                <label>Date</label>
+                                <div class="input-group mb-3">  
+                                    <asp:TextBox ID="txtdate" runat="server" TextMode="Date" class="form-control" Width="200px"></asp:TextBox>
+                                    <div class="input-group-append">
+                                        <asp:LinkButton runat="server" ID="SearchByDate" OnClick="SearchByDate_Click" CssClass="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></asp:LinkButton>
+                                    </div>
+            
+                                </div>
+                            </div>
+
+                        </div>
+
                         <div class="row m-2 my-5">
                             <asp:ListView ID="CoordinatorListView" runat="server">
                                 <LayoutTemplate>

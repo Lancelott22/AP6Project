@@ -299,5 +299,47 @@ namespace ctuconnect
             conDB.Close();
             return false;
         }
+
+        void SearchCoord(string industry)
+        {
+            SqlCommand cmd = new SqlCommand("select *, CONCAT(firstName, ' ',lastName) as Name, CONVERT(nvarchar, dateRegistered,1) as dateReg FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE " +
+                "(COORDINATOR_ACCOUNT.firstName LIKE '%" + industry + "%' " + "or COORDINATOR_ACCOUNT.lastName LIKE '%" + industry + "%') ", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            CoordinatorListView.DataSource = ds;
+            CoordinatorListView.DataBind();
+        }
+        protected void SearchCoordinator_Click(object sender, EventArgs e)
+        {
+            string industry = CoordinatorName.Text;
+            SearchCoord(industry);
+        }
+
+        protected void SearchByDate_Click(object sender, EventArgs e)
+        {
+            string dateRegistered = txtdate.Text;
+            SearchByDateRegistered(dateRegistered);
+        }
+
+        void SearchByDateRegistered(string dateRegistered)
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            if (string.IsNullOrEmpty(dateRegistered))
+            {
+                Response.Redirect("Coordinator_CreateAccount.aspx");
+            }
+            else
+            {
+                cmd = new SqlCommand("select *, CONCAT(firstName, ' ',lastName) as Name, CONVERT(nvarchar, dateRegistered,1) as dateReg FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE " +
+                " COORDINATOR_ACCOUNT.dateRegistered = '" + dateRegistered + "' ", conDB);
+            }
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            CoordinatorListView.DataSource = ds;
+            CoordinatorListView.DataBind();
+        }
     }
 }

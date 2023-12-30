@@ -252,5 +252,81 @@ namespace ctuconnect
             reader.Close();
             return true;
         }
+
+        void SearchByIndustryName(string industry)
+        {
+            SqlCommand cmd = new SqlCommand("select *, Convert(nvarchar, dateAdded, 1) as date_Added, Convert(nvarchar, decisionDate, 1) as decision_Date, case when isResolved = 1 then 'Resolved' when isResolved = 0 then 'Unresolved' else 'On process' end as disputeResolveStatus from DISPUTE JOIN INDUSTRY_ACCOUNT ON DISPUTE.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN STUDENT_ACCOUNT ON DISPUTE.student_accID = STUDENT_ACCOUNT.student_accID WHERE (INDUSTRY_ACCOUNT.industryName LIKE '%" + industry + "%') ", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            disputeListView.DataSource = ds;
+            disputeListView.DataBind();
+        }
+        protected void SearchIndustry_Click(object sender, EventArgs e)
+        {
+            string industry = IndustryName.Text;
+            SearchByIndustryName(industry);
+        }
+
+        protected void Status_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SqlCommand cmd = new SqlCommand();
+            if (Status.SelectedValue == "0")
+            {
+                Response.Redirect("Dispute.aspx");
+            }
+            else
+            {
+                cmd = new SqlCommand("select *, Convert(nvarchar, dateAdded, 1) as date_Added, Convert(nvarchar, decisionDate, 1) as decision_Date, case when isResolved = 1 then 'Resolved' when isResolved = 0 then 'Unresolved' else 'On process' end as disputeResolveStatus from DISPUTE JOIN INDUSTRY_ACCOUNT ON DISPUTE.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN STUDENT_ACCOUNT ON DISPUTE.student_accID = STUDENT_ACCOUNT.student_accID WHERE DISPUTE.status = '" + Status.SelectedValue + "' ", conDB);
+            }
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            disputeListView.DataSource = ds;
+            disputeListView.DataBind();
+        }
+
+        protected void Resolve_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SqlCommand cmd = new SqlCommand();
+            if (Status.SelectedValue == "-1")
+            {
+                Response.Redirect("Dispute.aspx");
+            }
+            else
+            {
+                cmd = new SqlCommand("select *, Convert(nvarchar, dateAdded, 1) as date_Added, Convert(nvarchar, decisionDate, 1) as decision_Date, case when isResolved = 1 then 'Resolved' when isResolved = 0 then 'Unresolved' else 'On process' end as disputeResolveStatus from DISPUTE JOIN INDUSTRY_ACCOUNT ON DISPUTE.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN STUDENT_ACCOUNT ON DISPUTE.student_accID = STUDENT_ACCOUNT.student_accID WHERE DISPUTE.isResolved = '" + Resolve.SelectedValue + "' ", conDB);
+            }
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            disputeListView.DataSource = ds;
+            disputeListView.DataBind();
+        }
+
+        protected void SearchByDate_Click(object sender, EventArgs e)
+        {
+            string dateAdded = txtdate.Text;
+            SearchByDateAdded(dateAdded);
+        }
+
+        void SearchByDateAdded(string dateAdded)
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            if (string.IsNullOrEmpty(dateAdded))
+            {
+                Response.Redirect("Dispute.aspx");
+            }
+            else
+            {
+                cmd = new SqlCommand("select *, Convert(nvarchar, dateAdded, 1) as date_Added, Convert(nvarchar, decisionDate, 1) as decision_Date, case when isResolved = 1 then 'Resolved' when isResolved = 0 then 'Unresolved' else 'On process' end as disputeResolveStatus from DISPUTE JOIN INDUSTRY_ACCOUNT ON DISPUTE.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN STUDENT_ACCOUNT ON DISPUTE.student_accID = STUDENT_ACCOUNT.student_accID WHERE dateAdded = '" + dateAdded + "' ", conDB);
+            }
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            disputeListView.DataSource = ds;
+            disputeListView.DataBind();
+        }
     }
 }
