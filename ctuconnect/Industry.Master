@@ -390,7 +390,7 @@
                                             </div>
                                         </ItemTemplate>
                                     </asp:Repeater>
-                                        <% if (rptapplicants.Items.Count == 0 && rptreferred.Items.Count == 0 && rptindustryfeedback.Items.Count == 0) { %>
+                                        <% if (rptapplicants.Items.Count == 0 && rptreferred.Items.Count == 0 && rptindustryfeedback.Items.Count == 0 && rptdispute.Items.Count == 0) { %>
                                             <div class="empty-message">
                                                 <p>No notifications available at this time</p>
                                             </div>
@@ -423,32 +423,60 @@
                                     </asp:Repeater>
 
                                     <asp:Repeater ID="rptindustryfeedback" runat="server" >
-                                    <HeaderTemplate>
-                                        <div id="headerTemplateContainer3" runat="server" class="red">
-                                            <asp:Label ID="lblapplicantslabel" runat="server" Text="Feedback"></asp:Label>
-                                        </div>
-                                    </HeaderTemplate>
-                                    <ItemTemplate>         
-                                        <div class='<%# Eval("isRead").ToString().ToLower() == "false" ? "notification-item read" : "notification-item unread" %>'">
-                                            <div class="row">
-                                                <div class="col-10 notification-details">
-                                                    <asp:LinkButton runat="server" class="notification-link" CommandName="MarkAsRead" CommandArgument='<%# Eval("id") %>' OnCommand="readFeedback_ItemCommand">           
-                                                        <div class="notification-content">
-                                                            <p class="notification-message">You receive a feedback from <%# Eval("firstName") %>&nbsp;<%# Eval("lastName") %> </p>
-                                                            <p class="notification-date"><%# Eval("dateCreated") %></p>
+                                        <HeaderTemplate>
+                                            <div id="headerTemplateContainer3" runat="server" class="red">
+                                                <asp:Label ID="lblapplicantslabel" runat="server" Text="Feedback"></asp:Label>
+                                            </div>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>         
+                                            <div class='<%# Eval("isRead").ToString().ToLower() == "false" ? "notification-item read" : "notification-item unread" %>'">
+                                                <div class="row">
+                                                    <div class="col-10 notification-details">
+                                                        <asp:LinkButton runat="server" class="notification-link" CommandName="MarkAsRead" CommandArgument='<%# Eval("id") %>' OnCommand="readFeedback_ItemCommand">           
+                                                            <div class="notification-content">
+                                                                <p class="notification-message">You receive a feedback from <%# Eval("firstName") %>&nbsp;<%# Eval("lastName") %> </p>
+                                                                <p class="notification-date"><%# Eval("dateCreated") %></p>
 
-                                                        </div>
-                                                    </asp:LinkButton>
-                                                </div>
-                                                <div class="col-2 notification-remove">
-                                                        <br />
-                                                        <asp:LinkButton runat="server" CssClass="notification-close-btn" CommandName="MarkAsRemove" CommandArgument='<%# Eval("id") %>' OnCommand="removeFeedback_ItemCommand">×</asp:LinkButton>
-                                                        <br />
+                                                            </div>
+                                                        </asp:LinkButton>
+                                                    </div>
+                                                    <div class="col-2 notification-remove">
+                                                            <br />
+                                                            <asp:LinkButton runat="server" CssClass="notification-close-btn" CommandName="MarkAsRemove" CommandArgument='<%# Eval("id") %>' OnCommand="removeFeedback_ItemCommand">×</asp:LinkButton>
+                                                            <br />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </ItemTemplate>
-                                </asp:Repeater>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+
+                                    <asp:Repeater ID="rptdispute" runat="server" >
+                                        <HeaderTemplate>
+                                            <div id="headerTemplateContainer4" runat="server" class="red">
+                                                <asp:Label ID="lblapplicantslabel" runat="server" Text="Feedback"></asp:Label>
+                                            </div>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>         
+                                            <div class='<%# Eval("isRead").ToString().ToLower() == "false" ? "notification-item read" : "notification-item unread" %>'">
+                                                <div class="row">
+                                                    <div class="col-10 notification-details">
+                                                        <asp:LinkButton runat="server" class="notification-link" CommandName="MarkAsRead" CommandArgument='<%# Eval("disputeID") %>' OnCommand="readDispute_ItemCommand">           
+                                                            <div class="notification-content">
+                                                                <p class="notification-message"><i class="fa fa-exclamation-circle" aria-hidden="true" style="color:red;"></i>Your account was reported by someone</p>
+                                                                <p class="notification-date"><%# Eval("dateAdded") %></p>
+
+                                                            </div>
+                                                        </asp:LinkButton>
+                                                    </div>
+                                                    <div class="col-2 notification-remove">
+                                                            <br />
+                                                            <asp:LinkButton runat="server" CssClass="notification-close-btn" CommandName="MarkAsRemove" CommandArgument='<%# Eval("disputeID") %>' OnCommand="removeDispute_ItemCommand">×</asp:LinkButton>
+                                                            <br />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
                                         
 
                                     </div>

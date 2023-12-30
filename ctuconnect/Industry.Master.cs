@@ -16,6 +16,7 @@ namespace ctuconnect
         private DataTable dtApplicants = new DataTable();
         private DataTable dtReferred = new DataTable();
         private DataTable dtFeedback = new DataTable();
+        private DataTable dtDispute = new DataTable();
         int count = 0;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -27,7 +28,7 @@ namespace ctuconnect
                     string industryID = Session["INDUSTRY_ACC_ID"].ToString();
                     // Do something with the departmentID
                 }
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
 
                 this.LoadApplicants();
@@ -42,6 +43,10 @@ namespace ctuconnect
                 rptindustryfeedback.DataSource = dtFeedback;
                 rptindustryfeedback.DataBind();
 
+                this.LoadDispute();
+                rptdispute.DataSource = dtDispute;
+                rptdispute.DataBind();
+
                 refreshCounting();
                 industryDetails();
                 industryPic();
@@ -49,6 +54,7 @@ namespace ctuconnect
                 disableHeader();
                 disableHeader2();
                 disableHeader3();
+                disableHeader4();
             }
         }
 
@@ -148,6 +154,24 @@ namespace ctuconnect
 
 
         }
+
+        void disableHeader4()
+        {
+
+            if (rptdispute.Items.Count == 0)
+            {
+                // Find the headerTemplateContainer and set its Visible property to false
+                Control headerTemplateContainer4 = rptdispute.Controls[0].Controls[0].FindControl("headerTemplateContainer4");
+
+                if (headerTemplateContainer4 != null)
+                {
+                    headerTemplateContainer4.Visible = false;
+                }
+            }
+
+
+        }
+
         private void LoadApplicants()
         {
             if (Session["INDUSTRY_ACC_ID"] != null)
@@ -213,6 +237,28 @@ namespace ctuconnect
             rptindustryfeedback.DataSource = dtFeedback;
             rptindustryfeedback.DataBind();
             disableHeader3();
+
+
+        }
+
+        private void LoadDispute()
+        {
+            string industryID = Session["INDUSTRY_ACC_ID"].ToString();
+
+            using (var db = new SqlConnection(conDB))
+            {
+                string query = "SELECT * FROM DISPUTE WHERE isRemove = 0 and industry_accID = '" + industryID + "' ORDER BY dateAdded DESC";
+                SqlCommand cmd = new SqlCommand(query, db);
+
+                db.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dtDispute);
+            }
+
+
+            rptdispute.DataSource = dtDispute;
+            rptdispute.DataBind();
+            disableHeader4();
 
 
         }
@@ -287,6 +333,29 @@ namespace ctuconnect
             return count;
         }
 
+        protected int UnreadDisputeCount()
+        {
+            string industryID = Session["INDUSTRY_ACC_ID"].ToString();
+            int count = 0;
+
+            // Replace with your connection string
+            string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(conDB))
+            {
+                connection.Open();
+
+                string query = "SELECT COUNT(*) FROM DISPUTE WHERE isRead = 0 and industry_accID = '" + industryID + "'";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    count = (int)command.ExecuteScalar();
+                }
+            }
+
+            return count;
+        }
+
 
         protected void readApplicants_ItemCommand(object sender, CommandEventArgs e)
         {
@@ -320,7 +389,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -349,7 +418,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -384,7 +453,7 @@ namespace ctuconnect
                 db.Open();
                 cmd.ExecuteNonQuery();
 
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -427,7 +496,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -454,7 +523,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -492,7 +561,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -536,7 +605,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -565,7 +634,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -601,7 +670,7 @@ namespace ctuconnect
                 db.Open();
                 cmd.ExecuteNonQuery();
 
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -610,6 +679,114 @@ namespace ctuconnect
             if (rptindustryfeedback.Items.Count == 1)
             {
                 disableHeader3();
+            }
+        }
+
+        protected void readDispute_ItemCommand(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "MarkAsRead")
+            {
+                int disputeID = Convert.ToInt32(e.CommandArgument);
+
+                MarkDisputeAsRead(disputeID);
+
+
+            }
+            // Refresh the notifications
+            this.LoadDispute();
+            this.UnreadDisputeCount();
+
+        }
+
+        private void MarkDisputeAsRead(int disputeID)
+        {
+
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE DISPUTE SET isRead = 1 WHERE disputeID = @DisputeID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@DisputeID", disputeID);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+
+
+                // Update the unread count
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount() + UnreadDisputeCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            this.disableHeader4();
+            RedirectToIndustryProf(disputeID);
+
+
+        }
+
+        private void RedirectToIndustryProf(int disputeID)
+        {
+            Response.Redirect("IndustryProfile.aspx?disputeID=" + disputeID);
+        }
+
+        private void DisputeRead(int disputeID)
+        {
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE DISPUTE SET isRead = 1 WHERE disputeID = @DisputeID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@DisputeID", disputeID);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+
+
+                // Update the unread count
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount() + UnreadDisputeCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            this.disableHeader4();
+        }
+
+        protected void removeDispute_ItemCommand(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "MarkAsRemove")
+            {
+                int disputeID = Convert.ToInt32(e.CommandArgument);
+
+                MarkDisputeAsRemoved(disputeID);
+                DisputeRead(disputeID);
+
+
+            }
+
+            // Refresh the notifications
+            this.LoadDispute();
+            this.UnreadDisputeCount();
+        }
+
+        private void MarkDisputeAsRemoved(int disputeID)
+        {
+            // Update the isRemove property in the database
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE DISPUTE SET isRemove = 1 WHERE disputeID = @DisputeID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@DisputeID", disputeID);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount() + UnreadDisputeCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            //this.disableHeader();
+
+            if (rptdispute.Items.Count == 1)
+            {
+                disableHeader4();
             }
         }
 
