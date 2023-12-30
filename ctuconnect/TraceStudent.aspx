@@ -47,21 +47,34 @@
     <h2 class="opacity-75">Intern List</h2>
     <div class="container m-auto my-5 w-100 h-100 d-flex flex-column py-3">
         <div class="row">
-            <div class="col-sm-4">
-                <div class="input-group mb-3">
-                    <asp:TextBox ID="StudentNameOrID" runat="server" class="form-control" Placeholder="Lastname or Firstname or StudentID"></asp:TextBox>
+            <div class="col-sm-2">
+                <label>Name or Student ID</label>
+                <div class="input-group mb-3">                    
+                    <asp:TextBox ID="StudentNameOrID" runat="server" class="form-control" Placeholder="First or Last or ID" Width="150px"></asp:TextBox>
                     <div class="input-group-append">
-                        <asp:Button class="btn btn-primary" runat="server" ID="SearchStudent" OnClick="SearchStudent_Click" Text="Search" />
+                        <asp:LinkButton runat="server" ID="SearchStudent" OnClick="SearchStudent_Click" CssClass="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></asp:LinkButton>
                     </div>
                 </div>
             </div>
             <div class="col-sm-2">
+                <label>Status</label>
+                <div class="form-group">
+                    <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="Status" AutoPostBack="true" OnSelectedIndexChanged="Status_SelectedIndexChanged">
+                        <asp:ListItem Value="0" Text="All" Selected="true"></asp:ListItem>
+                        <asp:ListItem Value="Ongoing" Text="Ongoing"></asp:ListItem>                    
+                        <asp:ListItem Value="Done" Text="Done" ></asp:ListItem>                 
+                    </asp:DropDownList>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <label>Department</label>
                 <div class="form-group">
                     <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="department" AutoPostBack="true" OnSelectedIndexChanged="department_SelectedIndexChanged">
                     </asp:DropDownList>
                 </div>
             </div>
             <div class="col-sm-2">
+                <label>Course</label>
                 <div class="form-group">
                     <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="course" AutoPostBack="true" OnSelectedIndexChanged="course_SelectedIndexChanged">
                     </asp:DropDownList>
@@ -69,6 +82,7 @@
             </div>
             <div class="col-sm-2">
                 <div class="form-group">
+                    <label>Industry Name</label>
                     <div class="form-group">
                         <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="industry" AutoPostBack="true" OnSelectedIndexChanged="industry_SelectedIndexChanged">
                         </asp:DropDownList>
@@ -76,6 +90,7 @@
                 </div>
             </div>
             <div class="col-sm-2">
+                <label>Position</label>
                 <div class="form-group">
                     <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="position" AutoPostBack="true" OnSelectedIndexChanged="position_SelectedIndexChanged">
                     </asp:DropDownList>
@@ -91,6 +106,7 @@
                             <th>Student ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
+                            <th>Department</th>
                             <th>Course</th>
                             <th>Industry Name</th>
                             <th>Position</th>
@@ -107,6 +123,7 @@
                         <td><%#Eval("studentId")%></td>
                         <td><%#Eval("firstName")%></td>
                         <td><%#Eval("lastName")%></td>
+                        <td><%#Eval("departmentName")%></td>
                         <td><%#Eval("course")%></td>
                         <td><%#Eval("workedAt")%></td>
                         <td><%#Eval("position")%></td>

@@ -21,6 +21,7 @@ namespace ctuconnect
             if (!IsPostBack)
             {
                 BindCoordinator();
+                BindDepartment();
             }
                
         }
@@ -182,6 +183,163 @@ namespace ctuconnect
                 {
                     /*  ListViewPager.Visible = false;*/
                 }
+        }
+
+        protected void AddCoordinator_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAddCoordinator();", true);
+                addError.Visible = false;
+                EmailError.Visible = false;
+                CoordFirstName.Value = string.Empty;
+                CoordMidInitial.Value = string.Empty;
+                CoordLastName.Value = string.Empty;
+                CoordEmail.Value = string.Empty;
+                CoordPassword.Value = string.Empty;
+                DepartmentID.SelectedValue = "0";
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='Coordinator_CreateAccount.aspx'</script>");
+            }
+        }
+        void BindDepartment()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DEPARTMENT", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            DepartmentID.DataSource = ds;
+            DepartmentID.DataValueField = "department_ID";
+            DepartmentID.DataTextField = "departmentName";
+            DepartmentID.DataBind();
+            DepartmentID.Items.Insert(0, new ListItem("Select Department", "0"));
+        }
+
+        protected void Save_Command(object sender, CommandEventArgs e)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(CoordFirstName.Value) || string.IsNullOrEmpty(CoordMidInitial.Value) || string.IsNullOrEmpty(CoordLastName.Value)
+                    || string.IsNullOrEmpty(CoordEmail.Value) || string.IsNullOrEmpty(CoordPassword.Value) || DepartmentID.SelectedValue.Equals("0"))
+                {
+                    addError.Visible = true;
+                    EmailError.Visible = false;
+                    ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Popup1", "$('.modal-backdrop').removeClass('modal-backdrop');", true);
+                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAddCoordinator();", true);
+                    return;
+                }
+                else if (checkCoordEmail(CoordEmail.Value))
+                {              
+                    EmailError.Visible = true;
+                    addError.Visible = false;
+                    ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "Popup1", "$('.modal-backdrop').removeClass('modal-backdrop');", true);
+                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAddCoordinator();", true);
+                    return;
+                }
+                else
+                {
+                   
+                    string firstName = CoordFirstName.Value;
+                    string midInit = CoordMidInitial.Value;
+                    string lastName = CoordLastName.Value;  
+                    string username = CoordEmail.Value;
+                    string password = CoordPassword.Value;          
+                    string departmentID = DepartmentID.SelectedValue;
+                  
+                    conDB.Open();
+                    SqlCommand cmd = new SqlCommand("INSERT INTO COORDINATOR_ACCOUNT (firstName, midInitials, lastName, username, password, department_ID) " +
+                      "Values(@firstName, @midInitials, @lastName, @username, @password, @department_ID)", conDB);
+
+                    cmd.Parameters.AddWithValue("@firstName", firstName);
+                    cmd.Parameters.AddWithValue("@midInitials", midInit);
+                    cmd.Parameters.AddWithValue("@lastName", lastName);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.Parameters.AddWithValue("@password", password);
+                    cmd.Parameters.AddWithValue("@department_ID", departmentID);
+
+                    int ctr = cmd.ExecuteNonQuery();
+                    if (ctr > 0)
+                    {
+                        string coordPassword = password;
+                        string Name = firstName + " " + lastName;
+                        string usernameEmail = username;
+                        // Send email to each student
+                        SendEmail(usernameEmail, coordPassword, Name);
+                        Response.Write("<script>alert('OJT Coordinator account has been saved successfully.');document.location='Coordinator_CreateAccount.aspx';</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script>alert('OJT Coordinator account has not been saved. Please try again later!');document.location='Coordinator_CreateAccount.aspx';</script>");
+                    }
+                    conDB.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='Coordinator_CreateAccount.aspx'</script>");
+            }
+        }
+        bool checkCoordEmail(string CoordEmail)
+        {
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("Select username from COORDINATOR_ACCOUNT Where username = @username", conDB);
+            cmd.Parameters.AddWithValue("@username", CoordEmail);
+
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                reader.Close();
+                conDB.Close();
+                return true;
+            }
+            reader.Close();
+            conDB.Close();
+            return false;
+        }
+
+        void SearchCoord(string industry)
+        {
+            SqlCommand cmd = new SqlCommand("select *, CONCAT(firstName, ' ',lastName) as Name, CONVERT(nvarchar, dateRegistered,1) as dateReg FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE " +
+                "(COORDINATOR_ACCOUNT.firstName LIKE '%" + industry + "%' " + "or COORDINATOR_ACCOUNT.lastName LIKE '%" + industry + "%') ", conDB);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            CoordinatorListView.DataSource = ds;
+            CoordinatorListView.DataBind();
+        }
+        protected void SearchCoordinator_Click(object sender, EventArgs e)
+        {
+            string industry = CoordinatorName.Text;
+            SearchCoord(industry);
+        }
+
+        protected void SearchByDate_Click(object sender, EventArgs e)
+        {
+            string dateRegistered = txtdate.Text;
+            SearchByDateRegistered(dateRegistered);
+        }
+
+        void SearchByDateRegistered(string dateRegistered)
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            if (string.IsNullOrEmpty(dateRegistered))
+            {
+                Response.Redirect("Coordinator_CreateAccount.aspx");
+            }
+            else
+            {
+                cmd = new SqlCommand("select *, CONCAT(firstName, ' ',lastName) as Name, CONVERT(nvarchar, dateRegistered,1) as dateReg FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE " +
+                " COORDINATOR_ACCOUNT.dateRegistered = '" + dateRegistered + "' ", conDB);
+            }
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            CoordinatorListView.DataSource = ds;
+            CoordinatorListView.DataBind();
         }
     }
 }

@@ -182,6 +182,50 @@
                     <br />
                     <br />
                     <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label>Industry Name</label>
+                            <div class="input-group mb-3">                    
+                                <asp:TextBox ID="IndustryName" runat="server" class="form-control" Placeholder="Industry name" Width="200px"></asp:TextBox>
+                                <div class="input-group-append">
+                                    <asp:LinkButton runat="server" ID="SearchIndustry" OnClick="SearchIndustry_Click" CssClass="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></asp:LinkButton>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label>Status</label>
+                            <div class="form-group">
+                                <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="Status" AutoPostBack="true" OnSelectedIndexChanged="Status_SelectedIndexChanged">
+                                    <asp:ListItem Value="0" Text="All" Selected="true"></asp:ListItem>
+                                    <asp:ListItem Value="Open" Text="Open"></asp:ListItem>                    
+                                    <asp:ListItem Value="Close" Text="Close" ></asp:ListItem>                 
+                                </asp:DropDownList>
+                            </div>
+                        </div>     
+                        
+                        <div class="col-sm-3">
+                            <label>Resolve</label>
+                            <div class="form-group">
+                                <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="Resolve" AutoPostBack="true" OnSelectedIndexChanged="Resolve_SelectedIndexChanged">
+                                    <asp:ListItem Value="-1" Text="All" Selected="true"></asp:ListItem>
+                                    <asp:ListItem Value="0" Text="Unresolved"></asp:ListItem>                    
+                                    <asp:ListItem Value="1" Text="Resolved" ></asp:ListItem>                 
+                                </asp:DropDownList>
+                            </div>
+                        </div>  
+                        
+                        <div class="col-sm-3">
+                            <label>Date</label>
+                            <div class="input-group mb-3">  
+                                <asp:TextBox ID="txtdate" runat="server" TextMode="Date" class="form-control" Width="200px"></asp:TextBox>
+                                <div class="input-group-append">
+                                    <asp:LinkButton runat="server" ID="SearchByDate" OnClick="SearchByDate_Click" CssClass="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></asp:LinkButton>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="row" id="showDispute" runat="server">
                         <asp:ListView ID="disputeListView" runat="server" OnItemDataBound="disputeListView_ItemDataBound">
                             <LayoutTemplate>

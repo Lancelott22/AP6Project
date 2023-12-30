@@ -60,6 +60,15 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label StudentID;
 
         /// <summary>
+        /// StudentCourse control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label StudentCourse;
+
+        /// <summary>
         /// JobDetailBox control.
         /// </summary>
         /// <remarks>

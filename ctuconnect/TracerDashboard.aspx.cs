@@ -29,23 +29,23 @@ namespace ctuconnect
                 BindIndustry();
                 BindHiredPerJobInIndustry(int.Parse(IndustryJob.SelectedValue));
                 BindDepartment();
-                BindAlumniEmployment(int.Parse(Course.SelectedValue));
-                BindIsConnectedToCourse(int.Parse(Course.SelectedValue));
-                BindSalaryRange(int.Parse(Course.SelectedValue));
-                BindAlignedToSkill(int.Parse(Course.SelectedValue));
-                BindIsMatchToSkills(int.Parse(Course_1.SelectedValue));
-                BindInternHired(int.Parse(Course_1.SelectedValue));
+                BindAlumniEmployment(int.Parse(Department.SelectedValue),int.Parse(Course.SelectedValue));
+                BindIsConnectedToCourse(int.Parse(Department.SelectedValue), int.Parse(Course.SelectedValue));
+                BindSalaryRange(int.Parse(Department.SelectedValue), int.Parse(Course.SelectedValue));
+                BindAlignedToSkill(int.Parse(Department.SelectedValue), int.Parse(Course.SelectedValue));
+                BindIsMatchToSkills(int.Parse(Department_1.SelectedValue), int.Parse(Course_1.SelectedValue));
+                BindInternHired(int.Parse(Department_1.SelectedValue), int.Parse(Course_1.SelectedValue));
             }
             else
             {
                 BindHiredPerIndustry();
                 BindHiredPerJobInIndustry(int.Parse(IndustryJob.SelectedValue));
-                BindAlumniEmployment(int.Parse(Course.SelectedValue));
-                BindIsConnectedToCourse(int.Parse(Course.SelectedValue));
-                BindSalaryRange(int.Parse(Course.SelectedValue));
-                BindAlignedToSkill(int.Parse(Course.SelectedValue));
-                BindIsMatchToSkills(int.Parse(Course_1.SelectedValue));
-                BindInternHired(int.Parse(Course_1.SelectedValue));
+                BindAlumniEmployment(int.Parse(Department.SelectedValue), int.Parse(Course.SelectedValue));
+                BindIsConnectedToCourse(int.Parse(Department.SelectedValue), int.Parse(Course.SelectedValue));
+                BindSalaryRange(int.Parse(Department.SelectedValue), int.Parse(Course.SelectedValue));
+                BindAlignedToSkill(int.Parse(Department.SelectedValue), int.Parse(Course.SelectedValue));
+                BindIsMatchToSkills(int.Parse(Department_1.SelectedValue), int.Parse(Course_1.SelectedValue));
+                BindInternHired(int.Parse(Department_1.SelectedValue), int.Parse(Course_1.SelectedValue));
             }            
         }
         private void BindHiredPerIndustry()
@@ -192,8 +192,9 @@ namespace ctuconnect
             da.Fill(ds);
             Course.DataSource = ds;
             Course.DataValueField = "course_ID";
-            Course.DataTextField = "course";
+            Course.DataTextField = "course";            
             Course.DataBind();
+            Course.Items.Insert(0, new ListItem("All", "0"));
             Course.SelectedIndex = 0;
         }
 
@@ -202,82 +203,107 @@ namespace ctuconnect
 
         }
 
-        private void BindAlumniEmployment(int course_ID)
+        private void BindAlumniEmployment(int departmentid, int course_ID)
         {
             Chart3.Series["EmploymentType"].Points.Clear();
             SqlCommand cmd = new SqlCommand();
-            if (course_ID == 0)
+            if (departmentid == 0 && course_ID == 0)
             {
                 cmd = new SqlCommand("SELECT employmentStatus, COUNT(id) AS employmentCount" +
                 " FROM ALUMNI_EMPLOYMENTFORM" +
                 " GROUP BY employmentStatus;", conDB);
             }
+            else if(departmentid != 0 && course_ID == 0)
+            {
+                cmd = new SqlCommand("SELECT employmentStatus, COUNT(id) AS employmentCount" +
+             " FROM ALUMNI_EMPLOYMENTFORM LEFT JOIN STUDENT_ACCOUNT ON ALUMNI_EMPLOYMENTFORM.student_accID = STUDENT_ACCOUNT.student_accID" +
+             " WHERE department_ID = '" + departmentid + "' GROUP BY employmentStatus;", conDB);
+            }
             else
             {
                 cmd = new SqlCommand("SELECT employmentStatus, COUNT(id) AS employmentCount" +
                 " FROM ALUMNI_EMPLOYMENTFORM LEFT JOIN STUDENT_ACCOUNT ON ALUMNI_EMPLOYMENTFORM.student_accID = STUDENT_ACCOUNT.student_accID  " +
-                " WHERE course_ID = '" + course_ID + "'   GROUP BY employmentStatus;", conDB);
+                " WHERE department_ID = '" + departmentid + "' and course_ID = '" + course_ID + "' GROUP BY employmentStatus;", conDB);
             }
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
             Chart3.Series["EmploymentType"].Points.DataBind(dt.DefaultView, "employmentStatus", "employmentCount", "");
         }
-        private void BindIsConnectedToCourse(int course_ID)
+        private void BindIsConnectedToCourse(int departmentid, int course_ID)
         {
 
             Chart4.Series["IsConnectedCourse"].Points.Clear();
             SqlCommand cmd = new SqlCommand();
-            if (course_ID == 0)
+            if (departmentid == 0 && course_ID == 0)
             {
                cmd = new SqlCommand("SELECT isConnectedToCourse, COUNT(id) AS isConnectedCount" +
                 " FROM ALUMNI_EMPLOYMENTFORM GROUP BY isConnectedToCourse;", conDB);
-            }else
+            }
+            else if (departmentid != 0 && course_ID == 0)
+            {
+                cmd = new SqlCommand("SELECT isConnectedToCourse, COUNT(id) AS isConnectedCount" +
+              " FROM ALUMNI_EMPLOYMENTFORM LEFT JOIN STUDENT_ACCOUNT ON ALUMNI_EMPLOYMENTFORM.student_accID = STUDENT_ACCOUNT.student_accID " +
+              " WHERE department_ID = '" + departmentid + "' GROUP BY isConnectedToCourse;", conDB);
+            }
+            else
             {
                 cmd = new SqlCommand("SELECT isConnectedToCourse, COUNT(id) AS isConnectedCount" +
                " FROM ALUMNI_EMPLOYMENTFORM LEFT JOIN STUDENT_ACCOUNT ON ALUMNI_EMPLOYMENTFORM.student_accID = STUDENT_ACCOUNT.student_accID " +
-               " WHERE course_ID = '" + course_ID + "' GROUP BY isConnectedToCourse;", conDB);
+               " WHERE department_ID = '" + departmentid + "' and course_ID = '" + course_ID + "' GROUP BY isConnectedToCourse;", conDB);
             }
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
             Chart4.Series["IsConnectedCourse"].Points.DataBind(dt.DefaultView, "isConnectedToCourse", "isConnectedCount", "");
         }
-        private void BindSalaryRange(int course_ID)
+        private void BindSalaryRange(int departmentid, int course_ID)
         {
 
             Chart5.Series["SalaryRange"].Points.Clear();
             SqlCommand cmd = new SqlCommand();
-            if (course_ID == 0)
+            if (departmentid == 0 && course_ID == 0)
             {
                 cmd = new SqlCommand("SELECT SalaryRange, COUNT(id) AS SalaryCount" +
                  " FROM ALUMNI_EMPLOYMENTFORM GROUP BY SalaryRange;", conDB);
+            }
+            else if (departmentid != 0 && course_ID == 0)
+            {
+                cmd = new SqlCommand("SELECT SalaryRange, COUNT(id) AS SalaryCount" +
+               " FROM ALUMNI_EMPLOYMENTFORM LEFT JOIN STUDENT_ACCOUNT ON ALUMNI_EMPLOYMENTFORM.student_accID = STUDENT_ACCOUNT.student_accID " +
+               " WHERE department_ID = '" + departmentid + "' GROUP BY SalaryRange;", conDB);
             }
             else
             {
                 cmd = new SqlCommand("SELECT SalaryRange, COUNT(id) AS SalaryCount" +
                " FROM ALUMNI_EMPLOYMENTFORM LEFT JOIN STUDENT_ACCOUNT ON ALUMNI_EMPLOYMENTFORM.student_accID = STUDENT_ACCOUNT.student_accID " +
-               " WHERE course_ID = '" + course_ID + "' GROUP BY SalaryRange;", conDB);
+               " WHERE department_ID = '" + departmentid + "' and course_ID = '" + course_ID + "' GROUP BY SalaryRange;", conDB);
             }
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
             Chart5.Series["SalaryRange"].Points.DataBind(dt.DefaultView, "SalaryRange", "SalaryCount", "");
         }
-        private void BindAlignedToSkill(int course_ID)
+        private void BindAlignedToSkill(int departmentid, int course_ID)
         {
             Chart6.Series["AlignedToSkill"].Points.Clear();
             SqlCommand cmd = new SqlCommand();
-            if (course_ID == 0)
+            if (departmentid == 0 && course_ID == 0)
             {
                 cmd = new SqlCommand("SELECT isAlignedToSkill, COUNT(id) AS AlignedToSkillCount" +
                  " FROM ALUMNI_EMPLOYMENTFORM GROUP BY isAlignedToSkill;", conDB);
+            }
+            else if (departmentid != 0 && course_ID == 0)
+            {
+                cmd = new SqlCommand("SELECT isAlignedToSkill, COUNT(id) AS AlignedToSkillCount" +
+               " FROM ALUMNI_EMPLOYMENTFORM LEFT JOIN STUDENT_ACCOUNT ON ALUMNI_EMPLOYMENTFORM.student_accID = STUDENT_ACCOUNT.student_accID " +
+               " WHERE department_ID = '" + departmentid + "' GROUP BY isAlignedToSkill;", conDB);
             }
             else
             {
                 cmd = new SqlCommand("SELECT isAlignedToSkill, COUNT(id) AS AlignedToSkillCount" +
                " FROM ALUMNI_EMPLOYMENTFORM LEFT JOIN STUDENT_ACCOUNT ON ALUMNI_EMPLOYMENTFORM.student_accID = STUDENT_ACCOUNT.student_accID " +
-               " WHERE course_ID = '" + course_ID + "' GROUP BY isAlignedToSkill;", conDB);
+               " WHERE department_ID = '" + departmentid + "' and course_ID = '" + course_ID + "' GROUP BY isAlignedToSkill;", conDB);
             }
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
@@ -285,39 +311,50 @@ namespace ctuconnect
             Chart6.Series["AlignedToSkill"].Points.DataBind(dt.DefaultView, "isAlignedToSkill", "AlignedToSkillCount", "");
         }
 
-        private void BindIsMatchToSkills(int course_ID)
+        private void BindIsMatchToSkills(int departmentid, int course_ID)
         {
             Chart7.Series["IsMatchToSkills"].Points.Clear();
             SqlCommand cmd = new SqlCommand();
-            if (course_ID == 0)
+            if (departmentid == 0 && course_ID == 0)
             {
                 cmd = new SqlCommand("SELECT case when isMatchToSkills = 1 then 'Matched' else 'Not Matched' end as MatchToSkills, COUNT(formID) AS MatchToSkillsCount" +
                  " FROM INTERNSHIPFORM GROUP BY CASE WHEN isMatchToSkills = 1 THEN 'Matched' ELSE 'Not Matched' END;", conDB);
+            }
+            else if (departmentid != 0 && course_ID == 0)
+            {
+                cmd = new SqlCommand("SELECT case when isMatchToSkills = 1 then 'Matched' else 'Not Matched' end as MatchToSkills, COUNT(formID) AS MatchToSkillsCount" +
+                 " FROM INTERNSHIPFORM LEFT JOIN STUDENT_ACCOUNT ON INTERNSHIPFORM.student_accID = STUDENT_ACCOUNT.student_accID" +
+                 " WHERE department_ID = '" + departmentid + "' GROUP BY CASE WHEN isMatchToSkills = 1 THEN 'Matched' ELSE 'Not Matched' END;", conDB);
             }
             else
             {
                 cmd = new SqlCommand("SELECT case when isMatchToSkills = 1 then 'Matched' else 'Not Matched' end as MatchToSkills, COUNT(formID) AS MatchToSkillsCount" +
                  " FROM INTERNSHIPFORM LEFT JOIN STUDENT_ACCOUNT ON INTERNSHIPFORM.student_accID = STUDENT_ACCOUNT.student_accID" +
-                 " WHERE course_ID = '" + course_ID + "' GROUP BY CASE WHEN isMatchToSkills = 1 THEN 'Matched' ELSE 'Not Matched' END;", conDB);
+                 " WHERE department_ID = '" + departmentid + "' and course_ID = '" + course_ID + "' GROUP BY CASE WHEN isMatchToSkills = 1 THEN 'Matched' ELSE 'Not Matched' END;", conDB);
             }
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
             Chart7.Series["IsMatchToSkills"].Points.DataBind(dt.DefaultView, "MatchToSkills", "MatchToSkillsCount", "");
         }
-        private void BindInternHired(int course_ID)
+        private void BindInternHired(int departmentid, int course_ID)
         {
             Chart8.Series["InternHired"].Points.Clear();
             SqlCommand cmd = new SqlCommand();
-            if (course_ID == 0)
+            if (departmentid == 0 && course_ID == 0)
             {
                 cmd = new SqlCommand("SELECT case when isHired = 1 then 'Hired' else 'Not hired' end as Hired, COUNT(student_accID) AS TotalHired" +
                  " FROM STUDENT_ACCOUNT GROUP BY case when isHired = 1 then 'Hired' else 'Not hired' end;", conDB);
             }
+            else if (departmentid != 0 && course_ID == 0)
+            {
+                cmd = new SqlCommand("SELECT  case when isHired = 1 then 'Hired' else 'Not hired' end as Hired, COUNT(student_accID) AS TotalHired" +
+                 " FROM STUDENT_ACCOUNT WHERE department_ID = '" + departmentid + "' GROUP BY case when isHired = 1 then 'Hired' else 'Not hired' end;", conDB);
+            }
             else
             {
                 cmd = new SqlCommand("SELECT  case when isHired = 1 then 'Hired' else 'Not hired' end as Hired, COUNT(student_accID) AS TotalHired" +
-                 " FROM STUDENT_ACCOUNT WHERE course_ID = '" + course_ID + "' GROUP BY case when isHired = 1 then 'Hired' else 'Not hired' end;", conDB);
+                 " FROM STUDENT_ACCOUNT WHERE department_ID = '" + departmentid + "' and course_ID = '" + course_ID + "' GROUP BY case when isHired = 1 then 'Hired' else 'Not hired' end;", conDB);
             }
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
@@ -339,7 +376,10 @@ namespace ctuconnect
             Course_1.DataValueField = "course_ID";
             Course_1.DataTextField = "course";
             Course_1.DataBind();
+            Course_1.Items.Insert(0, new ListItem("All", "0"));
             Course_1.SelectedIndex = 0;
+
+
         }
 
         protected void Course1_SelectedIndexChanged(object sender, EventArgs e)

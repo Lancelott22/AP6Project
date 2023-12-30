@@ -181,6 +181,7 @@
                 <LayoutTemplate>
                     <table style="font-size: 18px; line-height: 30px;">
                         <tr style="background-color: #336699; color: White; padding: 10px;">
+                            <th>Account ID</th>
                             <th>Industry Name</th>
                             <th>Address</th>
                             <th>Email</th>
@@ -198,6 +199,7 @@
                 <ItemTemplate>
                     <tr style="border-bottom: solid 1px #336699">
                         <span visible="false" runat="server" id="industryID"><%#Eval("industry_accID")%></span>
+                        <td><%#Eval("industry_accID")%></td>
                         <td><%#Eval("industryName")%></td>
                         <td><%#Eval("location")%></td>
                          <td><%#Eval("email")%></td>
@@ -207,7 +209,7 @@
                          <td><%#Eval("Verify")%></td>
                         <td><%#Eval("Deactivate")%></td>
                         <td>
-                            <asp:LinkButton ID="Verify" runat="server" CssClass="btn btn-info" OnCommand="Verify_Command" OnClientClick="confirmVerify();" CommandArgument='<%#Eval("industry_accID")%>'></asp:LinkButton>
+                            <asp:LinkButton ID="Verify" runat="server" CssClass="btn btn-info" OnCommand="Verify_Command" OnClientClick="confirmVerify();" CommandName='<%#Eval("email")%>' CommandArgument='<%#Eval("industry_accID")%>'></asp:LinkButton>
                            </td>
                             <td> <asp:LinkButton ID="Deactivate" runat="server" OnCommand="Deactivate_Command" OnClientClick="confirmDeactivate();"  CommandArguent='<%#Eval("industry_accID")%>'></asp:LinkButton>
 

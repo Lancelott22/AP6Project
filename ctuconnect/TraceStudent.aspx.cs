@@ -42,7 +42,7 @@ namespace ctuconnect
         }
         void BindInternList()
         {
-            SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE HIRED_LIST.studentType = 'Intern'", conDB);
+            SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID JOIN DEPARTMENT ON STUDENT_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE HIRED_LIST.studentType = 'Intern'", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
@@ -71,8 +71,8 @@ namespace ctuconnect
         }
         void SearchByStudentNameOrID(string student)
         {
-            SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE STUDENT_ACCOUNT.firstName LIKE '%" + student + "%' " +
-                "or STUDENT_ACCOUNT.lastName LIKE '%" + student + "%' or CAST(STUDENT_ACCOUNT.studentId as varchar) = '" + student + "' ", conDB);
+            SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID JOIN DEPARTMENT ON STUDENT_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE  HIRED_LIST.studentType = 'Intern' and (STUDENT_ACCOUNT.firstName LIKE '%" + student + "%' " +
+                "or STUDENT_ACCOUNT.lastName LIKE '%" + student + "%' or CAST(STUDENT_ACCOUNT.studentId as varchar) = '" + student + "') ", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
@@ -94,24 +94,42 @@ namespace ctuconnect
             department.DataValueField = "department_ID";
             department.DataTextField = "departmentName";
             department.DataBind();
-            department.Items.Insert(0, new ListItem("Select Department", "0"));
+            department.Items.Insert(0, new ListItem("All", "0"));
+            course.Items.Insert(0, new ListItem("All", "0"));
+            course.SelectedIndex = 0;
         }
         protected void department_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (department.SelectedValue == "0")
+            {
+                Response.Redirect("TraceStudent.aspx");
+            }
             SqlCommand cmd = new SqlCommand("SELECT * FROM PROGRAM WHERE department_ID = '" + department.SelectedValue + "'", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
             course.DataSource = ds;
-
             course.DataValueField = "course_ID";
             course.DataTextField = "course";
             course.DataBind();
-            course.Items.Insert(0, new ListItem("Select Course", "0"));
+            course.Items.Insert(0, new ListItem("All", "0"));
+            course.SelectedIndex = 0;
+            ShowByCourse(int.Parse(department.SelectedValue), int.Parse(course.SelectedValue));
         }
-        void ShowByCourse()
+        void ShowByCourse(int departmentid, int course_ID)
         {
-            SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE STUDENT_ACCOUNT.course_ID = '" + course.SelectedValue + "'", conDB);
+            SqlCommand cmd = new SqlCommand();
+
+            if (departmentid != 0 && course_ID == 0)
+            {
+                cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
+                    " JOIN DEPARTMENT ON STUDENT_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE STUDENT_ACCOUNT.department_ID = '" + departmentid + "' and HIRED_LIST.studentType = 'Intern'", conDB);
+            }
+            else
+            {
+                cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
+                    " JOIN DEPARTMENT ON STUDENT_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE STUDENT_ACCOUNT.department_ID = '" + departmentid + "' and STUDENT_ACCOUNT.course_ID = '" + course_ID + "' and HIRED_LIST.studentType = 'Intern'", conDB);
+            }
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
@@ -120,7 +138,7 @@ namespace ctuconnect
         }
         protected void course_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ShowByCourse();
+            ShowByCourse(int.Parse(department.SelectedValue), int.Parse(course.SelectedValue));
             /*ViewState["selectedCourse"] = course.SelectedValue;*/
         }
 
@@ -134,11 +152,11 @@ namespace ctuconnect
             industry.DataValueField = "industry_accID";
             industry.DataTextField = "industryName";
             industry.DataBind();
-            industry.Items.Insert(0, new ListItem("Select Industry", "0"));
+            industry.Items.Insert(0, new ListItem("All", "0"));
         }
         void ShowByIndustry()
         {
-            SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE HIRED_LIST.industry_accID = '" + industry.SelectedValue + "'", conDB);
+            SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID JOIN DEPARTMENT ON STUDENT_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE HIRED_LIST.industry_accID = '" + industry.SelectedValue + "' and HIRED_LIST.studentType = 'Intern'", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
@@ -147,6 +165,10 @@ namespace ctuconnect
         }
         protected void industry_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (industry.SelectedValue == "0")
+            {
+                Response.Redirect("TraceStudent.aspx");
+            }
             SqlCommand cmd = new SqlCommand("SELECT * FROM HIRING WHERE industry_accID = '" + industry.SelectedValue + "'", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
@@ -156,26 +178,33 @@ namespace ctuconnect
             position.DataValueField = "jobID";
             position.DataTextField = "jobTitle";
             position.DataBind();
-            position.Items.Insert(0, new ListItem("Select Position", "0"));
+            position.Items.Insert(0, new ListItem("All", "0"));
 
             ShowByIndustry();
         }
 
         protected void position_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE HIRED_LIST.jobID = '" + position.SelectedValue + "'", conDB);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable ds = new DataTable();
-            da.Fill(ds);
-            InternListView.DataSource = ds;
-            InternListView.DataBind();
+            if (position.SelectedValue == "0")
+            {
+                ShowByIndustry();
+            }
+            else
+            {
+                SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID JOIN DEPARTMENT ON STUDENT_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE HIRED_LIST.jobID = '" + position.SelectedValue + "' and HIRED_LIST.studentType = 'Intern'", conDB);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable ds = new DataTable();
+                da.Fill(ds);
+                InternListView.DataSource = ds;
+                InternListView.DataBind();
+            }
         }
 
         void getDetails(int hired_ID)
         {
             conDB.Open();
             SqlCommand cmd = new SqlCommand("select * from HIRED_LIST JOIN STUDENT_ACCOUNT ON HIRED_LIST.student_accID = STUDENT_ACCOUNT.student_accID JOIN INDUSTRY_ACCOUNT " +
-                "ON HIRED_LIST.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE HIRED_LIST.id = @hired_id", conDB);
+                "ON HIRED_LIST.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID JOIN DEPARTMENT ON STUDENT_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE HIRED_LIST.id = @hired_id", conDB);
             cmd.Parameters.AddWithValue("@hired_id", hired_ID);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
@@ -200,6 +229,24 @@ namespace ctuconnect
             int hired_ID = int.Parse(e.CommandArgument.ToString());
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showIntern();", true);
             getDetails(hired_ID);
+        }
+
+        protected void Status_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SqlCommand cmd = new SqlCommand();
+            if (Status.SelectedValue == "0")
+            {
+                Response.Redirect("TraceStudent.aspx");
+            }
+            else
+            {
+                cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID JOIN DEPARTMENT ON STUDENT_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE HIRED_LIST.internshipStatus = '" + Status.SelectedValue + "' and HIRED_LIST.studentType = 'Intern'", conDB);
+            }
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            InternListView.DataSource = ds;
+            InternListView.DataBind();
         }
     }
 }

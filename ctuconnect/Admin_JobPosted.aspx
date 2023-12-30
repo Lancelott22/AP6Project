@@ -140,9 +140,11 @@
                                         <asp:Label ID="JobPostedDate" runat="server" Visible="false" Text='<%#Eval("jobPostedDate")%>'></asp:Label>
                                         <label runat="server" hidden="hidden"><%#Eval("jobType")%></label>
                                         <div class="align-items-start">
+                                            <asp:LinkButton runat="server" ID="JobDetail" style="text-decoration:none;" CssClass="stretched-link" OnCommand="JobDetail_Command" CommandArgument='<%#Eval("jobID")%>'>
                                             <span>
                                                 <h3 style="color: #881A30; margin-bottom: 10px;"><b><%#Eval("jobTitle")%></b></h3>
                                             </span>
+                                            </asp:LinkButton>
                                         </div>
                                         <div class="col-3">
                                             <label>Industry Name: </label>
@@ -162,9 +164,9 @@
                                             <span id="jobCourse" runat="server"><%#Eval("jobCourse") %></span>
                                         </div>
                                         <div class="col-3">
-                                            <label>Job Location: </label>
+                                            <label>Job Type: </label>
                                             <br />
-                                            <span><%#Eval("jobLocation") %></span>
+                                            <span><%#Eval("jobType") %></span>
                                         </div>
                                         <div class="col-3">
                                             <label>Date: </label>
@@ -251,10 +253,93 @@
                 </div>
             </div>
 
+            <div class="modal" id="jobDetailModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <asp:Label ID="IndustryID" runat="server" Visible="false"></asp:Label>
+                        <asp:Label ID="Job_ID" runat="server" Visible="false"></asp:Label>
+
+                        <div class="modal-header ps-5 py-4">                            
+                                <div class="col-2">
+                                    <img id="IndstryLogo" runat="server" alt="Logo" class="imgStyle" />
+                                </div>
+                                <div class="col-10">
+                                    <div class="row" style="margin: 0px; margin-bottom: 5px;">
+                                        <asp:Label ID="JobTitle" runat="server" Style="font-size: 23px; font-weight: bold; color: #881A30;" />
+
+                                    </div>
+                                    <div class="row" style="margin: 0px; margin-bottom: 2px;">
+                                        <a href="#" id="viewIndustryProfileLink" runat="server" style="text-decoration: underline;">
+                                            <asp:Label ID="IndustryName" runat="server" Style="font-size: 17px;" /></a>
+                                    </div>
+
+                                    <div class="row" style="margin: 0px; margin-bottom: 2px; font-size: 15px;">
+                                        <asp:Label ID="JobLocation" runat="server" />
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="modal-body">
+                            <div style="padding: 15px; padding-top: 20px;">
+                                <div class="container-fluid row lh-lg">
+                                    <h3><b>Job Details</b></h3>
+                                    <br />
+                                    <span>
+                                        <label>Job Type: </label>
+                                        <asp:Label ID="JobType" runat="server" />
+                                        <br />
+                                    </span>
+                                    <span>
+                                        <label>Job Course: </label>
+                                        <asp:Label ID="JobCourse" runat="server" />
+                                        <br />
+                                    </span>
+                                    <span id="salaryData" runat="server">
+                                        <label>Salary: </label>
+                                        <asp:Label ID="SalaryRange" runat="server" />
+                                        <br />
+                                    </span>
+                                </div>
+                                <hr style="border: 1px solid #000000;" />
+                                <div class="container-fluid row">
+                                    <h4>
+                                        <label>Job Description</label></h4>
+                                    <asp:Label ID="JobDescription" runat="server" Style="margin-bottom: 10px;" /><br />
+
+                                    <h4>
+                                        <label>Job Qualification </label>
+                                    </h4>
+                                    <asp:Label ID="JobQualification" runat="server" Style="margin-bottom: 10px;" /><br />
+
+                                    <h4>
+                                        <label>Application Instruction </label>
+                                    </h4>
+
+                                    <asp:Label ID="ApplicationInstruction" runat="server" Style="margin-bottom: 5px;" />
+                                </div>
+                            </div>
+
+                        </div>
+                       <div class="modal-footer d-flex pe-5 ps-5">
+                            <div class="me-auto">
+                                <span>
+                                    <label>Date Posted: </label>
+                                    <asp:Label ID="DatePosted" runat="server" /></span>
+                            </div>
+                            <div class="ms-auto">
+                                <span>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="modal" id="DeleteJobModal" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
                         <asp:Label ID="delete_jobID" runat="server" Visible="false"></asp:Label>
+                        <span id="Delete_IndustryEmail" runat="server" visible="false"></span>
                         <div class="modal-header">
                             <h3><b>Delete Job</b></h3>
                         </div>
@@ -287,6 +372,9 @@
     <script type="text/javascript">
         function showReportList() {
             $('#ReportListModal').modal('show');
+        }
+        function showJobDetails() {
+            $('#jobDetailModal').modal('show');
         }
         function showDeleteJob() {
             $('#DeleteJobModal').modal('show');
