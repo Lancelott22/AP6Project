@@ -42,13 +42,31 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.LinkButton SignOut;
 
         /// <summary>
-        /// ddlSortBy control.
+        /// academicYearSemesterFilter control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSortBy;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl academicYearSemesterFilter;
+
+        /// <summary>
+        /// ddlAcademicYear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAcademicYear;
+
+        /// <summary>
+        /// programList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList programList;
 
         /// <summary>
         /// alumniListview control.

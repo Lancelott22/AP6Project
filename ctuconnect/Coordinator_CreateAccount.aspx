@@ -112,10 +112,6 @@
                             <i class="fa fa-tachometer" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Dashboard
                         </a>
-                        <a href="#myaccount">
-                            <i class="fa fa-users" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
-                            Create Partnership
-                        </a>
                         <a href="IndustryVerification.aspx">
                             <i class="fa fa-users" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
                             Industry Verification
@@ -167,7 +163,10 @@
                             <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Coordinator Account
                         </a>
-
+                        <asp:LinkButton runat="server" ID ="LinkButton1">
+                            <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
+                            Sign-out
+                        </asp:LinkButton>
                     </div>
 
                 </div>

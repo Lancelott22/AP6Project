@@ -19,6 +19,8 @@ namespace ctuconnect
     public partial class CoordinatorProfile : System.Web.UI.Page
     {
         string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
+        SqlConnection connectionDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack && Session["Username"] == null)
@@ -32,6 +34,8 @@ namespace ctuconnect
                 CoordinatorImage.ImageUrl = imagePath;
                 BindTable();
                 BindCourse();
+                BindSchoolYear();
+                BindSemester();
                 /*BindStatus();*/
 
 
@@ -87,7 +91,7 @@ namespace ctuconnect
             using (var db = new SqlConnection(conDB))
             {
                 string query = "SELECT  DISTINCT STUDENT_ACCOUNT.student_accID ,STUDENT_ACCOUNT.studentId, STUDENT_ACCOUNT.lastName, STUDENT_ACCOUNT.firstName, STUDENT_ACCOUNT.midInitials, " +
-                                "PROGRAM.course_ID, PROGRAM.course, STUDENT_ACCOUNT.semCode, ACADEMIC_YEAR.semdescription, STUDENT_ACCOUNT.contactNumber, STUDENT_ACCOUNT.email,STUDENT_ACCOUNT.isHired, HIRED_LIST.id, HIRED_LIST.renderedHours, HIRED_LIST.evaluationRequest " +
+                                "PROGRAM.course_ID, PROGRAM.course, STUDENT_ACCOUNT.semCode,  ACADEMIC_YEAR.academicYear + ' ' + ACADEMIC_YEAR.semDescription AS semDescription , STUDENT_ACCOUNT.contactNumber, STUDENT_ACCOUNT.email,STUDENT_ACCOUNT.isHired, HIRED_LIST.id, HIRED_LIST.renderedHours, HIRED_LIST.evaluationRequest " +
                 "FROM STUDENT_ACCOUNT LEFT JOIN ACADEMIC_YEAR ON STUDENT_ACCOUNT.semCode = ACADEMIC_YEAR.semCode " +
                 "LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
                 "LEFT JOIN HIRED_LIST  ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID " +
@@ -114,17 +118,34 @@ namespace ctuconnect
             Response.Redirect("LoginOJTCoordinator.aspx");
         }
 
-
-
         protected void ddlSemester_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ShowListView();
+        }
+
+            protected void ddlacademicYear_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            SqlCommand cmd = new SqlCommand("SELECT semCode, semDescription FROM ACADEMIC_YEAR " +
+                           "WHERE academicYear = '" + ddlAcademicYear.SelectedValue + "'", connectionDB);
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable ds = new DataTable();
+                da.Fill(ds);
+
+            ddlSemester.DataSource = ds;
+            ddlSemester.DataTextField = "semDescription";
+            ddlSemester.DataValueField = "semCode";
+            ddlSemester.DataBind();
+            ddlSemester.Items.Insert(0, new ListItem("All", "0"));
+
             ShowListView();
         }
         void ShowListView()
         {
             int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
             int selectedSemesterValue = Convert.ToInt32(ddlSemester.SelectedValue);
-
+            string selectedAcademicYearValue = ddlAcademicYear.SelectedValue;
             using (var db = new SqlConnection(conDB))
             {
                 SqlCommand cmd = new SqlCommand("SELECT * FROM STUDENT_ACCOUNT " +
@@ -137,7 +158,13 @@ namespace ctuconnect
 
                 cmd.Parameters.AddWithValue("@CoordinatorID", coordinatorID);
 
-                // Optional: Filter by semester if a specific semester is selected
+                if (selectedAcademicYearValue != null)
+                {
+                    cmd.CommandText += " AND ACADEMIC_YEAR.academicYear = @SelectedAcademicYear";
+                    cmd.Parameters.AddWithValue("@SelectedAcademicYear", selectedAcademicYearValue);
+                }
+
+                
                 if (selectedSemesterValue != 0)
                 {
                     cmd.CommandText += " AND STUDENT_ACCOUNT.semCode = @SemesterValue";
@@ -208,7 +235,7 @@ namespace ctuconnect
         {
             Button EvaluationBtn = (Button)sender;
 
-            if (EvaluationBtn.Text == "Evaluated")
+            if (EvaluationBtn.Text == "Evaluation")
             {
                 Response.Redirect("ViewEvaluation.aspx?student_accID=" + e.CommandArgument.ToString() + "&hired_id=" + e.CommandName.ToString());
             }
@@ -765,6 +792,42 @@ namespace ctuconnect
 
             }
         }
+
+        void BindSchoolYear()
+        {
+            string query = "SELECT DISTINCT academicYear FROM ACADEMIC_YEAR ";
+            using (var db = new SqlConnection(conDB))
+            {
+                SqlCommand cmd = new SqlCommand(query, db);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable ds = new DataTable();
+                da.Fill(ds);
+                ddlAcademicYear.DataSource = ds;
+                ddlAcademicYear.DataTextField = "academicYear";
+                ddlAcademicYear.DataValueField = "academicYear";
+                ddlAcademicYear.DataBind();
+
+            }
+        }
+        void BindSemester()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT semCode, semDescription FROM ACADEMIC_YEAR " +
+                "WHERE academicYear = '" + ddlAcademicYear.SelectedValue + "'", connectionDB);
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+
+            ddlSemester.DataSource = ds;
+            ddlSemester.DataTextField = "semDescription";
+            ddlSemester.DataValueField = "semCode";
+            ddlSemester.DataBind();
+            ddlSemester.Items.Insert(0, new ListItem("All", "0"));
+
+        
+        }
+
+
         /*        void BindStatus()
                 {
                     int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
@@ -793,7 +856,7 @@ namespace ctuconnect
             ShowListView();
 
         }
-        void ShowByCourse()
+/*        void ShowByCourse()
         {
             int coordinatorID = Convert.ToInt32(Session["Coor_ACC_ID"]);
             using (var db = new SqlConnection(conDB))
@@ -812,7 +875,7 @@ namespace ctuconnect
                 internListView.DataSource = ds;
                 internListView.DataBind();
             }
-        }
+        }*/
         /*        protected void status_SelectedIndexChanged(object sender, EventArgs e)
                 {
                     ShowByStatus();

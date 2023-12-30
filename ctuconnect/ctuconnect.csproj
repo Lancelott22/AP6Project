@@ -261,6 +261,7 @@
     <Content Include="images\ctulogo.png" />
     <Content Include="images\dashwhite.png" />
     <Content Include="images\defaultprofile.jpg" />
+    <Content Include="images\Icons\8541541_bullseye_target_icon.png" />
     <Content Include="images\industrypic.png" />
     <Content Include="images\IndustryProfile\defaultprofile.jpg" />
     <Content Include="images\job.png" />

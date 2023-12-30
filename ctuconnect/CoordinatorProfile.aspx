@@ -12,7 +12,7 @@
         .profile-container{
             font-family: 'Poppins', sans-serif;
             max-width:260px;
-            max-height:630px;
+            max-height:660px;
             background-color:white;
             margin-left:1%;
             padding-bottom:8px;
@@ -188,11 +188,6 @@
         padding:5px;
 
     }
-/*    td{
-        border: 1px solid;
-        border-color:dimgray;
-        padding-left:5px;
-    }*/
     .datas{
         border: 1px solid;
         border-color:#c4c4c4;
@@ -318,14 +313,9 @@
                          <asp:ListItem Text="Not Hired" Value="0" />
                      </asp:DropDownList>--%>
                                            <div id="academicYearSemesterFilter" style="float:left; min-width:50%;" runat="server">
-                    <p style="float:left;">Academic Year  <asp:DropDownList ID="ddlAcademicYear" runat="server" CssClass="sort-dropdown1" AutoPostBack="true" >
-                        <asp:ListItem Text="2023-2024" Value="1" />
+                    <p style="float:left;">Academic Year  <asp:DropDownList ID="ddlAcademicYear" runat="server" CssClass="sort-dropdown1" AutoPostBack="true" OnSelectedIndexChanged="ddlacademicYear_SelectedIndexChanged" >
                     </asp:DropDownList></p>
                     <asp:DropDownList ID="ddlSemester" runat="server" style="margin-left:1%;" CssClass="sort-dropdown2" OnSelectedIndexChanged="ddlSemester_SelectedIndexChanged" AutoPostBack="true">
-                        <asp:ListItem Text="All" Value="0" />
-                        <asp:ListItem Text="1st Semester" Value="23241" />
-                        <asp:ListItem Text="2nd Semester" Value="23242" />
-                        <asp:ListItem Text="Whole Semester" Value="23240" />
                     </asp:DropDownList>
                     <asp:DropDownList ID="programList" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="program_SelectedIndexChanged"></asp:DropDownList>
                    </div>
@@ -432,10 +422,10 @@
                                                 </td>
                                                 <td class="datas">
                                                     <asp:Button ID="EvaluationBtn" runat="server" Text='<%# Eval("evaluationRequest").ToString() == "Evaluated" ? "Evaluation" : "Not Available" %>' CommandArgument='<%# Eval("student_accID") %>' CommandName='<%# Eval("id") %>'  OnCommand="EvaluationBtn_Command" CssClass='<%# GetButtonCssClass(Eval("evaluationRequest")) %>' />
-                                                     
-
+             
                                                 </td>
-                                                <td><asp:Button ID="ViewIntern" Text="O"  runat="server"  OnCommand="TraceIntern_Command" CommandArgument='<%#Eval("student_accID")%>' /> </td>
+                                                <td><asp:Button ID="ViewIntern" Text="ioi" runat="server" style="padding:0px; width:30px; border:none;"  OnCommand="TraceIntern_Command" CommandArgument='<%#Eval("student_accID")%>' />
+                                                </td>
                                             </tr>
                                         </Itemtemplate>
                    </asp:ListView>

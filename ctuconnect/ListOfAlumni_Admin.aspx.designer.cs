@@ -24,6 +24,123 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
 
         /// <summary>
+        /// academicYearSemesterFilter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl academicYearSemesterFilter;
+
+        /// <summary>
+        /// ddlAcademicYear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAcademicYear;
+
+        /// <summary>
+        /// programList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList programList;
+
+        /// <summary>
+        /// ddlAcademicYear2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAcademicYear2;
+
+        /// <summary>
+        /// programList2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList programList2;
+
+        /// <summary>
+        /// ddlAcademicYear3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAcademicYear3;
+
+        /// <summary>
+        /// programList3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList programList3;
+
+        /// <summary>
+        /// ddlAcademicYear4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAcademicYear4;
+
+        /// <summary>
+        /// programList4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList programList4;
+
+        /// <summary>
+        /// ddlAcademicYear5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAcademicYear5;
+
+        /// <summary>
+        /// programList5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList programList5;
+
+        /// <summary>
+        /// ddlAcademicYear6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAcademicYear6;
+
+        /// <summary>
+        /// programList6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList programList6;
+
+        /// <summary>
         /// myLinkButton1 control.
         /// </summary>
         /// <remarks>
@@ -87,57 +204,57 @@ namespace ctuconnect
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// dataRepeater1 control.
+        /// CASListview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater dataRepeater1;
+        protected global::System.Web.UI.WebControls.ListView CASListview;
 
         /// <summary>
-        /// dataRepeater2 control.
+        /// CCICTListview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater dataRepeater2;
+        protected global::System.Web.UI.WebControls.ListView CCICTListview;
 
         /// <summary>
-        /// dataRepeater3 control.
+        /// CMEListview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater dataRepeater3;
+        protected global::System.Web.UI.WebControls.ListView CMEListview;
 
         /// <summary>
-        /// dataRepeater4 control.
+        /// COEListview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater dataRepeater4;
+        protected global::System.Web.UI.WebControls.ListView COEListview;
 
         /// <summary>
-        /// dataRepeater5 control.
+        /// COEdListview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater dataRepeater5;
+        protected global::System.Web.UI.WebControls.ListView COEdListview;
 
         /// <summary>
-        /// dataRepeater6 control.
+        /// COTListview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater dataRepeater6;
+        protected global::System.Web.UI.WebControls.ListView COTListview;
     }
 }

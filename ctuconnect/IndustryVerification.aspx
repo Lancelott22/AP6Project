@@ -110,11 +110,7 @@
                             <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             Dashboard
                         </a>
-                        <a href="#myaccount">
-                            <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                            Create Partnership
-                        </a>
-                        <a class="active" href="#myaccount">
+                        <a class="active" href="IndustryVerification.aspx">
                             <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             Industry Verification
                         </a>
@@ -142,9 +138,29 @@
                         </a>
                         <a href="Blacklist_Admin.aspx">
                             <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                            Blacklist
+                            Blacklisted
+                        </a>
+                        <a href="SuggestionsAdmin.aspx">
+                            <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Suggestions
+                        </a>
+                        <a href="Admin_Contact.aspx">
+                            <i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Contact
                         </a>
                         <hr class="second" />
+                        <a href="TracerDashboard.aspx">
+                            <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            Tracer
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Profile
+                        </a>
+                        <a href="Coordinator_CreateAccount.aspx">
+                            <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Coordinator Account
+                        </a>
                         <asp:LinkButton runat="server" ID ="LinkButton1">
                             <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
                             Sign-out

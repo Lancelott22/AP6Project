@@ -34,7 +34,7 @@
         width: 90%;
         margin-left:auto;
         margin-right:auto;
-        margin-top:13%;
+        margin-top:1%;
         margin-bottom:0%;
     }
          
@@ -142,13 +142,9 @@
                     <img src="images/administratorpic.jpg" />
                     <p >Admin</p>
                     <hr class="horizontal-line" />
-                    <a href="#">
+                    <a href="AdminDashboard.aspx">
                         <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Dashboard
-                    </a>
-                    <a href="AdminDashboard.aspx">
-                        <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Create Partnership
                     </a>
                     <a  href="IndustryVerification.aspx">
                         <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
@@ -178,22 +174,33 @@
                     </a>
                     <a class="active" href="Blacklist_Admin.aspx">
                         <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Blacklist
+                        Blacklisted
                     </a>
-                    <hr class="second" />
-                                        <a href="TracerDashboard.aspx">
-                        <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Blacklist
-                    </a>
-                    <a href="#">
-                        <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                        Profile
-                    </a>
-                    <asp:LinkButton runat="server" ID ="LinkButton1">
-                        <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
-                        Sign-out
-                    </asp:LinkButton>
-                </div>
+                        <a href="SuggestionsAdmin.aspx">
+                            <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Suggestions
+                        </a>
+                        <a href="Admin_Contact.aspx">
+                            <i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Contact
+                        </a>
+                        <hr class="second" />
+                        <a href="TracerDashboard.aspx">
+                            <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            Tracer
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Profile
+                        </a>
+                        <a href="Coordinator_CreateAccount.aspx">
+                            <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Coordinator Account
+                        </a>
+                        <asp:LinkButton runat="server" ID ="LinkButton1">
+                            <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
+                            Sign-out
+                        </asp:LinkButton>                </div>
                 
             </div>
         </div>
