@@ -108,21 +108,52 @@
             border-radius: 10px;
         }
 
-     
-                .submitStyle {
-    float: right;
-    color: white;
-    background-color: orange;
-    border-radius: 15px;
-    height: 40px;
-    width: 20%;
-    border: 1px solid orange;
-}
 
-    .submitStyle:hover {
-        box-shadow: 3px 6px 7px -4px grey;
-    }
+        .submitStyle {
+            float: right;
+            color: white;
+            background-color: orange;
+            border-radius: 15px;
+            height: 40px;
+            width: 20%;
+            border: 1px solid orange;
+        }
+
+            .submitStyle:hover {
+                box-shadow: 3px 6px 7px -4px grey;
+            }
+
+        .overlay {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: 9999;
+        }
+
+        .spinner-container {
+            text-align: center;
+        }
     </style>
+    <div class="overlay">
+        <div class="spinner-container">
+            <span class="fs-1" id="Load">Sending Message</span>
+            <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-3 d-flex flex-column">
@@ -223,7 +254,7 @@
                         <asp:TextBox class="form-control summernote" Rows="5" TextMode="MultiLine" ID="message" runat="server" ValidateRequestMode="Disabled"></asp:TextBox>
                     </div>
                     <div>
-                        <asp:Button ID="SendMessage" runat="server" CssClass="submitStyle" Text="Send Message" OnClick="SendMessage_Click" />
+                        <asp:Button ID="SendMessage" runat="server" CssClass="submitStyle" Text="Send Message" OnClientClick="showOverlay();" OnClick="SendMessage_Click" />
                     </div>
                 </div>
 
@@ -231,26 +262,31 @@
 
         </div>
     </div>
-        <script>
-            $(document).ready(function () {
-                $('.summernote').summernote({
-                    height: 300,
-                    placeholder: 'Input message...',
-                    toolbar: [
-                        ['style', ['bold', 'italic', 'underline', 'clear']],
-                        ['font',],
-                        ['fontsize', ['fontsize']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                height: 300,
+                placeholder: 'Input message...',
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font',],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
 
-                        ['height', ['height']]
-                    ]
-                });
+                    ['height', ['height']]
+                ]
             });
-        </script>
-<script>
-    $(document).ready(function () {
-        $('.selectpicker').selectpicker();
-    });
-</script>
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.selectpicker').selectpicker();
+        });
+    </script>
+    <script>
+        function showOverlay() {
+            $(".overlay").css("display", "flex");
+        }
+    </script>
 </asp:Content>

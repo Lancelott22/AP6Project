@@ -45,6 +45,7 @@ namespace ctuconnect
         {
             try
             {
+
                 HttpPostedFile studentCSVFile = studentCSV.PostedFile;
                 string studentCSVFileName = Path.GetFileName(studentCSVFile.FileName);
                 string studentCSVFileEx = Path.GetExtension(studentCSVFileName).ToLower();
@@ -127,7 +128,7 @@ namespace ctuconnect
                         sqlBulkCopy.WriteToServer(dt);
                         sqlBulkCopy.Close();
                         conDB.Close();
-                        Response.Write("<script>alert('The file has been uploaded successfully.');document.location='Coordinator_UploadCSV.aspx';</script>");
+                        Response.Write("<script>alert('The file has been uploaded successfully.');document.location='CoordinatorProfile.aspx';</script>");
                                                
                     }
                     foreach (DataRow row in dt.Rows)
@@ -139,6 +140,7 @@ namespace ctuconnect
                         // Send email to each student
                         SendEmail(studentEmail, studentPassword, username, Name);
                     }
+
                 }
                 else
                 {
@@ -158,8 +160,10 @@ namespace ctuconnect
                 string sendToEmail = studentEmail;
                 string sendFrom = "ctuconnect00@gmail.com";
                 string sendMessage = $"Hello {studentName}, <br/><br/>" +
+                    $"Your account has been created by your department OJT Coordinator. You can now use it to sign in on CTU Connect as Student/Intern. Please change your default password to make your account secure.<br/><br/>" +
                     $"Your email is: {username} <br/>" +
                     $"Your password is: {password}<br/>" +
+                    $"Date Created: {DateTime.Now}<br/>" +
                     $"<br/><br/><h4>Note: This is a confidential information. Please do not share this message to anyone.</h4>";
                 string subject = "New Created Account";
                 using (MailMessage mm = new MailMessage())
@@ -369,7 +373,7 @@ namespace ctuconnect
                         string usernameEmail = username;
                         // Send email to each student
                         SendEmail(studentEmail, studentPassword, usernameEmail, Name);
-                        Response.Write("<script>alert('Student account has been saved successfully.');document.location='Coordinator_UploadCSV.aspx';</script>");
+                        Response.Write("<script>alert('Student account has been saved successfully.');document.location='CoordinatorProfile.aspx';</script>");
                     }
                     else
                     {

@@ -139,8 +139,10 @@ namespace ctuconnect
                 string sendToEmail = CoordinatorUsername;
                 string sendFrom = "ctuconnect00@gmail.com";
                 string sendMessage = $"Hello {CoordinatorName}, <br/><br/>" +
+                    $"Your account has been created by the Admin. You can now use it to sign in on CTU Connect as OJT Coordinator. Please change your default password to make your account secure.<br/><br/>" +
                     $"Your email is: {CoordinatorUsername} <br/>" +
                     $"Your password is: {CoordinatorPassword}<br/>" +
+                    $"Date Created: {DateTime.Now}<br/>" +
                     $"<br/><br/><h4>Note: This is a confidential information. Please do not share this message to anyone.</h4>";
                 string subject = "New Created Account";
                 using (MailMessage mm = new MailMessage())

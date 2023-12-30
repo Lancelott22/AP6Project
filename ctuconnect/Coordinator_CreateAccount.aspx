@@ -99,7 +99,37 @@
             background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%);
             border-radius: 10px;
         }
+        .overlay {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: 9999;
+        }
+
+        .spinner-container {
+            text-align: center;
+        }
     </style>
+    <div class="overlay">
+        <div class="spinner-container">
+            <span class="fs-1" id="LoadAddCoordinator"></span>
+            <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-3 d-flex flex-column">
@@ -183,7 +213,7 @@
                             <h3 class="my-1 text-danger">or</h3>
                             <h4>Upload CSV for Coordinator</h4>
                             <asp:FileUpload ID="coordinatorCSV" runat="server" />
-                            <asp:Button Text="Upload Coordinator CSV" ID="UploadCoordinatorCSV" CssClass="btn btn-success"  OnClick="UploadCoordinatorCSV_Click" runat="server" />
+                            <asp:Button Text="Upload Coordinator CSV" ID="UploadCoordinatorCSV" CssClass="btn btn-success" OnClientClick="showOverlay(this.id);" OnClick="UploadCoordinatorCSV_Click" runat="server" />
                         </div>
                         <div class="row m-2 my-5">
                             <asp:ListView ID="CoordinatorListView" runat="server">
@@ -278,7 +308,7 @@
             <div class="modal-footer">
                 <div style="float: right;">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                    <asp:LinkButton ID="Save" class="btn btn-success" runat="server" OnCommand="Save_Command">Save</asp:LinkButton>
+                    <asp:LinkButton ID="Save" class="btn btn-success" runat="server" OnClientClick="showOverlay(this.id);" OnCommand="Save_Command">Save</asp:LinkButton>
                 </div>
             </div>
         </div>
@@ -300,5 +330,20 @@
             }
         }
     </script>
-
+    <script>
+        function showOverlay(buttonId) {
+            var SaveCoordinatorBtn = document.getElementById('<%= Save.ClientID %>').id;
+        var UploadCoordinatorBtn = document.getElementById('<%= UploadCoordinatorCSV.ClientID %>').id;
+            var textLoading = document.getElementById("LoadAddCoordinator");
+            if (buttonId === UploadCoordinatorBtn) {
+            textLoading.innerText = 'Uploading CSV';
+        }
+            else if (buttonId === SaveCoordinatorBtn) {
+            var firstName = document.getElementById('<%= CoordFirstName.ClientID %>').value;
+            var lastName = document.getElementById('<%= CoordLastName.ClientID %>').value;
+                textLoading.innerText = 'Saving ' + firstName + ' ' + lastName + ' Data';
+            }
+            $(".overlay").css("display", "flex");
+        }
+    </script>
 </asp:Content>

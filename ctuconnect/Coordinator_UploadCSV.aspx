@@ -210,7 +210,38 @@
             width: 100%;
             color: dimgray;
         }
+
+        .overlay {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: 9999;
+        }
+
+        .spinner-container {
+            text-align: center;
+        }
     </style>
+    <div class="overlay">
+        <div class="spinner-container">
+            <span class="fs-1" id="LoadAddIntern"></span>
+            <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
     <asp:Table ID="Table1" runat="server" CssClass="content">
         <asp:TableRow>
             <asp:TableCell Style="vertical-align: top;">
@@ -242,12 +273,11 @@
                     <div>
                         <h3>Add Intern</h3>
 
-                        <asp:Button Text="Add Intern Account" CssClass="btn btn-info" ID="AddIntern" OnClick="AddIntern_Click" runat="server"/>
+                        <asp:Button Text="Add Intern Account" CssClass="btn btn-info" ID="AddIntern" OnClick="AddIntern_Click" runat="server" />
                         <h3 class="my-1 text-danger">or</h3>
                         <h3 class="my-2">Upload CSV for Intern</h3>
                         <asp:FileUpload ID="studentCSV" runat="server" />
-                        <asp:Button Text="Upload Intern CSV" CssClass="btn btn-success" ID="UploadInternCSV" OnClick="UploadInternCSV_Click" runat="server" />
-
+                        <asp:Button Text="Upload Intern CSV" CssClass="btn btn-success" ID="UploadInternCSV" OnClientClick="showOverlay(this.id);" OnClick="UploadInternCSV_Click" runat="server" />
                     </div>
                     <div>
                         <h3>Upload CSV for Graduates</h3>
@@ -319,8 +349,8 @@
                         <label for="StudPersonalEmail" class="col-sm-3 col-form-label">Personal Email:</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="StudPersonalEmail" runat="server" placeholder="Personal Email">
-                            <asp:RegularExpressionValidator runat="server" ID="EmailValidator" ControlToValidate="StudPersonalEmail" 
-                                ErrorMessage="Please enter a valid Gmail address." ValidationExpression="^[a-zA-Z0-9._%+-]+@gmail\.com$" 
+                            <asp:RegularExpressionValidator runat="server" ID="EmailValidator" ControlToValidate="StudPersonalEmail"
+                                ErrorMessage="Please enter a valid Gmail address." ValidationExpression="^[a-zA-Z0-9._%+-]+@gmail\.com$"
                                 Display="Dynamic" CssClass="text-danger"></asp:RegularExpressionValidator>
                         </div>
                     </div>
@@ -349,7 +379,7 @@
                 <div class="modal-footer">
                     <div style="float: right;">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <asp:LinkButton ID="Save" class="btn btn-success" runat="server" OnCommand="Save_Command">Save</asp:LinkButton>
+                        <asp:LinkButton ID="Save" class="btn btn-success" runat="server" OnCommand="Save_Command" OnClientClick="showOverlay(this.id);">Save</asp:LinkButton>
                     </div>
                 </div>
             </div>
@@ -378,6 +408,23 @@
             if (firstName != '' && lastName != '') {
                 emailBox.value = firstName.toLowerCase() + '.' + lastName.toLowerCase() + '@ctu.edu.ph';
             }
+        }
+
+    </script>
+    <script>
+        function showOverlay(buttonId) {
+            var SaveInternBtn = document.getElementById('<%= Save.ClientID %>').id;
+            var UploadInternBtn = document.getElementById('<%= UploadInternCSV.ClientID %>').id;
+            var textLoading = document.getElementById("LoadAddIntern");
+            if (buttonId === UploadInternBtn) {
+                textLoading.innerText = 'Uploading CSV';
+            }
+            else if (buttonId === SaveInternBtn) {
+                var firstName = document.getElementById('<%= FirstName.ClientID %>').value;
+                var lastName = document.getElementById('<%= LastName.ClientID %>').value;
+                textLoading.innerText = 'Saving ' + firstName + ' ' + lastName + ' Data';
+            }
+            $(".overlay").css("display", "flex");
         }
     </script>
 </asp:Content>

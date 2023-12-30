@@ -231,7 +231,37 @@
      .submitStyle:hover {
          box-shadow: 3px 6px 7px -4px grey;
      }
+     .overlay {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 9999;
+}
+
+.spinner-container {
+    text-align: center;
+}
     </style>
+    <div class="overlay">
+    <div class="spinner-container">
+        <span class="fs-1" id="Load">Sending Message</span>
+        <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
     <asp:Table ID="Table1" runat="server" CssClass="content">
         <asp:TableRow>
             <asp:TableCell Style="vertical-align: top;">
@@ -289,7 +319,7 @@
                             <asp:TextBox class="form-control summernote" Rows="5" TextMode="MultiLine" ID="message" runat="server" ValidateRequestMode="Disabled"></asp:TextBox>
                         </div>
                         <div>
-                            <asp:Button ID="SendMessage" runat="server" CssClass="submitStyle" Text="Send Message" OnClick="SendMessage_Click" />
+                            <asp:Button ID="SendMessage" runat="server" CssClass="submitStyle" Text="Send Message"  OnClientClick="showOverlay();" OnClick="SendMessage_Click" />
                         </div>
                     </div>
                </div>
@@ -318,6 +348,12 @@
         $(document).ready(function () {
             $('.selectpicker').selectpicker();
         });
+    </script>
+
+    <script>
+        function showOverlay() {
+            $(".overlay").css("display", "flex");
+        }
     </script>
 </asp:Content>
 

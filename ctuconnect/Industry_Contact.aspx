@@ -281,8 +281,38 @@
             .submitStyle:hover {
                 box-shadow: 3px 6px 7px -4px grey;
             }
-    </style>
 
+        .overlay {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: 9999;
+        }
+
+        .spinner-container {
+            text-align: center;
+        }
+    </style>
+    <div class="overlay">
+        <div class="spinner-container">
+            <span class="fs-1" id="Load">Sending Message</span>
+            <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
     <asp:Table ID="Table1" runat="server" CssClass="content">
         <asp:TableRow>
             <asp:TableCell Style="vertical-align: top; height: 200px;">
@@ -307,18 +337,18 @@
                     <br />
                     <div class="form-group row p-2">
                         <label class="fs-3 fw-normal">Send to:</label>
-                        
-                        <asp:DropDownList runat="server" title="Select User"  CssClass="selectpicker form-control" ID="SendToUser" AutoPostBack="true" OnSelectedIndexChanged="SendToUser_SelectedIndexChanged">
-                             <asp:ListItem Value="" Enabled="false" Selected="true">Select User</asp:ListItem>
+
+                        <asp:DropDownList runat="server" title="Select User" CssClass="selectpicker form-control" ID="SendToUser" AutoPostBack="true" OnSelectedIndexChanged="SendToUser_SelectedIndexChanged">
+                            <asp:ListItem Value="" Enabled="false" Selected="true">Select User</asp:ListItem>
                             <asp:ListItem Value="Admin">Admin</asp:ListItem>
-                             <asp:ListItem Value="OJTCoordinator">OJT Coordinator</asp:ListItem>
-                             <asp:ListItem Value="HiredStudent">Hired</asp:ListItem>
-                        </asp:DropDownList>                             
+                            <asp:ListItem Value="OJTCoordinator">OJT Coordinator</asp:ListItem>
+                            <asp:ListItem Value="HiredStudent">Hired</asp:ListItem>
+                        </asp:DropDownList>
                         <br />
-                           <br />
+                        <br />
                         <select runat="server" title="Select Account" class="selectpicker form-control" data-actions-box="true" multiple="true" name="SendToEmail" id="SendToEmail">
                         </select>
-                   
+
                     </div>
                     <div class="form-group row p-2">
                         <label class="fs-3 fw-normal">Subject:</label>
@@ -326,10 +356,10 @@
                     </div>
                     <div class="form-group row p-2">
                         <label class="fs-3 fw-normal">Message:</label>
-                        <asp:TextBox class="form-control summernote" rows="5" TextMode="MultiLine" id="message" runat="server" ValidateRequestMode="Disabled"></asp:TextBox>
+                        <asp:TextBox class="form-control summernote" Rows="5" TextMode="MultiLine" ID="message" runat="server" ValidateRequestMode="Disabled"></asp:TextBox>
                     </div>
                     <div>
-                        <asp:Button ID="SendMessage" runat="server" CssClass="submitStyle" Text="Send Message" OnClick="SendMessage_Click" />
+                        <asp:Button ID="SendMessage" runat="server" CssClass="submitStyle" Text="Send Message" OnClientClick="showOverlay();" OnClick="SendMessage_Click" />
                     </div>
                 </div>
 
@@ -347,7 +377,7 @@
                     <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                     <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
                     <a href="IndustryProfile.aspx"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
-                                        <a href="Industry_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right:12px;"></i>Account Settings</a>
+                    <a href="Industry_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right: 12px;"></i>Account Settings</a>
 
                     <a class="active" href="Industry_Contact.aspx"><i class="fa fa-comments" aria-hidden="true"></i>Contact</a>
                     <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
@@ -381,6 +411,11 @@
         $(document).ready(function () {
             $('.selectpicker').selectpicker();
         });
+    </script>
+    <script>
+        function showOverlay() {
+            $(".overlay").css("display", "flex");
+        }
     </script>
 </asp:Content>
 
