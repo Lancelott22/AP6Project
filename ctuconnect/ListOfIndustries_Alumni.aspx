@@ -5,6 +5,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
 <style>
     .profile-container{
         background-color:white;
@@ -36,7 +37,7 @@
         width: 90%;
         margin-left:auto;
         margin-right:auto;
-        margin-top:13%;
+        margin-top:1%;
         margin-bottom:0%;
     }
          
@@ -112,27 +113,33 @@
         background-color: #881A30;
 
     }
-   th{
-   border-collapse: collapse;
-    border-color:white;
-    background-color:#f4f4fb;
-    padding:5px;
+    th{
+         border: 1px solid;
+         border-color:#c4c4c4;
+        background-color:#f4f4fb;
+        padding:5px;
 
     }
+/*    td{
+        border: 1px solid;
+        border-color:dimgray;
+        padding-left:5px;
+    }*/
     .datas{
-         padding:9px;
-          border: 8px solid;
-          border-color:white;
-         font-weight:bold;
+        border: 1px solid;
+        border-color:#c4c4c4;
+        padding-left:5px;
          color:black;
+         cursor:default;
     }
 
     .table-list{
-         border-collapse: collapse;
-        font-size:13px; 
+        border-collapse: collapse;        
+        font-size:14px; 
         height:auto; 
         width:100%;
         color:dimgray;
+        padding-right:4px;
     }
     .add-button{
     background-color: white;
@@ -166,10 +173,6 @@
                         <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Dashboard
                     </a>
-                    <a href="#myaccount">
-                        <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Create Partnership
-                    </a>
                     <a  href="IndustryVerification.aspx">
                         <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Industry Verification
@@ -183,36 +186,48 @@
                         <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         List of Industry
                     </a>
-                    <a href="ListOfInterns_Alumni.aspx">
-                        <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        List of Interns
-                    </a>
-                    <a href="ListOfAlumni_Admin.aspx">
-                        <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        List of Alumni
-                    </a>
-                    <hr class="horizontal-line" />
-                    <a href="Dispute.aspx">
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Dispute
-                    </a>
-                    <a href="Blacklist_Admin.aspx">
-                        <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Blacklist
-                    </a>
-                    <hr class="second" />
-                                        <a href="TracerDashboard.aspx">
-                        <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Tracer
-                    </a>
-                    <a href="#">
-                        <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                        Profile
-                    </a>
-                    <asp:LinkButton runat="server" ID ="LinkButton1">
-                        <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
-                        Sign-out
-                    </asp:LinkButton>
+                        <a href="ListOfInterns_Alumni.aspx">
+                            <i class="fa fa-industry" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            List of Interns
+                        </a>
+                        <a href="ListOfAlumni_Admin.aspx">
+                            <i class="fa fa-industry" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            List of Alumni
+                        </a>
+                        <hr class="horizontal-line" />
+                        <a href="Dispute.aspx">
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            Dispute
+                        </a>
+                        <a href="Blacklist_Admin.aspx">
+                            <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            Blacklisted
+                        </a>
+                        <a href="SuggestionsAdmin.aspx">
+                            <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Suggestions
+                        </a>
+                        <a href="Admin_Contact.aspx">
+                            <i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Contact
+                        </a>
+                        <hr class="second" />
+                        <a href="TracerDashboard.aspx">
+                            <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            Tracer
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Profile
+                        </a>
+                        <a href="Coordinator_CreateAccount.aspx">
+                            <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Coordinator Account
+                        </a>
+                        <asp:LinkButton runat="server" ID ="LinkButton1">
+                            <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
+                            Sign-out
+                        </asp:LinkButton>
                 </div>
                 
             </div>
@@ -227,35 +242,41 @@
                     <i class="fa fa-plus"></i>Add Industry
 
                 </asp:LinkButton>
-                                <table  class="table-list">
-                     <tr>
-                         <th>No.</th>
-                         <th>Industry Name</th>
-                         <th>Location</th>
-                         <th>Contact Person</th>
-                         <th>Contact Number</th>
-                         <th>Contact Email</th>
-                         <th>Memorandum Of Understanding</th>
-                     </tr>
-                     <asp:Repeater ID="dataRepeater" runat="server">
-                         <Itemtemplate>
-                             <tr class="datas">
-                                 <td><%# Container.ItemIndex + 1 %></td>
-                                 <td><%# Eval("industryName") %></td>
-                                 <td><%# Eval("location") %></td>
-                                 <td><%# Eval("contactPerson") %></td>
-                                 <td><%# Eval("contactNumber") %></td>
-                                 <td><%# Eval("contactEmail") %></td>
-                                 <td>
-                                     <asp:Button ID="btnMOU" runat="server" Text="View MOU"
-                                        OnCommand="ViewMOU_Command" CommandName="View"  
-                                        CommandArgument='<%# Eval("mou") %>'/>
-                                     </td>
-                             </tr>
-                         </Itemtemplate>
-     
-                     </asp:Repeater>
-                 </table>
+                                <asp:ListView ID="dataRepeater" runat="server"> 
+                     <LayoutTemplate>
+                            <table  class="table-list">
+                                 <tr>
+                                     <th>No.</th>
+                                     <th>Industry Name</th>
+                                     <th>Location</th>
+                                     <th>Contact Person</th>
+                                     <th>Contact Number</th>
+                                     <th>Contact Email</th>
+                                     <th>MOU</th>
+                                 </tr>
+                                <tbody>
+                                     <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                                 </tbody>
+                                </table>
+                    </LayoutTemplate>
+                                 <Itemtemplate>
+                                         <tr>
+                                             <td class="datas"><%# Container.DataItemIndex + 1 %></td>
+                                             <td class="datas">
+                                                 <a href='<%# ResolveUrl("~/ViewIndustryProfile_Coord?industry_accID=" + Eval("industry_accID"))%>' style="text-decoration: underline;">
+                                                 <asp:Label runat="server" Text='<%# Eval("industryName") %>'></asp:Label>
+
+                                             </td>
+                                             <td class="datas"><%# Eval("location") %></td>
+                                             <td class="datas"><%# Eval("contactPerson") %></td>
+                                             <td class="datas"><%# Eval("contactNumber") %></td>
+                                             <td class="datas"><%# Eval("contactEmail") %></td>
+                                             <td class="datas"><asp:Button ID="btnMOU" runat="server" Text="View MOU"
+                                                   OnCommand="ViewMOU_Command" CommandName="View"  
+                                                   CommandArgument='<%# Eval("mou") %>'/></td>
+                                         </tr>
+                                </Itemtemplate>
+                       </asp:ListView>
 </div>
             </div>
         </div>    

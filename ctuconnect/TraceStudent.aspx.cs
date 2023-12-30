@@ -24,6 +24,14 @@ namespace ctuconnect
                 BindInternList();
                 BindDepartment();
                 BindIndustry();
+                if (!IsPostBack && Request.QueryString["student_accID"] != null)
+                {
+                    FilterByStudent();
+                }
+                else
+                {
+                    this.BindInternList();
+                }
                 /* if (ViewState["selectedCourse"] != null)
                  {
                      course.SelectedValue = ViewState["selectedCourse"].ToString();
@@ -43,6 +51,22 @@ namespace ctuconnect
             if (InternListView.Items.Count == 0)
             {
                 /*  ListViewPager.Visible = false;*/
+            }
+        }
+        void FilterByStudent()
+        {
+
+            if (Request.QueryString["student_accID"] != null)
+            {
+                int studentId = int.Parse(Request.QueryString["student_accID"].ToString());
+
+                SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN HIRED_LIST ON STUDENT_ACCOUNT.student_accID = HIRED_LIST.student_accID JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE HIRED_LIST.studentType = 'Intern' AND HIRED_LIST.student_accID = @studentID", conDB);
+                cmd.Parameters.AddWithValue("@studentID", studentId);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable ds = new DataTable();
+                da.Fill(ds);
+                InternListView.DataSource = ds;
+                InternListView.DataBind();
             }
         }
         void SearchByStudentNameOrID(string student)

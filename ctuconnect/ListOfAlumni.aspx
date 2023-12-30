@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OJTCoordinator.Master" AutoEventWireup="true" CodeBehind="ListOfAlumni.aspx.cs" Inherits="ctuconnect.ListOfAlumni" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OJTCoordinator.Master" AutoEventWireup="true" CodeBehind="ListOfAlumni.aspx.cs" Inherits="ctuconnect.ListOfAlumni" EnableEventValidation="false" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -9,7 +9,7 @@
      .profile-container{
          font-family: 'Poppins', sans-serif;
          max-width:260px;
-         max-height:630px;
+         max-height:660px;
          background-color:white;
          margin-left:4%;
          padding-bottom:8px;
@@ -121,12 +121,11 @@
               text-align:center;
               align-items:center;
           }
-         .sort-dropdown{
-             border-radius: 12px;
-             width:100px;
-             padding-left:8px;
-             border-color:#c1beba;
-         }
+            .sort-dropdown{
+                width:100px;
+                padding-left:8px;
+                border-color:#c1beba;
+            }
          .gridview-container {
      position: relative;
      min-height: 1px;
@@ -225,10 +224,11 @@
          <asp:TableCell Style="padding:0px 5px 0px 40px">
             <div class="display-container">
                 <h1 class="title">List of Alumni</h1>
-                 <p style="float:left;">Sort by <asp:DropDownList ID="ddlSortBy" runat="server" AutoPostBack="true"  CssClass="sort-dropdown">
-                     <asp:ListItem Text="Course" Value="ColumnName1"></asp:ListItem>
-                     <asp:ListItem Text="Status" Value="ColumnName2"></asp:ListItem>
-                 </asp:DropDownList></p>
+                <div id="academicYearSemesterFilter" style="float:left; min-width:50%;" runat="server">
+                 <p style="float:left;">Academic Year  <asp:DropDownList ID="ddlAcademicYear" runat="server" CssClass="sort-dropdown1" AutoPostBack="true" OnSelectedIndexChanged="ddlacademicYear_SelectedIndexChanged" >
+                </asp:DropDownList></p>
+                <asp:DropDownList ID="programList" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="program_SelectedIndexChanged"></asp:DropDownList>
+                    </div>
                 <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
                
                             <asp:ListView ID="alumniListview" runat="server"> 
@@ -272,7 +272,7 @@
                                     </EmptyDataTemplate>
                                         <ItemTemplate>
                                             <tr>
-                                                <td class="datas"><%# Eval("studentId") %></td>
+                                                <td class="datas"><%# Eval("studentID") %></td>
                                                 <td class="datas"><%# Eval("lastname") %></td>
                                                 <td class="datas"><%# Eval("firstname") %></td>
                                                 <td class="datas"><%# Eval("midinitials") %></td>

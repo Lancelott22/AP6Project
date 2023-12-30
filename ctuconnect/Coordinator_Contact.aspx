@@ -18,7 +18,7 @@
         .profile-container {
             font-family: 'Poppins', sans-serif;
             max-width: 260px;
-            max-height: 630px;
+            max-height: 660px;
             background-color: white;
             margin-left: 4%;
             padding-bottom: 8px;
@@ -53,7 +53,7 @@
         .sidemenu-container {
             font-family: 'Poppins', sans-serif;
             width: 260px;
-            height: 200px;
+            height: 220px;
             background-color: white;
             /*margin-top:22%;*/
             padding-top: 4px;
@@ -269,7 +269,7 @@
                     <img src="images/industrypic.png" />
                     <p>OJT Coordinator</p>
                     <hr class="horizontal-line" />
-                    <a href="Coordinator.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right: 12px;"></i>List of Interns</a>
+                    <a href="CoordinatorProfile.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right: 12px;"></i>List of Interns</a>
                     <a href="ListOfAlumni.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right: 12px;"></i>List of Alumni</a>
                     <a href="PartneredIndustries.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right: 12px;"></i>Partnered Industry</a>
                     <a href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>Refer Student</a>
@@ -278,8 +278,9 @@
                     <a class="active" href="Coordinator_Contact.aspx"><i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px;"></i>Contact</a>
                     <a  href="Coordinator_UploadCSV.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Upload CSV</a>
                     <a href="TracerDashboard.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right: 12px;"></i>Tracer</a>
-                    <a href="Coord_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right:12px;"></i>Account Settings</a>
-                    <hr class="second" />
+                        <hr class="second" />
+                <a href="OJTCoordinatorProfile.aspx"><i class="fa fa-user" aria-hidden="true" style="padding-right:12px;"></i>Profile</a>
+                <a href="Coord_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right:12px;"></i>Account Settings</a>
                     <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
     <i class="fa fa-sign-out" aria-hidden="true"></i>
      Sign-out

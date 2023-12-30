@@ -35,7 +35,7 @@
             width: 90%;
             margin-left: auto;
             margin-right: auto;
-            margin-top: 13%;
+            margin-top: 1%;
             margin-bottom: 0%;
         }
 
@@ -146,10 +146,6 @@
                             <i class="fa fa-tachometer" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Dashboard
                         </a>
-                        <a href="#myaccount">
-                            <i class="fa fa-users" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
-                            Create Partnership
-                        </a>
                         <a href="IndustryVerification.aspx">
                             <i class="fa fa-users" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
                             Industry Verification
@@ -178,11 +174,15 @@
                         </a>
                         <a href="Blacklist_Admin.aspx">
                             <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
-                            Blacklist
+                            Blacklisted
                         </a>
                         <a href="SuggestionsAdmin.aspx">
                             <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Suggestions
+                        </a>
+                        <a href="Admin_Contact.aspx">
+                            <i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Contact
                         </a>
                         <hr class="second" />
                         <a href="TracerDashboard.aspx">
@@ -193,11 +193,14 @@
                             <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Profile
                         </a>
-                        <asp:LinkButton runat="server" ID="LinkButton1">
-                        <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
-                        Sign-out
+                        <a href="Coordinator_CreateAccount.aspx">
+                            <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Coordinator Account
+                        </a>
+                        <asp:LinkButton runat="server" ID ="LinkButton1">
+                            <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
+                            Sign-out
                         </asp:LinkButton>
-
                     </div>
 
                 </div>
@@ -209,6 +212,50 @@
                     <br />
                     <br />
                     <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label>Industry Name</label>
+                            <div class="input-group mb-3">                    
+                                <asp:TextBox ID="IndustryName" runat="server" class="form-control" Placeholder="Industry name" Width="200px"></asp:TextBox>
+                                <div class="input-group-append">
+                                    <asp:LinkButton runat="server" ID="SearchIndustry" OnClick="SearchIndustry_Click" CssClass="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></asp:LinkButton>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label>Status</label>
+                            <div class="form-group">
+                                <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="Status" AutoPostBack="true" OnSelectedIndexChanged="Status_SelectedIndexChanged">
+                                    <asp:ListItem Value="0" Text="All" Selected="true"></asp:ListItem>
+                                    <asp:ListItem Value="Open" Text="Open"></asp:ListItem>                    
+                                    <asp:ListItem Value="Close" Text="Close" ></asp:ListItem>                 
+                                </asp:DropDownList>
+                            </div>
+                        </div>     
+                        
+                        <div class="col-sm-3">
+                            <label>Resolve</label>
+                            <div class="form-group">
+                                <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="Resolve" AutoPostBack="true" OnSelectedIndexChanged="Resolve_SelectedIndexChanged">
+                                    <asp:ListItem Value="-1" Text="All" Selected="true"></asp:ListItem>
+                                    <asp:ListItem Value="0" Text="Unresolved"></asp:ListItem>                    
+                                    <asp:ListItem Value="1" Text="Resolved" ></asp:ListItem>                 
+                                </asp:DropDownList>
+                            </div>
+                        </div>  
+                        
+                        <div class="col-sm-3">
+                            <label>Date</label>
+                            <div class="input-group mb-3">  
+                                <asp:TextBox ID="txtdate" runat="server" TextMode="Date" class="form-control" Width="200px"></asp:TextBox>
+                                <div class="input-group-append">
+                                    <asp:LinkButton runat="server" ID="SearchByDate" OnClick="SearchByDate_Click" CssClass="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></asp:LinkButton>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="row" id="showDispute" runat="server">
                         <asp:ListView ID="disputeListView" runat="server" OnItemDataBound="disputeListView_ItemDataBound">
                             <LayoutTemplate>

@@ -325,9 +325,6 @@ width:100%;
                            <asp:LinkButton ID="btnEdit2" runat="server" CssClass="edit-button" OnClick="onEditButton_Click" data-listview="listView2" Visible="false"> 
                                 <i class="fas fa-edit"></i> Edit
                             </asp:LinkButton>
-<%--                           <asp:LinkButton ID="btnDelete" runat="server" CssClass="delete-button" OnClientClick="return confirmDelete();" >
-                               <i class="fas fa-trash"></i> Delete
-                           </asp:LinkButton>--%>
                            </div>
                     </div>
                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">

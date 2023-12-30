@@ -142,10 +142,6 @@
                             <i class="fa fa-tachometer" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Dashboard
                         </a>
-                        <a href="#myaccount">
-                            <i class="fa fa-users" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
-                            Create Partnership
-                        </a>
                         <a href="IndustryVerification.aspx">
                             <i class="fa fa-users" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
                             Industry Verification
@@ -197,7 +193,10 @@
                             <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Coordinator Account
                         </a>
-
+                        <asp:LinkButton runat="server" ID ="LinkButton1">
+                            <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
+                            Sign-out
+                        </asp:LinkButton>
                     </div>
 
                 </div>
@@ -215,6 +214,31 @@
                             <asp:FileUpload ID="coordinatorCSV" runat="server" />
                             <asp:Button Text="Upload Coordinator CSV" ID="UploadCoordinatorCSV" CssClass="btn btn-success" OnClientClick="showOverlay(this.id);" OnClick="UploadCoordinatorCSV_Click" runat="server" />
                         </div>
+                        <br /><br /><br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Coordinator Name</label>
+                                <div class="input-group mb-3">                    
+                                    <asp:TextBox ID="CoordinatorName" runat="server" class="form-control" Placeholder="Industry name" Width="200px"></asp:TextBox>
+                                    <div class="input-group-append">
+                                        <asp:LinkButton runat="server" ID="SearchCoordinator" OnClick="SearchCoordinator_Click" CssClass="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></asp:LinkButton>
+                                    </div>
+                                </div>
+                            </div>      
+    
+                            <div class="col-sm-6">
+                                <label>Date</label>
+                                <div class="input-group mb-3">  
+                                    <asp:TextBox ID="txtdate" runat="server" TextMode="Date" class="form-control" Width="200px"></asp:TextBox>
+                                    <div class="input-group-append">
+                                        <asp:LinkButton runat="server" ID="SearchByDate" OnClick="SearchByDate_Click" CssClass="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></asp:LinkButton>
+                                    </div>
+            
+                                </div>
+                            </div>
+
+                        </div>
+
                         <div class="row m-2 my-5">
                             <asp:ListView ID="CoordinatorListView" runat="server">
                                 <LayoutTemplate>
