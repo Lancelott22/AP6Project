@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.Configuration;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace ctuconnect
 {
     public partial class LoginIndustry : System.Web.UI.Page
     {
-        SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+        SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack && Session["IndustryEmail"] != null)
@@ -32,22 +29,21 @@ namespace ctuconnect
                 {
                     txtemail.Text = Request.Cookies["Email"].Value;
                     txtpwd.Attributes["value"] = Request.Cookies["Password"].Value;
+                    LoginErrorMessage.Visible = false;
                 }
             }
         }
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            SqlConnection conDB2 = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
             try
             {
-
                 string loginEmail = txtemail.Text;
                 string loginPassword = txtpwd.Text;
 
                 if (!string.IsNullOrEmpty(loginEmail) && !string.IsNullOrEmpty(loginPassword))
                 {
-                    using (conDB2)
+                    using (SqlConnection conDB2 = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString))
                     {
                         conDB2.Open();
                         string query = "SELECT COUNT(1) FROM INDUSTRY_ACCOUNT WHERE Email=@Email AND Password=@Password AND isDeactivated=@isDeactivated";
@@ -59,26 +55,30 @@ namespace ctuconnect
                             int count = Convert.ToInt32(command.ExecuteScalar());
                             if (count == 1)
                             {
-                                using (SqlDataReader reader = command.ExecuteReader())
-                                {
-
-                                    while (reader.Read())
-                                    {
-
-                                        getIndustryInfo();
-
-                                    }
-                                    Response.Write("<script>alert('Invalid Credentials')</script>");
-                                    conDB2.Close();
-                                    reader.Close();
-                                }
+                                // User is authenticated, retrieve industry information
+                                getIndustryInfo();
                                 Session["IndustryEmail"] = txtemail.Text;
-                                Response.Redirect("IndustryDashboard.aspx");// User is authenticated, you can redirect to another page
+                                Response.Redirect("IndustryDashboard.aspx");
                             }
                             else
                             {
-                                // Invalid credentials, show error message
-                                LoginErrorMessage.Visible = true;
+                                // Check if the account is deactivated
+                                command.Parameters.Clear();
+                                command.CommandText = "SELECT COUNT(1) FROM INDUSTRY_ACCOUNT WHERE Email=@Email AND isDeactivated=@isDeactivated";
+                                command.Parameters.AddWithValue("@Email", loginEmail);
+                                command.Parameters.AddWithValue("@isDeactivated", true);
+                                int deactivatedCount = Convert.ToInt32(command.ExecuteScalar());
+
+                                if (deactivatedCount == 1)
+                                {
+                                    // Account is deactivated
+                                    ShowErrorMessage("Account deactivated. Contact support for assistance.");
+                                }
+                                else
+                                {
+                                    // Incorrect credentials
+                                    ShowErrorMessage("The password or email is incorrect!");
+                                }
                             }
                         }
                     }
@@ -86,7 +86,7 @@ namespace ctuconnect
             }
             catch
             {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginIndustry.aspx'</script>");
+                ShowErrorMessage("Something went wrong! Please try again.");
             }
         }
 
@@ -108,30 +108,38 @@ namespace ctuconnect
                 {
                     conDB.Open();
                     string query = "SELECT * FROM INDUSTRY_ACCOUNT WHERE EMAIL = '" + getEmail + "' ";
-                    SqlCommand command = new SqlCommand(query, conDB);
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
+                    using (SqlCommand command = new SqlCommand(query, conDB))
                     {
-                        Session["INDUSTRY_ACC_ID"] = reader["industry_accID"];
-                        Session["INDUSTRYNAME"] = reader["industryName"];
-                        Session["LOCATION"] = reader["location"];
-                        Session["IndustryEmail"] = reader["email"];
-                        Session["PASSWORD"] = reader["password"];
-                        Session["MOU"] = reader["mou"];
-                        Session["INDUSTRYPIC"] = reader["industryPicture"];
-                        Session["DATEREG"] = reader["dateRegistered"];
-                        Session["ISVerified"] = reader["isVerified"];
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // Retrieve industry information and store in session
+                                Session["INDUSTRY_ACC_ID"] = reader["industry_accID"];
+                                Session["INDUSTRYNAME"] = reader["industryName"];
+                                Session["LOCATION"] = reader["location"];
+                                Session["IndustryEmail"] = reader["email"];
+                                Session["PASSWORD"] = reader["password"];
+                                Session["MOU"] = reader["mou"];
+                                Session["INDUSTRYPIC"] = reader["industryPicture"];
+                                Session["DATEREG"] = reader["dateRegistered"];
+                                Session["ISVerified"] = reader["isVerified"];
+                            }
+                        }
                     }
-                    conDB.Close();
-                    reader.Close();
                 }
             }
             catch
             {
-                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginIndustry.aspx'</script>");
+                ShowErrorMessage("Something went wrong! Please try again.");
             }
         }
 
-       
+        // Helper method to show error messages
+        private void ShowErrorMessage(string message)
+        {
+            LoginErrorMessage.Visible = true;
+            LoginErrorMessage.Text = message;
+        }
     }
 }

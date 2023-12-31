@@ -15,7 +15,7 @@
 
     <table>
         <tr >
-            <td colspan="6"><center><h1>OJT PERFORMANCE EVALUATION FORM</h1><br /><p>(for BSIT, BSICT, BSGD and BSMx)</p></center></td>
+            <td colspan="6"><center><h1>OJT PERFORMANCE EVALUATION FORM</h1><br /><p>for&nbsp <asp:Label ID="forCourse" runat="server" ></asp:Label></p></center></td>
         </tr>
         <tr>
             <td colspan="2">Student:</td>
@@ -42,42 +42,42 @@
     <tr>
         <td><input type="radio" name="productivity" value="1" />&nbsp 1 </td> 
         <td><input type="radio" name="productivity" value="2"  />&nbsp 2</td>
-        <td>Falls to do an adequate job</td>
+        <td><asp:Label ID="disp_Prod1" runat="server"></asp:Label></td>
         <td><input type="radio" name="cooperation" value="1" />&nbsp 1</td>
         <td><input type="radio" name="cooperation" value="2" />&nbsp 2</td>
-        <td>Uncooperative, antagonistic</td>
+        <td><asp:Label ID="disp_Coop1" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="productivity" value="3"  />&nbsp 3</td>
         <td><input type="radio" name="productivity" value="4"  />&nbsp 4</td>
-        <td>Does just enough to get by</td>
+        <td><asp:Label ID="disp_Prod2" runat="server"></asp:Label></td>
         <td><input type="radio" name="cooperation" value="3"  />&nbsp 3</td>
         <td><input type="radio" name="cooperation" value="4"  />&nbsp 4</td>
-        <td>Cooperates reluctantly</td>
+        <td><asp:Label ID="disp_Coop2" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="productivity" value="5" />&nbsp 5</td>
         <td><input type="radio" name="productivity" value="6"  />&nbsp 6</td>
-        <td>Maintains constant level of performance</td>
+        <td><asp:Label ID="disp_Prod3" runat="server"></asp:Label></td>
         <td><input type="radio" name="cooperation" value="5"  />&nbsp 5</td>
         <td><input type="radio" name="cooperation" value="6" />&nbsp 6</td>
-        <td>Cooperates willingly when asked</td>
+        <td><asp:Label ID="disp_Coop3" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="productivity" value="7"  />&nbsp 7</td>
         <td><input type="radio" name="productivity" value="8" />&nbsp 8</td>
-        <td>Very industrious, does more than required</td>
+        <td><asp:Label ID="disp_Prod4" runat="server"></asp:Label></td>
         <td><input type="radio" name="cooperation" value="7"  />&nbsp 7</td>
         <td><input type="radio" name="cooperation" value="8"  />&nbsp 8</td>
-        <td>Cooperates eagerly and cheerfully</td>
+        <td><asp:Label ID="disp_Coop4" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="productivity" value="9"  />&nbsp 9</td>
         <td><input type="radio" name="productivity" value="10"  />&nbsp 10</td>
-        <td>Superior work production record</td>
+        <td><asp:Label ID="disp_Prod5" runat="server"></asp:Label></td>
         <td><input type="radio" name="cooperation" value="9"  />&nbsp 9</td>
         <td><input type="radio" name="cooperation" value="10"  />&nbsp 10</td>
-        <td>Always cooperates eagerly and cheerfully</td>
+        <td><asp:Label ID="disp_Coop5" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <th colspan="3">Ability to Follow Instructions</th>
@@ -87,42 +87,42 @@
     <tr>
         <td><input type="radio" name="abilityToFollow" value="1"  />&nbsp 1</td>
         <td><input type="radio" name="abilityToFollow" value="2"  />&nbsp 2</td>
-        <td>Usable to follow instructions</td>
+        <td><asp:Label ID="disp_AbilityF1" runat="server"></asp:Label></td>
         <td><input type="radio" name="abilityToGet" value="1"  />&nbsp 1</td>
         <td><input type="radio" name="abilityToGet" value="2"  />&nbsp 2</td>
-        <td>Frequently rude and unfriendly</td>
+        <td><asp:Label ID="disp_AbilityG1" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="abilityToFollow" value="3" />&nbsp 3</td>
         <td><input type="radio" name="abilityToFollow" value="4"  />&nbsp 4</td>
-        <td>Needs repeated detailed instructions</td>
+        <td><asp:Label ID="disp_AbilityF2" runat="server"></asp:Label></td>
         <td><input type="radio" name="abilityToGet" value="3"  />&nbsp 3</td>
         <td><input type="radio" name="abilityToGet" value="4"  />&nbsp 4</td>
-        <td>Has some difficulty working with others</td>
+        <td><asp:Label ID="disp_AbilityG2" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="abilityToFollow" value="5" />&nbsp 5</td>
         <td><input type="radio" name="abilityToFollow" value="6"  />&nbsp 6</td>
-        <td>Follows most instructions without difficulty</td>
+        <td><asp:Label ID="disp_AbilityF3" runat="server"></asp:Label></td>
         <td><input type="radio" name="abilityToGet" value="5"  />&nbsp 5</td>
         <td><input type="radio" name="abilityToGet" value="6" />&nbsp 6</td>
-        <td>Usually gets along well with people</td>
+        <td><asp:Label ID="disp_AbilityG3" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="abilityToFollow" value="7" />&nbsp 7</td>
         <td><input type="radio" name="abilityToFollow" value="8"  />&nbsp 8</td>
-        <td>Follows instructions with no difficulty</td>
+        <td><asp:Label ID="disp_AbilityF4" runat="server"></asp:Label></td>
         <td><input type="radio" name="abilityToGet" value="7" />&nbsp 7</td>
         <td><input type="radio" name="abilityToGet" value="8" />&nbsp 8</td>
-        <td>Is courteous and tactful with people</td>
+        <td><asp:Label ID="disp_AbilityG4" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="abilityToFollow" value="9"  />&nbsp 9</td>
         <td><input type="radio" name="abilityToFollow" value="10"  />&nbsp 10</td>
-        <td>Uses initiative in interpreting and following instructions</td>
+        <td><asp:Label ID="disp_AbilityF5" runat="server"></asp:Label></td>
         <td><input type="radio" name="abilityToGet" value="9" />&nbsp 9</td>
         <td><input type="radio" name="abilityToGet" value="10"  />&nbsp 10</td>
-        <td>Exceptionally well accepted by peers and supervisors</td>
+        <td><asp:Label ID="disp_AbilityG5" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <th colspan="3">Initiative</th>
@@ -132,42 +132,42 @@
     <tr>
         <td><input type="radio" name="category5" value="1"  />&nbsp 1</td>
         <td><input type="radio" name="category5" value="2" />&nbsp 2</td>
-        <td>Always attempts to avoid work</td>
+        <td><asp:Label ID="disp_Init1" runat="server"></asp:Label></td>
         <td><input type="radio" name="category6" value="1" />&nbsp 1</td>
         <td><input type="radio" name="category6" value="2"  />&nbsp 2</td>
-        <td>Often absent without good excuse</td>
+        <td><asp:Label ID="disp_Attend1" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="category5" value="3"  />&nbsp 3</td>
         <td><input type="radio" name="category5" value="4" />&nbsp 4</td>
-        <td>Sometimes attempts to avoid work</td>
+        <td><asp:Label ID="disp_Init2" runat="server"></asp:Label></td>
         <td><input type="radio" name="category6" value="3"  />&nbsp 3</td>
         <td><input type="radio" name="category6" value="4"  />&nbsp 4</td>
-        <td>Frequently late</td>
+        <td><asp:Label ID="disp_Attend2" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="category5" value="5" />&nbsp 5</td>
         <td><input type="radio" name="category5" value="6" />&nbsp 6</td>
-        <td>Does assigned job willingly</td>
+        <td><asp:Label ID="disp_Init3" runat="server"></asp:Label></td>
         <td><input type="radio" name="category6" value="5"  />&nbsp 5</td>
         <td><input type="radio" name="category6" value="6"  />&nbsp 6</td>
-        <td>Usually present and on time</td>
+        <td><asp:Label ID="disp_Attend3" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="category5" value="7"  />&nbsp 7</td>
         <td><input type="radio" name="category5" value="8"  />&nbsp 8</td>
-        <td>Does more than assigned job willingly</td>
+        <td><asp:Label ID="disp_Init4" runat="server"></asp:Label></td>
         <td><input type="radio" name="category6" value="7"  />&nbsp 7</td>
         <td><input type="radio" name="category6" value="8"  />&nbsp 8</td>
-        <td>Very prompt and regular, volunteers for overtime when asked</td>
+        <td><asp:Label ID="disp_Attend4" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="category5" value="9"  />&nbsp 9</td>
         <td><input type="radio" name="category5" value="10" />&nbsp 10</td>
-        <td>Shows resourcefulness in going beyond assigned job</td>
+        <td><asp:Label ID="disp_Init5" runat="server"></asp:Label></td>
         <td><input type="radio" name="category6" value="9"  />&nbsp 9</td>
         <td><input type="radio" name="category6" value="10" />&nbsp 10</td>
-        <td>Always prompt and regular, volunteers for overtime when asked</td>
+        <td><asp:Label ID="disp_Attend5" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <th colspan="3">Quality of Work</th>
@@ -177,42 +177,42 @@
     <tr>
         <td><input type="radio" name="category7" value="1"  />&nbsp 1</td>
         <td><input type="radio" name="category7" value="2"  />&nbsp 2</td>
-        <td>Does almost no acceptable work</td>
+        <td><asp:Label ID="disp_Qual1" runat="server"></asp:Label></td>
         <td><input type="radio" name="category8" value="1"  />&nbsp 1</td>
         <td><input type="radio" name="category8" value="2" />&nbsp 2</td>
-        <td>Untidy or inappropriately groomed</td>
+        <td><asp:Label ID="disp_Appear1" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="category7" value="3" />&nbsp 3</td>
         <td><input type="radio" name="category7" value="4"/>&nbsp 4</td>
-        <td>Does less than required amount of satisfactory work</td>
+        <td><asp:Label ID="disp_Qual2" runat="server"></asp:Label></td>
         <td><input type="radio" name="category8" value="3" />&nbsp 3 </td>
         <td><input type="radio" name="category8" value="4"  />&nbsp 4</td>
-        <td>Sometimes neglected of appearance</td>
+        <td><asp:Label ID="disp_Appear2" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="category7" value="5" />&nbsp 5</td>
         <td><input type="radio" name="category7" value="6"/>&nbsp 6</td>
-        <td>Does normal amount of acceptable work</td>
+        <td><asp:Label ID="disp_Qual3" runat="server"></asp:Label></td>
         <td><input type="radio" name="category8" value="5"/>&nbsp 5</td>
         <td><input type="radio" name="category8" value="6"/>&nbsp 6</td>
-        <td>Satisfactory appearance</td>
+        <td><asp:Label ID="disp_Appear3" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="category7" value="7"/>&nbsp 7</td>
         <td><input type="radio" name="category7" value="8" />&nbsp 8</td>
-        <td>Does more than required amount of neat, accurate work</td>
+        <td><asp:Label ID="disp_Qual4" runat="server"></asp:Label></td>
         <td><input type="radio" name="category8" value="7"/>&nbsp 7</td>
         <td><input type="radio" name="category8" value="8" />&nbsp 8</td>
-        <td>Careful about personal appearance </td>
+        <td><asp:Label ID="disp_Appear4" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="category7" value="9"  />&nbsp 9</td>
         <td><input type="radio" name="category7" value="10"  />&nbsp 10</td>
-        <td>Shows special attitude for doing neat, accurate work beyond required amount</td>
+        <td><asp:Label ID="disp_Qual5" runat="server"></asp:Label></td>
         <td><input type="radio" name="category8" value="9"  />&nbsp 9</td>
         <td><input type="radio" name="category8" value="10" />&nbsp 10</td>
-        <td>Exceptionally neat, and appropriately groomed</td>
+        <td><asp:Label ID="disp_Appear5" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <th colspan="3">Dependability</th>
@@ -222,42 +222,42 @@
     <tr>
         <td><input type="radio" name="category9" value="1"  />&nbsp 1</td>
         <td><input type="radio" name="category9" value="2" />&nbsp 2</td>
-        <td>Unreliable</td>
+        <td><asp:Label ID="disp_Depend1" runat="server"></asp:Label></td>
         <td><input type="radio" name="category10" value="1"  />&nbsp 1</td>
         <td><input type="radio" name="category10" value="2"  />&nbsp 2</td>
-        <td>Unsatisfactory</td>
+        <td><asp:Label ID="disp_Overall1" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="category9" value="3"  />&nbsp 3</td>
         <td><input type="radio" name="category9" value="4" />&nbsp 4</td>
-        <td>Sometimes fails in obligations</td>
+        <td><asp:Label ID="disp_Depend2" runat="server"></asp:Label></td>
         <td><input type="radio" name="category10" value="3"  />&nbsp 3</td>
         <td><input type="radio" name="category10" value="4" />&nbsp 4</td>
-        <td>Below average</td>
+        <td><asp:Label ID="disp_Overall2" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="category9" value="5" />&nbsp 5</td>
         <td><input type="radio" name="category9" value="6"  />&nbsp 6</td>
-        <td>Meets obligations under supervision</td>
+        <td><asp:Label ID="disp_Depend3" runat="server"></asp:Label></td>
         <td><input type="radio" name="category10" value="5"  />&nbsp 5</td>
         <td><input type="radio" name="category10" value="6"  />&nbsp 6</td>
-        <td>Average</td>
+        <td><asp:Label ID="disp_Overall3" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="category9" value="7"  />&nbsp 7</td>
         <td><input type="radio" name="category9" value="8" />&nbsp 8</td>
-        <td>Meets obligations under very little supervision</td>
+        <td><asp:Label ID="disp_Depend4" runat="server"></asp:Label></td>
         <td><input type="radio" name="category10" value="7"  />&nbsp 7</td>
         <td><input type="radio" name="category10" value="8" />&nbsp 8</td>
-        <td>Very good</td>
+        <td><asp:Label ID="disp_Overall4" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td><input type="radio" name="category9" value="9" />&nbsp 9</td>
         <td><input type="radio" name="category9" value="10" />&nbsp 10</td>
-        <td>Meets obligations without supervision</td>
+        <td><asp:Label ID="disp_Depend5" runat="server"></asp:Label></td>
         <td><input type="radio" name="category10" value="9" />&nbsp 9</td>
         <td><input type="radio" name="category10" value="10" />&nbsp 10</td>
-        <td>Outstanding</td>
+        <td><asp:Label ID="disp_Overall5" runat="server"></asp:Label></td>
     </tr>
     <tr>
         <td colspan="2">Total Score:</td>
@@ -335,7 +335,8 @@
         </div>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <div class="col-2 d-flex flex-column">
-            <button onclick="history.back()" class="btn btn-primary btn-md btn-close">Go Back</button>
+            
+            <asp:Button ID="btnBack" runat="server" Text="Go Back" OnClick="btnBack_Click" class="btn btn-primary btn-md btn-close" />
         </div>
     </div>
 </div>
@@ -377,4 +378,5 @@
             }
         }
     </script>
+    
 </html>

@@ -112,7 +112,7 @@ namespace ctuconnect
             {
                 if (File.Exists(filepath))
                 {
-                    Response.Write("<script>alert('A file with the same name already exists. Please choose a different name.');document.location='RegisterIndustry.aspx'</script>");
+                    Response.Write("<script>alert('A file with the same name already exists. Please choose a different name.');document.location='ListOfIndustries_Alumni.aspx'</script>");
                     return; // Return to stop further execution
                 }
                 postedFile.SaveAs(filepath);
@@ -125,8 +125,8 @@ namespace ctuconnect
                         //SQL Statement
                         cmd.CommandType = CommandType.Text;
 
-                        cmd.CommandText = "INSERT INTO INDUSTRY_ACCOUNT (INDUSTRYNAME, LOCATION, EMAIL, PASSWORD, MOU, DATEREGISTERED, ISVERIFIED )"
-                            + "VALUES (@industryName, @location, @email, @password, @mou, @datereg, @isVerified )";
+                        cmd.CommandText = "INSERT INTO INDUSTRY_ACCOUNT (INDUSTRYNAME, LOCATION, EMAIL, PASSWORD, MOU, DATEREGISTERED, ISDEACTIVATED, ISREAD, ISREMOVE, ISVERIFIED, ISDELETE )"
+                            + "VALUES (@industryName, @location, @email, @password, @mou, @datereg, @deact, @read, @remove, @verified, @delete )";
 
 
 
@@ -137,13 +137,17 @@ namespace ctuconnect
                         cmd.Parameters.AddWithValue("@password", industryPwd);
                         cmd.Parameters.AddWithValue("@mou", filename);
                         cmd.Parameters.AddWithValue("@datereg", DateTime.Now.ToString("yyyy/MM/dd"));
-                        cmd.Parameters.AddWithValue("@isVerified", true);
+                        cmd.Parameters.AddWithValue("@deact", false);
+                        cmd.Parameters.AddWithValue("@read", false);
+                        cmd.Parameters.AddWithValue("@remove", false);
+                        cmd.Parameters.AddWithValue("@verified", true);
+                        cmd.Parameters.AddWithValue("@delete", false);
                         cmd.ExecuteNonQuery();
                         conDB.Close();
 
                     }
-                    ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('show');", true);
-                    //Response.Write("<script>alert('Created Successfully');document.location='ListIndustries_Alumni.aspx'</script>");
+                    Response.Write("<script>alert('Created Successfully');document.location='ListOfIndustries_Alumni.aspx'</script>");
+                    //Response.Redirect("ListOfIndustries_Alumni.aspx");
                 }
             }
             else

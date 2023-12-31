@@ -48,11 +48,12 @@ namespace ctuconnect
                 using (conDB2)
                 {
                     conDB2.Open();
-                    string query = "SELECT COUNT(1) FROM COORDINATOR_ACCOUNT WHERE username=@Email AND password=@Password";
+                    string query = "SELECT COUNT(1) FROM COORDINATOR_ACCOUNT WHERE username=@Email AND password=@Password AND isDeactivated=@isDeactivated";
                     using (SqlCommand command = new SqlCommand(query, conDB2))
                     {
                         command.Parameters.AddWithValue("@Email", loginUsername);
                         command.Parameters.AddWithValue("@Password", loginPassword);
+                        command.Parameters.AddWithValue("@isDeactivated", false);
                         int count = Convert.ToInt32(command.ExecuteScalar());
                         if (count == 1)
                         {
@@ -75,8 +76,23 @@ namespace ctuconnect
                         }
                         else
                         {
-                            // Invalid credentials, show error message
-                            LoginErrorMessage.Visible = true;
+                            // Check if the account is deactivated
+                            command.Parameters.Clear();
+                            command.CommandText = "SELECT COUNT(1) FROM COORDINATOR_ACCOUNT WHERE username=@Email AND isDeactivated=@isDeactivated";
+                            command.Parameters.AddWithValue("@Email", loginUsername);
+                            command.Parameters.AddWithValue("@isDeactivated", true);
+                            int deactivatedCount = Convert.ToInt32(command.ExecuteScalar());
+
+                            if (deactivatedCount == 1)
+                            {
+                                // Account is deactivated
+                                ShowErrorMessage("Account deactivated. Contact support for assistance.");
+                            }
+                            else
+                            {
+                                // Incorrect credentials
+                                ShowErrorMessage("The password or email is incorrect!");
+                            }
                         }
                     }
                 }
@@ -123,6 +139,11 @@ namespace ctuconnect
             {
                 Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginOJTCoordinator.aspx'</script>");
             }
+        }
+        private void ShowErrorMessage(string message)
+        {
+            LoginErrorMessage.Visible = true;
+            LoginErrorMessage.Text = message;
         }
     }
 }
