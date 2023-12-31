@@ -313,8 +313,9 @@
                             <asp:Label ID="Label5" runat="server" Style="font-size:18px;">
                                 MOU<span style="color:red;">*</span>
                             </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
-                        </div>
+                        </div><br /><br />
                         <!--LOCATION-->
+                        
                         <asp:Label ID="lblocation" runat="server" Style="font-size:18px;">
                             Location<span style="color:red;">*</span>
                         </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span>

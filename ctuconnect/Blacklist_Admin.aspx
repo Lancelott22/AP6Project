@@ -110,27 +110,33 @@
         background-color: #881A30;
 
     }
-   th{
-   border-collapse: collapse;
-    border-color:white;
-    background-color:#f4f4fb;
-    padding:5px;
+    th{
+         border: 1px solid;
+         border-color:#c4c4c4;
+        background-color:#f4f4fb;
+        padding:5px;
 
     }
+/*    td{
+        border: 1px solid;
+        border-color:dimgray;
+        padding-left:5px;
+    }*/
     .datas{
-         padding:9px;
-          border: 8px solid;
-          border-color:white;
-         font-weight:bold;
+        border: 1px solid;
+        border-color:#c4c4c4;
+        padding-left:5px;
          color:black;
+         cursor:default;
     }
 
     .table-list{
-         border-collapse: collapse;
+        border-collapse: collapse;        
         font-size:13px; 
         height:auto; 
         width:100%;
         color:dimgray;
+        padding-right:4px;
     }
 
 </style>
@@ -216,6 +222,7 @@
                        <LayoutTemplate>
                                 <table  class="table-list">
                      <tr>
+                         <th>ID</th>
                          <th>Industry Name</th>
                          <th>Reason</th>
                          <th>Date Added</th>
@@ -224,12 +231,30 @@
                           <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
                       </tbody>
                      </table>
-            </LayoutTemplate>         
+            </LayoutTemplate> 
+                     <EmptyDataTemplate>
+                                    <table class="table-list">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                            <th>Industry Name</th>
+                                             <th>Reason</th>
+                                             <th>Date Added</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:center; font-size:18px;" colspan="4">No data available</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </EmptyDataTemplate>
               <Itemtemplate>
-                  <tr class="datas">
-                                 <td><%# Eval("industryName") %></td>
-                                 <td><%# Eval("reason") %></td>
-                                 <td><%# Eval("dateAdded") %></td>
+                  <tr>
+                                <td class="datas"><%# Eval("id") %></td>
+                                 <td class="datas"><%# Eval("industryName") %></td>
+                                 <td class="datas"><%# Eval("reason") %></td>
+                                 <td class="datas"><%# Eval("dateAdded") %></td>
                              </tr>
                          </Itemtemplate>
      </asp:ListView>

@@ -246,6 +246,7 @@
     <Content Include="Dispute.aspx" />
     <Content Include="EditAccount.aspx" />
     <Content Include="EditCoordinatorProfile.aspx" />
+    <Content Include="EditEvaluation.aspx" />
     <Content Include="EditIndustryProfile.aspx" />
     <Content Include="EditResume.aspx" />
     <Content Include="EvaluationForm.aspx" />
@@ -539,6 +540,13 @@
     </Compile>
     <Compile Include="EditCoordinatorProfile.aspx.designer.cs">
       <DependentUpon>EditCoordinatorProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditEvaluation.aspx.cs">
+      <DependentUpon>EditEvaluation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditEvaluation.aspx.designer.cs">
+      <DependentUpon>EditEvaluation.aspx</DependentUpon>
     </Compile>
     <Compile Include="EditIndustryProfile.aspx.cs">
       <DependentUpon>EditIndustryProfile.aspx</DependentUpon>

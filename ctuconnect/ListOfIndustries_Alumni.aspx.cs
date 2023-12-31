@@ -112,7 +112,7 @@ namespace ctuconnect
             {
                 if (File.Exists(filepath))
                 {
-                    Response.Write("<script>alert('A file with the same name already exists. Please choose a different name.');document.location='RegisterIndustry.aspx'</script>");
+                    Response.Write("<script>alert('A file with the same name already exists. Please choose a different name.');document.location='ListOfIndustries_Alumni.aspx'</script>");
                     return; // Return to stop further execution
                 }
                 postedFile.SaveAs(filepath);
@@ -125,8 +125,8 @@ namespace ctuconnect
                         //SQL Statement
                         cmd.CommandType = CommandType.Text;
 
-                        cmd.CommandText = "INSERT INTO INDUSTRY_ACCOUNT (INDUSTRYNAME, LOCATION, EMAIL, PASSWORD, MOU, DATEREGISTERED, ISVERIFIED )"
-                            + "VALUES (@industryName, @location, @email, @password, @mou, @datereg, @isVerified )";
+                        cmd.CommandText = "INSERT INTO INDUSTRY_ACCOUNT (INDUSTRYNAME, LOCATION, EMAIL, PASSWORD, MOU, DATEREGISTERED )"
+                            + "VALUES (@industryName, @location, @email, @password, @mou, @datereg )";
 
 
 
@@ -137,13 +137,12 @@ namespace ctuconnect
                         cmd.Parameters.AddWithValue("@password", industryPwd);
                         cmd.Parameters.AddWithValue("@mou", filename);
                         cmd.Parameters.AddWithValue("@datereg", DateTime.Now.ToString("yyyy/MM/dd"));
-                        cmd.Parameters.AddWithValue("@isVerified", true);
                         cmd.ExecuteNonQuery();
                         conDB.Close();
 
                     }
-                    ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('show');", true);
-                    //Response.Write("<script>alert('Created Successfully');document.location='ListIndustries_Alumni.aspx'</script>");
+                    Response.Write("<script>alert('Created Successfully');document.location='ListOfIndustries_Alumni.aspx'</script>");
+                    //Response.Redirect("ListOfIndustries_Alumni.aspx");
                 }
             }
             else

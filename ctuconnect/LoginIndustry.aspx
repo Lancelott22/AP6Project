@@ -102,7 +102,7 @@
                     <div class="col-lg-12 align-self-end">
                         <asp:TextBox ID="txtpwd" CssClass="txtbox" runat="server" TextMode="Password" placeholder="Password" Height="40px" Width="285px"></asp:TextBox><br />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Enter password" ControlToValidate="txtpwd" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
-                        <asp:Label ID="LoginErrorMessage" runat="server" Text="The password or email is incorrect!" CssClass="errorMessage"></asp:Label>
+                        <asp:Label ID="LoginErrorMessage" runat="server" CssClass="errorMessage" Visible="false"></asp:Label>
                     </div>
                     <!-- Check Box for Hide Password -->
                     <div>
