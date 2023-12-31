@@ -40,10 +40,7 @@ namespace ctuconnect
 
                 SetSelectedRadioButtons();
             }
-            else
-            {
-                disp_Indlocation.Text = Session["LOCATION"].ToString();
-            }
+            
         }
         private void SetSelectedRadioButtons()
         {
@@ -349,6 +346,7 @@ namespace ctuconnect
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
+
                     firstName.Text = reader["firstName"].ToString();
                     lastName.Text = reader["lastName"].ToString();
                     course.Text = reader["major"].ToString();
@@ -455,9 +453,6 @@ namespace ctuconnect
 
         }
 
-        protected void btnBack_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("HiredList.aspx");
-        }
+        
     }
 }
