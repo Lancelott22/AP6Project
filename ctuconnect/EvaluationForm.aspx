@@ -413,7 +413,7 @@
                 </td>
             </tr>
         </table>
-                  <asp:Button CommandName="PrevView" ID="btnprevious2" runat="server" Text = "Go To Previous View" />
+                  <asp:Button CommandName="PrevView" ID="btnprevious2" runat="server" Text = "Go To Previous View" OnClick="btnprevious2_Click" />
                  
 
               
@@ -523,4 +523,9 @@
         return false; // Prevent the form from submitting
     }  
 </script>
+    <script type="text/javascript">
+        function hideSubmitButton() {
+            document.getElementById('<%= btnsubmit.ClientID %>').style.display = 'none';
+        }
+    </script>
 </asp:Content>
