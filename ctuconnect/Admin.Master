@@ -391,7 +391,7 @@
                                                 </div>
                                             </ItemTemplate>
                                         </asp:Repeater>
-                                        <% if (rptjobposted.Items.Count == 0 && rptnewregistered.Items.Count == 0 && rptsuggestions.Items.Count == 0) { %>
+                                        <% if (rptjobposted.Items.Count == 0 && rptnewregistered.Items.Count == 0 && rptsuggestions.Items.Count == 0 && rptjobreported.Items.Count == 0) { %>
                                             <div class="empty-message">
                                                 <p>No notifications available at this time</p>
                                             </div>

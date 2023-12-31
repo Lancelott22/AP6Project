@@ -112,7 +112,37 @@
         body:not(.modal-open) {
             padding-right: 0px !important;
         }
+        .overlay {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 9999;
+}
+
+.spinner-container {
+    text-align: center;
+}
     </style>
+    <div class="overlay">
+    <div class="spinner-container">
+        <span class="fs-1" id="LoadDelete"></span>
+        <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server" ClientIDMode="AutoID">
         <ContentTemplate>
             <div class="container d-flex flex-column my-5">
@@ -359,7 +389,7 @@
                         <div class="modal-footer">
                             <div style="float: right;">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                                <asp:LinkButton ID="ConfirmDeletion" class="btn btn-success" runat="server" OnCommand="ConfirmDeletion_Command">Confirm Deletion</asp:LinkButton>
+                                <asp:LinkButton ID="ConfirmDeletion" class="btn btn-success" runat="server" OnClientClick="showOverlay();" OnCommand="ConfirmDeletion_Command">Confirm Deletion</asp:LinkButton>
                             </div>
                         </div>
 
@@ -378,6 +408,14 @@
         }
         function showDeleteJob() {
             $('#DeleteJobModal').modal('show');
+        }
+    </script>
+    <script>
+        function showOverlay() {
+            var jobTitle = document.getElementById('<%= Delete_JobTitle.ClientID %>').innerText;
+            var textLoading = document.getElementById("LoadDelete");       
+            textLoading.innerText = 'Deleting ' + jobTitle;
+            $(".overlay").css("display", "flex");
         }
     </script>
 </asp:Content>
