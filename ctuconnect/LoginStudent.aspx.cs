@@ -38,14 +38,16 @@ namespace ctuconnect
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            SqlConnection conDB2 = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            
 
-            string loginEmail = txtemail.Text;
-            string loginPassword = txtpwd.Text;
+            try
+            {
+                string loginEmail = txtemail.Text;
+                string loginPassword = txtpwd.Text;
 
                 if (!string.IsNullOrEmpty(loginEmail) && !string.IsNullOrEmpty(loginPassword))
                 {
-                    using (conDB2)
+                    using (SqlConnection conDB2 = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString))
                     {
                         conDB2.Open();
                         string query = "SELECT COUNT(1) FROM STUDENT_ACCOUNT WHERE Email=@Email AND Password=@Password AND isDeactivated=@isDeactivated";
@@ -55,42 +57,50 @@ namespace ctuconnect
                             command.Parameters.AddWithValue("@Password", loginPassword);
                             command.Parameters.AddWithValue("@isDeactivated", false);
                             int count = Convert.ToInt32(command.ExecuteScalar());
-                        if (count == 1)
-                        {
-                            using (SqlDataReader reader = command.ExecuteReader())
+                            if (count == 1)
                             {
+                                // User is authenticated, retrieve student information
+                                getStudentInfo();
 
-                                while (reader.Read())
+                                if (checkStatusAndIsAnsweredAlumniForm(Session["STUDENT_ID"].ToString()))
                                 {
-
-                                    getStudentInfo();
-
+                                    Session["StudentEmail"] = txtemail.Text;
+                                    Response.Redirect("Alumni_Employment_Form.aspx");
                                 }
-                                Response.Write("<script>alert('Invalid Credentials')</script>");
-                                conDB2.Close();
-                                reader.Close();
-                            }
-                            if (checkStatusAndIsAnsweredAlumniForm(Session["STUDENT_ID"].ToString()))
-                            {
-                                Session["StudentEmail"] = txtemail.Text;
-                                Response.Redirect("Alumni_Employment_Form.aspx");
+                                else
+                                {
+                                    Session["StudentEmail"] = txtemail.Text;
+                                    Response.Redirect("JobPortal.aspx");
+                                }
                             }
                             else
                             {
-                                Session["StudentEmail"] = txtemail.Text;
-                                Response.Redirect("JobPortal.aspx");// User is authenticated, you can redirect to another page
+                                // Check if the account is deactivated
+                                command.Parameters.Clear();
+                                command.CommandText = "SELECT COUNT(1) FROM STUDENT_ACCOUNT WHERE Email=@Email AND isDeactivated=@isDeactivated";
+                                command.Parameters.AddWithValue("@Email", loginEmail);
+                                command.Parameters.AddWithValue("@isDeactivated", true);
+                                int deactivatedCount = Convert.ToInt32(command.ExecuteScalar());
+
+                                if (deactivatedCount == 1)
+                                {
+                                    // Account is deactivated
+                                    ShowErrorMessage("Account deactivated. Contact support for assistance.");
+                                }
+                                else
+                                {
+                                    // Incorrect credentials
+                                    ShowErrorMessage("The password or email is incorrect!");
+                                }
                             }
-                        }
-                        else
-                        {
-                            // Invalid credentials, show error message
-                            LoginErrorMessage.Visible = true;
-                        }
                         }
                     }
                 }
-
-                //Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>");
+            }
+            catch
+            {
+                ShowErrorMessage("Something went wrong! Please try again.");
+            }
 
         }
         bool checkStatusAndIsAnsweredAlumniForm(string studentID)
@@ -154,6 +164,12 @@ namespace ctuconnect
                     reader.Close();
                 }
                 //Response.Write("<script>alert('Something went wrong! Please try again.');document.location='LoginStudent.aspx'</script>"); 
+        }
+        // Helper method to show error messages
+        private void ShowErrorMessage(string message)
+        {
+            LoginErrorMessage.Visible = true;
+            LoginErrorMessage.Text = message;
         }
     }
 
