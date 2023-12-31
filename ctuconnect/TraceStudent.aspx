@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="col-sm-2">
-                <label>Status</label>
+                <label>Internship Status</label>
                 <div class="form-group">
                     <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="Status" AutoPostBack="true" OnSelectedIndexChanged="Status_SelectedIndexChanged">
                         <asp:ListItem Value="0" Text="All" Selected="true"></asp:ListItem>

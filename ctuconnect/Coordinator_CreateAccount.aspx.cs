@@ -10,6 +10,7 @@ using System.Web.Configuration;
 using System.IO;
 using System.Net.Mail;
 using System.Net;
+using System.Text;
 
 namespace ctuconnect
 {
@@ -73,7 +74,7 @@ namespace ctuconnect
                         }
                     }*/
 
-                    string csvData = File.ReadAllText(coordinatorCSVFilePath);
+                    string csvData = File.ReadAllText(coordinatorCSVFilePath, Encoding.UTF8);
                     string[] rows = csvData.Split('\n');
 
                     for (int rowIndex = 1; rowIndex < rows.Length; rowIndex++)
@@ -175,7 +176,7 @@ namespace ctuconnect
 
         void BindCoordinator()
         {           
-                SqlCommand cmd = new SqlCommand("select *, CONCAT(firstName, ' ',lastName) as Name, CONVERT(nvarchar, dateRegistered,1) as dateReg FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID", conDB);
+                SqlCommand cmd = new SqlCommand("select *, CONVERT(nvarchar, dateRegistered,1) as dateReg FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID", conDB);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable ds = new DataTable();
                 da.Fill(ds);
@@ -302,10 +303,10 @@ namespace ctuconnect
             return false;
         }
 
-        void SearchCoord(string industry)
+        void SearchCoord(string coordinator)
         {
-            SqlCommand cmd = new SqlCommand("select *, CONCAT(firstName, ' ',lastName) as Name, CONVERT(nvarchar, dateRegistered,1) as dateReg FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE " +
-                "(COORDINATOR_ACCOUNT.firstName LIKE '%" + industry + "%' " + "or COORDINATOR_ACCOUNT.lastName LIKE '%" + industry + "%') ", conDB);
+            SqlCommand cmd = new SqlCommand("select *, CONVERT(nvarchar, dateRegistered,1) as dateReg FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE " +
+                "(COORDINATOR_ACCOUNT.firstName LIKE '%" + coordinator + "%' " + "or COORDINATOR_ACCOUNT.lastName LIKE '%" + coordinator + "%') ", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
@@ -314,8 +315,8 @@ namespace ctuconnect
         }
         protected void SearchCoordinator_Click(object sender, EventArgs e)
         {
-            string industry = CoordinatorName.Text;
-            SearchCoord(industry);
+            string coordinator = CoordinatorName.Text;
+            SearchCoord(coordinator);
         }
 
         protected void SearchByDate_Click(object sender, EventArgs e)
@@ -334,7 +335,7 @@ namespace ctuconnect
             }
             else
             {
-                cmd = new SqlCommand("select *, CONCAT(firstName, ' ',lastName) as Name, CONVERT(nvarchar, dateRegistered,1) as dateReg FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE " +
+                cmd = new SqlCommand("select *, CONVERT(nvarchar, dateRegistered,1) as dateReg FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE " +
                 " COORDINATOR_ACCOUNT.dateRegistered = '" + dateRegistered + "' ", conDB);
             }
             SqlDataAdapter da = new SqlDataAdapter(cmd);
