@@ -219,7 +219,7 @@
                             <div class="col-sm-6">
                                 <label>Coordinator Name</label>
                                 <div class="input-group mb-3">                    
-                                    <asp:TextBox ID="CoordinatorName" runat="server" class="form-control" Placeholder="Industry name" Width="200px"></asp:TextBox>
+                                    <asp:TextBox ID="CoordinatorName" runat="server" class="form-control" Placeholder="Firstname or Lastname" Width="200px"></asp:TextBox>
                                     <div class="input-group-append">
                                         <asp:LinkButton runat="server" ID="SearchCoordinator" OnClick="SearchCoordinator_Click" CssClass="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></asp:LinkButton>
                                     </div>
@@ -245,7 +245,8 @@
                                     <table style="font-size: 18px; line-height: 30px;">
                                         <tr style="background-color: #336699; color: White; padding: 10px;">
                                             <th>Account ID</th>
-                                            <th>Name</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
                                             <th>Email</th>
                                             <th>Deparment</th>
                                             <th>Date Registered</th>
@@ -259,7 +260,8 @@
                                     <tr style="border-bottom: solid 1px #336699">
                                         <span visible="false" runat="server" id="coordinatorID"><%#Eval("coordinator_accID")%></span>
                                          <td><%#Eval("coordinator_accID")%></td>
-                                        <td><%#Eval("Name")%></td>
+                                        <td><%#Eval("firstName")%></td>
+                                        <td><%#Eval("lastName")%></td>
                                         <td><%#Eval("username")%></td>
                                         <td><%#Eval("departmentName")%></td>
                                          <td><%#Eval("dateReg")%></td>

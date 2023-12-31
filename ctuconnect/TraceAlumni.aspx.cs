@@ -204,5 +204,29 @@ namespace ctuconnect
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAlumni();", true);
            getDetails(studentID);
         }
+
+       
+        void ShowByEmploymentStatus()
+        {
+           
+            SqlCommand cmd = new SqlCommand();
+          
+                cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN ALUMNI_EMPLOYMENTFORM ON STUDENT_ACCOUNT.student_accID = ALUMNI_EMPLOYMENTFORM.student_accID JOIN PROGRAM ON " +
+               "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID JOIN DEPARTMENT ON STUDENT_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE employmentStatus = '" + EmploymentStatusDDL.SelectedValue + "'", conDB);          
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            AlumniListView.DataSource = ds;
+            AlumniListView.DataBind();
+        }
+
+        protected void EmploymentStatusDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (EmploymentStatusDDL.SelectedValue == "0")
+            {
+                Response.Redirect("TraceAlumni.aspx");
+            }
+            ShowByEmploymentStatus();
+        }
     }
 }

@@ -49,29 +49,44 @@
     <div class="container m-auto my-5 w-100 h-100 d-flex flex-column py-3">
         <div class="row">
             <div class="col-sm-4">
-                <div class="input-group mb-3">
-                    <asp:TextBox ID="AlumniNameOrID" runat="server" class="form-control" Placeholder="Lastname or Firstname or StudentID"></asp:TextBox>
+                <label>Name or Student ID</label>
+                <div class="input-group mb-3">                 
+                    <asp:TextBox ID="AlumniNameOrID" runat="server" class="form-control" Placeholder="Last or First or StudentID"></asp:TextBox>
                     <div class="input-group-append">
                         <asp:Button class="btn btn-primary" runat="server" ID="SearchAlumni" OnClick="SearchAlumni_Click" Text="Search" />
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
+                <label>Department</label>
                 <div class="form-group">
-                    <label for="department" class="col-sm-4 col-form-label">Department</label>
-                    <div class="col-sm-8">
+                    
                         <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="department" AutoPostBack="true" OnSelectedIndexChanged="department_SelectedIndexChanged">
                         </asp:DropDownList>
-                    </div>
+                    
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
+                 <label>Course</label>
                 <div class="form-group">
-                    <label for="department" class="col-sm-3 col-form-label">Course</label>
-                    <div class="col-sm-8">
+                    
+                    
                         <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="course" AutoPostBack="true" OnSelectedIndexChanged="course_SelectedIndexChanged">
                         </asp:DropDownList>
-                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <label>Employment Status</label>
+                <div class="form-group">
+                    
+                        <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="EmploymentStatusDDL" AutoPostBack="true" OnSelectedIndexChanged="EmploymentStatusDDL_SelectedIndexChanged">
+                            <asp:ListItem Value="0" Text="All" Selected="true"></asp:ListItem>
+                            <asp:ListItem Text="Employed" Value="Employed"></asp:ListItem>
+                            <asp:ListItem Text="Not Employed" Value="Not Employed"></asp:ListItem>
+                            <asp:ListItem Text="Self-Employed" Value="Self-Employed"></asp:ListItem>
+                        </asp:DropDownList>
+                    
                 </div>
             </div>
             <%-- <div class="col-sm-2">
