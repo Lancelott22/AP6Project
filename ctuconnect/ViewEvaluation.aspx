@@ -6,7 +6,11 @@
 <head runat="server">
     <title></title>
     <link rel="stylesheet" type="text/css" href="StyleSheet1.css" />
-
+    <script>
+        function goBack() {
+            window.history.back(); // This function triggers the browser's back functionality
+        }
+    </script>
 </head>
     
 <body>
@@ -336,7 +340,7 @@
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <div class="col-2 d-flex flex-column">
             
-            <asp:Button ID="btnBack" runat="server" Text="Go Back" OnClick="btnBack_Click" class="btn btn-primary btn-md btn-close" />
+            <asp:Button ID="btnBack" runat="server" Text="Go Back" OnClientClick="goBack(); return false;" class="btn btn-primary btn-md btn-close" />
         </div>
     </div>
 </div>
