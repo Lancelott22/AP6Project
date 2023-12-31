@@ -50,6 +50,7 @@ namespace ctuconnect
         {
            
             Label jobPostedDate = (Label)e.Item.FindControl("JobPostedDate");
+            Label jobID = (Label)e.Item.FindControl("JobPostID");
             ((Label)e.Item.FindControl("timeAgoMsg")).Text = postedDateTimeAgo(Convert.ToDateTime(jobPostedDate.Text));
 
             DateTime postedDate = Convert.ToDateTime(jobPostedDate.Text);
@@ -63,8 +64,60 @@ namespace ctuconnect
                 /* HtmlGenericControl JobList = (HtmlGenericControl)e.Item.FindControl("jobList");
                  JobList.Style.Add("background-color", "#f0e789");*/
             }
-        }
+            Button ViewReportBtn = (Button)e.Item.FindControl("ViewReport");
+            int jobPostID = int.Parse(jobID.Text);
+            if (checkReportJob(jobPostID))
+            {
+                string countReport = countJobReport(jobPostID);
+                if(int.Parse(countReport) > 1)
+                {
+                    ViewReportBtn.Text = "View " + countReport + " Reports";
+                }
+                else
+                {
+                    ViewReportBtn.Text = "View " + countReport + " Report";
+                }
+                
+            }
+            else
+            {
+                ViewReportBtn.Text = "View 0 Report";
+            }
 
+        }
+        string countJobReport(int jobPostID)
+        {
+            string countReport = "0";
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select COUNT(id) as totalReport from REPORT_JOB WHERE jobID = '" + jobPostID + "'", conDB);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                countReport = reader["totalReport"].ToString();
+                reader.Close();
+                conDB.Close();
+                return countReport;
+            }
+            reader.Close();
+            conDB.Close();
+            return countReport;
+        }
+        bool checkReportJob(int jobPostID)
+        {
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select COUNT(1) from REPORT_JOB WHERE jobID = '" + jobPostID + "'", conDB);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+
+                reader.Close();
+                conDB.Close();
+                return true;
+            }
+            reader.Close();
+            conDB.Close();
+            return false;
+        }
         private string postedDateTimeAgo(DateTime postDateTime) //check the time gap between posted date and current date
         {
             string timeAgoMsg = "";
