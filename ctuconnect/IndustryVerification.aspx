@@ -161,10 +161,6 @@
                             <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Coordinator Account
                         </a>
-                        <asp:LinkButton runat="server" ID ="LinkButton1">
-                            <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
-                            Sign-out
-                        </asp:LinkButton>
                     </div>
                     
                 </div>
