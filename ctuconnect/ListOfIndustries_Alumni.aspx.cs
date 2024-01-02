@@ -97,57 +97,61 @@ namespace ctuconnect
 
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
-            string industryName = txtIndustryName.Text;
-            string industryEmail = txtemail.Text;
-            string industryPwd = txtpwd.Text;
-            string industryLoc = txtLocation.Text;
-            HttpPostedFile postedFile = mouUpload.PostedFile;
-            string filename = Path.GetFileName(postedFile.FileName); ///to check the filename
-            string fileExtension = Path.GetExtension(filename).ToLower(); //to get the extension filename
-            int filezise = postedFile.ContentLength; //to get the filesize
-            string logpath = Server.MapPath("~/images/MOU/"); //creating a drive to upload or save the image
-            string filepath = Path.Combine(logpath, filename);
+            if (Page.IsValid) 
+            { 
+                string industryName = txtIndustryName.Text;
+                string industryEmail = txtemail.Text;
+                //string industryPwd = txtpwd.Text;
+               // string industryLoc = txtLocation.Text;
+                HttpPostedFile postedFile = mouUpload.PostedFile;
+                string filename = Path.GetFileName(postedFile.FileName); ///to check the filename
+                string fileExtension = Path.GetExtension(filename).ToLower(); //to get the extension filename
+                int filezise = postedFile.ContentLength; //to get the filesize
+                string logpath = Server.MapPath("~/images/MOU/"); //creating a drive to upload or save the image
+                string filepath = Path.Combine(logpath, filename);
 
-            if (fileExtension == ".bmp" || fileExtension.Equals(".jpg") || fileExtension.Equals(".png") || fileExtension.Equals(".jpeg") || fileExtension.Equals(".pdf"))
-            {
-                if (File.Exists(filepath))
+                if (fileExtension == ".bmp" || fileExtension.Equals(".jpg") || fileExtension.Equals(".png") || fileExtension.Equals(".jpeg") || fileExtension.Equals(".pdf"))
                 {
-                    Response.Write("<script>alert('A file with the same name already exists. Please choose a different name.');document.location='ListOfIndustries_Alumni.aspx'</script>");
-                    return; // Return to stop further execution
-                }
-                postedFile.SaveAs(filepath);
-                using (conDB)
-                {
-                    //SQL Connection
-                    conDB.Open();
-                    using (var cmd = conDB.CreateCommand())
+                    if (File.Exists(filepath))
                     {
-                        //SQL Statement
-                        cmd.CommandType = CommandType.Text;
-
-                        cmd.CommandText = "INSERT INTO INDUSTRY_ACCOUNT (INDUSTRYNAME, LOCATION, EMAIL, PASSWORD, MOU, DATEREGISTERED )"
-                            + "VALUES (@industryName, @location, @email, @password, @mou, @datereg )";
-
-
-
-
-                        cmd.Parameters.AddWithValue("@industryName", industryName);
-                        cmd.Parameters.AddWithValue("@location", industryLoc);
-                        cmd.Parameters.AddWithValue("@email", industryEmail);
-                        cmd.Parameters.AddWithValue("@password", industryPwd);
-                        cmd.Parameters.AddWithValue("@mou", filename);
-                        cmd.Parameters.AddWithValue("@datereg", DateTime.Now.ToString("yyyy/MM/dd"));
-                        cmd.ExecuteNonQuery();
-                        conDB.Close();
-
+                        Response.Write("<script>alert('A file with the same name already exists. Please choose a different name.');document.location='ListOfIndustries_Alumni.aspx'</script>");
+                        return; // Return to stop further execution
                     }
-                    Response.Write("<script>alert('Created Successfully');document.location='ListOfIndustries_Alumni.aspx'</script>");
-                    //Response.Redirect("ListOfIndustries_Alumni.aspx");
+                    postedFile.SaveAs(filepath);
+                    using (conDB)
+                    {
+                        //SQL Connection
+                        conDB.Open();
+                        using (var cmd = conDB.CreateCommand())
+                        {
+                            //SQL Statement
+                            cmd.CommandType = CommandType.Text;
+
+                            cmd.CommandText = "INSERT INTO INDUSTRY_ACCOUNT (INDUSTRYNAME, LOCATION, EMAIL, PASSWORD, MOU, DATEREGISTERED,ISVERIFIED, )"
+                                + "VALUES (@industryName, @location, @email, @password, @mou, @datereg, @verified )";
+
+
+
+
+                            cmd.Parameters.AddWithValue("@industryName", industryName);
+                            //cmd.Parameters.AddWithValue("@location", industryLoc);
+                            cmd.Parameters.AddWithValue("@email", industryEmail);
+                            //cmd.Parameters.AddWithValue("@password", industryPwd);
+                            cmd.Parameters.AddWithValue("@mou", filename);
+                            cmd.Parameters.AddWithValue("@datereg", DateTime.Now.ToString("yyyy/MM/dd"));
+                            cmd.Parameters.AddWithValue("@verified", true);
+                            cmd.ExecuteNonQuery();
+                            conDB.Close();
+
+                        }
+                        Response.Write("<script>alert('Created Successfully');document.location='ListOfIndustries_Alumni.aspx'</script>");
+                        //Response.Redirect("ListOfIndustries_Alumni.aspx");
+                    }
                 }
-            }
-            else
-            {
-                Response.Write("<script>alert('The file extension of the uploaded file is not acceptable')</script>");//error message after checking the file extensions
+                else
+                {
+                    Response.Write("<script>alert('The file extension of the uploaded file is not acceptable')</script>");//error message after checking the file extensions
+                }
             }
         }
 

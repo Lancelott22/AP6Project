@@ -42,453 +42,462 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.LinkButton SignOut;
 
         /// <summary>
-        /// prod1 control.
+        /// disp_Prod1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox prod1;
+        protected global::System.Web.UI.WebControls.Label disp_Prod1;
 
         /// <summary>
-        /// prod2 control.
+        /// disp_Prod2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox prod2;
+        protected global::System.Web.UI.WebControls.Label disp_Prod2;
 
         /// <summary>
-        /// prod3 control.
+        /// disp_Prod3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox prod3;
+        protected global::System.Web.UI.WebControls.Label disp_Prod3;
 
         /// <summary>
-        /// prod4 control.
+        /// disp_Prod4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox prod4;
+        protected global::System.Web.UI.WebControls.Label disp_Prod4;
 
         /// <summary>
-        /// prod5 control.
+        /// disp_Prod5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox prod5;
+        protected global::System.Web.UI.WebControls.Label disp_Prod5;
 
         /// <summary>
-        /// coop1 control.
+        /// disp_Coop1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox coop1;
+        protected global::System.Web.UI.WebControls.Label disp_Coop1;
 
         /// <summary>
-        /// coop2 control.
+        /// disp_Coop2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox coop2;
+        protected global::System.Web.UI.WebControls.Label disp_Coop2;
 
         /// <summary>
-        /// coop3 control.
+        /// disp_Coop3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox coop3;
+        protected global::System.Web.UI.WebControls.Label disp_Coop3;
 
         /// <summary>
-        /// coop4 control.
+        /// disp_Coop4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox coop4;
+        protected global::System.Web.UI.WebControls.Label disp_Coop4;
 
         /// <summary>
-        /// coop5 control.
+        /// disp_Coop5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox coop5;
+        protected global::System.Web.UI.WebControls.Label disp_Coop5;
 
         /// <summary>
-        /// abilityF1 control.
+        /// disp_AbilityF1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox abilityF1;
+        protected global::System.Web.UI.WebControls.Label disp_AbilityF1;
 
         /// <summary>
-        /// abilityF2 control.
+        /// disp_AbilityF2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox abilityF2;
+        protected global::System.Web.UI.WebControls.Label disp_AbilityF2;
 
         /// <summary>
-        /// abilityF3 control.
+        /// disp_AbilityF3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox abilityF3;
+        protected global::System.Web.UI.WebControls.Label disp_AbilityF3;
 
         /// <summary>
-        /// abilityF4 control.
+        /// disp_AbilityF4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox abilityF4;
+        protected global::System.Web.UI.WebControls.Label disp_AbilityF4;
 
         /// <summary>
-        /// abilityF5 control.
+        /// disp_AbilityF5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox abilityF5;
+        protected global::System.Web.UI.WebControls.Label disp_AbilityF5;
 
         /// <summary>
-        /// abilityG1 control.
+        /// disp_AbilityG1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox abilityG1;
+        protected global::System.Web.UI.WebControls.Label disp_AbilityG1;
 
         /// <summary>
-        /// abilityG2 control.
+        /// disp_AbilityG2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox abilityG2;
+        protected global::System.Web.UI.WebControls.Label disp_AbilityG2;
 
         /// <summary>
-        /// abilityG3 control.
+        /// disp_AbilityG3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox abilityG3;
+        protected global::System.Web.UI.WebControls.Label disp_AbilityG3;
 
         /// <summary>
-        /// abilityG4 control.
+        /// disp_AbilityG4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox abilityG4;
+        protected global::System.Web.UI.WebControls.Label disp_AbilityG4;
 
         /// <summary>
-        /// abilityG5 control.
+        /// disp_AbilityG5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox abilityG5;
+        protected global::System.Web.UI.WebControls.Label disp_AbilityG5;
 
         /// <summary>
-        /// init1 control.
+        /// disp_Init1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox init1;
+        protected global::System.Web.UI.WebControls.Label disp_Init1;
 
         /// <summary>
-        /// init2 control.
+        /// disp_Init2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox init2;
+        protected global::System.Web.UI.WebControls.Label disp_Init2;
 
         /// <summary>
-        /// init3 control.
+        /// disp_Init3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox init3;
+        protected global::System.Web.UI.WebControls.Label disp_Init3;
 
         /// <summary>
-        /// init4 control.
+        /// disp_Init4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox init4;
+        protected global::System.Web.UI.WebControls.Label disp_Init4;
 
         /// <summary>
-        /// init5 control.
+        /// disp_Init5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox init5;
+        protected global::System.Web.UI.WebControls.Label disp_Init5;
 
         /// <summary>
-        /// attend1 control.
+        /// disp_Attend1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox attend1;
+        protected global::System.Web.UI.WebControls.Label disp_Attend1;
 
         /// <summary>
-        /// attend2 control.
+        /// disp_Attend2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox attend2;
+        protected global::System.Web.UI.WebControls.Label disp_Attend2;
 
         /// <summary>
-        /// attend3 control.
+        /// disp_Attend3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox attend3;
+        protected global::System.Web.UI.WebControls.Label disp_Attend3;
 
         /// <summary>
-        /// attend4 control.
+        /// disp_Attend4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox attend4;
+        protected global::System.Web.UI.WebControls.Label disp_Attend4;
 
         /// <summary>
-        /// attend5 control.
+        /// disp_Attend5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox attend5;
+        protected global::System.Web.UI.WebControls.Label disp_Attend5;
 
         /// <summary>
-        /// qual1 control.
+        /// disp_Qual1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox qual1;
+        protected global::System.Web.UI.WebControls.Label disp_Qual1;
 
         /// <summary>
-        /// qual2 control.
+        /// disp_Qual2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox qual2;
+        protected global::System.Web.UI.WebControls.Label disp_Qual2;
 
         /// <summary>
-        /// qual3 control.
+        /// disp_Qual3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox qual3;
+        protected global::System.Web.UI.WebControls.Label disp_Qual3;
 
         /// <summary>
-        /// qual4 control.
+        /// disp_Qual4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox qual4;
+        protected global::System.Web.UI.WebControls.Label disp_Qual4;
 
         /// <summary>
-        /// qual5 control.
+        /// disp_Qual5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox qual5;
+        protected global::System.Web.UI.WebControls.Label disp_Qual5;
 
         /// <summary>
-        /// appear1 control.
+        /// disp_Appear1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox appear1;
+        protected global::System.Web.UI.WebControls.Label disp_Appear1;
 
         /// <summary>
-        /// appear2 control.
+        /// disp_Appear2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox appear2;
+        protected global::System.Web.UI.WebControls.Label disp_Appear2;
 
         /// <summary>
-        /// appear3 control.
+        /// disp_Appear3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox appear3;
+        protected global::System.Web.UI.WebControls.Label disp_Appear3;
 
         /// <summary>
-        /// appear4 control.
+        /// disp_Appear4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox appear4;
+        protected global::System.Web.UI.WebControls.Label disp_Appear4;
 
         /// <summary>
-        /// appear5 control.
+        /// disp_Appear5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox appear5;
+        protected global::System.Web.UI.WebControls.Label disp_Appear5;
 
         /// <summary>
-        /// depend1 control.
+        /// disp_Depend1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox depend1;
+        protected global::System.Web.UI.WebControls.Label disp_Depend1;
 
         /// <summary>
-        /// depend2 control.
+        /// disp_Depend2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox depend2;
+        protected global::System.Web.UI.WebControls.Label disp_Depend2;
 
         /// <summary>
-        /// depend3 control.
+        /// disp_Depend3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox depend3;
+        protected global::System.Web.UI.WebControls.Label disp_Depend3;
 
         /// <summary>
-        /// depend4 control.
+        /// disp_Depend4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox depend4;
+        protected global::System.Web.UI.WebControls.Label disp_Depend4;
 
         /// <summary>
-        /// depend5 control.
+        /// disp_Depend5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox depend5;
+        protected global::System.Web.UI.WebControls.Label disp_Depend5;
 
         /// <summary>
-        /// overAll1 control.
+        /// disp_Overall1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox overAll1;
+        protected global::System.Web.UI.WebControls.Label disp_Overall1;
 
         /// <summary>
-        /// overAll2 control.
+        /// disp_Overall2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox overAll2;
+        protected global::System.Web.UI.WebControls.Label disp_Overall2;
 
         /// <summary>
-        /// overAll3 control.
+        /// disp_Overall3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox overAll3;
+        protected global::System.Web.UI.WebControls.Label disp_Overall3;
 
         /// <summary>
-        /// overAll4 control.
+        /// disp_Overall4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox overAll4;
+        protected global::System.Web.UI.WebControls.Label disp_Overall4;
 
         /// <summary>
-        /// overAll5 control.
+        /// disp_Overall5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox overAll5;
+        protected global::System.Web.UI.WebControls.Label disp_Overall5;
+
+        /// <summary>
+        /// btnUpdate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnUpdate;
     }
 }

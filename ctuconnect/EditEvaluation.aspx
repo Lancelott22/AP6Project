@@ -74,13 +74,16 @@
              padding: 0px 0px 0px 8px;
              text-decoration: none;
          }
-         .display-container{
+         .container{
              font-family: 'Poppins', sans-serif;
              background-color:white; 
              width:1550px;
              top:0;
              bottom:0;
-             padding: 2%;
+             border: 1px solid grey;
+            padding-top:2em;
+            padding-left:2em;
+            padding-right:2em;
              overflow: auto;
              /*background-color:white;*/
              height:1000px;
@@ -90,25 +93,17 @@
              position:relative;
              padding: 4% 0% 0% 6%;*/
          }
-             .display-container {
-                 max-width: 100%;
-             }
-         .display-container .title{
-             font-size:25px;
-             font-weight:500;
-             position:relative;
-             margin-bottom:3%;
-             padding-bottom:4px;
+         .category{
+            padding-left:7em;
          }
-         .display-container .title:before{
-             content:'';
-             position:absolute;
-             height:2px;
-             width:40px;
-             bottom:0;
-             background-color: #881A30;
-
+         .details{
+            padding-left:10em;
          }
+         .container2{
+            padding-left:4em;
+            padding-right:2em;
+        }
+             
           .content{
               height:100%; 
               width:97%; 
@@ -116,90 +111,31 @@
               margin-right:2%;
               padding: 0px 0px 0px 0px;
           }
-          .gridview-style{
-              margin-top:5%;
-              text-align:center;
-          }
-          .gridview-style .header-style{
-              width:20px;
-              text-align:center;
-              align-items:center;
-          }
-         .sort-dropdown{
-             border-radius: 12px;
-             width:100px;
-             padding-left:8px;
-             border-color:#c1beba;
+ 
+         .full-time:active::before{
+                     content:'';
+                     position:absolute;
+                     height:10px;
+                     width:40px;
+                     bottom:0%;
+                     background-color: #881A30;
+
          }
-         .gridview-container {
-     position: relative;
-     min-height: 1px;
-     height: auto;
-     width: 100%;
- }
+         .line{
+            height:2px;
+            width:100%;
+            background-color:#000000;
+            color:#000000;
+            position:center;
+        }
+         .btn-md{
+            border: 1px #881A30;
+            background-color: #881A30;
+            position:center;
+            width: 120px;
+            height:45px;
+        }
 
- .gridview {
-     position: absolute;
-     top: 0;
-     left: 0;
-     width: 100%;
-     display: none;
- }
-.horizontal-line {
-     border: none;
-     border-top: 1.5px solid black;
-     width: 90%;
-     margin-left:auto;
-     margin-right:auto;
-     margin-top:1%;
-     margin-bottom:0%;
- }
- .second{
-     border: none;
-     border-top: 1.5px solid black;
-     width: 90%;
-     margin-left:auto;
-     margin-right:auto;
-     margin-top:13%;
-     margin-bottom:0%;
- }
- .full-time:active::before{
-             content:'';
-             position:absolute;
-             height:10px;
-             width:40px;
-             bottom:0%;
-             background-color: #881A30;
-
- }
- th{
-    border-collapse: collapse;
-     border-color:white;
-     background-color:#f4f4fb;
-     padding:5px;
-
- }
- .datas{
-      padding:9px;
-       border: 8px solid;
-       border-color:white;
-      font-weight:bold;
-      color:black;
- }
-
- .table-list{
-      border-collapse: collapse;
-     font-size:13px; 
-     height:auto; 
-     width:100%;
-     color:dimgray;
- }
- .txtbox{
-    opacity: 0.5;
-    border-radius: 5px;
-    height: 28px;
-    width: 1000%;
-}
  </style>
  <asp:Table ID="Table1" runat="server"  CssClass="content">
      <asp:TableRow>
@@ -228,96 +164,174 @@
              </div>
          </asp:TableCell>
          <asp:TableCell Style="padding:0px 5px 0px 40px">
-            <div class="display-container">
-                <h1 class="title">Evaluation</h1>
-                <div class="row gx-4 gx-lg-5 h-50 align-items-center justify-content-center">
-                    <h3>Productivity</h3><br />
-                    <div class="col-sm-3 d-flex flex-column justify-content-center"><asp:TextBox ID="prod1" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div class="col-sm-3 d-flex flex-column justify-content-center"><asp:TextBox ID="prod2" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div class="col-sm-3 d-flex flex-column justify-content-center"><asp:TextBox ID="prod3" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div class="col-sm-3 d-flex flex-column justify-content-center"><asp:TextBox ID="prod4" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div class="col-sm-3 d-flex flex-column justify-content-center"><asp:TextBox ID="prod5" CssClass="txtbox" runat="server"></asp:TextBox></div>
+            <div class="col-9 d-flex flex-column">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 d-flex flex-column">
+                            <center><h1>Evaluation Form</h1></center><br />
+                        </div>
+                    </div>
+                    <hr class="line" />
+                    <div class="row">
+                        <div class="col-12 d-flex flex-column">
+                            <b>Categories</b>
+                            <br />
+                            <div class="row category">
+                                <div class="col-6">
+                                    <b>Productivity</b>
+                                    <br />
+                                    <div class="row details">
+                                        <div class="col-6 d-flex flex-column">
+                                            <asp:Label ID="disp_Prod1" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Prod2" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Prod3" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Prod4" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Prod5" runat="server"></asp:Label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <b>Cooperation</b>
+                                    <br />
+                                    <div class="row details">
+                                        <div class="col-6 d-flex flex-column">
+                                            <asp:Label ID="disp_Coop1" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Coop2" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Coop3" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Coop4" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Coop5" runat="server"></asp:Label>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                             <div class="row category">
+                                 <div class="col-6">
+                                     <b>Ability to Follow Instructions</b>
+                                     <br />
+                                     <div class="row details">
+                                         <div class="col-6 d-flex flex-column">
+                                             <asp:Label ID="disp_AbilityF1" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityF2" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityF3" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityF4" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityF5" runat="server"></asp:Label>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="col-6">
+                                     <b>Ability to Get Along with People</b>
+                                     <br />
+                                     <div class="row details">
+                                         <div class="col-6 d-flex flex-column">
+                                             <asp:Label ID="disp_AbilityG1" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityG2" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityG3" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityG4" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityG5" runat="server"></asp:Label>
+                                         </div>
+                                     </div>
+                                 </div>
+ 
+                             </div>
+                             <div class="row category">
+                                 <div class="col-6">
+                                     <b>Initiative</b>
+                                     <br />
+                                     <div class="row details">
+                                         <div class="col-6 d-flex flex-column">
+                                             <asp:Label ID="disp_Init1" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Init2" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Init3" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Init4" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Init5" runat="server"></asp:Label>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="col-6">
+                                     <b>Attendance</b>
+                                     <br />
+                                     <div class="row details">
+                                         <div class="col-6 d-flex flex-column">
+                                             <asp:Label ID="disp_Attend1" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Attend2" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Attend3" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Attend4" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Attend5" runat="server"></asp:Label>
+                                         </div>
+                                     </div>
+                                 </div>
+ 
+                             </div>
+                             <div class="row category">
+                                 <div class="col-6">
+                                     <b>Quality of Work</b>
+                                     <br />
+                                     <div class="row details">
+                                         <div class="col-6 d-flex flex-column">
+                                             <asp:Label ID="disp_Qual1" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Qual2" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Qual3" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Qual4" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Qual5" runat="server"></asp:Label>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="col-6">
+                                     <b>Appearance</b>
+                                     <br />
+                                     <div class="row details">
+                                         <div class="col-6 d-flex flex-column">
+                                             <asp:Label ID="disp_Appear1" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Appear2" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Appear3" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Appear4" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Appear5" runat="server"></asp:Label>
+                                         </div>
+                                     </div>
+                                 </div>
+ 
+                             </div>
+                             <div class="row category">
+                                 <div class="col-6">
+                                     <b>Dependability</b>
+                                     <br />
+                                     <div class="row details">
+                                         <div class="col-6 d-flex flex-column">
+                                             <asp:Label ID="disp_Depend1" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Depend2" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Depend3" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Depend4" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Depend5" runat="server"></asp:Label>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="col-6">
+                                     <b>Overall Performance</b>
+                                     <br />
+                                     <div class="row details">
+                                         <div class="col-6 d-flex flex-column">
+                                             <asp:Label ID="disp_Overall1" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Overall2" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Overall3" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Overall4" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Overall5" runat="server"></asp:Label>
+                                         </div>
+                                     </div>
+                                 </div>
+ 
+                             </div>
+                        </div>
+                    </div>
                 </div>
+                <br />
+                <div class="container2">
+                    <div class="row">
+                        <div class="col-2 d-flex flex-column">
+                            <asp:Button ID="btnUpdate" class="btn btn-primary btn-md" runat="server" Text="Update" OnClick="btnUpdate_Click"/>
+                        </div>
 
-                <div class="row gx-4 gx-lg-5 h-50 align-items-center justify-content-center">
-                    <h3>Cooperation</h3><br />
-                    <div><asp:TextBox ID="coop1" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="coop2" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="coop3" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="coop4" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="coop5" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                </div>
-
-                <div class="row gx-4 gx-lg-5 h-50 align-items-center justify-content-center">
-                    <h3>Ability to Follow Instructions</h3><br />
-                    <div><asp:TextBox ID="abilityF1" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="abilityF2" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="abilityF3" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="abilityF4" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="abilityF5" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                </div>
-
-                <div class="row gx-4 gx-lg-5 h-50 align-items-center justify-content-center">
-                    <h3>Ability to Ge tAlong with People</h3><br />
-                    <div><asp:TextBox ID="abilityG1" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="abilityG2" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="abilityG3" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="abilityG4" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="abilityG5" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                </div>
-
-                <div class="row gx-4 gx-lg-5 h-50 align-items-center justify-content-center">
-                    <h3>Initiative</h3><br />
-                    <div><asp:TextBox ID="init1" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="init2" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="init3" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="init4" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="init5" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                </div>
-
-                <div class="row gx-4 gx-lg-5 h-50 align-items-center justify-content-center">
-                    <h3>Attendance</h3><br />
-                    <div><asp:TextBox ID="attend1" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="attend2" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="attend3" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="attend4" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="attend5" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                </div>
-
-                <div class="row gx-4 gx-lg-5 h-50 align-items-center justify-content-center">
-                    <h3>Quality of Work</h3><br />
-                    <div><asp:TextBox ID="qual1" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="qual2" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="qual3" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="qual4" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="qual5" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                </div>
-
-                <div class="row gx-4 gx-lg-5 h-50 align-items-center justify-content-center">
-                    <h3>Appearance</h3><br />
-                    <div><asp:TextBox ID="appear1" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="appear2" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="appear3" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="appear4" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="appear5" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                </div>
-
-                <div class="row gx-4 gx-lg-5 h-50 align-items-center justify-content-center">
-                    <h3>Dependability</h3><br />
-                    <div><asp:TextBox ID="depend1" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="depend2" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="depend3" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="depend4" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="depend5" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                </div>
-
-                <div class="row gx-4 gx-lg-5 h-50 align-items-center justify-content-center">
-                    <h3>Overall Performance</h3><br />
-                    <div><asp:TextBox ID="overAll1" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="overAll2" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="overAll3" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="overAll4" CssClass="txtbox" runat="server"></asp:TextBox></div>
-                    <div><asp:TextBox ID="overAll5" CssClass="txtbox" runat="server"></asp:TextBox></div>
+                    </div>
                 </div>
             </div>
          </asp:TableCell>
