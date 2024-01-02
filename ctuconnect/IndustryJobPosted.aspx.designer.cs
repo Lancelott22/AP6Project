@@ -60,6 +60,51 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label disp_accID;
 
         /// <summary>
+        /// txtsearchJob control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtsearchJob;
+
+        /// <summary>
+        /// SearchJob control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SearchJob;
+
+        /// <summary>
+        /// JobTypeSort control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList JobTypeSort;
+
+        /// <summary>
+        /// JobStatusSort control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList JobStatusSort;
+
+        /// <summary>
+        /// ddlDateFilter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlDateFilter;
+
+        /// <summary>
         /// IndustryJobPostedList control.
         /// </summary>
         /// <remarks>

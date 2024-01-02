@@ -149,31 +149,31 @@
                 <br />
                 <div class="row">
 
-    <div class="col input-group mb-3">
-        <asp:TextBox ID="txtsearchJob" CssClass="form-control searchbox" runat="server" placeholder="Search job title"></asp:TextBox>
-        <div class="input-group-append">
-            <asp:Button class="btn btn-primary" runat="server" ID="SearchJob" OnClick="SearchJob_Click" Text="Search" />
-        </div>
-    </div>
-    <div class="col">
-        <asp:DropDownList runat="server" CssClass="form-control" ID="JobTypeSort" AutoPostBack="true" OnSelectedIndexChanged="JobTypeSort_SelectedIndexChanged">
-            <asp:ListItem Value="0" Disabled="true">Select Type</asp:ListItem>
-            <asp:ListItem Value="All">All</asp:ListItem>
-            <asp:ListItem Value="internship">Internship</asp:ListItem>
-            <asp:ListItem Value="fulltime">Fulltime</asp:ListItem>
-        </asp:DropDownList>
-    </div>
-    <div class="col">
-        <asp:DropDownList ID="ddlDateFilter" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlDateFilter_SelectedIndexChanged">
-            <asp:ListItem Value="0" Disabled="true">Select Date</asp:ListItem>
-            <asp:ListItem Text="All" Value="All"></asp:ListItem>
-            <asp:ListItem Text="24 hours ago" Value="1"></asp:ListItem>
-            <asp:ListItem Text="Last 3 days" Value="3"></asp:ListItem>
-            <asp:ListItem Text="Last 7 days" Value="7"></asp:ListItem>
-            <asp:ListItem Text="Last 14 days" Value="14"></asp:ListItem>
-        </asp:DropDownList>
-    </div>
-</div>
+                    <div class="col input-group mb-3">
+                        <asp:TextBox ID="txtsearchJob" CssClass="form-control searchbox" runat="server" placeholder="Search job title"></asp:TextBox>
+                        <div class="input-group-append">
+                            <asp:Button class="btn btn-primary" runat="server" ID="SearchJob" OnClick="SearchJob_Click" Text="Search" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <asp:DropDownList runat="server" CssClass="form-control" ID="JobTypeSort" AutoPostBack="true" OnSelectedIndexChanged="JobTypeSort_SelectedIndexChanged">
+                            <asp:ListItem Value="0" Disabled="true">Select Type</asp:ListItem>
+                            <asp:ListItem Value="All">All</asp:ListItem>
+                            <asp:ListItem Value="internship">Internship</asp:ListItem>
+                            <asp:ListItem Value="fulltime">Fulltime</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col">
+                        <asp:DropDownList ID="ddlDateFilter" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlDateFilter_SelectedIndexChanged">
+                            <asp:ListItem Value="0" Disabled="true">Select Date</asp:ListItem>
+                            <asp:ListItem Text="All" Value="All"></asp:ListItem>
+                            <asp:ListItem Text="24 hours ago" Value="1"></asp:ListItem>
+                            <asp:ListItem Text="Last 3 days" Value="3"></asp:ListItem>
+                            <asp:ListItem Text="Last 7 days" Value="7"></asp:ListItem>
+                            <asp:ListItem Text="Last 14 days" Value="14"></asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                </div>
                 <br />
                 <label id="totalJob" runat="server"></label>
                 <div class="jobs">

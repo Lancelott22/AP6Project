@@ -153,7 +153,7 @@ namespace ctuconnect
         {
             int industryID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE industry_accID = '" + industryID + "'", conDB);
+            SqlCommand cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE (isDeletedByAdmin = 'false' or isDeletedByAdmin IS NULL) and industry_accID = '" + industryID + "'", conDB);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {

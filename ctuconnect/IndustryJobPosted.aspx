@@ -353,6 +353,41 @@
                         <div class="d-flex flex-column" style="margin-bottom: 30px;">                           
                             <div class="JobPostedListbox" style="padding: 30px;">
                                  <h3 class="title">My Job Posted</h3><br />
+                                <div class="row mb-5">
+
+                                    <div class="col input-group mb-3">
+                                        <asp:TextBox ID="txtsearchJob" CssClass="form-control searchbox" style="width:200px" runat="server" placeholder="Search job title"></asp:TextBox>
+                                        <div class="input-group-append">
+                                            <asp:Button class="btn btn-primary" runat="server" ID="SearchJob" OnClick="SearchJob_Click" Text="Search" />
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <asp:DropDownList runat="server" CssClass="form-control" ID="JobTypeSort" AutoPostBack="true" OnSelectedIndexChanged="JobTypeSort_SelectedIndexChanged">
+                                            <asp:ListItem Value="0" Disabled="true">Select Type</asp:ListItem>
+                                            <asp:ListItem Value="All">All</asp:ListItem>
+                                            <asp:ListItem Value="internship">Internship</asp:ListItem>
+                                            <asp:ListItem Value="fulltime">Fulltime</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </div>
+                                    <div class="col">
+                                        <asp:DropDownList runat="server" CssClass="form-control" ID="JobStatusSort" AutoPostBack="true" OnSelectedIndexChanged="JobStatusSort_SelectedIndexChanged">
+                                            <asp:ListItem Value="0" Disabled="true">Select Job Status</asp:ListItem>
+                                            <asp:ListItem Value="All">All</asp:ListItem>
+                                            <asp:ListItem Value="Active">Active</asp:ListItem>
+                                            <asp:ListItem Value="Inactive">Inactive</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </div>
+                                    <div class="col">
+                                        <asp:DropDownList ID="ddlDateFilter" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlDateFilter_SelectedIndexChanged">
+                                            <asp:ListItem Value="0" Disabled="true">Select Date</asp:ListItem>
+                                            <asp:ListItem Text="All" Value="All"></asp:ListItem>
+                                            <asp:ListItem Text="24 hours ago" Value="1"></asp:ListItem>
+                                            <asp:ListItem Text="Last 3 days" Value="3"></asp:ListItem>
+                                            <asp:ListItem Text="Last 7 days" Value="7"></asp:ListItem>
+                                            <asp:ListItem Text="Last 14 days" Value="14"></asp:ListItem>
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
                                 <asp:ListView ID="IndustryJobPostedList" runat="server" class="container-fluid" OnItemDataBound="IndustryJobPostedList_ItemDataBound" OnPagePropertiesChanged="IndustryJobPostedList_PagePropertiesChanged">
                                     <ItemTemplate>
                                         <div id="myJobPosted" runat="server" class="row d-flex align-items-center jobPostedBox">
