@@ -1031,7 +1031,7 @@ namespace ctuconnect
 
            Page.ClientScript.RegisterStartupScript(this.GetType(), "closeModal", "closeEditModal();", true);
         }
-
+        
         protected void EvaluationBtn_Command(object sender, CommandEventArgs e)
         {
             Button Evalbtn = (Button)sender;
@@ -1060,6 +1060,22 @@ namespace ctuconnect
                     return "btn-success"; // Green
                 default:
                     return string.Empty; // No CSS class if no request
+            }
+        }
+        protected string GetButtonText(object evaluationRequest)
+        {
+            string requestStatus = evaluationRequest.ToString();
+
+            switch (requestStatus)
+            {
+                case "no request":
+                    return "no request";
+                case "Requested":
+                    return "Requested"; // Change the text to "Evaluation" for Requested status
+                case "Evaluated":
+                    return "Evaluation"; // Change the text to "Evaluation" for Evaluated status
+                default:
+                    return string.Empty; // No text if no request
             }
         }
     }

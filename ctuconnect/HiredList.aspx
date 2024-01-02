@@ -494,7 +494,7 @@ width:100%;
                                                             <asp:Label ID="lblRenderedHours" runat="server" Text='<%# Eval("renderedHours") %>'></asp:Label>
                                                         </td>
                                                         <td class="datas">
-                                                            <asp:Button ID="EvaluationBtn"  runat="server" Text='<%# Eval("evaluationRequest").ToString() == "Evaluated" ? "Evaluation" : "Not Available" %>' CommandArgument='<%# Eval("student_accID") %>' CommandName='<%# Eval("id") %>'  OnCommand="EvaluationBtn_Command" CssClass='<%# GetButtonCssClass(Eval("evaluationRequest")) %>'/>
+                                                            <asp:Button ID="EvaluationBtn"  runat="server" Text='<%# GetButtonText(Eval("evaluationRequest")) %>' CommandArgument='<%# Eval("student_accID") %>' CommandName='<%# Eval("id") %>'  OnCommand="EvaluationBtn_Command" CssClass='<%# GetButtonCssClass(Eval("evaluationRequest")) %>'/>
                                                         </td>
                                                     </tr>
                                                 </ItemTemplate>

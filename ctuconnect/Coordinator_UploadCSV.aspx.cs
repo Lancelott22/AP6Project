@@ -197,8 +197,6 @@ namespace ctuconnect
 
         protected void UploadGraduate_Click(object sender, EventArgs e)
         {
-           try
-            {
                 HttpPostedFile graduateCSVFile = graduateCSV.PostedFile;
                 string graduateCSVFileName = Path.GetFileName(graduateCSVFile.FileName);
                 string graduateCSVFileEx = Path.GetExtension(graduateCSVFileName).ToLower();
@@ -279,11 +277,7 @@ namespace ctuconnect
                 {
                     Response.Write("<script>alert('The file extension of the uploaded file is not acceptable! Must be .csv file.');document.location='Coordinator_UploadCSV.aspx';</script>");
                 }
-           }
-            catch 
-            {
-                Response.Write("<script>alert('The csv is not in correct format. The number of columns is not consistent or the column names are missing or invalid. Or the StudentID is already in the list or duplicated.');document.location='Coordinator_UploadCSV.aspx';</script>");
-            }
+           
         }
 
         protected void AddIntern_Click(object sender, EventArgs e)
