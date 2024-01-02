@@ -185,8 +185,8 @@ namespace ctuconnect
 
         protected void btnEditResume_Click(object sender, EventArgs e)
         {
-            int studentAccID = Convert.ToInt32(Session["STUDENT_ACC_ID"].ToString());
-            Response.Redirect("EditResume.aspx");
+            
+            Response.Redirect("Resume.aspx");
         }
 
         protected void btnCloseStatus_Click(object sender, EventArgs e)

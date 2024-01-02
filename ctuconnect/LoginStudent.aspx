@@ -117,6 +117,11 @@
                         <p><asp:Button ID="btn" class="btn btn-primary btn-md" runat="server" Text="Login" OnClick="btn_Click"/></p>
                     </div> 
                     
+                    <div class="col-lg-12 align-self-end">
+                        <br /><br />
+                        <a href="ForgotPassword_Student.aspx" class="link">Forgot password?</a>
+                    </div> 
+                    
                 </div>
                 <br />
             </div>

@@ -16,6 +16,7 @@ namespace ctuconnect
         private DataTable dtApplicants = new DataTable();
         private DataTable dtReferred = new DataTable();
         private DataTable dtFeedback = new DataTable();
+ 
         int count = 0;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -41,6 +42,7 @@ namespace ctuconnect
                 this.LoadFeedback();
                 rptindustryfeedback.DataSource = dtFeedback;
                 rptindustryfeedback.DataBind();
+
 
                 refreshCounting();
                 industryDetails();
@@ -148,6 +150,7 @@ namespace ctuconnect
 
 
         }
+
         private void LoadApplicants()
         {
             if (Session["INDUSTRY_ACC_ID"] != null)
@@ -320,7 +323,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -349,7 +352,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount();
+                int totalCounts = UnreadApplicantsCount() + UnreadReferredCount() + UnreadFeedbackCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -612,6 +615,7 @@ namespace ctuconnect
                 disableHeader3();
             }
         }
+
 
         protected void SignOut_Click(object sender, EventArgs e)
         {

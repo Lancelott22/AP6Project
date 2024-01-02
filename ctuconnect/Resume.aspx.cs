@@ -81,20 +81,24 @@ namespace ctuconnect
 
         private void InsertResumeRecord(int studentAcctID)
         {
-
+            string fname = Session["FNAME"].ToString();
+            string lname = Session["LNAME"].ToString();
             using (var db = new SqlConnection(conDB))
             {
                 db.Open();
-                string query = "INSERT INTO RESUME (student_accID) VALUES (@studentAccID)";
+                string query = "INSERT INTO RESUME (student_accID,fname,lname) VALUES (@studentAccID,@fname,@lname)";
                 SqlCommand cmd = new SqlCommand(query, db);
                 cmd.Parameters.AddWithValue("@studentAccID", studentAcctID);
+                cmd.Parameters.AddWithValue("@fname", fname);
+                cmd.Parameters.AddWithValue("@lname", lname);
 
                 var ctr = cmd.ExecuteNonQuery();
                 if (ctr > 0)
                 {
                     
                 }
-
+                int studentaccID = Convert.ToInt32(Session["STUDENT_ACC_ID"].ToString());
+                DisplayResume(studentaccID);
             }
         }
 

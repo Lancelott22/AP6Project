@@ -80,6 +80,7 @@ namespace ctuconnect
 
                         if (ctr > 0)
                         {
+                            Session["IsAnswered"] = true;
                             cmd = new SqlCommand("UPDATE STUDENT_ACCOUNT SET isAnsweredAlumniForm = 1 WHERE student_accID = '" + student_accID + "'", conDB);
                             cmd.ExecuteNonQuery();
                             Response.Write("<script>alert('The form has been submitted successfully.');document.location='JobPortal.aspx';</script>");

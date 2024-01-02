@@ -342,6 +342,8 @@
 
                                 <br />
                                 <asp:Label ID="StudentID" CssClass="accountid" runat="server"></asp:Label>
+                                <br />
+                                <asp:Label ID="StudentCourse" CssClass="accountid text-dark fw-light" style="font-size:15px;"  runat="server"></asp:Label>
                             </div>
                             <div class="detailsBox" id="JobDetailBox" runat="server" visible="false">
                                 <asp:UpdateProgress ID="LoadDetails" class="align-items-center h-100" runat="server" AssociatedUpdatePanelID="UpdatePanel1" DynamicLayout="true">
@@ -450,15 +452,24 @@
                                     <asp:Button class="btn btn-primary" runat="server" ID="SearchJob" OnClick="SearchJob_Click" Text="Search" />
                                 </div>
                             </div>
-                            <div class="col ">
+                            <div class="col">
                                 <asp:DropDownList runat="server" CssClass="form-control" ID="JobTypeSort" AutoPostBack="true" OnSelectedIndexChanged="JobType_SelectedIndexChanged">
                                     <asp:ListItem Value="0" Disabled="true">Select Type</asp:ListItem>
-                                    <asp:ListItem Value="All" >All</asp:ListItem>
-                                    <asp:ListItem Value="Internship" >Internship</asp:ListItem>
-                                    <asp:ListItem Value="Fulltime" >Fulltime</asp:ListItem>
+                                    <asp:ListItem Value="All">All</asp:ListItem>
+                                    <asp:ListItem Value="internship">Internship</asp:ListItem>
+                                    <asp:ListItem Value="fulltime">Fulltime</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
-
+                            <div class="col">
+                                <asp:DropDownList ID="ddlDateFilter" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlDateFilter_SelectedIndexChanged">
+                                    <asp:ListItem Value="0" Disabled="true">Select Date</asp:ListItem>
+                                    <asp:ListItem Text="All" Value="All"></asp:ListItem>
+                                    <asp:ListItem Text="24 hours ago" Value="1"></asp:ListItem>
+                                    <asp:ListItem Text="Last 3 days" Value="3"></asp:ListItem>
+                                    <asp:ListItem Text="Last 7 days" Value="7"></asp:ListItem>
+                                    <asp:ListItem Text="Last 14 days" Value="14"></asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
                         </div>
                         <br />
                         <label id="totalJob" runat="server"></label>
@@ -501,9 +512,9 @@
                                                     <span id="jobCourse" runat="server"><%#Eval("jobCourse") %></span>
                                                 </div>
                                                 <div class="col-3">
-                                                    <label>Job Location: </label>
+                                                    <label>Job Type: </label>
                                                     <br />
-                                                    <span><%#Eval("jobLocation") %></span>
+                                                    <span><%#Eval("jobType") %></span>
                                                 </div>
                                                 <div class="col-3">
                                                     <label>Date: </label>

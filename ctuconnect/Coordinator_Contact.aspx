@@ -18,7 +18,7 @@
         .profile-container {
             font-family: 'Poppins', sans-serif;
             max-width: 260px;
-            max-height: 630px;
+            max-height: 660px;
             background-color: white;
             margin-left: 4%;
             padding-bottom: 8px;
@@ -53,7 +53,7 @@
         .sidemenu-container {
             font-family: 'Poppins', sans-serif;
             width: 260px;
-            height: 200px;
+            height: 220px;
             background-color: white;
             /*margin-top:22%;*/
             padding-top: 4px;
@@ -231,15 +231,45 @@
      .submitStyle:hover {
          box-shadow: 3px 6px 7px -4px grey;
      }
+     .overlay {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 9999;
+}
+
+.spinner-container {
+    text-align: center;
+}
     </style>
+    <div class="overlay">
+    <div class="spinner-container">
+        <span class="fs-1" id="Load">Sending Message</span>
+        <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
     <asp:Table ID="Table1" runat="server" CssClass="content">
         <asp:TableRow>
             <asp:TableCell Style="vertical-align: top;">
                 <div class="profile-container">
-                    <img src="images/industrypic.png" />
+                    <asp:Image ID="CoordinatorImage" runat="server"/>
                     <p>OJT Coordinator</p>
                     <hr class="horizontal-line" />
-                    <a href="Coordinator.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right: 12px;"></i>List of Interns</a>
+                    <a href="CoordinatorProfile.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right: 12px;"></i>List of Interns</a>
                     <a href="ListOfAlumni.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right: 12px;"></i>List of Alumni</a>
                     <a href="PartneredIndustries.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right: 12px;"></i>Partnered Industry</a>
                     <a href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>Refer Student</a>
@@ -248,8 +278,9 @@
                     <a class="active" href="Coordinator_Contact.aspx"><i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px;"></i>Contact</a>
                     <a  href="Coordinator_UploadCSV.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Upload CSV</a>
                     <a href="TracerDashboard.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right: 12px;"></i>Tracer</a>
-                    <a href="Coord_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right:12px;"></i>Account Settings</a>
-                    <hr class="second" />
+                        <hr class="second" />
+                <a href="OJTCoordinatorProfile.aspx"><i class="fa fa-user" aria-hidden="true" style="padding-right:12px;"></i>Profile</a>
+                <a href="Coord_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right:12px;"></i>Account Settings</a>
                     <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
     <i class="fa fa-sign-out" aria-hidden="true"></i>
      Sign-out
@@ -289,7 +320,7 @@
                             <asp:TextBox class="form-control summernote" Rows="5" TextMode="MultiLine" ID="message" runat="server" ValidateRequestMode="Disabled"></asp:TextBox>
                         </div>
                         <div>
-                            <asp:Button ID="SendMessage" runat="server" CssClass="submitStyle" Text="Send Message" OnClick="SendMessage_Click" />
+                            <asp:Button ID="SendMessage" runat="server" CssClass="submitStyle" Text="Send Message"  OnClientClick="showOverlay();" OnClick="SendMessage_Click" />
                         </div>
                     </div>
                </div>
@@ -318,6 +349,12 @@
         $(document).ready(function () {
             $('.selectpicker').selectpicker();
         });
+    </script>
+
+    <script>
+        function showOverlay() {
+            $(".overlay").css("display", "flex");
+        }
     </script>
 </asp:Content>
 

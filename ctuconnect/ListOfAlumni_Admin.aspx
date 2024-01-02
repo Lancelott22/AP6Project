@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="true" CodeBehind="ListOfAlumni_Admin.aspx.cs" Inherits="ctuconnect.ListOfAlumni_Admin" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="true" CodeBehind="ListOfAlumni_Admin.aspx.cs" Inherits="ctuconnect.ListOfAlumni_Admin" EnableEventValidation="false" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -34,7 +34,7 @@
         width: 90%;
         margin-left:auto;
         margin-right:auto;
-        margin-top:13%;
+        margin-top:1%;
         margin-bottom:0%;
     }
          
@@ -110,27 +110,28 @@
         background-color: #881A30;
 
     }
-   th{
-   border-collapse: collapse;
-    border-color:white;
-    background-color:#f4f4fb;
-    padding:5px;
+    th{
+         border: 1px solid;
+         border-color:#c4c4c4;
+        background-color:#f4f4fb;
+        padding:5px;
 
     }
     .datas{
-         padding:9px;
-          border: 8px solid;
-          border-color:white;
-         font-weight:bold;
+        border: 1px solid;
+        border-color:#c4c4c4;
+        padding-left:5px;
          color:black;
+         cursor:default;
     }
 
     .table-list{
-         border-collapse: collapse;
+        border-collapse: collapse;        
         font-size:13px; 
         height:auto; 
         width:100%;
         color:dimgray;
+        padding-right:4px;
     }
     .topnav {
       overflow: hidden;
@@ -168,10 +169,6 @@
                         <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Dashboard
                     </a>
-                    <a href="#myaccount">
-                        <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Create Partnership
-                    </a>
                     <a  href="IndustryVerification.aspx">
                         <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Industry Verification
@@ -193,28 +190,36 @@
                         <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         List of Alumni
                     </a>
-                    <hr class="horizontal-line" />
-                    <a href="Dispute.aspx">
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Dispute
-                    </a>
-                    <a href="Blacklist_Admin.aspx">
-                        <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Blacklist
-                    </a>
-                    <hr class="second" />
-                    <a href="TracerDashboard.aspx">
-                        <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Tracer
-                    </a>
-                    <a href="#">
-                        <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                        Profile
-                    </a>
-                    <asp:LinkButton runat="server" ID ="LinkButton1">
-                        <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
-                        Sign-out
-                    </asp:LinkButton>
+                        <hr class="horizontal-line" />
+                        <a href="Dispute.aspx">
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            Dispute
+                        </a>
+                        <a href="Blacklist_Admin.aspx">
+                            <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            Blacklisted
+                        </a>
+                        <a href="SuggestionsAdmin.aspx">
+                            <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Suggestions
+                        </a>
+                        <a href="Admin_Contact.aspx">
+                            <i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Contact
+                        </a>
+                        <hr class="second" />
+                        <a href="TracerDashboard.aspx">
+                            <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            Tracer
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Profile
+                        </a>
+                        <a href="Coordinator_CreateAccount.aspx">
+                            <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Coordinator Account
+                        </a>
                 </div>
                 
             </div>
@@ -223,6 +228,26 @@
             <br />
             <div class="container">
                 <h1 class="title">List of Alumni</h1>
+                 <div id="academicYearSemesterFilter" style="float:left; min-width:50%;" runat="server">
+                 <p style="float:left;">Academic Year  <asp:DropDownList ID="ddlAcademicYear" runat="server" CssClass="sort-dropdown1" AutoPostBack="true" OnSelectedIndexChanged="dropdownsforCAS_SelectedIndexChanged"></asp:DropDownList></p>
+                 <asp:DropDownList ID="programList" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="dropdownsforCAS_SelectedIndexChanged" ></asp:DropDownList>
+
+                 <asp:DropDownList ID="ddlAcademicYear2" runat="server" CssClass="sort-dropdown1" AutoPostBack="true" OnSelectedIndexChanged="dropdownsforCCICT_SelectedIndexChanged" Visible="false"></asp:DropDownList>
+                 <asp:DropDownList ID="programList2" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="dropdownsforCCICT_SelectedIndexChanged" Visible="false"></asp:DropDownList>
+
+                 <asp:DropDownList ID="ddlAcademicYear3" runat="server" CssClass="sort-dropdown1" AutoPostBack="true" OnSelectedIndexChanged="dropdownsforCME_SelectedIndexChanged" Visible="false" ></asp:DropDownList>
+                 <asp:DropDownList ID="programList3" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="dropdownsforCME_SelectedIndexChanged" Visible="false"></asp:DropDownList>
+
+                 <asp:DropDownList ID="ddlAcademicYear4" runat="server" CssClass="sort-dropdown1" AutoPostBack="true" OnSelectedIndexChanged="dropdownsforCOE_SelectedIndexChanged" Visible="false" ></asp:DropDownList>
+                 <asp:DropDownList ID="programList4" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="dropdownsforCOE_SelectedIndexChanged" Visible="false"></asp:DropDownList>
+
+                  <asp:DropDownList ID="ddlAcademicYear5" runat="server" CssClass="sort-dropdown1" AutoPostBack="true" OnSelectedIndexChanged="dropdownsforCOEd_SelectedIndexChanged" Visible="false"></asp:DropDownList>
+                 <asp:DropDownList ID="programList5" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="dropdownsforCOEd_SelectedIndexChanged" Visible="false"></asp:DropDownList>
+
+                 <asp:DropDownList ID="ddlAcademicYear6" runat="server" CssClass="sort-dropdown1" AutoPostBack="true" OnSelectedIndexChanged="dropdownsforCOT_SelectedIndexChanged" Visible="false" ></asp:DropDownList>
+                 <asp:DropDownList ID="programList6" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="dropdownsforCOT_SelectedIndexChanged" Visible="false"></asp:DropDownList>
+
+                </div><div style="clear: both;"></div>
                 <div class="col-lg-5 order-1 order-lg-2 topnav">
                     <asp:LinkButton ID="myLinkButton1"  runat="server" OnClick="btnSwitchGrid_CAS" CssClass="linkbutton" >CAS</asp:LinkButton>
                     <asp:LinkButton ID="myLinkButton2" runat="server" OnClick="btnSwitchGrid_CCICT" CssClass="linkbutton">CCICT</asp:LinkButton>
@@ -236,200 +261,332 @@
                      <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                         <ContentTemplate>
                        <%--CAS Gridview--%>
-                            <asp:Repeater ID="dataRepeater1" runat="server">
-                            <HeaderTemplate>
-                                <table  class="table-list">
-                                    <tr>
-                                         <th style="width: 150px;">Student ID</th>
-                                        <th style="width: 200px;">Last name</th>
-                                        <th style="width: 190px;">First name</th>
-                                        <th style="width: 190px;">Middle initial</th>
-                                        <th style="width: 200px;">Program enrolled</th>
-                                        <th style="width: 200px;">Contact Number</th>
-                                        <th style="width: 200px;">Email</th>
-                                        <th style="width: 200px;">Year Graduated</th>
-                                    </tr>
-                                  </table>
-                            </HeaderTemplate>
-                                    <ItemTemplate>
-                                        <table class="table-list">
-                                        <tr class="datas">
-                                             <td style="width: 120px;"><%# Eval("studentId") %></td>
-                                            <td style="width: 160px;"><%# Eval("lastname") %></td>
-                                            <td style="width: 170px;"><%# Eval("firstname") %></td>
-                                            <td style="width: 170px;"><%# Eval("midinitials") %></td>
-                                            <td style="width: 150px;"><%# Eval("course") %></td>
-                                            <td style="width: 150px;"><%# Eval("contactNumber") %></td>
-                                            <td style="width: 150px;"><%# Eval("email") %></td>
-                                            <td style="width: 150px;"><%# Eval("yearGraduated") %></td>
+                            <asp:Listview ID="CASListview" runat="server">
+                                      <LayoutTemplate>
+                                          <table  class="table-list">
+                                               <tr>
+                                           <th>Student ID</th>
+                                          <th>Last name</th>
+                                          <th>First name</th>
+                                          <th>Middle initial</th>
+                                          <th>Program enrolled</th>
+                                          <th>Contact Number</th>
+                                          <th>Email</th>
+                                          <th>Year Graduated</th>
+                                      </tr>
+                                    <tbody>
+                                   <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                               </tbody>
+                              </table>
+                              </LayoutTemplate> 
+                               <EmptyDataTemplate>
+                                <table class="table-list">
+                                    <thead>
+                                        <tr>
+                                           <th>Student ID</th>
+                                          <th>Last name</th>
+                                          <th>First name</th>
+                                          <th>Middle initial</th>
+                                          <th>Program enrolled</th>
+                                          <th>Contact Number</th>
+                                          <th>Email</th>
+                                          <th>Year Graduated</th>
                                         </tr>
-                                            </table>
-                                    </ItemTemplate>
-                                </asp:Repeater>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center; font-size:18px;" colspan="8">No data available</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </EmptyDataTemplate>
+                                      <ItemTemplate>
+                                          <tr>
+                                               <td class="datas"><%# Eval("studentId") %></td>
+                                              <td class="datas"><%# Eval("lastname") %></td>
+                                              <td class="datas"><%# Eval("firstname") %></td>
+                                              <td class="datas"><%# Eval("midinitials") %></td>
+                                              <td class="datas"><%# Eval("course") %></td>
+                                              <td class="datas"><%# Eval("contactNumber") %></td>
+                                              <td class="datas"><%# Eval("email") %></td>
+                                              <td class="datas"><%# Eval("yearGraduated") %></td>
+                                          </tr>
+                                      </ItemTemplate>
+                                  </asp:Listview>
 
 
                          
 
                                   <%--CCICT Gridview--%>
-                               <asp:Repeater ID="dataRepeater2" runat="server">
-                                <HeaderTemplate> 
-                                    <table  class="table-list">
+                               <asp:Listview ID="CCICTListview" runat="server">
+                                      <LayoutTemplate>
+                                          <table  class="table-list">
+                                               <tr>
+                                           <th>Student ID</th>
+                                          <th>Last name</th>
+                                          <th>First name</th>
+                                          <th>Middle initial</th>
+                                          <th>Program enrolled</th>
+                                          <th>Contact Number</th>
+                                          <th>Email</th>
+                                          <th>Year Graduated</th>
+                                      </tr>
+                                    <tbody>
+                                   <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                               </tbody>
+                              </table>
+                              </LayoutTemplate> 
+                               <EmptyDataTemplate>
+                                <table class="table-list">
+                                    <thead>
                                         <tr>
-                                             <th style="width: 150px;">Student ID</th>
-                                            <th style="width: 200px;">Last name</th>
-                                            <th style="width: 190px;">First name</th>
-                                            <th style="width: 190px;">Middle initial</th>
-                                            <th style="width: 200px;">Program enrolled</th>
-                                            <th style="width: 200px;">Contact Number</th>
-                                            <th style="width: 200px;">Email</th>
-                                            <th style="width: 200px;">Year Graduated</th>
+                                           <th>Student ID</th>
+                                          <th>Last name</th>
+                                          <th>First name</th>
+                                          <th>Middle initial</th>
+                                          <th>Program enrolled</th>
+                                          <th>Contact Number</th>
+                                          <th>Email</th>
+                                          <th>Year Graduated</th>
                                         </tr>
-                                      </table>
-                                </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <table class="table-list">
-                                            <tr class="datas">
-                                                 <td style="width: 120px;"><%# Eval("studentId") %></td>
-                                                <td style="width: 160px;"><%# Eval("lastname") %></td>
-                                                <td style="width: 170px;"><%# Eval("firstname") %></td>
-                                                <td style="width: 170px;"><%# Eval("midinitials") %></td>
-                                                <td style="width: 150px;"><%# Eval("course") %></td>
-                                                <td style="width: 150px;"><%# Eval("contactNumber") %></td>
-                                                <td style="width: 150px;"><%# Eval("email") %></td>
-                                                <td style="width: 150px;"><%# Eval("yearGraduated") %></td>
-                                            </tr>
-                                                </table>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center; font-size:18px;" colspan="8">No data available</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </EmptyDataTemplate>
+                                      <ItemTemplate>
+                                          <tr>
+                                               <td class="datas"><%# Eval("studentId") %></td>
+                                              <td class="datas"><%# Eval("lastname") %></td>
+                                              <td class="datas"><%# Eval("firstname") %></td>
+                                              <td class="datas"><%# Eval("midinitials") %></td>
+                                              <td class="datas"><%# Eval("course") %></td>
+                                              <td class="datas"><%# Eval("contactNumber") %></td>
+                                              <td class="datas"><%# Eval("email") %></td>
+                                              <td class="datas"><%# Eval("yearGraduated") %></td>
+                                          </tr>
+                                      </ItemTemplate>
+                                  </asp:Listview>
 
                                       <%--CME Gridview--%>
-                            <asp:Repeater ID="dataRepeater3" runat="server">
-                             <HeaderTemplate>
-                                    <table  class="table-list">
+                            <asp:Listview ID="CMEListview" runat="server">
+                                      <LayoutTemplate>
+                                          <table  class="table-list">
+                                               <tr>
+                                           <th>Student ID</th>
+                                          <th>Last name</th>
+                                          <th>First name</th>
+                                          <th>Middle initial</th>
+                                          <th>Program enrolled</th>
+                                          <th>Contact Number</th>
+                                          <th>Email</th>
+                                          <th>Year Graduated</th>
+                                      </tr>
+                                    <tbody>
+                                   <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                               </tbody>
+                              </table>
+                              </LayoutTemplate> 
+                               <EmptyDataTemplate>
+                                <table class="table-list">
+                                    <thead>
                                         <tr>
-                                             <th style="width: 150px;">Student ID</th>
-                                            <th style="width: 200px;">Last name</th>
-                                            <th style="width: 190px;">First name</th>
-                                            <th style="width: 190px;">Middle initial</th>
-                                            <th style="width: 200px;">Program enrolled</th>
-                                            <th style="width: 200px;">Contact Number</th>
-                                            <th style="width: 200px;">Email</th>
-                                            <th style="width: 200px;">Year Graduated</th>
+                                           <th>Student ID</th>
+                                          <th>Last name</th>
+                                          <th>First name</th>
+                                          <th>Middle initial</th>
+                                          <th>Program enrolled</th>
+                                          <th>Contact Number</th>
+                                          <th>Email</th>
+                                          <th>Year Graduated</th>
                                         </tr>
-                                      </table>
-                                </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <table class="table-list">
-                                            <tr class="datas">
-                                                 <td style="width: 120px;"><%# Eval("studentId") %></td>
-                                                <td style="width: 160px;"><%# Eval("lastname") %></td>
-                                                <td style="width: 170px;"><%# Eval("firstname") %></td>
-                                                <td style="width: 170px;"><%# Eval("midinitials") %></td>
-                                                <td style="width: 150px;"><%# Eval("course") %></td>
-                                                <td style="width: 150px;"><%# Eval("contactNumber") %></td>
-                                                <td style="width: 150px;"><%# Eval("email") %></td>
-                                                <td style="width: 150px;"><%# Eval("yearGraduated") %></td>
-                                            </tr>
-                                                </table>
-                                     </ItemTemplate>
-                                 </asp:Repeater>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center; font-size:18px;" colspan="8">No data available</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </EmptyDataTemplate>
+                                      <ItemTemplate>
+                                          <tr>
+                                               <td class="datas"><%# Eval("studentId") %></td>
+                                              <td class="datas"><%# Eval("lastname") %></td>
+                                              <td class="datas"><%# Eval("firstname") %></td>
+                                              <td class="datas"><%# Eval("midinitials") %></td>
+                                              <td class="datas"><%# Eval("course") %></td>
+                                              <td class="datas"><%# Eval("contactNumber") %></td>
+                                              <td class="datas"><%# Eval("email") %></td>
+                                              <td class="datas"><%# Eval("yearGraduated") %></td>
+                                          </tr>
+                                      </ItemTemplate>
+                                  </asp:Listview>
                                        
 
                                       <%--COE Gridview--%>
-                            <asp:Repeater ID="dataRepeater4" runat="server">
-                             <HeaderTemplate>
-                                     <table  class="table-list">
+                            <asp:Listview ID="COEListview" runat="server">
+                                      <LayoutTemplate>
+                                          <table  class="table-list">
+                                               <tr>
+                                           <th>Student ID</th>
+                                          <th>Last name</th>
+                                          <th>First name</th>
+                                          <th>Middle initial</th>
+                                          <th>Program enrolled</th>
+                                          <th>Contact Number</th>
+                                          <th>Email</th>
+                                          <th>Year Graduated</th>
+                                      </tr>
+                                    <tbody>
+                                   <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                               </tbody>
+                              </table>
+                              </LayoutTemplate> 
+                               <EmptyDataTemplate>
+                                <table class="table-list">
+                                    <thead>
                                         <tr>
-                                             <th style="width: 150px;">Student ID</th>
-                                            <th style="width: 200px;">Last name</th>
-                                            <th style="width: 190px;">First name</th>
-                                            <th style="width: 190px;">Middle initial</th>
-                                            <th style="width: 200px;">Program enrolled</th>
-                                            <th style="width: 200px;">Contact Number</th>
-                                            <th style="width: 200px;">Email</th>
-                                            <th style="width: 200px;">Year Graduated</th>
+                                           <th>Student ID</th>
+                                          <th>Last name</th>
+                                          <th>First name</th>
+                                          <th>Middle initial</th>
+                                          <th>Program enrolled</th>
+                                          <th>Contact Number</th>
+                                          <th>Email</th>
+                                          <th>Year Graduated</th>
                                         </tr>
-                                      </table>
-                                </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <table class="table-list">
-                                            <tr class="datas">
-                                                 <td style="width: 120px;"><%# Eval("studentId") %></td>
-                                                <td style="width: 160px;"><%# Eval("lastname") %></td>
-                                                <td style="width: 170px;"><%# Eval("firstname") %></td>
-                                                <td style="width: 170px;"><%# Eval("midinitials") %></td>
-                                                <td style="width: 150px;"><%# Eval("course") %></td>
-                                                <td style="width: 150px;"><%# Eval("contactNumber") %></td>
-                                                <td style="width: 150px;"><%# Eval("email") %></td>
-                                                <td style="width: 150px;"><%# Eval("yearGraduated") %></td>
-                                            </tr>
-                                                </table>
-                                     </ItemTemplate>
-                                 </asp:Repeater>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center; font-size:18px;" colspan="8">No data available</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </EmptyDataTemplate>
+                                      <ItemTemplate>
+                                          <tr>
+                                               <td class="datas"><%# Eval("studentId") %></td>
+                                              <td class="datas"><%# Eval("lastname") %></td>
+                                              <td class="datas"><%# Eval("firstname") %></td>
+                                              <td class="datas"><%# Eval("midinitials") %></td>
+                                              <td class="datas"><%# Eval("course") %></td>
+                                              <td class="datas"><%# Eval("contactNumber") %></td>
+                                              <td class="datas"><%# Eval("email") %></td>
+                                              <td class="datas"><%# Eval("yearGraduated") %></td>
+                                          </tr>
+                                      </ItemTemplate>
+                                  </asp:Listview>
 
                                       <%--COEd Gridview--%>
-                        <asp:Repeater ID="dataRepeater5" runat="server">
-                         <HeaderTemplate>
-                                    <table  class="table-list">
+                        <asp:Listview ID="COEdListview" runat="server">
+                                      <LayoutTemplate>
+                                          <table  class="table-list">
+                                               <tr>
+                                           <th>Student ID</th>
+                                          <th>Last name</th>
+                                          <th>First name</th>
+                                          <th>Middle initial</th>
+                                          <th>Program enrolled</th>
+                                          <th>Contact Number</th>
+                                          <th>Email</th>
+                                          <th>Year Graduated</th>
+                                      </tr>
+                                    <tbody>
+                                   <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                               </tbody>
+                              </table>
+                              </LayoutTemplate> 
+                               <EmptyDataTemplate>
+                                <table class="table-list">
+                                    <thead>
                                         <tr>
-                                             <th style="width: 150px;">Student ID</th>
-                                            <th style="width: 200px;">Last name</th>
-                                            <th style="width: 190px;">First name</th>
-                                            <th style="width: 190px;">Middle initial</th>
-                                            <th style="width: 200px;">Program enrolled</th>
-                                            <th style="width: 200px;">Contact Number</th>
-                                            <th style="width: 200px;">Email</th>
-                                            <th style="width: 200px;">Year Graduated</th>
+                                           <th>Student ID</th>
+                                          <th>Last name</th>
+                                          <th>First name</th>
+                                          <th>Middle initial</th>
+                                          <th>Program enrolled</th>
+                                          <th>Contact Number</th>
+                                          <th>Email</th>
+                                          <th>Year Graduated</th>
                                         </tr>
-                                      </table>
-                                </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <table class="table-list">
-                                            <tr class="datas">
-                                                 <td style="width: 120px;"><%# Eval("studentId") %></td>
-                                                <td style="width: 160px;"><%# Eval("lastname") %></td>
-                                                <td style="width: 170px;"><%# Eval("firstname") %></td>
-                                                <td style="width: 170px;"><%# Eval("midinitials") %></td>
-                                                <td style="width: 150px;"><%# Eval("course") %></td>
-                                                <td style="width: 150px;"><%# Eval("contactNumber") %></td>
-                                                <td style="width: 150px;"><%# Eval("email") %></td>
-                                                <td style="width: 150px;"><%# Eval("yearGraduated") %></td>
-                                            </tr>
-                                                </table>
-                                 </ItemTemplate>
-                             </asp:Repeater>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center; font-size:18px;" colspan="8">No data available</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </EmptyDataTemplate>
+                                      <ItemTemplate>
+                                          <tr>
+                                               <td class="datas"><%# Eval("studentId") %></td>
+                                              <td class="datas"><%# Eval("lastname") %></td>
+                                              <td class="datas"><%# Eval("firstname") %></td>
+                                              <td class="datas"><%# Eval("midinitials") %></td>
+                                              <td class="datas"><%# Eval("course") %></td>
+                                              <td class="datas"><%# Eval("contactNumber") %></td>
+                                              <td class="datas"><%# Eval("email") %></td>
+                                              <td class="datas"><%# Eval("yearGraduated") %></td>
+                                          </tr>
+                                      </ItemTemplate>
+                                  </asp:Listview>
 
                                           <%--COT Gridview--%>
-                        <asp:Repeater ID="dataRepeater6" runat="server">
-                         <HeaderTemplate>
-                                    <table  class="table-list">
+                        <asp:Listview ID="COTListview" runat="server">
+                                      <LayoutTemplate>
+                                          <table  class="table-list">
+                                               <tr>
+                                           <th>Student ID</th>
+                                          <th>Last name</th>
+                                          <th>First name</th>
+                                          <th>Middle initial</th>
+                                          <th>Program enrolled</th>
+                                          <th>Contact Number</th>
+                                          <th>Email</th>
+                                          <th>Year Graduated</th>
+                                      </tr>
+                                    <tbody>
+                                   <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                               </tbody>
+                              </table>
+                              </LayoutTemplate> 
+                               <EmptyDataTemplate>
+                                <table class="table-list">
+                                    <thead>
                                         <tr>
-                                             <th style="width: 150px;">Student ID</th>
-                                            <th style="width: 200px;">Last name</th>
-                                            <th style="width: 190px;">First name</th>
-                                            <th style="width: 190px;">Middle initial</th>
-                                            <th style="width: 200px;">Program enrolled</th>
-                                            <th style="width: 200px;">Contact Number</th>
-                                            <th style="width: 200px;">Email</th>
-                                            <th style="width: 200px;">Year Graduated</th>
+                                           <th>Student ID</th>
+                                          <th>Last name</th>
+                                          <th>First name</th>
+                                          <th>Middle initial</th>
+                                          <th>Program enrolled</th>
+                                          <th>Contact Number</th>
+                                          <th>Email</th>
+                                          <th>Year Graduated</th>
                                         </tr>
-                                      </table>
-                                </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <table class="table-list">
-                                            <tr class="datas">
-                                                 <td style="width: 120px;"><%# Eval("studentId") %></td>
-                                                <td style="width: 160px;"><%# Eval("lastname") %></td>
-                                                <td style="width: 170px;"><%# Eval("firstname") %></td>
-                                                <td style="width: 170px;"><%# Eval("midinitials") %></td>
-                                                <td style="width: 150px;"><%# Eval("course") %></td>
-                                                <td style="width: 150px;"><%# Eval("contactNumber") %></td>
-                                                <td style="width: 150px;"><%# Eval("email") %></td>
-                                                <td style="width: 150px;"><%# Eval("yearGraduated") %></td>
-                                            </tr>
-                                                </table>
-                                 </ItemTemplate>
-                             </asp:Repeater>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center; font-size:18px;" colspan="8">No data available</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </EmptyDataTemplate>
+                                      <ItemTemplate>
+                                          <tr>
+                                               <td class="datas"><%# Eval("studentId") %></td>
+                                              <td class="datas"><%# Eval("lastname") %></td>
+                                              <td class="datas"><%# Eval("firstname") %></td>
+                                              <td class="datas"><%# Eval("midinitials") %></td>
+                                              <td class="datas"><%# Eval("course") %></td>
+                                              <td class="datas"><%# Eval("contactNumber") %></td>
+                                              <td class="datas"><%# Eval("email") %></td>
+                                              <td class="datas"><%# Eval("yearGraduated") %></td>
+                                          </tr>
+                                      </ItemTemplate>
+                                  </asp:Listview>
 
                             </ContentTemplate>
                             </asp:UpdatePanel>

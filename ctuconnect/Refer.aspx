@@ -13,7 +13,7 @@
         .profile-container{
             font-family: 'Poppins', sans-serif;
             max-width:260px;
-            max-height:630px;
+            max-height:660px;
             background-color:white;
             margin-left:4%;
             padding-bottom:8px;
@@ -327,6 +327,7 @@
                                     <LayoutTemplate>
                                       <table  class="table-list">
                                         <tr>
+                                            <th>Student ID</th>
                                             <th>Last Name</th>
                                             <th>First Name</th>
                                             <th>Middle Initial</th>
@@ -341,8 +342,31 @@
                                         </tbody>
                                     </table>
                                 </LayoutTemplate>
+                                    <EmptyDataTemplate>
+                                    <table class="table-list">
+                                        <thead>
+                                            <tr>
+                                                <th>Student ID</th>
+                                                <th>Last Name</th>
+                                                <th>First Name</th>
+                                                <th>Middle Initial</th>
+                                                <th>Industry</th>
+                                                <th>Referred by</th>
+                                                <th>Referral Letter</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:center; font-size:18px;" colspan="9">No data available</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </EmptyDataTemplate>
                                   <ItemTemplate>
                                                 <tr >
+                                                    <td class="datas"><%# Eval("studentId") %></td>
                                                     <td class="datas"><%# Eval("lastName") %></td>
                                                     <td class="datas"><%# Eval("firstName") %></td>
                                                     <td class="datas"><%# Eval("midInitials") %></td>

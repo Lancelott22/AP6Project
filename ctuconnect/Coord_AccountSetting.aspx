@@ -9,7 +9,7 @@
      .profile-container{
          font-family: 'Poppins', sans-serif;
          max-width:260px;
-         max-height:630px;
+         max-height:660px;
          background-color:white;
          margin-left:4%;
          padding-bottom:8px;

@@ -37,7 +37,7 @@ namespace ctuconnect
         void BindAlumniList()
         {
             SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN ALUMNI_EMPLOYMENTFORM ON STUDENT_ACCOUNT.student_accID = ALUMNI_EMPLOYMENTFORM.student_accID JOIN PROGRAM ON " +
-                "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE studentStatus = 'Alumni'", conDB);
+                "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID JOIN DEPARTMENT ON STUDENT_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE studentStatus = 'Alumni'", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
@@ -45,19 +45,31 @@ namespace ctuconnect
             AlumniListView.DataBind();
             if (AlumniListView.Items.Count == 0)
             {
-                /*  ListViewPager.Visible = false;*/
+               ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
             }
         }
         void SearchByAlumniNameorID(string alumni)
         {
             SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN ALUMNI_EMPLOYMENTFORM ON STUDENT_ACCOUNT.student_accID = ALUMNI_EMPLOYMENTFORM.student_accID JOIN PROGRAM ON " +
-                "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE studentStatus = 'Alumni' and  STUDENT_ACCOUNT.firstName LIKE '%" + alumni + "%' " +
+                "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID JOIN DEPARTMENT ON STUDENT_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE studentStatus = 'Alumni' and  STUDENT_ACCOUNT.firstName LIKE '%" + alumni + "%' " +
                 "or STUDENT_ACCOUNT.lastName LIKE '%" + alumni + "%' or CAST(STUDENT_ACCOUNT.studentId as varchar) = '" + alumni + "'", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
             AlumniListView.DataSource = ds;
             AlumniListView.DataBind();
+            if (AlumniListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
         protected void SearchAlumni_Click(object sender, EventArgs e)
         {
@@ -74,34 +86,60 @@ namespace ctuconnect
             department.DataValueField = "department_ID";
             department.DataTextField = "departmentName";
             department.DataBind();
-            department.Items.Insert(0, new ListItem("Select Department", "0"));
+            department.Items.Insert(0, new ListItem("All", "0"));
+            course.Items.Insert(0, new ListItem("All", "0"));
+            course.SelectedIndex = 0;
         }
         protected void department_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (department.SelectedValue == "0")
+            {
+                Response.Redirect("TraceAlumni.aspx");
+            }
             SqlCommand cmd = new SqlCommand("SELECT * FROM PROGRAM WHERE department_ID = '" + department.SelectedValue + "'", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
-            course.DataSource = ds;       
-           
+            course.DataSource = ds;        
             course.DataValueField = "course_ID";
             course.DataTextField = "course";
             course.DataBind();
-            course.Items.Insert(0, new ListItem("Select Course", "0"));
+            course.Items.Insert(0, new ListItem("All", "0"));
+            course.SelectedIndex = 0;
+            ShowByCourse(int.Parse(department.SelectedValue), int.Parse(course.SelectedValue));
         }
-        void ShowByCourse()
+        void ShowByCourse(int departmentid, int course_ID)
         {
-            SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN ALUMNI_EMPLOYMENTFORM ON STUDENT_ACCOUNT.student_accID = ALUMNI_EMPLOYMENTFORM.student_accID JOIN PROGRAM ON " +
-                "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE STUDENT_ACCOUNT.course_ID = '" + course.SelectedValue + "'", conDB);
+            SqlCommand cmd = new SqlCommand();
+            
+            if (departmentid != 0 && course_ID == 0)
+            {
+                cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN ALUMNI_EMPLOYMENTFORM ON STUDENT_ACCOUNT.student_accID = ALUMNI_EMPLOYMENTFORM.student_accID JOIN PROGRAM ON " +
+               "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID JOIN DEPARTMENT ON STUDENT_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE STUDENT_ACCOUNT.department_ID = '" + departmentid + "'", conDB);
+            }
+            else
+            {
+                cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN ALUMNI_EMPLOYMENTFORM ON STUDENT_ACCOUNT.student_accID = ALUMNI_EMPLOYMENTFORM.student_accID JOIN PROGRAM ON " +
+               "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID JOIN DEPARTMENT ON STUDENT_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE STUDENT_ACCOUNT.department_ID = '" + departmentid + "' and STUDENT_ACCOUNT.course_ID = '" + course_ID + "'", conDB);
+            }
+             
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
             AlumniListView.DataSource = ds;
             AlumniListView.DataBind();
+            if (AlumniListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
         protected void course_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ShowByCourse();
+            ShowByCourse(int.Parse(department.SelectedValue), int.Parse(course.SelectedValue));
             /*ViewState["selectedCourse"] = course.SelectedValue;*/
         }
 
@@ -158,7 +196,7 @@ namespace ctuconnect
         {
             conDB.Open();
             SqlCommand cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN ALUMNI_EMPLOYMENTFORM ON STUDENT_ACCOUNT.student_accID = ALUMNI_EMPLOYMENTFORM.student_accID JOIN PROGRAM ON " +
-                "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID WHERE studentStatus = 'Alumni' and STUDENT_ACCOUNT.studentID = @studentID ", conDB);
+                "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID JOIN DEPARTMENT ON STUDENT_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE studentStatus = 'Alumni' and STUDENT_ACCOUNT.studentID = @studentID ", conDB);
             cmd.Parameters.AddWithValue("@studentID", studentID);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
@@ -185,6 +223,43 @@ namespace ctuconnect
             int studentID = int.Parse(e.CommandArgument.ToString());
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showAlumni();", true);
            getDetails(studentID);
+        }
+
+       
+        void ShowByEmploymentStatus()
+        {
+           
+            SqlCommand cmd = new SqlCommand();
+          
+                cmd = new SqlCommand("select * from STUDENT_ACCOUNT JOIN ALUMNI_EMPLOYMENTFORM ON STUDENT_ACCOUNT.student_accID = ALUMNI_EMPLOYMENTFORM.student_accID JOIN PROGRAM ON " +
+               "STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID JOIN DEPARTMENT ON STUDENT_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE employmentStatus = '" + EmploymentStatusDDL.SelectedValue + "'", conDB);          
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            AlumniListView.DataSource = ds;
+            AlumniListView.DataBind();
+            if (AlumniListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
+        }
+
+        protected void EmploymentStatusDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (EmploymentStatusDDL.SelectedValue == "0")
+            {
+                Response.Redirect("TraceAlumni.aspx");
+            }
+            ShowByEmploymentStatus();
+        }
+
+        protected void AlumniListView_PagePropertiesChanged(object sender, EventArgs e)
+        {
+            BindAlumniList();
         }
     }
 }

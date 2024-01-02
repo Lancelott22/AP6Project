@@ -11,7 +11,7 @@
         .profile-container{
             font-family: 'Poppins', sans-serif;
             max-width:260px;
-            max-height:630px;
+            max-height:660px;
             background-color:white;
             margin-left:4%;
             padding-bottom:8px;
@@ -173,6 +173,15 @@
                  margin-top:1%;
                  margin-bottom:0%;
              }
+                .second{
+        border: none;
+        border-top: 2px solid black;
+        width: 90%;
+        margin-left:auto;
+        margin-right:auto;
+        margin-top:13%;
+        margin-bottom:0%;
+    }
 
     </style>
 <asp:Table ID="Table1" runat="server"  CssClass="content">

@@ -38,7 +38,7 @@ namespace ctuconnect
         void myApplicationBind()
         {
             int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString());
-            SqlCommand cmd = new SqlCommand("select * from APPLICANT JOIN INDUSTRY_ACCOUNT ON APPLICANT.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN HIRING ON APPLICANT.jobID = HIRING.jobID Where student_accID = @Student_accID ORDER BY dateApplied DESC", conDB);
+            SqlCommand cmd = new SqlCommand("select *, CONVERT(nvarchar, dateApplied,1) as date_Applied from APPLICANT JOIN INDUSTRY_ACCOUNT ON APPLICANT.industry_accID = INDUSTRY_ACCOUNT.industry_accID JOIN HIRING ON APPLICANT.jobID = HIRING.jobID Where student_accID = @Student_accID ORDER BY dateApplied DESC", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
@@ -114,7 +114,7 @@ namespace ctuconnect
             if (reader.Read())
             {
                 string applicantStatus = reader["applicantStatus"].ToString();
-                if (applicantStatus == "Approved" || applicantStatus == "Rejected")
+                if (applicantStatus == "Hired" || applicantStatus == "Rejected")
                 {
                     conDB.Close();
                     return true;
@@ -128,10 +128,12 @@ namespace ctuconnect
             conDB.Close();
             return false;
         }
+        
         protected void ViewApplication_Command(object sender, CommandEventArgs e)
         {
             int jobId = int.Parse(e.CommandName.ToString());
             int applicantID = int.Parse(e.CommandArgument.ToString());
+            Job_Title.InnerText = getJobDetails(applicantID);
             if (checkResumeStatus(applicantID, jobId) == true)
             {
                 resumeStatusCheck.Text = "Your resume has been reviewed.";
@@ -177,10 +179,10 @@ namespace ctuconnect
                 applicantStatus.Visible = true;
                 if (checkApplicantStatus(applicantID, jobId) == true)
                 {
-                    if (getApplicantStatus(applicantID, jobId) == "Approved")
+                    if (getApplicantStatus(applicantID, jobId) == "Hired")
                     {
-                        statusApplication.InnerText = "Approved";
-                        applicationStatusCheck.Text = "Congratulations! Your application has been approved.";
+                        statusApplication.InnerText = "Hired";
+                        applicationStatusCheck.Text = "Congratulations! Your application has been approved. You're hired!";
                         statusApplication.Visible = true;
                         statusApplication.Attributes.Add("class", "statusStyle");
                         requirementDetails.Visible = true;
@@ -288,6 +290,23 @@ namespace ctuconnect
             }
             conDB.Close();
             return interviewDetail;
+        }
+        string getJobDetails(int applicantID)
+        {
+            int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString());
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select appliedPosition from APPLICANT Where student_accID = @Student_accID and applicantID = @applicantId", conDB);
+            cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
+            cmd.Parameters.AddWithValue("@applicantId", applicantID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                string jobTitle = reader["appliedPosition"].ToString();
+                conDB.Close();
+                return jobTitle;
+            }
+            conDB.Close();
+            return "";
         }
         protected void SignOut_Click(object sender, EventArgs e)
         {
@@ -448,7 +467,8 @@ namespace ctuconnect
         {
             int studentAccID = int.Parse(Session["Student_ACC_ID"].ToString());
 
-            SqlCommand cmd = new SqlCommand("select * from HIRED_LIST JOIN INDUSTRY_ACCOUNT ON HIRED_LIST.industry_accID = INDUSTRY_ACCOUNT.industry_accID Where student_accID = @Student_accID ORDER BY dateHired DESC", conDB);
+            SqlCommand cmd = new SqlCommand("select *, CONVERT(nvarchar, dateHired,1) as date_Hired,CONVERT(nvarchar, dateStarted,1) as date_Started, CONVERT(nvarchar, dateEnded,1) as date_Ended from HIRED_LIST " +
+                "JOIN INDUSTRY_ACCOUNT ON HIRED_LIST.industry_accID = INDUSTRY_ACCOUNT.industry_accID Where student_accID = @Student_accID ORDER BY dateHired DESC", conDB);
             cmd.Parameters.AddWithValue("@Student_accID", studentAccID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
@@ -457,7 +477,7 @@ namespace ctuconnect
             MyJobView.DataBind();
             if (MyJobView.Items.Count == 0)
             {
-                /* ListViewPager.Visible = false;*/
+                ListViewPager1.Visible = false;
             }
         }
         protected void RequestEval_Command(object sender, CommandEventArgs e)
@@ -505,6 +525,11 @@ namespace ctuconnect
             int student_accID = int.Parse(e.CommandArgument.ToString());
             int hiredID = int.Parse(e.CommandName.ToString());
             Response.Redirect("ViewEvaluation.aspx?student_accID=" + student_accID + "&hired_id=" + hiredID);
+        }
+
+        protected void MyJobView_PagePropertiesChanged(object sender, EventArgs e)
+        {
+            myCurrentJobBind();
         }
     }
 }
