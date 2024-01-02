@@ -149,9 +149,11 @@
     .custom-modal-size {
         max-width: 800px; /* Set your desired width */
     }
-    .modal-content{
-        padding-left: 3%;
-        padding-right:3%;
+
+    .modal-content {
+        width: 100%; /* Set the width to 100% to ensure it adapts to the container */
+        margin: auto; /* Center the modal content horizontally */
+        padding: 20px; /* Add padding for better appearance */
     }
 </style>
 <div class="container-fluid">
@@ -223,7 +225,7 @@
                 <h1 class="title">List of Partnered Industries</h1>
                  
                 <p style="float:left;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
-                <asp:LinkButton ID="BtnAddIndustry" runat="server" CssClass="add-button" OnClick="BtnAddIndustry_Click">
+                <asp:LinkButton ID="BtnAddIndustry" runat="server" CssClass="add-button" OnClick="BtnAddIndustry_Click" CausesValidation="false">
                     <i class="fa fa-plus"></i>Add Industry
 
                 </asp:LinkButton>
@@ -270,56 +272,57 @@
                     <h2 class="title">Create Industry Account</h2>
                 </div>
                 <div class="modal-body" style="align-items:center;">
-                        <div style="float:left; text-align:right;">
-                        <!--INDUSTRY NAME-->
-                        <asp:Label ID="Label1" runat="server" Style="font-size:18px;">
-                            IndustryName<span style="color:red;">*</span>
-                        </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
-                        <!--EMAIL-->
-                        <asp:Label ID="Label2" runat="server" Style="font-size:18px;">
-                            Email<span style="color:red;">*</span>
-                        </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
-                        <!--PASSWORD-->
-                        <asp:Label ID="Label3" runat="server" Style="font-size:18px;">
-                            Password<span style="color:red;">*</span>
-                        </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
-                        <!--CONFIRM PASSWORD-->
-                        <asp:Label ID="Label4" runat="server" Style="font-size:18px;">
-                            Confirm Password<span style="color:red;">*</span>
-                        </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
-                        <!--MOU-->
-                        <div class="column">
-                            <asp:Label ID="Label5" runat="server" Style="font-size:18px;">
-                                MOU<span style="color:red;">*</span>
-                            </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
-                        </div><br /><br />
-                        <!--LOCATION-->
-                        
-                        <asp:Label ID="lblocation" runat="server" Style="font-size:18px;">
-                            Location<span style="color:red;">*</span>
-                        </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span>
-                        
-                    </div>
-                    <div style="float:left;">
-                        <!--INDUSTRY NAME-->
-                        <asp:TextBox ID="txtIndustryName" runat="server" CssClass="txtbox" style="width:400px; margin-left:11px;"></asp:TextBox><br />
-                        <!--EMAIL-->
-                        <asp:TextBox ID="txtemail" runat="server" CssClass="txtbox" style="width:400px; margin-left:11px;"></asp:TextBox><br />
-                        <!--PASSWORD-->
-                        <asp:TextBox ID="txtpwd" runat="server" CssClass="txtbox" TextMode="Password" style="width:400px; margin-left:11px;"></asp:TextBox><br />
-                        <asp:RegularExpressionValidator ID="revpwd" runat="server" ControlToValidate="txtpwd" ErrorMessage="Invalid Password" Display="Dynamic" CssClass="text-danger" ValidationExpression="^(?=.*\d)(?=.*[A-Z])(?=.*\W)(?!.*\s).{8,}$"></asp:RegularExpressionValidator>
-                        <!--CONFIRM PASSWORD-->
-                        <asp:TextBox ID="txtcpwd" runat="server" CssClass="txtbox" TextMode="Password" style="width:400px; margin-left:11px;"></asp:TextBox><br />
-                        <asp:CompareValidator ID="cvcpwd" runat="server" ErrorMessage="Password did not match!" ControlToCompare="txtpwd" ControlToValidate="txtcpwd"></asp:CompareValidator>
-                        <!--MOU-->
-                        <asp:FileUpload ID="mouUpload" runat="server" Width="300px"/><br />
-                        <!--LOCATION-->
-                        <asp:TextBox ID="txtLocation" runat="server" CssClass="txtbox" style="width:400px; margin-left:11px;"></asp:TextBox><br />
+                    <div class="container">
+                        <div class="row">
+                           <div class="col-md-12">
+                                <!-- Row 1 -->
+                                <asp:Label ID="Label1" runat="server" Style="font-size:18px;">
+                                    IndustryName<span style="color:red;">*</span>
+                                </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
+                                <asp:TextBox ID="txtIndustryName" runat="server" CssClass="txtbox" style="width:400px; margin-left:11px;"></asp:TextBox><br />
+                               <asp:RequiredFieldValidator ID="RequiredFieldValidator1" forecolor="#F7941F" ControlToValidate="txtIndustryName"  runat="server" Display="Dynamic" ErrorMessage="this field is required!" ValidationGroup="AddIndustry"></asp:RequiredFieldValidator><br /><br />
+                                <!-- Row 2 -->
+                                <asp:Label ID="Label2" runat="server" Style="font-size:18px;">
+                                    Email<span style="color:red;">*</span>
+                                </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
+                                <asp:TextBox ID="txtemail" runat="server" CssClass="txtbox" style="width:400px; margin-left:11px;"></asp:TextBox><br />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" forecolor="#F7941F" ControlToValidate="txtemail"  runat="server" Display="Dynamic" ErrorMessage="this field is required!" ValidationGroup="AddIndustry"></asp:RequiredFieldValidator><br /><br />
+                                <!-- Row 3 -->
+                                <!--PASSWORD-->
+                                <asp:Label ID="Label3" runat="server" Style="font-size:18px;">
+                                    Password<span style="color:red;">*</span>
+                                </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
+                                <asp:TextBox ID="txtpwd" runat="server" CssClass="txtbox" TextMode="Password" style="width:400px; margin-left:11px;"></asp:TextBox>
+                                <asp:RegularExpressionValidator ID="revpwd" runat="server" ControlToValidate="txtpwd" ErrorMessage="Invalid Password" CssClass="text-danger" ValidationExpression="^(?=.*\d)(?=.*[A-Z])(?=.*\W)(?!.*\s).{8,}$"></asp:RegularExpressionValidator><br />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" forecolor="#F7941F" ControlToValidate="txtpwd"  runat="server" Display="Dynamic" ErrorMessage="this field is required!" ValidationGroup="AddIndustry"></asp:RequiredFieldValidator><br /><br />
+                                <!-- Row 4 -->
+                                <!--CONFIRM PASSWORD-->
+                                <asp:Label ID="Label4" runat="server" Style="font-size:18px;">
+                                    Confirm Password<span style="color:red;">*</span>
+                                </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
+                                <asp:TextBox ID="txtcpwd" runat="server" CssClass="txtbox" TextMode="Password" style="width:400px; margin-left:11px;"></asp:TextBox>
+                                <asp:CompareValidator ID="cvcpwd" runat="server" ErrorMessage="Password did not match!" ControlToCompare="txtpwd" ControlToValidate="txtcpwd"></asp:CompareValidator><br />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" forecolor="#F7941F" ControlToValidate="txtcpwd"  runat="server" Display="Dynamic" ErrorMessage="this field is required!" ValidationGroup="AddIndustry"></asp:RequiredFieldValidator><br /><br />
+                                <!-- Row 5 -->
+                               <!--MOU-->
+                                    <asp:Label ID="Label5" runat="server" Style="font-size:18px;">
+                                        MOU<span style="color:red;">*</span>
+                                    </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
+                               <asp:FileUpload ID="mouUpload" runat="server" style="width:400px; margin-left:11px;"/><br />
+                               <asp:RequiredFieldValidator ID="RequiredFieldValidator5" forecolor="#F7941F" ControlToValidate="mouUpload"  runat="server" Display="Dynamic" ErrorMessage="this field is required!" ValidationGroup="AddIndustry"></asp:RequiredFieldValidator><br /><br />
+                               <!-- Row 6 -->
+                               <asp:Label ID="lblocation" runat="server" Style="font-size:18px;">
+                                Location<span style="color:red;">*</span>
+                                </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
+                               <asp:TextBox ID="txtLocation" runat="server" CssClass="txtbox" style="width:400px; margin-left:11px;"></asp:TextBox><br />
+                               <asp:RequiredFieldValidator ID="RequiredFieldValidator6" forecolor="#F7941F" ControlToValidate="txtLocation"  runat="server" Display="Dynamic" ErrorMessage="this field is required!" ValidationGroup="AddIndustry"></asp:RequiredFieldValidator><br /><br />
+                           </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <asp:Button runat="server" CssClass="btn btn-danger" data-dismiss="modal" Text="Close" OnClick="CloseIndustryModal" />
-                    <asp:Button ID="BtnSubmit"  class="btn btn-primary" runat="server" Text="Submit" OnCLick="BtnSubmit_Click" autopostback="true" />
+                    <asp:Button ID="BtnSubmit"  class="btn btn-primary" runat="server" Text="Submit" OnCLick="BtnSubmit_Click" autopostback="true" ValidationGroup="AddIndustry"/>
                 </div>
             </div>
         </div>
@@ -353,4 +356,5 @@
         }
     </script>
     
+    </script>
 </asp:Content>
