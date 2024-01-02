@@ -186,6 +186,10 @@ namespace ctuconnect
                 {
                     ListViewPager.Visible = false;
                 }
+                else
+                {
+                    ListViewPager.Visible = true;
+                }
         }
 
         protected void AddCoordinator_Click(object sender, EventArgs e)
@@ -312,6 +316,14 @@ namespace ctuconnect
             da.Fill(ds);
             CoordinatorListView.DataSource = ds;
             CoordinatorListView.DataBind();
+            if (CoordinatorListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
         protected void SearchCoordinator_Click(object sender, EventArgs e)
         {
@@ -343,6 +355,14 @@ namespace ctuconnect
             da.Fill(ds);
             CoordinatorListView.DataSource = ds;
             CoordinatorListView.DataBind();
+            if (CoordinatorListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
 
         protected void CoordinatorListView_PagePropertiesChanged(object sender, EventArgs e)

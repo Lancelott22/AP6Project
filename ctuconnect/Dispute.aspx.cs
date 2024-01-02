@@ -36,6 +36,10 @@ namespace ctuconnect
             {
                 ListViewPager.Visible = false;
             }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
         protected void statusBtn_Command(object sender, CommandEventArgs e)
         {
@@ -261,6 +265,14 @@ namespace ctuconnect
             da.Fill(ds);
             disputeListView.DataSource = ds;
             disputeListView.DataBind();
+            if (disputeListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
         protected void SearchIndustry_Click(object sender, EventArgs e)
         {
@@ -284,12 +296,20 @@ namespace ctuconnect
             da.Fill(ds);
             disputeListView.DataSource = ds;
             disputeListView.DataBind();
+            if (disputeListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
 
         protected void Resolve_SelectedIndexChanged(object sender, EventArgs e)
         {
             SqlCommand cmd = new SqlCommand();
-            if (Status.SelectedValue == "-1")
+            if (Resolve.SelectedValue == "-1")
             {
                 Response.Redirect("Dispute.aspx");
             }
@@ -302,6 +322,14 @@ namespace ctuconnect
             da.Fill(ds);
             disputeListView.DataSource = ds;
             disputeListView.DataBind();
+            if (disputeListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
 
         protected void SearchByDate_Click(object sender, EventArgs e)
@@ -327,6 +355,14 @@ namespace ctuconnect
             da.Fill(ds);
             disputeListView.DataSource = ds;
             disputeListView.DataBind();
+            if (disputeListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
 
         protected void disputeListView_PagePropertiesChanged(object sender, EventArgs e)

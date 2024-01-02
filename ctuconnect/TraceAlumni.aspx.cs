@@ -45,7 +45,11 @@ namespace ctuconnect
             AlumniListView.DataBind();
             if (AlumniListView.Items.Count == 0)
             {
-                /*  ListViewPager.Visible = false;*/
+               ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
             }
         }
         void SearchByAlumniNameorID(string alumni)
@@ -58,6 +62,14 @@ namespace ctuconnect
             da.Fill(ds);
             AlumniListView.DataSource = ds;
             AlumniListView.DataBind();
+            if (AlumniListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
         protected void SearchAlumni_Click(object sender, EventArgs e)
         {
@@ -116,6 +128,14 @@ namespace ctuconnect
             da.Fill(ds);
             AlumniListView.DataSource = ds;
             AlumniListView.DataBind();
+            if (AlumniListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
         protected void course_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -218,6 +238,14 @@ namespace ctuconnect
             da.Fill(ds);
             AlumniListView.DataSource = ds;
             AlumniListView.DataBind();
+            if (AlumniListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
 
         protected void EmploymentStatusDDL_SelectedIndexChanged(object sender, EventArgs e)
@@ -227,6 +255,11 @@ namespace ctuconnect
                 Response.Redirect("TraceAlumni.aspx");
             }
             ShowByEmploymentStatus();
+        }
+
+        protected void AlumniListView_PagePropertiesChanged(object sender, EventArgs e)
+        {
+            BindAlumniList();
         }
     }
 }
