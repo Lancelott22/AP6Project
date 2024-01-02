@@ -225,26 +225,26 @@
                  <asp:Label runat="server"  style="left: 0px; top: 10px;">Old password</asp:Label>         
                <asp:TextBox ID="Oldpass" runat="server" TextMode="Password" CssClass ="form-control" width ="250px" placeholder="Enter old password"></asp:TextBox>
                 <asp:Label ID="PasswordErrorMessage" Font-Size="15px" runat="server" Text="Invalid password! Please enter your current password!" CssClass="text-danger"></asp:Label>             
-                    <asp:RequiredFieldValidator ID="reqOldpass" Font-Size="15px" runat="server" ErrorMessage="Required Field!" ControlToValidate="Oldpass" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>  
+                    <asp:RequiredFieldValidator ID="reqOldpass" Font-Size="15px" runat="server" ErrorMessage="Required Field!" ControlToValidate="Oldpass" Display="Dynamic" CssClass="text-danger" ValidationGroup="Update"></asp:RequiredFieldValidator>  
       </div>
     <div class="form-group">         
                     <asp:Label runat="server" style="left: 0px; top: 10px;">New Password</asp:Label>           
                     <asp:TextBox ID="Newpass" runat="server" TextMode="Password" CssClass ="form-control" width ="250px" placeholder="Enter new password"></asp:TextBox>
                     <asp:Label ID="NewpassErrorMessage" Font-Size="15px" runat="server" Text="New password must be different from current password!" CssClass="text-danger"></asp:Label>
-                    <asp:RequiredFieldValidator ID="reqnewpassword" Font-Size="15px" runat="server" ErrorMessage="Required Field!" ControlToValidate="Newpass" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>                                                                                                          <!-- "^(?=.*\d)(?=.*[A-Z])(?=.*\W)(?!.*\s).{8,}$"-->
+                    <asp:RequiredFieldValidator ID="reqnewpassword" Font-Size="15px" runat="server" ErrorMessage="Required Field!" ControlToValidate="Newpass" Display="Dynamic" CssClass="text-danger" ValidationGroup="Update"></asp:RequiredFieldValidator>                                                                                                          <!-- "^(?=.*\d)(?=.*[A-Z])(?=.*\W)(?!.*\s).{8,}$"-->
                     <asp:RegularExpressionValidator ID="regnewPassword" Font-Size="15px" runat="server" ErrorMessage="Password length must be minimum of 8 characters! Must be alphanumeric, atleast 1 uppercase and lowercase letter, and 1 symbol." Display="Dynamic" CssClass="text-danger" ControlToValidate="Newpass" ValidationExpression="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\w])(?!.*\s)^.{8,16}$"></asp:RegularExpressionValidator>    
       </div>
      <div class="form-group">         
                 <asp:Label runat="server" style="left: 0px; top: 10px;">Confirm New Password</asp:Label>
             
                <asp:TextBox ID="confirmNewPass" runat="server" TextMode="Password" CssClass ="form-control" width ="250px" placeholder="Enter new confirm password"></asp:TextBox>
-               <asp:RequiredFieldValidator ID="reqConfirmNewPass" Font-Size="15px" runat="server" ErrorMessage="Required Field!" ControlToValidate="confirmNewPass" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
+               <asp:RequiredFieldValidator ID="reqConfirmNewPass" Font-Size="15px" runat="server" ErrorMessage="Required Field!" ControlToValidate="confirmNewPass" Display="Dynamic" CssClass="text-danger" ValidationGroup="Update"></asp:RequiredFieldValidator>
                <asp:CompareValidator ID="comNewPassword" Font-Size="15px" runat="server" ErrorMessage="The new password did not match!" ControlToCompare="Newpass" Display="Dynamic" ControlToValidate="confirmNewPass" CssClass="text-danger"></asp:CompareValidator>
           
       </div>
       <div class="form-group">
         <div style="margin-left: 10px">
-             <asp:Button ID="BtnUpdatePass" class ="btn btn-success" runat="server" Text="Update Password" OnClick="BtnUpdatePass_Click" />   
+             <asp:Button ID="BtnUpdatePass" class ="btn btn-success" runat="server" Text="Update Password" OnClick="BtnUpdatePass_Click" ValidationGroup="Update" />   
             <asp:Button ID="cancelButton" class ="btn btn-danger" runat="server" Text="Cancel" CausesValidation="False" PostBackUrl="~/Industry_AccountSetting.aspx" />
         </div>
       </div><br />
