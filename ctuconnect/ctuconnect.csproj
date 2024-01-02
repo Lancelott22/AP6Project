@@ -251,6 +251,9 @@
     <Content Include="EditResume.aspx" />
     <Content Include="EvaluationForm.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="ForgotPassword_Coordinator.aspx" />
+    <Content Include="ForgotPassword_Industry.aspx" />
+    <Content Include="ForgotPassword_Student.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HiredList.aspx" />
     <Content Include="Home.aspx" />
@@ -262,6 +265,7 @@
     <Content Include="images\ctulogo.png" />
     <Content Include="images\dashwhite.png" />
     <Content Include="images\defaultprofile.jpg" />
+    <Content Include="images\Icons\8541541_bullseye_target_icon.png" />
     <Content Include="images\industrypic.png" />
     <Content Include="images\IndustryProfile\defaultprofile.jpg" />
     <Content Include="images\job.png" />
@@ -331,8 +335,6 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="MyJobApplication.aspx" />
     <Content Include="Admin.Master" />
-    <Content Include="images\resume\100000_Bagahansol_COR.pdf" />
-    <Content Include="images\resume\Jade_resume.pdf" />
     <Content Include="Industry.Master" />
     <Content Include="OJTCoordinator.Master" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -567,6 +569,27 @@
     </Compile>
     <Compile Include="EvaluationForm.aspx.designer.cs">
       <DependentUpon>EvaluationForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ForgotPassword_Coordinator.aspx.cs">
+      <DependentUpon>ForgotPassword_Coordinator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgotPassword_Coordinator.aspx.designer.cs">
+      <DependentUpon>ForgotPassword_Coordinator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ForgotPassword_Industry.aspx.cs">
+      <DependentUpon>ForgotPassword_Industry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgotPassword_Industry.aspx.designer.cs">
+      <DependentUpon>ForgotPassword_Industry.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ForgotPassword_Student.aspx.cs">
+      <DependentUpon>ForgotPassword_Student.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgotPassword_Student.aspx.designer.cs">
+      <DependentUpon>ForgotPassword_Student.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -943,6 +966,7 @@
     <Folder Include="images\EndorsementLetter\" />
     <Folder Include="images\MOU\" />
     <Folder Include="images\ReferralLetter\" />
+    <Folder Include="images\resume\" />
     <Folder Include="Industry\" />
     <Folder Include="Interns\" />
     <Folder Include="OjtCoordinator\" />

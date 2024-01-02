@@ -12,7 +12,7 @@
         .profile-container{
             font-family: 'Poppins', sans-serif;
             max-width:260px;
-            max-height:630px;
+            max-height:660px;
             background-color:white;
             margin-left:1%;
             padding-bottom:8px;
@@ -128,6 +128,16 @@
                 padding-left:8px;
                 border-color:#c1beba;
             }
+            .sort-dropdown1{
+                width:110px;
+                padding-left:8px;
+                border-color:#c1beba;
+            }
+            .sort-dropdown2{
+                width:153px;
+                padding-left:8px;
+                border-color:#c1beba;
+            }
             .gridview-container {
         position: relative;
         min-height: 1px;
@@ -178,11 +188,6 @@
         padding:5px;
 
     }
-/*    td{
-        border: 1px solid;
-        border-color:dimgray;
-        padding-left:5px;
-    }*/
     .datas{
         border: 1px solid;
         border-color:#c4c4c4;
@@ -301,19 +306,24 @@
             <asp:TableCell Style="padding:0px 5px 0px 40px">
                <div class="display-container">
                  <h1 class="title">List of Interns</h1>
+
                    <p style="float:right;">Search <asp:Textbox runat="server" ID="searchInput" Style="border-color:#c1beba; border-width:1px;" OnTextChanged="SearchInternInfo" AutoPostBack="true" EnableViewState="true"/></p>
                     <div class="col-lg-5 order-1 order-lg-2 topnav">
                     <%-- <asp:DropDownList ID="statusList" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="status_SelectedIndexChanged">
                          <asp:ListItem Text="Hired" Value="1" />
                          <asp:ListItem Text="Not Hired" Value="0" />
                      </asp:DropDownList>--%>
-
+                                           <div id="academicYearSemesterFilter" style="float:left; min-width:50%;" runat="server">
+                    <p style="float:left;">Academic Year  <asp:DropDownList ID="ddlAcademicYear" runat="server" CssClass="sort-dropdown1" AutoPostBack="true" OnSelectedIndexChanged="ddlacademicYear_SelectedIndexChanged" >
+                    </asp:DropDownList></p>
+                    <asp:DropDownList ID="ddlSemester" runat="server" style="margin-left:1%;" CssClass="sort-dropdown2" OnSelectedIndexChanged="ddlSemester_SelectedIndexChanged" AutoPostBack="true">
+                    </asp:DropDownList>
                     <asp:DropDownList ID="programList" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="program_SelectedIndexChanged"></asp:DropDownList>
+                   </div>
                        <div class="bulk-action">
                      <asp:LinkButton ID="btnEdit" runat="server" CssClass="edit-button" OnClick="Edit_Click">
                         <i class="fas fa-edit"></i> Edit
                     </asp:LinkButton> 
-                   <button runat="server" style="background-color:white; border:1px solid; border-color:gray; box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);"><i class="fa fa-trash" aria-hidden="true"></i>Delete </button>
                     <asp:LinkButton ID="lnkRefer" runat="server" CssClass="action-button" OnClick="referIntern_Click">
                         <i class="fas fa-paper-plane"></i> Refer
                     </asp:LinkButton>                           
@@ -332,6 +342,7 @@
                                         <th>First name</th>
                                         <th>Middle initial</th>
                                         <th>Program enrolled</th>
+                                        <th>Semester</th>
                                         <th>Contact Number</th>
                                         <th>Email</th>
                                         <th>Status</th>
@@ -355,6 +366,7 @@
                                                 <th>First name</th>
                                                 <th>Middle initial</th>
                                                 <th>Program enrolled</th>
+                                                <th>Semester</th>
                                                 <th>Contact Number</th>
                                                 <th>Email</th>
                                                 <th>Status</th>
@@ -391,6 +403,9 @@
                                                 <td class="datas"> 
                                                     <asp:Label ID="courseLabel" runat="server" Text='<%# Eval("course") %>'></asp:Label>
                                                 </td>
+                                                <td class="datas"> 
+                                                    <asp:Label ID="Label25" runat="server" Text='<%# Eval("semdescription") %>'></asp:Label>
+                                                </td>
                                                 <td class="datas">
                                                     <asp:Label ID="contactLabel" runat="server" Text='<%# Eval("contactNumber") %>'></asp:Label>
                                                 </td >
@@ -407,8 +422,10 @@
                                                     <asp:Label ID="hourslabel" runat="server" Text='<%# Eval("renderedHours") %>'></asp:Label>
                                                 </td>
                                                 <td class="datas">
-                                                    <asp:Button ID="EvaluationBtn" runat="server" Text='<%# Eval("evaluationRequest") %>' CommandArgument='<%# Eval("student_accID") %>' CommandName='<%# Eval("id") %>'  OnCommand="EvaluationBtn_Command" CssClass='<%# GetButtonCssClass(Eval("evaluationRequest")) %>' />
-                                                
+                                                    <asp:Button ID="EvaluationBtn" runat="server" Text='<%# Eval("evaluationRequest").ToString() == "Evaluated" ? "Evaluation" : "Not Available" %>' CommandArgument='<%# Eval("student_accID") %>' CommandName='<%# Eval("id") %>'  OnCommand="EvaluationBtn_Command" CssClass='<%# GetButtonCssClass(Eval("evaluationRequest")) %>' />
+             
+                                                </td>
+                                                <td><asp:Button ID="ViewIntern" Text="ioi" runat="server" style="padding:0px; width:30px; border:none;"  OnCommand="TraceIntern_Command" CommandArgument='<%#Eval("student_accID")%>' />
                                                 </td>
                                             </tr>
                                         </Itemtemplate>
@@ -564,6 +581,26 @@
          </div>
      </div>
   </div>
+                 <div class="modal" id="allNotHired" tabindex="-1" role="dialog" >
+     <div class="modal-dialog modal-dialog-centered" >
+         <div class="modal-content">
+             <div class="modal-header">
+                   <h2 class="title">
+                         <span style="color: red;">&#9888;</span> Failed to Proceed
+                    </h2>
+             </div>
+                 <div class="modal-body" style="padding-left:8%; text-align:center;">
+                      <asp:Label ID="Label26" runat="server" Style="font-size:16px; text-align:center;">
+                        No edit action for <span style="color: red;">not hired</span>
+                    </asp:Label><br />
+                    <asp:Label ID="Label27" runat="server" Text="Select another row. Thank you!" Style="font-size:16px; text-align:center;" ></asp:Label>
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal" OnClick="closeFailedEditAllNotHired()">Close</button>
+             </div>
+         </div>
+     </div>
+  </div>
 
                  <div class="modal" id="editMultiple" tabindex="-1" role="dialog" >
      <div class="modal-dialog modal-dialog-centered" >
@@ -685,6 +722,10 @@
            var modal = document.getElementById("stillHaveNotHired");
            modal.style.display = "block";
        }
+       function openFailedEditAllNotHired() {
+           var modal = document.getElementById("allNotHired");
+           modal.style.display = "block";
+       }
        function openModalMultipleEdit(existingname) {
            var modal = document.getElementById("editMultiple");
            modal.style.display = "block";
@@ -719,6 +760,10 @@
        }
        function closeModalFailedEdit() {
            document.getElementById("stillHaveNotHired").style.display = "none";
+
+       }
+       function closeFailedEditAllNotHired() {
+           document.getElementById("allNotHired").style.display = "none";
 
        }
        function closeModalBulkEdit() {

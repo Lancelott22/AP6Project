@@ -26,10 +26,12 @@ namespace ctuconnect
             }          
             if (!IsPostBack && Request.QueryString["IndustryID"] != null && Request.QueryString["IndustryName"] != null)
             {
+                NameOfIndustry.InnerText = "All job posts from " + Request.QueryString["IndustryName"].ToString();
+                NameOfIndustry.Visible = true;
                 showIndustryList.Visible = false;
                 showIndustryList.Attributes["class"] = "d-none";
                 showJobPosted.Visible = true;
-                showJobPosted.Attributes["class"] = "row";
+                showJobPosted.Attributes["class"] = "row m-2 my-4 mb-5";
                 getJobPosted();
             }
         }
@@ -47,13 +49,17 @@ namespace ctuconnect
             IndustryListView.DataBind();
             if (IndustryListView.Items.Count == 0)
             {
-                /*ListViewPager.Visible = false;*/
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
             }
         }
         void SearchByIndustryName(string industryName)
         {
             SqlCommand cmd = new SqlCommand("SELECT INDUSTRY_ACCOUNT.*,COALESCE(HIRING_COUNT.TotalJob, 0) as totalJobPosted, COALESCE(HIRED_LIST.TotalHired, 0) as TotalEmployee " +
-                "FROM INDUSTRY_ACCOUNT LEFT JOIN (SELECT industry_accID, COUNT(jobID) as TotalJob FROM HIRING WHERE isActive = 1 GROUP BY industry_accID) HIRING_COUNT " +
+                "FROM INDUSTRY_ACCOUNT LEFT JOIN (SELECT industry_accID, COUNT(jobID) as TotalJob FROM HIRING GROUP BY industry_accID) HIRING_COUNT " +
                 "ON INDUSTRY_ACCOUNT.industry_accID = HIRING_COUNT.industry_accID LEFT JOIN (SELECT industry_accID, COUNT(id) as TotalHired FROM HIRED_LIST " +
                 "WHERE internshipStatus = 'Ongoing' or workStatus = 'Ongoing' GROUP BY industry_accID) HIRED_LIST " +
                 "ON INDUSTRY_ACCOUNT.industry_accID = HIRED_LIST.industry_accID WHERE industryName LIKE '%" + industryName + "%'", conDB);
@@ -62,6 +68,14 @@ namespace ctuconnect
             da.Fill(ds);
             IndustryListView.DataSource = ds;
             IndustryListView.DataBind();
+            if (IndustryListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
 
         protected void SearchIndustry_Click(object sender, EventArgs e)
@@ -72,7 +86,7 @@ namespace ctuconnect
         void SearchByIndustryAddress(string industryAddress)
         {
             SqlCommand cmd = new SqlCommand("SELECT INDUSTRY_ACCOUNT.*,COALESCE(HIRING_COUNT.TotalJob, 0) as totalJobPosted, COALESCE(HIRED_LIST.TotalHired, 0) as TotalEmployee " +
-                "FROM INDUSTRY_ACCOUNT LEFT JOIN (SELECT industry_accID, COUNT(jobID) as TotalJob FROM HIRING WHERE isActive = 1 GROUP BY industry_accID) HIRING_COUNT " +
+                "FROM INDUSTRY_ACCOUNT LEFT JOIN (SELECT industry_accID, COUNT(jobID) as TotalJob FROM HIRING GROUP BY industry_accID) HIRING_COUNT " +
                 "ON INDUSTRY_ACCOUNT.industry_accID = HIRING_COUNT.industry_accID LEFT JOIN (SELECT industry_accID, COUNT(id) as TotalHired FROM HIRED_LIST " +
                 "WHERE internshipStatus = 'Ongoing' or workStatus = 'Ongoing' GROUP BY industry_accID) HIRED_LIST " +
                 "ON INDUSTRY_ACCOUNT.industry_accID = HIRED_LIST.industry_accID WHERE location LIKE '%" + industryAddress + "%'", conDB);
@@ -81,6 +95,14 @@ namespace ctuconnect
             da.Fill(ds);
             IndustryListView.DataSource = ds;
             IndustryListView.DataBind();
+            if (IndustryListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
         protected void IndustryAdress_Click(object sender, EventArgs e)
         {
@@ -133,7 +155,26 @@ namespace ctuconnect
                 da.Fill(ds);
                 JobPostListView.DataSource = ds;
                 JobPostListView.DataBind();
+                if (JobPostListView.Items.Count == 0)
+                {
+                    ListViewPager1.Visible = false;
+                }
+                else
+                {
+                    ListViewPager1.Visible = true;
+                }
+
             }
+        }
+
+        protected void IndustryListView_PagePropertiesChanged(object sender, EventArgs e)
+        {
+            BindIndustryList();
+        }
+
+        protected void JobPostListView_PagePropertiesChanged(object sender, EventArgs e)
+        {
+            getJobPosted();
         }
     }
 }

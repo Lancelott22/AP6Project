@@ -34,7 +34,7 @@
         width: 90%;
         margin-left:auto;
         margin-right:auto;
-        margin-top:13%;
+        margin-top:1%;
         margin-bottom:0%;
     }
          
@@ -110,27 +110,33 @@
         background-color: #881A30;
 
     }
-   th{
-   border-collapse: collapse;
-    border-color:white;
-    background-color:#f4f4fb;
-    padding:5px;
+    th{
+         border: 1px solid;
+         border-color:#c4c4c4;
+        background-color:#f4f4fb;
+        padding:5px;
 
     }
+/*    td{
+        border: 1px solid;
+        border-color:dimgray;
+        padding-left:5px;
+    }*/
     .datas{
-         padding:9px;
-          border: 8px solid;
-          border-color:white;
-         font-weight:bold;
+        border: 1px solid;
+        border-color:#c4c4c4;
+        padding-left:5px;
          color:black;
+         cursor:default;
     }
 
     .table-list{
-         border-collapse: collapse;
+        border-collapse: collapse;        
         font-size:13px; 
         height:auto; 
         width:100%;
         color:dimgray;
+        padding-right:4px;
     }
 
 </style>
@@ -142,13 +148,9 @@
                     <img src="images/administratorpic.jpg" />
                     <p >Admin</p>
                     <hr class="horizontal-line" />
-                    <a href="#">
+                    <a href="AdminDashboard.aspx">
                         <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Dashboard
-                    </a>
-                    <a href="AdminDashboard.aspx">
-                        <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Create Partnership
                     </a>
                     <a  href="IndustryVerification.aspx">
                         <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
@@ -178,22 +180,29 @@
                     </a>
                     <a class="active" href="Blacklist_Admin.aspx">
                         <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Blacklist
+                        Blacklisted
                     </a>
-                    <hr class="second" />
-                                        <a href="TracerDashboard.aspx">
-                        <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Blacklist
-                    </a>
-                    <a href="#">
-                        <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                        Profile
-                    </a>
-                    <asp:LinkButton runat="server" ID ="LinkButton1">
-                        <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
-                        Sign-out
-                    </asp:LinkButton>
-                </div>
+                        <a href="SuggestionsAdmin.aspx">
+                            <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Suggestions
+                        </a>
+                        <a href="Admin_Contact.aspx">
+                            <i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Contact
+                        </a>
+                        <hr class="second" />
+                        <a href="TracerDashboard.aspx">
+                            <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            Tracer
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Profile
+                        </a>
+                        <a href="Coordinator_CreateAccount.aspx">
+                            <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Coordinator Account
+                        </a>                </div>
                 
             </div>
         </div>
@@ -209,6 +218,7 @@
                        <LayoutTemplate>
                                 <table  class="table-list">
                      <tr>
+                         <th>ID</th>
                          <th>Industry Name</th>
                          <th>Reason</th>
                          <th>Date Added</th>
@@ -217,12 +227,30 @@
                           <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
                       </tbody>
                      </table>
-            </LayoutTemplate>         
+            </LayoutTemplate> 
+                     <EmptyDataTemplate>
+                                    <table class="table-list">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                            <th>Industry Name</th>
+                                             <th>Reason</th>
+                                             <th>Date Added</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:center; font-size:18px;" colspan="4">No data available</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </EmptyDataTemplate>
               <Itemtemplate>
-                  <tr class="datas">
-                                 <td><%# Eval("industryName") %></td>
-                                 <td><%# Eval("reason") %></td>
-                                 <td><%# Eval("dateAdded") %></td>
+                  <tr>
+                                <td class="datas"><%# Eval("id") %></td>
+                                 <td class="datas"><%# Eval("industryName") %></td>
+                                 <td class="datas"><%# Eval("reason") %></td>
+                                 <td class="datas"><%# Eval("dateAdded") %></td>
                              </tr>
                          </Itemtemplate>
      </asp:ListView>

@@ -47,8 +47,8 @@
     <h2 class="opacity-75">Industry List</h2>
     <div class="container m-auto my-5 w-100 h-100 d-flex flex-column py-3">
 
-        <div class="row" id="showIndustryList" runat="server">
-            <div class="row">
+        <div class="row m-2 my-4 mb-5" id="showIndustryList" runat="server">
+            <div class="row mb-4">
                 <div class="col-sm-4">
                     <div class="input-group mb-3">
                         <asp:TextBox ID="IndustryName" runat="server" class="form-control" Placeholder="Search Industry Name"></asp:TextBox>
@@ -67,10 +67,11 @@
                 </div>
             </div>
 
-            <asp:ListView ID="IndustryListView" runat="server">
+            <asp:ListView ID="IndustryListView" runat="server" OnPagePropertiesChanged="IndustryListView_PagePropertiesChanged">
                 <LayoutTemplate>
                     <table style="font-size: 18px; line-height: 30px;">
                         <tr style="background-color: #336699; color: White; padding: 10px;">
+                            <th>Account ID</th>
                             <th>Industry Name</th>
                             <th>Location</th>
                             <th>Total Job Posts</th>
@@ -84,6 +85,7 @@
                 </LayoutTemplate>
                 <ItemTemplate>
                     <tr style="border-bottom: solid 1px #336699">
+                        <td><%#Eval("industry_accID")%></td>
                         <td><%#Eval("industryName")%></td>
                         <td><%#Eval("location")%></td>
                         <td><%#Eval("totalJobPosted")%></td>
@@ -95,14 +97,29 @@
                         </td>
                     </tr>
                 </ItemTemplate>
+                <EmptyDataTemplate>
+                    <h3 style="position: relative;">
+                        <asp:Label CssClass="alert alert-light d-flex p-2 bg-light justify-content-sm-center" runat="server" Text="No Data Found!"></asp:Label></h3>
+                </EmptyDataTemplate>
             </asp:ListView>
+            <div class="text-end mt-5">
+                <asp:DataPager ID="ListViewPager" runat="server" PagedControlID="IndustryListView" PageSize="15" class="btn-group btn-group-sm">
+                    <Fields>
+                        <asp:NextPreviousPagerField ButtonType="Link" ShowFirstPageButton="true" ShowPreviousPageButton="true" ShowNextPageButton="false" RenderDisabledButtonsAsLabels="false" RenderNonBreakingSpacesBetweenControls="false" ButtonCssClass="btn btn-default" />
+                        <asp:NumericPagerField ButtonType="Link" RenderNonBreakingSpacesBetweenControls="false" ButtonCount="5" NumericButtonCssClass="btn btn-default" CurrentPageLabelCssClass="btn btn-primary disabled" NextPreviousButtonCssClass="btn btn-default" />
+                        <asp:NextPreviousPagerField ButtonType="Link" ShowNextPageButton="true" ShowLastPageButton="true" ShowPreviousPageButton="false" RenderDisabledButtonsAsLabels="false" RenderNonBreakingSpacesBetweenControls="false" ButtonCssClass="btn btn-default" />
+                    </Fields>
+                </asp:DataPager>
+            </div>
         </div>
-
-        <div class="row d-none" id="showJobPosted" runat="server" visible="false">
-            <asp:ListView ID="JobPostListView" runat="server">
+        
+        <div class="row m-2 my-4 mb-5 d-none" id="showJobPosted" runat="server" visible="false">
+            <h3 runat="server" id="NameOfIndustry" visible="false" class="mb-4"></h3>
+            <asp:ListView ID="JobPostListView" runat="server" OnPagePropertiesChanged="JobPostListView_PagePropertiesChanged">
                 <LayoutTemplate>
                     <table style="font-size: 18px; line-height: 30px;">
                         <tr style="background-color: #336699; color: White; padding: 10px;">
+                            <th>Job ID</th>
                             <th>Job Title</th>
                             <th>Job Type</th>
                             <th>Job Course</th>
@@ -118,6 +135,7 @@
                 </LayoutTemplate>
                 <ItemTemplate>
                     <tr style="border-bottom: solid 1px #336699">
+                        <td><%#Eval("jobID")%></td>
                         <td><%#Eval("jobTitle")%></td>
                         <td><%#Eval("jobType")%></td>
                         <td><%#Eval("jobCourse")%></td>
@@ -128,7 +146,20 @@
                             <asp:LinkButton ID="viewJob" runat="server">View Job</asp:LinkButton></td>--%>
                     </tr>
                 </ItemTemplate>
+                <EmptyDataTemplate>
+                    <h3 style="position: relative;">
+                        <asp:Label CssClass="alert alert-light d-flex p-2 bg-light justify-content-sm-center" runat="server" Text="No Job Found!"></asp:Label></h3>
+                </EmptyDataTemplate>
             </asp:ListView>
+            <div class="text-end mt-5">
+                <asp:DataPager ID="ListViewPager1" runat="server" PagedControlID="JobPostListView" PageSize="15" class="btn-group btn-group-sm">
+                    <Fields>
+                        <asp:NextPreviousPagerField ButtonType="Link" ShowFirstPageButton="true" ShowPreviousPageButton="true" ShowNextPageButton="false" RenderDisabledButtonsAsLabels="false" RenderNonBreakingSpacesBetweenControls="false" ButtonCssClass="btn btn-default" />
+                        <asp:NumericPagerField ButtonType="Link" RenderNonBreakingSpacesBetweenControls="false" ButtonCount="5" NumericButtonCssClass="btn btn-default" CurrentPageLabelCssClass="btn btn-primary disabled" NextPreviousButtonCssClass="btn btn-default" />
+                        <asp:NextPreviousPagerField ButtonType="Link" ShowNextPageButton="true" ShowLastPageButton="true" ShowPreviousPageButton="false" RenderDisabledButtonsAsLabels="false" RenderNonBreakingSpacesBetweenControls="false" ButtonCssClass="btn btn-default" />
+                    </Fields>
+                </asp:DataPager>
+            </div>
         </div>
     </div>
     <div class="modal" id="showIndustryProfile" tabindex="-1" role="dialog">

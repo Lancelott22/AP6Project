@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
@@ -36,6 +38,7 @@ namespace ctuconnect
         protected void Verify_Command(object sender, CommandEventArgs e)
         {
             int industry_accID = int.Parse(e.CommandArgument.ToString());
+            string email = e.CommandName.ToString();
             conDB.Open();
             SqlCommand cmd = new SqlCommand("UPDATE INDUSTRY_ACCOUNT SET isVerified = 1 where industry_accID = '" + industry_accID + "'", conDB);
             var ctr = cmd.ExecuteNonQuery();
@@ -43,6 +46,7 @@ namespace ctuconnect
             if (ctr > 0)
             {
                 Response.Write("<script>alert('Industry has been successfully verified.')</script>");
+                SendEmail(industry_accID, email);
             }
             else
             {
@@ -50,7 +54,61 @@ namespace ctuconnect
             }
             conDB.Close();
         }
-
+        private void SendEmail(int industry_accID, string email)
+        {
+            try
+            {
+                string industryName = getIndustryName(industry_accID);
+                string sendToEmail = email;
+                string sendFrom = "ctuconnect00@gmail.com";
+                string sendMessage = $"Dear <b>{industryName}</b>, <br/><br/>" +
+                    $"We are pleased to inform you that your account with CTU Connect has been successfully verified. Your commitment to security and compliance is appreciated.<br/><br/>" +
+                    $"Thank you for using CTU Connect. <br/><br/>" +
+                    $"Best regards,<br/><br/>" +
+                    $"<b>CTU Connect</b>";
+                string subject = "Account Verification Successful";
+                using (MailMessage mm = new MailMessage())
+                {
+                    mm.From = new MailAddress(sendFrom, "CTU Connect");
+                    mm.To.Add(sendToEmail);
+                    mm.Subject = subject;
+                    mm.Body = sendMessage;
+                    mm.IsBodyHtml = true;
+                    mm.ReplyToList.Add(new MailAddress(sendFrom));
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.EnableSsl = true;
+                        NetworkCredential NetworkCred = new NetworkCredential();
+                        NetworkCred.UserName = "ctuconnect00@gmail.com";
+                        NetworkCred.Password = "diwvlfhaanwwfsid";
+                        smtp.UseDefaultCredentials = true;
+                        smtp.Credentials = NetworkCred;
+                        smtp.Port = 587;
+                        smtp.Send(mm);
+                    }
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='IndustryVerification.aspx'</script>");
+            }
+        }
+        string getIndustryName(int industry_accID)
+        {                      
+            SqlCommand cmd = new SqlCommand("Select industryName from INDUSTRY_ACCOUNT Where industry_accID = @industry_accID", conDB);
+            cmd.Parameters.AddWithValue("@industry_accID", industry_accID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                    string industryName = reader["industryName"].ToString();
+                    reader.Close();                   
+                    return industryName;
+               
+            }
+            reader.Close();           
+            return "";
+        }
         protected void ViewMou_Command(object sender, CommandEventArgs e)
         {
 

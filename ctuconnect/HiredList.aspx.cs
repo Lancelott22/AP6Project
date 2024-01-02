@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static iTextSharp.text.pdf.AcroFields;
 using Label = System.Web.UI.WebControls.Label;
 
 namespace ctuconnect
@@ -79,6 +80,10 @@ namespace ctuconnect
                 {
                     selectedAlumniName = (List<string>)ViewState["SelectedAlumniName"];
                 }
+                else if (ViewState["SelectedDateHiredAlumni"] != null)
+                {
+                    selectedDateHiredAlumni = (List<string>)ViewState["SelectedDateHiredAlumni"];
+                }
                 else if (ViewState["SelectedDateStartAlumni"] != null)
                 {
                     selectedDateStartAlumni = (List<string>)ViewState["SelectedDateStartAlumni"];
@@ -109,7 +114,7 @@ namespace ctuconnect
             using (var db = new SqlConnection(conDB))
             {
                 
-                string query = "SELECT student_accID, lastName, firstName, CONVERT(VARCHAR(10), HIRED_LIST.dateStarted, 120) AS dateStarted, CONVERT(VARCHAR(10), HIRED_LIST.dateEnded, 120) AS dateEnded, position, resumeFile FROM HIRED_LIST WHERE jobType = 'fulltime' AND  industry_accID = '" + industry_accID + "' ORDER BY id DESC";
+                string query = "SELECT student_accID, lastName, firstName,CONVERT(VARCHAR(10), HIRED_LIST.dateHired, 120) AS dateHired, CONVERT(VARCHAR(10), HIRED_LIST.dateStarted, 120) AS dateStarted, CONVERT(VARCHAR(10), HIRED_LIST.dateEnded, 120) AS dateEnded, position, resumeFile, workStatus FROM HIRED_LIST WHERE jobType = 'fulltime' AND  industry_accID = '" + industry_accID + "' ORDER BY id DESC";
                 SqlCommand cmd = new SqlCommand(query, db);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
@@ -164,6 +169,7 @@ namespace ctuconnect
             btnEdit.Visible = true;
             btnEdit2.Visible = false;
 
+
             UpdatePanel1.Update();
         }
         protected void btnSwitchGrid_Click2(object sender, EventArgs e)
@@ -181,9 +187,12 @@ namespace ctuconnect
             btnEdit.Visible = false;
             btnEdit2.Visible = true;
 
+
             UpdatePanel1.Update();
 
         }
+
+
         protected void SearchInternInfo(object sender, EventArgs e)
         {
             string student = searchInput.Text;
@@ -253,14 +262,8 @@ namespace ctuconnect
         {
             if (e.CommandName == "View")
             {
-                /* Button btn = (Button)sender;
-                 int studentID = Convert.ToInt32(btn.Attributes["data-studentid"]);
- */
+ 
                 string ResumeFileName = e.CommandArgument.ToString();
-                /*string endorsementLetterPath = Server.MapPath("~/images/EndorsementLetter" + endorsementLetterFileName);*/
-                // Change the button text to "Reviewed"
-                //Button button = (Button)sender;
-                //button.Text = "Reviewed";
 
 
                 // Retrieve and display the resume file
@@ -273,7 +276,7 @@ namespace ctuconnect
                     Response.Clear();
                     Response.Buffer = true;
                     Response.ContentType = "application/pdf"; // Set the appropriate content type
-                    Response.AddHeader("content-disposition", "inline; filename=resume.pdf"); // Open in a new tab
+                    Response.AddHeader("content-disposition", "inline; filename=resumeFile.pdf"); // Open in a new tab
                     Response.BinaryWrite(ResumeFileData);
                     Response.End();
                 }
@@ -283,9 +286,9 @@ namespace ctuconnect
         {
             using (var db = new SqlConnection(conDB))
             {
-                string query = "SELECT resumeFile FROM HIRED_LIST WHERE resumeFile = @ResumeFileName";
+                string query = "SELECT resumeFile FROM HIRED_LIST WHERE resumeFile = @ResumeFileNamee";
                 SqlCommand cmd = new SqlCommand(query, db);
-                cmd.Parameters.AddWithValue("@ResumeFileName", ResumeFileName);
+                cmd.Parameters.AddWithValue("@ResumeFileNamee", ResumeFileName);
 
                 db.Open();
                 object result = cmd.ExecuteScalar();
@@ -294,7 +297,7 @@ namespace ctuconnect
                 {
                     // Assuming that the result is a file path, read the file content
                     string fileName = result.ToString();
-                    string filePath = "~/images/Resume/" + fileName; // Construct the path
+                    string filePath = "~/images/resume/" + fileName; // Construct the path
                     byte[] fileData = System.IO.File.ReadAllBytes(Server.MapPath(filePath));
                     return fileData;
                 }
@@ -445,73 +448,111 @@ namespace ctuconnect
             }
         }
 
-        protected void TxtDate_TextChanged(object sender, EventArgs e)
+/*        protected void TxtDate_TextChanged(object sender, EventArgs e)
         {
-            string student_id = studentID.Text;
-            
-            if (!string.IsNullOrEmpty(txtDateEnded.Text) )
+            foreach (ListViewItem item in listView2.Items)
             {
-                if (Convert.ToDateTime(txtDateEnded.Text) <= Convert.ToDateTime(GetstartDate(student_id)))
+                CheckBox chkSelect = (CheckBox)item.FindControl("chkSelect");
+                if (chkSelect.Checked)
                 {
-                    dateErrorlabel.Visible = true;
-                    dateErrorlabel.Text = "date must not be earlier than date started";
-                }
-                else if (Convert.ToDateTime(txtDateEnded.Text) >= DateTime.Now)
-                {
-                    dateErrorlabel2.Visible = true;
-                    dateErrorlabel2.Text = "must not be future date";
-                }
-                else
-                {
-                    dateErrorlabel.Visible = false;
-                    dateErrorlabel2.Visible = false;
-                }
-            }
-            else
-            {
-                dateErrorlabel.Visible = false;
-                dateErrorlabel2.Visible = false;
-            }
+                    Label studentID = (Label)item.FindControl("studentID");
+                    string studentAccID = studentID.Text;
 
-        }
 
-        private string GetstartDate(string student_id)
-        {
-            DateTime startDate = DateTime.MinValue;
-            string formattedStartDate = string.Empty;
-
-            if (int.TryParse(student_id, out int studentIdAsInt))
-            {
-                using (var db = new SqlConnection(conDB))
-                {
-                    db.Open();
-                    using (var cmd = db.CreateCommand())
+                    if (studentAccID != null)
                     {
-                        string sql = "SELECT dateStarted from HIRED_LIST WHERE student_accID = @studsID";
-                        cmd.CommandText = sql;
-                        cmd.Parameters.AddWithValue("@studsID", studentIdAsInt);
+                        int studentaccId = Convert.ToInt32(studentAccID);
 
-                        using (var reader = cmd.ExecuteReader())
+                        if (!string.IsNullOrEmpty(txtDateEnded.Text))
                         {
-                            if (reader.Read())
-                            {
-                                // Check if the startDate column is not null in the database
-                                if (!reader.IsDBNull(0))
-                                {
-                                    startDate = reader.GetDateTime(0);
-                                    formattedStartDate = startDate.ToString("yyyy-MM-dd");
 
-                                }
+                            if (Convert.ToDateTime(txtDateEnded.Text) <= Convert.ToDateTime(GetstartDate(studentaccId)))
+                            {
+                                dateErrorlabel.Visible = true;
+                                dateErrorlabel.Text = "Date in conflict with date Started";
+                            }
+                            else
+                            {
+                                dateErrorlabel.Visible = false;
                             }
                         }
+                        else
+                        {
+                            dateErrorlabel.Visible = false;
+                        }
                     }
-                }
-               
-            }
-            return formattedStartDate;
-        }
-        
-        protected void ListView2_ItemDataBound(object sender, ListViewItemEventArgs e)
+                    else
+                    {
+
+                    }
+                } } }*/
+
+                    /*        protected void TxtDate_TextChanged(object sender, EventArgs e)
+                            {
+                                Label studentID = (Label).FindControl("studentID");
+                                string student_id = studentID.Text;
+
+                                if (!string.IsNullOrEmpty(txtDateEnded.Text))
+                                {
+                                    if (Convert.ToDateTime(txtDateEnded.Text) <= Convert.ToDateTime(GetstartDate(student_id)))
+                                    {
+                                        dateErrorlabel.Visible = true;
+                                        dateErrorlabel.Text = "date must not be earlier than date started";
+                                    }
+                                    else if (Convert.ToDateTime(txtDateEnded.Text) >= DateTime.Now)
+                                    {
+                                        dateErrorlabel2.Visible = true;
+                                        dateErrorlabel2.Text = "must not be future date";
+                                    }
+                                    else
+                                    {
+                                        dateErrorlabel.Visible = false;
+                                        dateErrorlabel2.Visible = false;
+                                    }
+                                }
+                                else
+                                {
+                                    dateErrorlabel.Visible = false;
+                                    dateErrorlabel2.Visible = false;
+                                }
+
+                            }*/
+
+/*                    private string GetstartDate(int studentaccId)
+                    {
+                        DateTime startDate = DateTime.MinValue;
+                        string formattedStartDate = string.Empty;
+
+                            using (var db = new SqlConnection(conDB))
+                            {
+                                db.Open();
+                                using (var cmd = db.CreateCommand())
+                                {
+                                    string sql = "SELECT dateStarted from HIRED_LIST WHERE student_accID = @studsID";
+                                    cmd.CommandText = sql;
+                                    cmd.Parameters.AddWithValue("@studsID", studentaccId);
+
+                                    using (var reader = cmd.ExecuteReader())
+                                    {
+                                        if (reader.Read())
+                                        {
+                                            // Check if the startDate column is not null in the database
+                                            if (!reader.IsDBNull(0))
+                                            {
+                                                startDate = reader.GetDateTime(0);
+                                                formattedStartDate = startDate.ToString("yyyy-MM-dd");
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                        
+                        return formattedStartDate;
+                    }*/
+
+                    protected void ListView2_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
             Button editbtn = (Button)sender;
             if (e.Item.ItemType == ListViewItemType.DataItem)
@@ -544,6 +585,7 @@ namespace ctuconnect
         private List<string> selectedInternshipStatus = new List<string>();
 
         private List<string> selectedAlumniName = new List<string>();
+        private List<string> selectedDateHiredAlumni = new List<string>();
         private List<string> selectedDateStartAlumni = new List<string>();
         private List<string> selectedDateEndAlumni = new List<string>();
         private List<string> selectedPositionAlumni = new List<string>();
@@ -641,7 +683,7 @@ namespace ctuconnect
                 {
                     if (selectedInternshipStatus[0] == "Ongoing")
                     {
-                        string existingID = string.Join(" ", selectedStudentIds);
+                        string existingID = string.Join("", selectedStudentIds);
                         string existingname = string.Join(" ", selectedInternNames);
                         string existingposition = string.Join(" ", selectedPosition);
                         string existingdatehired = string.Join(" ", selectedDateHired);
@@ -675,13 +717,15 @@ namespace ctuconnect
 
                         Label lblemployeeID = (Label)item.FindControl("lblemployeeID");
                         Label lblLastName = (Label)item.FindControl("lblLastName");
-                        Label lblFirstName = (Label)item.FindControl("lblFirstName");
+                        Label lblFirstName = (Label)item.FindControl("lblFirstName"); 
+                        Label lblDateHired = (Label)item.FindControl("lblDateHired");
                         Label lblDateStarted = (Label)item.FindControl("lblDateStarted");
                         Label lblDateEnded = (Label)item.FindControl("lblDateEnded");
                         Label lblPosition = (Label)item.FindControl("lblPosition");
 
                         string lname = lblLastName.Text;
                         string fname = lblFirstName.Text;
+                        string hired = lblDateHired.Text;
                         string start = lblDateStarted.Text;
                         string end = lblDateEnded.Text;
                         string position = lblPosition.Text;
@@ -689,6 +733,7 @@ namespace ctuconnect
 
                         
                         selectedAlumniName.Add($"{fname} {lname}");
+                        selectedDateHiredAlumni.Add(hired);
                         selectedDateStartAlumni.Add(start);
                         selectedDateEndAlumni.Add(end);
                         selectedPositionAlumni.Add(position);
@@ -698,18 +743,21 @@ namespace ctuconnect
                         checkedCount2++;
                     }
                 }
-                ViewState["SelectedDateEnded"] = selectedAlumniName;
-                ViewState["SelectedRenderedHours"] = selectedDateStartAlumni;
-                ViewState["SelectedInternshipStatus"] = selectedDateEndAlumni;
-                ViewState["SelectedStudentIds"] = selectedPositionAlumni;
+
+                ViewState["selectedAlumniName"] = selectedAlumniName;
+                ViewState["selectedDateHiredAlumni"] = selectedDateHiredAlumni;
+                ViewState["selectedDateStartAlumni"] = selectedDateStartAlumni;
+                ViewState["selectedDateEndAlumni"] = selectedDateEndAlumni;
+                ViewState["selectedPositionAlumni"] = selectedPositionAlumni;
 
                 if (checkedCount2 == 1)
                 {
                     string existingAlumniName = string.Join(" ", selectedAlumniName);
+                    string existingAlumniHired = string.Join(" ", selectedDateHiredAlumni);
                     string existingAlumniStart = string.Join(" ", selectedDateStartAlumni);
                     string existingAlumniEnd = string.Join(" ", selectedDateEndAlumni);
                     string existingAlumniPosition = string.Join(" ", selectedPositionAlumni);
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript5", $"openSingleSelectFulltimeModal('{existingAlumniName}','{existingAlumniStart}','{existingAlumniEnd}','{existingAlumniPosition}');", true);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenModalScript5", $"openSingleSelectFulltimeModal('{existingAlumniName}','{existingAlumniHired}','{existingAlumniStart}','{existingAlumniEnd}','{existingAlumniPosition}');", true);
 
                 }
                 else if (checkedCount2 == 0)
@@ -754,7 +802,7 @@ namespace ctuconnect
         protected void saveEmployeeDetails(object sender, EventArgs e)
         {
             object dateendedValue = string.IsNullOrEmpty(employeeEndedtxt.Text) ? DBNull.Value : (object)employeeEndedtxt.Text;
-            string stat = "Done";
+            string stat = reasonOfEnd.SelectedValue;
             string type = "Alumni";
 
             foreach (ListViewItem item in listView1.Items)
@@ -983,7 +1031,7 @@ namespace ctuconnect
 
            Page.ClientScript.RegisterStartupScript(this.GetType(), "closeModal", "closeEditModal();", true);
         }
-
+        
         protected void EvaluationBtn_Command(object sender, CommandEventArgs e)
         {
             Button Evalbtn = (Button)sender;
@@ -1012,6 +1060,22 @@ namespace ctuconnect
                     return "btn-success"; // Green
                 default:
                     return string.Empty; // No CSS class if no request
+            }
+        }
+        protected string GetButtonText(object evaluationRequest)
+        {
+            string requestStatus = evaluationRequest.ToString();
+
+            switch (requestStatus)
+            {
+                case "no request":
+                    return "no request";
+                case "Requested":
+                    return "Requested"; // Change the text to "Evaluation" for Requested status
+                case "Evaluated":
+                    return "Evaluation"; // Change the text to "Evaluation" for Evaluated status
+                default:
+                    return string.Empty; // No text if no request
             }
         }
     }

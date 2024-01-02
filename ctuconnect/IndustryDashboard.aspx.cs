@@ -38,8 +38,45 @@ namespace ctuconnect
                     InsertContactPerson();
                 }
             }
+            if (checkVerified())
+            {
+                verifiedIcon.Attributes.Add("title", "Verified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-info");
+            }
+            else
+            {
+                verifiedIcon.Attributes.Add("title", "Unverified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-danger");
+            }
         }
+        bool checkVerified()
+        {
+            int industry_accId = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select isVerified from INDUSTRY_ACCOUNT where industry_accID = @industry_accID", conDB);
+            cmd.Parameters.AddWithValue("@industry_accID", industry_accId);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (reader["isVerified"] == DBNull.Value || bool.Parse(reader["isVerified"].ToString()) == false)
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return false;
 
+                }
+                else
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return true;
+                }
+
+            }
+            reader.Close();
+            conDB.Close();
+            return false;
+        }
         private bool ContactExists()
         {
             int industryID = Convert.ToInt32(Session["INDUSTRY_ACC_ID"].ToString());
@@ -116,7 +153,7 @@ namespace ctuconnect
         {
             int industryID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE industry_accID = '" + industryID + "'", conDB);
+            SqlCommand cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE (isDeletedByAdmin = 'false' or isDeletedByAdmin IS NULL) and industry_accID = '" + industryID + "'", conDB);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {

@@ -8,6 +8,7 @@ using System.Web.Configuration;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace ctuconnect
 {
@@ -17,6 +18,8 @@ namespace ctuconnect
         private DataTable dtNotif = new DataTable();
         private DataTable dtRegistered = new DataTable();
         private DataTable dtSuggestion = new DataTable();
+        private DataTable dtJobReport = new DataTable();
+        private DataTable dtDispute = new DataTable();
         int count = 0;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -28,7 +31,7 @@ namespace ctuconnect
             if (!IsPostBack)
             {
 
-                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount();
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
 
                 this.LoadNotification();
@@ -43,10 +46,21 @@ namespace ctuconnect
                 rptsuggestions.DataSource = dtSuggestion;
                 rptsuggestions.DataBind();
 
+                this.LoadJobReport();
+                rptjobreported.DataSource = dtJobReport;
+                rptjobreported.DataBind();
+
+                this.LoadDispute();
+                rptdispute.DataSource = dtDispute;
+                rptdispute.DataBind();
+
+
                 refreshCounting();
                 disableHeader();
                 disableHeader2();
                 disableHeader3();
+                disableHeader4();
+                disableHeader5();
 
             }
 
@@ -108,6 +122,37 @@ namespace ctuconnect
             }
         }
 
+        void disableHeader4()
+        {
+            if (rptjobreported.Items.Count == 0)
+            {
+                // Find the headerTemplateContainer and set its Visible property to false
+                Control headerTemplateContainer4 = rptjobreported.Controls[0].Controls[0].FindControl("headerTemplateContainer4");
+
+                if (headerTemplateContainer4 != null)
+                {
+                    headerTemplateContainer4.Visible = false;
+                }
+            }
+        }
+
+        void disableHeader5()
+        {
+
+            if (rptdispute.Items.Count == 0)
+            {
+                // Find the headerTemplateContainer and set its Visible property to false
+                Control headerTemplateContainer5 = rptdispute.Controls[0].Controls[0].FindControl("headerTemplateContainer5");
+
+                if (headerTemplateContainer5 != null)
+                {
+                    headerTemplateContainer5.Visible = false;
+                }
+            }
+
+
+        }
+
         private void LoadNotification()
         {
 
@@ -163,6 +208,45 @@ namespace ctuconnect
             rptsuggestions.DataSource = dtSuggestion;
             rptsuggestions.DataBind();
             disableHeader3();
+        }
+
+        private void LoadJobReport()
+        {
+            using (var db = new SqlConnection(conDB))
+            {
+                string query = "SELECT * FROM REPORT_JOB JOIN HIRING ON REPORT_JOB.jobID = HIRING.jobID WHERE REPORT_JOB.isRemove = 0 ORDER BY reportDate DESC";
+                SqlCommand cmd = new SqlCommand(query, db);
+
+                db.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dtJobReport);
+
+
+            }
+            rptjobreported.DataSource = dtJobReport;
+            rptjobreported.DataBind();
+            disableHeader4();
+        }
+
+        private void LoadDispute()
+        {
+            
+            using (var db = new SqlConnection(conDB))
+            {
+                string query = "SELECT * FROM DISPUTE JOIN INDUSTRY_ACCOUNT ON DISPUTE.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE DISPUTE.isRemove = 0 ORDER BY dateAdded DESC";
+                SqlCommand cmd = new SqlCommand(query, db);
+
+                db.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dtDispute);
+            }
+
+
+            rptdispute.DataSource = dtDispute;
+            rptdispute.DataBind();
+            disableHeader5();
+
+
         }
 
         protected int UnreadNotificationCount()
@@ -232,6 +316,50 @@ namespace ctuconnect
             return count;
         }
 
+        protected int UnreadReportCount()
+        {
+            int count = 0;
+
+            // Replace with your connection string
+            string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(conDB))
+            {
+                connection.Open();
+
+                string query = "SELECT COUNT(*) FROM REPORT_JOB WHERE isRead = 0";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    count = (int)command.ExecuteScalar();
+                }
+            }
+
+            return count;
+        }
+
+        protected int UnreadDisputeCount()
+        {
+            int count = 0;
+
+            // Replace with your connection string
+            string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(conDB))
+            {
+                connection.Open();
+
+                string query = "SELECT COUNT(*) FROM DISPUTE WHERE isRead = 0";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    count = (int)command.ExecuteScalar();
+                }
+            }
+
+            return count;
+        }
+
 
         protected void readNotification_ItemCommand(object sender, CommandEventArgs e)
         {
@@ -262,9 +390,8 @@ namespace ctuconnect
                 cmd.ExecuteNonQuery();
 
 
-
                 // Update the unread count
-                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount();
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -291,9 +418,8 @@ namespace ctuconnect
                 cmd.ExecuteNonQuery();
 
 
-
                 // Update the unread count
-                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount();
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -328,7 +454,8 @@ namespace ctuconnect
                 db.Open();
                 cmd.ExecuteNonQuery();
 
-                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount();
+                // Update the unread count
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -371,7 +498,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount();
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -400,7 +527,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount();
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -438,7 +565,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount();
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -480,21 +607,21 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount();
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
             this.disableHeader3();
-            //RedirectToSuggestion(suggestionID);
+            RedirectToSuggestion(suggestionID);
 
         }
 
-        /*
+        
         void RedirectToSuggestion(int suggestionID)
         {
-            Response.Redirect("Suggestion.aspx?suggestionID=" + suggestionID);
+            Response.Redirect("SuggestionsAdmin.aspx?suggestionID=" + suggestionID);
         }
-        */
+        
 
         private void SuggestionRead(int suggestionID)
         {
@@ -509,7 +636,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount();
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -546,7 +673,7 @@ namespace ctuconnect
 
 
                 // Update the unread count
-                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount();
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
                 lblUnreadCount.Text = totalCounts.ToString();
             }
             refreshCounting();
@@ -557,6 +684,220 @@ namespace ctuconnect
                 disableHeader3();
             }
 
+        }
+
+        protected void readReport_ItemCommand(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "MarkAsReportRead")
+            {
+                int id = Convert.ToInt32(e.CommandArgument);
+
+                MarkReportAsRead(id);
+
+            }
+            // Refresh
+            this.LoadJobReport();
+            this.UnreadReportCount();
+
+        }
+
+        private void MarkReportAsRead(int id)
+        {
+
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE REPORT_JOB SET isRead = 1 WHERE id = @ID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@ID", id);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+
+                // Update the unread count
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            this.disableHeader4();
+            RedirectToReport(id);
+
+        }
+
+        void RedirectToReport(int id)
+        {
+            Response.Redirect("Admin_JobPosted.aspx?suggestionID=" + id);
+        }
+
+        private void ReportRead(int id)
+        {
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE REPORT_JOB SET isRead = 1 WHERE id = @ID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@ID", id);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+
+                // Update the unread count
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            this.disableHeader4();
+        }
+
+        protected void removeReport_ItemCommand(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "MarkAsReportRemove")
+            {
+                int id = Convert.ToInt32(e.CommandArgument);
+
+                MarkReportAsRemoved(id);
+                ReportRead(id);
+
+            }
+            // Refresh the notifications
+            this.LoadJobReport();
+            this.UnreadReportCount();
+
+        }
+
+        private void MarkReportAsRemoved(int id)
+        {
+
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE REPORT_JOB SET isRemove = 1 WHERE id = @ID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@ID", id);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+
+                // Update the unread count
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            //disableHeader3();
+
+            if (rptjobreported.Items.Count == 1)
+            {
+                disableHeader4();
+            }
+
+        }
+
+        protected void readDispute_ItemCommand(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "MarkAsRead")
+            {
+                int disputeID = Convert.ToInt32(e.CommandArgument);
+
+                MarkDisputeAsRead(disputeID);
+
+
+            }
+            // Refresh the notifications
+            this.LoadDispute();
+            this.UnreadDisputeCount();
+
+        }
+
+        private void MarkDisputeAsRead(int disputeID)
+        {
+
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE DISPUTE SET isRead = 1 WHERE disputeID = @DisputeID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@DisputeID", disputeID);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+
+
+                // Update the unread count
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            this.disableHeader5();
+            RedirectToDispute(disputeID);
+
+
+        }
+
+        private void RedirectToDispute(int disputeID)
+        {
+            Response.Redirect("Dispute.aspx?disputeID=" + disputeID);
+        }
+
+        private void DisputeRead(int disputeID)
+        {
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE DISPUTE SET isRead = 1 WHERE disputeID = @DisputeID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@DisputeID", disputeID);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+
+
+                // Update the unread count
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            this.disableHeader5();
+        }
+
+        protected void removeDispute_ItemCommand(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "MarkAsRemove")
+            {
+                int disputeID = Convert.ToInt32(e.CommandArgument);
+
+                MarkDisputeAsRemoved(disputeID);
+                DisputeRead(disputeID);
+
+
+            }
+
+            // Refresh the notifications
+            this.LoadDispute();
+            this.UnreadDisputeCount();
+        }
+
+        private void MarkDisputeAsRemoved(int disputeID)
+        {
+            // Update the isRemove property in the database
+            using (var db = new SqlConnection(conDB))
+            {
+
+                string query = "UPDATE DISPUTE SET isRemove = 1 WHERE disputeID = @DisputeID";
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@DisputeID", disputeID);
+                db.Open();
+                cmd.ExecuteNonQuery();
+
+                int totalCounts = UnreadNotificationCount() + UnreadRegisteredCount() + UnreadSuggestionCount() + UnreadReportCount() + UnreadDisputeCount();
+                lblUnreadCount.Text = totalCounts.ToString();
+            }
+            refreshCounting();
+            //this.disableHeader();
+
+            if (rptdispute.Items.Count == 1)
+            {
+                disableHeader5();
+            }
         }
 
         protected void SignOut_Click(object sender, EventArgs e)

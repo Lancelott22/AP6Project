@@ -93,5 +93,25 @@ namespace ctuconnect
         {
             Response.Redirect("IndustryHome.aspx?jobid=" + e.CommandArgument.ToString());
         }
+
+        protected void SearchJob_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void JobTypeSort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ddlDateFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void JobStatusSort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

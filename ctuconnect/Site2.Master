@@ -124,7 +124,7 @@
             &nbsp;Trace Interns</a>
         <a id="traceIndustry" runat="server" href="TraceIndustry.aspx">
             <img src="images/report.png" width="24" height="24" />
-            &nbsp;Trace Industry</a>
+            &nbsp;List of Industry</a>
         <a href="#" id="back" runat="server">
             <img src="images/logout.png" width="24" height="24" />
             &nbsp;Back</a>

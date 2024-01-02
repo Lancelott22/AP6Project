@@ -69,6 +69,15 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.ListView IndustryListView;
 
         /// <summary>
+        /// ListViewPager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataPager ListViewPager;
+
+        /// <summary>
         /// showJobPosted control.
         /// </summary>
         /// <remarks>
@@ -78,6 +87,15 @@ namespace ctuconnect
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl showJobPosted;
 
         /// <summary>
+        /// NameOfIndustry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NameOfIndustry;
+
+        /// <summary>
         /// JobPostListView control.
         /// </summary>
         /// <remarks>
@@ -85,6 +103,15 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListView JobPostListView;
+
+        /// <summary>
+        /// ListViewPager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataPager ListViewPager1;
 
         /// <summary>
         /// IndustryLogo control.

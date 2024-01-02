@@ -44,6 +44,11 @@ namespace ctuconnect
                 JobBind();
                 TotalJob();
                 DisplayStudentInfo();
+                if(Session["STATUSorTYPE"].ToString() == "Intern")
+                {
+                    JobTypeSort.Enabled = false;
+                    JobTypeSort.SelectedValue = "internship";
+                }
             }
             if (checkResume())
             {
@@ -55,7 +60,7 @@ namespace ctuconnect
                 resumeIcon.Attributes.Add("title", "No Resume");
                 resumeIcon.Attributes.Add("class", "fa fa-address-card-o m-1 text-danger");
             }
-            
+           
         }
         void JobBind()
         {
@@ -131,7 +136,7 @@ namespace ctuconnect
                         AlreadyApplied.Visible = false;
                     }
                     ApplyForJob.Value = e.CommandName.ToString();
-                    Name.Value = Session["FNAME"].ToString() + " " + Session["LNAME"].ToString();
+                    Name.Value = Session["STUD_FNAME"].ToString() + " " + Session["STUD_LNAME"].ToString();
                     Resume.Value = getResume();
                     applyJobId.Text = jobId.ToString();
                     applyIndustryId.Text = getApplyIndustryId(jobId).ToString();
@@ -153,6 +158,19 @@ namespace ctuconnect
                 ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertResume", "alert('Please upload or create resume first before applying job.');document.location='Resume.aspx';", true);
             }
 
+            ListViewItem currentItem = (sender as Button).NamingContainer as ListViewItem;
+            foreach (ListViewItem item in JobHiring.Items)
+            {
+                HtmlGenericControl JobBox = item.FindControl("jobList") as HtmlGenericControl;
+                if (currentItem.DataItemIndex == item.DataItemIndex)
+                {
+                    JobBox.Attributes["class"] = "row d-flex align-items-center jobBoxSelected";
+                }
+                else
+                {
+                    JobBox.Attributes["class"] = "row d-flex align-items-center jobBox";
+                }
+            }
         }
         private int getApplyIndustryId(int jobId)
         {
@@ -204,10 +222,10 @@ namespace ctuconnect
                 jobtype = job_Type.Value;
             }
             string position = ApplyForJob.Value.ToString();
-            string applicantFName = Session["FNAME"].ToString();
-            string applicantLName = Session["LNAME"].ToString();
+            string applicantFName = Session["STUD_FNAME"].ToString();
+            string applicantLName = Session["STUD_LNAME"].ToString();
             DateTime dateApplied = DateTime.Now;
-            string resume = Session["ResumeFile"].ToString();
+            string resume = getResume();
             int jobID = int.Parse(applyJobId.Text.ToString());
             int industry_accId = int.Parse(applyIndustryId.Text.ToString());
             string endorsementLetterFile = "";
@@ -453,6 +471,25 @@ namespace ctuconnect
         }
         private void DisplayStudentInfo()
         {
+                       
+            int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select firstName, lastName, studentPicture, course from STUDENT_ACCOUNT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID where student_accID = @student_accID", conDB);
+            cmd.Parameters.AddWithValue("@student_accID", student_accId);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                Session["STUD_FNAME"] = reader["firstName"];
+                Session["STUD_LNAME"] = reader["lastName"];
+                Session["PROFILE"] = reader["studentPicture"];
+                StudentCourse.Text = reader["course"].ToString();
+            }
+            conDB.Close();
+            reader.Close();
+
+            StudentName.Text = Session["STUD_FNAME"].ToString() + " " + Session["STUD_LNAME"].ToString();
+            StudentID.Text = Session["STUDENT_ID"].ToString();
+
             if (!string.IsNullOrEmpty(Session["PROFILE"].ToString()))
             {
                 profileImage.ImageUrl = "~/images/StudentProfiles/" + Session["PROFILE"].ToString();
@@ -461,9 +498,6 @@ namespace ctuconnect
             {
                 profileImage.ImageUrl = "~/images/StudentProfiles/defaultprofile.jpg";
             }
-
-            StudentName.Text = Session["FNAME"].ToString() + " " + Session["LNAME"].ToString();
-            StudentID.Text = Session["STUDENT_ID"].ToString();
         }
         private bool isCurrentlyHired()
         {
@@ -614,10 +648,46 @@ namespace ctuconnect
 
         protected void JobHiring_PagePropertiesChanged(object sender, EventArgs e)
         {
+            string Usertype = Session["STATUSorTYPE"].ToString();
             /* DataPager listPager = JobHiring.FindControl("ListViewPager") as DataPager;
             (JobHiring.FindControl("ListViewPager") as DataPager).SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
             listPager.SetPageProperties(listPager.PageSize, listPager.TotalRowCount, false);*/
-            JobBind();
+            if (Usertype == "Intern")
+            {
+                if (txtsearchJob.Text != string.Empty)
+                {
+                    JobBindBySearch();
+                }
+                else if(ddlDateFilter.SelectedValue != "All" && ddlDateFilter.SelectedValue != "0")
+                {
+                    FilterJobsByDate();
+                }
+                else
+                {
+                    JobBind();
+                }
+                
+            }
+           
+            else if (Usertype == "Alumni")
+            {
+                if (JobTypeSort.SelectedValue != "All" && JobTypeSort.SelectedValue != "0")
+                {
+                    JobBindByType();
+                }
+                else if (ddlDateFilter.SelectedValue != "All" && ddlDateFilter.SelectedValue != "0")
+                {
+                    FilterJobsByDate();
+                }
+                else if(txtsearchJob.Text != string.Empty)
+                {
+                    JobBindBySearch();
+                }
+                else
+                {
+                    JobBind();
+                }
+            }       
         }
         void TotalJob()
         {
@@ -625,13 +695,59 @@ namespace ctuconnect
             string studentCourse = Session["Student_COURSE"].ToString();
             string Usertype = Session["STATUSorTYPE"].ToString();
             string jobtype = "";
+            
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand();
             if (Usertype == "Intern")
             {
                 jobtype = "internship";
+                if(txtsearchJob.Text != string.Empty)
+                {
+                    cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' and " +
+                    " jobTitle LIKE '%" + txtsearchJob.Text + "%' and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID)", conDB);
+
+                }
+                else if(ddlDateFilter.SelectedValue != "All" && ddlDateFilter.SelectedValue != "0")
+                {
+                    int days = Convert.ToInt32(ddlDateFilter.SelectedValue);
+                    DateTime startDate = DateTime.Today.AddDays(-days);
+                    cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' and " +
+                   " jobPostedDate >= '"+ startDate + "' and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID)", conDB);
+                }
+                else
+                {
+                    cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' " +
+                    " and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID)", conDB);
+
+                }
             }
-            conDB.Open();
-            SqlCommand cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' " +
-                "and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID)", conDB);
+            else if(Usertype == "Alumni")
+            {
+                if(JobTypeSort.SelectedValue != "All" && JobTypeSort.SelectedValue != "0")
+                {
+                    cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobType LIKE '%" + JobTypeSort.SelectedValue + "%' " +
+                    "and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID)", conDB);
+
+                }
+                else if (ddlDateFilter.SelectedValue != "All" && ddlDateFilter.SelectedValue != "0")
+                {
+                    int days = Convert.ToInt32(ddlDateFilter.SelectedValue);
+                    DateTime startDate = DateTime.Today.AddDays(-days);
+                    cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobPostedDate >= '" + startDate + "' " +
+                  " and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) ", conDB);
+                }
+                else if(txtsearchJob.Text != string.Empty)
+                {
+                    cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobTitle LIKE '%" + txtsearchJob.Text + "%' " +
+                   " and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) ", conDB);
+                }
+                else
+                {
+                    cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE " +
+                 " isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) ", conDB);
+                }
+
+            }
             cmd.Parameters.AddWithValue("@studentAccID", student_accId);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
@@ -680,7 +796,7 @@ namespace ctuconnect
         {
             int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("SELECT DISTINCT skills FROM RESUME WHERE EXISTS (SELECT 1 FROM HIRING WHERE CHARINDEX(skills, jobQualifications) > 0 AND jobID = @jobID AND student_accID = student_accID);", conDB);
+            SqlCommand cmd = new SqlCommand("SELECT DISTINCT skills FROM RESUME WHERE student_accID = @student_accID AND EXISTS (SELECT 1 FROM HIRING WHERE CHARINDEX(skills, jobQualifications) > 0 AND jobID = @jobID);", conDB);
             cmd.Parameters.AddWithValue("@student_accID", student_accId);
             cmd.Parameters.AddWithValue("@jobID", jobID);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -711,7 +827,7 @@ namespace ctuconnect
             int user_accID = -1;
             if(Usertype == "Alumni")
             {
-                user_accID = int.Parse(Session["Alumni_accID"].ToString());
+                user_accID = int.Parse(Session["Student_ACC_ID"].ToString());
             }
             else if (Usertype == "Intern")
             {
@@ -750,36 +866,54 @@ namespace ctuconnect
 
         protected void JobType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string Usertype = Session["STATUSorTYPE"].ToString();
+            if (Usertype == "Alumni")
+            {
+                txtsearchJob.Text = string.Empty;
+                ddlDateFilter.SelectedValue = "0";
+            }
+            
+            JobBindByType();
+            
+        }
+        void JobBindByType()
+        {
             int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
             string studentCourse = Session["Student_COURSE"].ToString();
             string Usertype = Session["STATUSorTYPE"].ToString();
             string jobtype = "";
 
             SqlCommand cmd = new SqlCommand();
-            if (Usertype == "Intern")
+            /*if (Usertype == "Intern")
             {
                 if(JobTypeSort.SelectedValue != "All")
+                {
+                    cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' " +
+                   "and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) ORDER BY jobPostedDate DESC", conDB);
+                    
+                }else
                 {
                     jobtype = "internship";
                     cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' " +
                    "and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) and jobType LIKE '%" + JobTypeSort.SelectedValue + "%' ORDER BY jobPostedDate DESC", conDB);
-                }else
-                {
-                    cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' " +
-                   "and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) ORDER BY jobPostedDate DESC", conDB);
                 }
 
-            }
-            else if (Usertype == "Alumni")
+            }*/
+            /* else*/
+            if (Usertype == "Alumni")
             {
-                if (JobTypeSort.SelectedValue != "All")
-                {
-                    cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE " +
-                "isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) and jobTitle LIKE '%" + JobTypeSort.SelectedValue + "%' ORDER BY jobPostedDate DESC", conDB);
-                }else
+                if (JobTypeSort.SelectedValue == "All")
                 {
                     cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE " +
                 "isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) ORDER BY jobPostedDate DESC", conDB);
+                    TotalJob();
+                }
+                else
+                {
+                    
+                    cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE " +
+                "isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) and jobType LIKE '%" + JobTypeSort.SelectedValue + "%' ORDER BY jobPostedDate DESC", conDB);
+                    TotalJob();
                 }
             }
             cmd.Parameters.AddWithValue("@studentAccID", student_accId);
@@ -797,8 +931,68 @@ namespace ctuconnect
                 ListViewPager.Visible = true;
             }
         }
-
         protected void SearchJob_Click(object sender, EventArgs e)
+        {
+            string Usertype = Session["STATUSorTYPE"].ToString();
+            if (Usertype == "Alumni")
+            {
+                JobTypeSort.SelectedValue = "0";
+            }
+            ddlDateFilter.SelectedValue = "0";
+            JobBindBySearch();           
+        }
+
+        void JobBindBySearch()
+        {
+            int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
+            string studentCourse = Session["Student_COURSE"].ToString();
+            string Usertype = Session["STATUSorTYPE"].ToString();
+            string jobtype = "";
+
+            SqlCommand cmd = new SqlCommand();
+            if (Usertype == "Intern")
+            {
+                jobtype = "internship";
+                cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' " +
+               "and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) and jobTitle LIKE '%" + txtsearchJob.Text + "%' ORDER BY jobPostedDate DESC", conDB);
+                TotalJob();
+            }
+            else if (Usertype == "Alumni")
+            {
+                cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE " +
+                "isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) and jobTitle LIKE '%" + txtsearchJob.Text + "%' ORDER BY jobPostedDate DESC", conDB);
+                TotalJob();
+            }
+            cmd.Parameters.AddWithValue("@studentAccID", student_accId);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            JobHiring.DataSource = ds;
+            JobHiring.DataBind();
+            if (JobHiring.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
+        }
+
+        protected void ddlDateFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string Usertype = Session["STATUSorTYPE"].ToString();
+            if (Usertype == "Alumni")
+            {
+                JobTypeSort.SelectedValue = "0";
+                txtsearchJob.Text = string.Empty;
+            }else
+            {
+                txtsearchJob.Text = string.Empty;
+            }
+            FilterJobsByDate();
+        }
+        void FilterJobsByDate()
         {
             int student_accId = int.Parse(Session["Student_ACC_ID"].ToString());
             string studentCourse = Session["Student_COURSE"].ToString();
@@ -808,16 +1002,41 @@ namespace ctuconnect
             SqlCommand cmd = new SqlCommand();
             if (Usertype == "Intern")
             {
-                jobtype = "internship";
-                cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' " +
-               "and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) and jobTitle LIKE '%" + txtsearchJob.Text + "%' ORDER BY jobPostedDate DESC", conDB);
-
+                if (ddlDateFilter.SelectedValue == "All")
+                {
+                    jobtype = "internship";
+                    cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' " +
+                   "and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) ORDER BY jobPostedDate DESC", conDB);
+                  
+                    TotalJob();
+                }else
+                {
+                    int days = Convert.ToInt32(ddlDateFilter.SelectedValue);
+                    DateTime startDate = DateTime.Today.AddDays(-days);
+                    jobtype = "internship";
+                    cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE jobCourse LIKE '%" + studentCourse + "%' and jobType LIKE '%" + jobtype + "%' " +
+                   "and isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) and jobPostedDate >= '" + startDate + "' ORDER BY jobPostedDate DESC", conDB);
+                    TotalJob();
+                }
+              
             }
             else if (Usertype == "Alumni")
             {
-                cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE " +
-                "isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) and jobTitle LIKE '%" + txtsearchJob.Text + "%' ORDER BY jobPostedDate DESC", conDB);
 
+                if (ddlDateFilter.SelectedValue == "All")
+                {
+                    cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE " +
+                   "isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) ORDER BY jobPostedDate DESC", conDB);
+                    TotalJob();
+                }
+                else
+                {
+                    int days = Convert.ToInt32(ddlDateFilter.SelectedValue);
+                    DateTime startDate = DateTime.Today.AddDays(-days);
+                    cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID WHERE " +
+                    "isActive = 'true' and NOT EXISTS (SELECT 1 from APPLICANT WHERE APPLICANT.jobID = HIRING.jobID AND APPLICANT.student_accID = @studentAccID) and jobPostedDate >= '" + startDate + "' ORDER BY jobPostedDate DESC", conDB);
+                    TotalJob();
+                }
             }
             cmd.Parameters.AddWithValue("@studentAccID", student_accId);
             SqlDataAdapter da = new SqlDataAdapter(cmd);

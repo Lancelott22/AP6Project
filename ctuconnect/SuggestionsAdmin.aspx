@@ -34,7 +34,7 @@
             width: 90%;
             margin-left:auto;
             margin-right:auto;
-            margin-top:13%;
+            margin-top:1%;
             margin-bottom:0%;
         }
              
@@ -84,7 +84,7 @@
         }
 
     .container {
-        min-height: 550px;
+        min-height: 700px;
         background-color: #FFFFFF;
         max-width:100%;
         width:1550px;
@@ -128,11 +128,13 @@
            line-height: 60px;
         }
         .suggestion-container{
+            width:100%;
     max-height: 500px; 
     overflow-y: auto;
-    background-color:plum;
-    margin-left:20%;
-    margin-right:20%;
+    border: 1px solid;
+    background-color:white;
+    margin-left:1%;
+    margin-right:1%;
     padding:20px;
 }
 .suggestion-item{
@@ -154,14 +156,10 @@
                         <img src="images/administratorpic.jpg" />
                         <p >Admin</p>
                         <hr class="horizontal-line" />
-                        <a class="active" href="AdminDashboard.aspx">
+                        <a href="AdminDashboard.aspx">
                             <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
                             Dashboard
                         </a>
-                    <a href="#myaccount">
-                        <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Create Partnership
-                    </a>
                     <a  href="IndustryVerification.aspx">
                         <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Industry Verification
@@ -179,37 +177,40 @@
                         <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         List of Interns
                     </a>
-                    <a href="ListOfAlumni_Admin.apsx">
+                    <a href="ListOfAlumni_Admin.aspx">
                         <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         List of Alumni
                     </a>
                     <hr class="horizontal-line" />
-                    <a href="#">
+                    <a href="Dispute.aspx">
                         <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Dispute
                     </a>
                     <a href="Blacklist_Admin.aspx">
                         <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Blacklist
+                        Blacklisted
                     </a>
-                        <a href="SuggestionsAdmin.aspx">
+                        <a  class="active" href="SuggestionsAdmin.aspx">
                         <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
                         Suggestions
                     </a>
-                    <hr class="second" />
-                    <a href="TracerDashboard.aspx">
-                        <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Tracer
-                    </a>
-                    <a href="#">
-                        <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                        Profile
-                    </a>
-                    <asp:LinkButton runat="server" ID ="LinkButton1">
-                        <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
-                        Sign-out
-                    </asp:LinkButton>
-
+                        <a href="Admin_Contact.aspx">
+                            <i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Contact
+                        </a>
+                        <hr class="second" />
+                        <a href="TracerDashboard.aspx">
+                            <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            Tracer
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Profile
+                        </a>
+                        <a href="Coordinator_CreateAccount.aspx">
+                            <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Coordinator Account
+                        </a>
                     </div>
                     
                 </div>
@@ -218,27 +219,25 @@
                 <br />
             <div class="container">
                 <h1 class="title">List of Suggestions</h1>
-                 
-                <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p><br />
-         <div class="suggestion-container ">
-    <div class="suggestion-list">
-        <%-- Display suggestions here --%>
-        <asp:Repeater ID="rptSuggestions" runat="server">
-            <ItemTemplate>
-                <div class="suggestion-item">
-                    <div style="display: flex; gap:6px;">
-                    <img src="images/defaultprofile.jpg" style="width:40px; height:auto; border-radius: 50%;"/>
-                    <div>
-                        <b>Anonymous:</b> <br />
-                        <span style="font-size: 11px; color: #888;">Date Posted: <%# Eval("dateCreated") %></span>
-                    </div>
+                     <div class="suggestion-container ">
+                <div class="suggestion-list">
+                    <%-- Display suggestions here --%>
+                    <asp:Repeater ID="rptSuggestions" runat="server">
+                        <ItemTemplate>
+                            <div class="suggestion-item">
+                                <div style="display: flex; gap:6px;">
+                                <img src="images/defaultprofile.jpg" style="width:40px; height:auto; border-radius: 50%;"/>
+                                <div>
+                                    <b>Anonymous:</b> <br />
+                                    <span style="font-size: 11px; color: #888;">Date Posted: <%# Eval("dateCreated") %></span>
+                                </div>
+                            </div>
+                                <p class="suggestion-text"> <%# Eval("Suggestion") %></p>
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
                 </div>
-                    <p class="suggestion-text"> <%# Eval("Suggestion") %></p>
-                </div>
-            </ItemTemplate>
-        </asp:Repeater>
-    </div>
-</div>
+            </div>
 </div>
             </div>    
        

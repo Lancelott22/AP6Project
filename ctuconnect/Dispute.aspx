@@ -35,7 +35,7 @@
             width: 90%;
             margin-left: auto;
             margin-right: auto;
-            margin-top: 13%;
+            margin-top: 1%;
             margin-bottom: 0%;
         }
 
@@ -103,7 +103,37 @@
         body:not(.modal-open) {
             padding-right: 0px !important;
         }
+                .overlay {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 9999;
+}
+
+.spinner-container {
+    text-align: center;
+}
     </style>
+        <div class="overlay">
+    <div class="spinner-container">
+        <span class="fs-1" id="LoadBlacklist"></span>
+        <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow" style="width: 1rem; height: 1rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-3 d-flex flex-column">
@@ -115,10 +145,6 @@
                         <a href="AdminDashboard.aspx">
                             <i class="fa fa-tachometer" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Dashboard
-                        </a>
-                        <a href="#myaccount">
-                            <i class="fa fa-users" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
-                            Create Partnership
                         </a>
                         <a href="IndustryVerification.aspx">
                             <i class="fa fa-users" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
@@ -148,11 +174,15 @@
                         </a>
                         <a href="Blacklist_Admin.aspx">
                             <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
-                            Blacklist
+                            Blacklisted
                         </a>
                         <a href="SuggestionsAdmin.aspx">
                             <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Suggestions
+                        </a>
+                        <a href="Admin_Contact.aspx">
+                            <i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Contact
                         </a>
                         <hr class="second" />
                         <a href="TracerDashboard.aspx">
@@ -163,11 +193,10 @@
                             <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Profile
                         </a>
-                        <asp:LinkButton runat="server" ID="LinkButton1">
-                        <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
-                        Sign-out
-                        </asp:LinkButton>
-
+                        <a href="Coordinator_CreateAccount.aspx">
+                            <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Coordinator Account
+                        </a>
                     </div>
 
                 </div>
@@ -179,8 +208,52 @@
                     <br />
                     <br />
                     <br />
-                    <div class="row" id="showDispute" runat="server">
-                        <asp:ListView ID="disputeListView" runat="server" OnItemDataBound="disputeListView_ItemDataBound">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label>Industry Name</label>
+                            <div class="input-group mb-3">                    
+                                <asp:TextBox ID="IndustryName" runat="server" class="form-control" Placeholder="Industry name" Width="200px"></asp:TextBox>
+                                <div class="input-group-append">
+                                    <asp:LinkButton runat="server" ID="SearchIndustry" OnClick="SearchIndustry_Click" CssClass="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></asp:LinkButton>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label>Status</label>
+                            <div class="form-group">
+                                <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="Status" AutoPostBack="true" OnSelectedIndexChanged="Status_SelectedIndexChanged">
+                                    <asp:ListItem Value="0" Text="All" Selected="true"></asp:ListItem>
+                                    <asp:ListItem Value="Open" Text="Open"></asp:ListItem>                    
+                                    <asp:ListItem Value="Close" Text="Close" ></asp:ListItem>                 
+                                </asp:DropDownList>
+                            </div>
+                        </div>     
+                        
+                        <div class="col-sm-3">
+                            <label>Resolve</label>
+                            <div class="form-group">
+                                <asp:DropDownList runat="server" CssClass="selectpicker form-control" ID="Resolve" AutoPostBack="true" OnSelectedIndexChanged="Resolve_SelectedIndexChanged">
+                                    <asp:ListItem Value="-1" Text="All" Selected="true"></asp:ListItem>
+                                    <asp:ListItem Value="0" Text="Unresolved"></asp:ListItem>                    
+                                    <asp:ListItem Value="1" Text="Resolved" ></asp:ListItem>                 
+                                </asp:DropDownList>
+                            </div>
+                        </div>  
+                        
+                        <div class="col-sm-3">
+                            <label>Date</label>
+                            <div class="input-group mb-3">  
+                                <asp:TextBox ID="txtdate" runat="server" TextMode="Date" class="form-control" Width="200px"></asp:TextBox>
+                                <div class="input-group-append">
+                                    <asp:LinkButton runat="server" ID="SearchByDate" OnClick="SearchByDate_Click" CssClass="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></asp:LinkButton>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row m-2 my-4 mb-5">
+                        <asp:ListView ID="disputeListView" runat="server" OnItemDataBound="disputeListView_ItemDataBound" OnPagePropertiesChanged="disputeListView_PagePropertiesChanged">
                             <LayoutTemplate>
                                 <table style="font-size: 18px; line-height: 30px;">
                                     <tr style="background-color: #336699; color: White; padding: 10px;">
@@ -221,8 +294,15 @@
                                 <h3 style="position: relative;">
                                     <asp:Label CssClass="alert alert-light d-flex p-2 bg-light justify-content-sm-center" runat="server" Text="No Reports Yet!"></asp:Label></h3>
                             </EmptyDataTemplate>
-                        </asp:ListView>
+                        </asp:ListView>                       
                     </div>
+                    <asp:DataPager ID="ListViewPager" runat="server" PagedControlID="disputeListView" PageSize="15" class="btn-group btn-group-sm float-end">
+                        <Fields>
+                            <asp:NextPreviousPagerField ButtonType="Link" ShowFirstPageButton="true" ShowPreviousPageButton="true" ShowNextPageButton="false" RenderDisabledButtonsAsLabels="false" RenderNonBreakingSpacesBetweenControls="false" ButtonCssClass="btn btn-default" />
+                            <asp:NumericPagerField ButtonType="Link" RenderNonBreakingSpacesBetweenControls="false" ButtonCount="5" NumericButtonCssClass="btn btn-default" CurrentPageLabelCssClass="btn btn-primary disabled" NextPreviousButtonCssClass="btn btn-default" />
+                            <asp:NextPreviousPagerField ButtonType="Link" ShowNextPageButton="true" ShowLastPageButton="true" ShowPreviousPageButton="false" RenderDisabledButtonsAsLabels="false" RenderNonBreakingSpacesBetweenControls="false" ButtonCssClass="btn btn-default" />
+                        </Fields>
+                    </asp:DataPager>
                 </div>
             </div>
 
@@ -249,7 +329,7 @@
                 <div class="modal-footer">
                     <div style="float: right;">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <asp:LinkButton ID="ConfirmBlacklist" class="btn btn-success" runat="server" OnCommand="ConfirmBlacklist_Command">Confirm Blacklist</asp:LinkButton>
+                        <asp:LinkButton ID="ConfirmBlacklist" class="btn btn-success" runat="server" OnClientClick="showOverlay();" OnCommand="ConfirmBlacklist_Command">Confirm Blacklist</asp:LinkButton>
                     </div>
                 </div>
             </div>
@@ -323,5 +403,13 @@
          today = yyyy + '-' + mm + '-' + dd;
          dateInput.setAttribute('max', today);
 
+     </script>
+     <script>
+         function showOverlay() {
+             var industryName = document.getElementById('<%= BlackList_IndustryName.ClientID %>').innerText;
+             var textLoading = document.getElementById("LoadBlacklist");
+             textLoading.innerText = 'Adding ' + industryName + ' to Blacklist';
+             $(".overlay").css("display", "flex");
+         }
      </script>
 </asp:Content>

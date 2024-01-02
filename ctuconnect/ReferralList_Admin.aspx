@@ -34,7 +34,7 @@
         width: 90%;
         margin-left:auto;
         margin-right:auto;
-        margin-top:13%;
+        margin-top:1%;
         margin-bottom:0%;
     }
          
@@ -110,27 +110,33 @@
         background-color: #881A30;
 
     }
-   th{
-   border-collapse: collapse;
-    border-color:white;
-    background-color:#f4f4fb;
-    padding:5px;
+    th{
+         border: 1px solid;
+         border-color:#c4c4c4;
+        background-color:#f4f4fb;
+        padding:5px;
 
     }
+/*    td{
+        border: 1px solid;
+        border-color:dimgray;
+        padding-left:5px;
+    }*/
     .datas{
-         padding:9px;
-          border: 8px solid;
-          border-color:white;
-         font-weight:bold;
+        border: 1px solid;
+        border-color:#c4c4c4;
+        padding-left:5px;
          color:black;
+         cursor:default;
     }
 
     .table-list{
-         border-collapse: collapse;
-        font-size:13px; 
+        border-collapse: collapse;        
+        font-size:14px; 
         height:auto; 
         width:100%;
         color:dimgray;
+        padding-right:4px;
     }
     .topnav {
       overflow: hidden;
@@ -168,10 +174,6 @@
                         <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Dashboard
                     </a>
-                    <a href="#myaccount">
-                        <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Create Partnership
-                    </a>
                     <a  href="IndustryVerification.aspx">
                         <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Industry Verification
@@ -200,8 +202,16 @@
                     </a>
                     <a href="Blacklist_Admin.aspx">
                         <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Blacklist
+                        Blacklisted
                     </a>
+                    <a href="SuggestionsAdmin.aspx">
+                            <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Suggestions
+                        </a>
+                        <a href="Admin_Contact.aspx">
+                            <i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Contact
+                        </a>
                     <hr class="second" />
                     <a href="TracerDashboard.aspx">
                         <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
@@ -211,10 +221,10 @@
                         <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
                         Profile
                     </a>
-                    <asp:LinkButton runat="server" ID ="LinkButton1">
-                        <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
-                        Sign-out
-                    </asp:LinkButton>
+                     <a href="Coordinator_CreateAccount.aspx">
+                            <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Coordinator Account
+                        </a>
                 </div>
                 
             </div>
@@ -228,37 +238,62 @@
                  
                 <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
                      
-                                                <table  class="table-list">
+                                            <asp:Listview ID="dataRepeater" runat="server">
+                                      <LayoutTemplate>
+                                          <table  class="table-list">
+                                               <tr>
+                                            <th>No.</th>
+                                             <th>Last Name</th>
+                                             <th>First Name</th>
+                                             <th>Middle Initial</th>
+                                             <th>Industry</th>
+                                             <th>Referred by</th>
+                                             <th>Referral Letter</th>
+                                             <th>Date</th>
+                                      </tr>
+                                    <tbody>
+                                   <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                               </tbody>
+                              </table>
+                              </LayoutTemplate> 
+                               <EmptyDataTemplate>
+                                <table class="table-list">
+                                    <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Last Name</th>
-                                            <th>First Name</th>
-                                            <th>Middle Initial</th>
-                                            <th>Industry</th>
-                                            <th>Referred by</th>
-                                            <th>Referral Letter</th>
-                                            <th>Date</th>
+                                             <th>Last Name</th>
+                                             <th>First Name</th>
+                                             <th>Middle Initial</th>
+                                             <th>Industry</th>
+                                             <th>Referred by</th>
+                                             <th>Referral Letter</th>
+                                             <th>Date</th>
                                         </tr>
-                                        <asp:Repeater ID="dataRepeater" runat="server">
-                                            <ItemTemplate>
-                                                <tr class="datas">
-                                                    <td><%# Container.ItemIndex + 1 %></td>
-                                                    <td><%# Eval("lastName") %></td>
-                                                    <td><%# Eval("firstName") %></td>
-                                                    <td><%# Eval("midInitials") %></td>
-                                                    <td><%# Eval("industryName") %></td>
-                                                    <td><%# Eval("referredBy") %></td>
-                                                    <td>
-                                                        <asp:Button ID="btnEndorsementLetterButton" runat="server" Text="View Referral Letter"
-                                                        OnCommand="ReviewLetter_Command" CommandName="Review"  
-                                                        CommandArgument='<%# Eval("referralLetter") %>'/>
-                                                    </td>
-                                                    <td><%# Eval("dateReferred") %></td>
-                                                </tr>
-                                            </ItemTemplate>
-                                            
-                                        </asp:Repeater>
-                                    </table>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center; font-size:18px;" colspan="8">No data available</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </EmptyDataTemplate>
+                                      <ItemTemplate>
+                                          <tr>
+                                              <td class="datas"><%# Container.DataItemIndex + 1 %></td>
+                                                <td class="datas"><%# Eval("lastName") %></td>
+                                                <td class="datas"><%# Eval("firstName") %></td>
+                                                <td class="datas"><%# Eval("midInitials") %></td>
+                                                <td class="datas"><%# Eval("industryName") %></td>
+                                                <td class="datas"><%# Eval("referredBy") %></td>
+                                                <td class="datas">
+                                                    <asp:Button ID="btnEndorsementLetterButton" runat="server" Text="View Referral Letter"
+                                                    OnCommand="ReviewLetter_Command" CommandName="Review"  
+                                                    CommandArgument='<%# Eval("referralLetter") %>'/>
+                                                </td>
+                                                <td class="datas"><%# Eval("dateReferred") %></td>
+                                          </tr>
+                                      </ItemTemplate>
+                                  </asp:Listview>
 </div>
             </div>
         </div>    
