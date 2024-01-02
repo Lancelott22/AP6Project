@@ -12,6 +12,7 @@ using Antlr.Runtime.Tree;
 using static System.Net.Mime.MediaTypeNames;
 using System.Net.Mail;
 using System.Net;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace ctuconnect
 {
@@ -172,12 +173,47 @@ namespace ctuconnect
         }
         protected void JobPosted_PagePropertiesChanged(object sender, EventArgs e)
         {
-            JobPostedBind();
+            if (JobTypeSort.SelectedValue != "All" && JobTypeSort.SelectedValue != "0")
+            {
+                JobBindByType();
+            }
+            else if (ddlDateFilter.SelectedValue != "All" && ddlDateFilter.SelectedValue != "0")
+            {
+                FilterJobsByDate();
+            }
+            else if (txtsearchJob.Text != string.Empty)
+            {
+                JobBindBySearch();
+            }
+            else
+            {
+                JobPostedBind();
+            }
+            
         }
         void TotalJob()
         {           
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE isActive = 'true'", conDB);
+            SqlCommand cmd = new SqlCommand();
+            if (JobTypeSort.SelectedValue != "All" && JobTypeSort.SelectedValue != "0")
+            {
+                cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobType LIKE '%" + JobTypeSort.SelectedValue + "%' and isActive = 'true'", conDB);
+
+            }
+            else if (ddlDateFilter.SelectedValue != "All" && ddlDateFilter.SelectedValue != "0")
+            {
+                int days = Convert.ToInt32(ddlDateFilter.SelectedValue);
+                DateTime startDate = DateTime.Today.AddDays(-days);
+                cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobPostedDate >= '" + startDate + "' and isActive = 'true'", conDB);
+            }
+            else if (txtsearchJob.Text != string.Empty)
+            {
+                cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobTitle LIKE '%" + txtsearchJob.Text + "%' and isActive = 'true'", conDB);
+            }
+            else
+            {
+                cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE isActive = 'true'", conDB);
+            }
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
@@ -353,10 +389,16 @@ namespace ctuconnect
         }
         protected void SearchJob_Click(object sender, EventArgs e)
         {
-
-           
+            JobTypeSort.SelectedValue = "0";   
+            ddlDateFilter.SelectedValue = "0";
+            JobBindBySearch();
+        }
+        void JobBindBySearch()
+        {
+            
             SqlCommand cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
                 "WHERE isActive = 'true' and jobTitle LIKE '%" + txtsearchJob.Text + "%'  ORDER BY jobPostedDate DESC", conDB);
+            TotalJob();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
@@ -371,7 +413,6 @@ namespace ctuconnect
                 ListViewPager.Visible = true;
             }
         }
-
         protected void JobDetail_Command(object sender, CommandEventArgs e)
         {
             int jobId = int.Parse(e.CommandArgument.ToString());
@@ -431,6 +472,79 @@ namespace ctuconnect
                 {
                     jobPosted.Attributes["class"] = "row d-flex align-items-center jobBox";
                 }
+            }
+        }
+
+        protected void ddlDateFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            JobTypeSort.SelectedValue = "0";
+            txtsearchJob.Text = string.Empty;
+            FilterJobsByDate();
+        }
+        void FilterJobsByDate()
+        {
+            SqlCommand cmd = new SqlCommand();
+            if (ddlDateFilter.SelectedValue == "All")
+            {
+                 cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
+                "WHERE isActive = 'true' ORDER BY jobPostedDate DESC", conDB);
+                TotalJob();
+            } else
+            {
+                int days = Convert.ToInt32(ddlDateFilter.SelectedValue);
+                DateTime startDate = DateTime.Today.AddDays(-days);
+                cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
+                "WHERE jobPostedDate >= '" + startDate + "' and isActive = 'true' ORDER BY jobPostedDate DESC", conDB);
+                TotalJob();
+            }
+            
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            JobPosted.DataSource = ds;
+            JobPosted.DataBind();
+            if (JobPosted.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
+        }
+        protected void JobTypeSort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtsearchJob.Text = string.Empty;
+            ddlDateFilter.SelectedValue = "0";
+            JobBindByType();
+        }
+        void JobBindByType()
+        {
+            SqlCommand cmd = new SqlCommand();
+            if (JobTypeSort.SelectedValue == "All")
+            {
+                cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
+               "WHERE isActive = 'true' ORDER BY jobPostedDate DESC", conDB);
+                TotalJob();
+            }
+            else
+            {
+                cmd = new SqlCommand("select * from HIRING JOIN INDUSTRY_ACCOUNT ON HIRING.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
+                 "WHERE jobType LIKE '%" + JobTypeSort.SelectedValue + "%' and isActive = 'true' ORDER BY jobPostedDate DESC", conDB);
+                TotalJob();
+            }
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            JobPosted.DataSource = ds;
+            JobPosted.DataBind();
+            if (JobPosted.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
             }
         }
     }

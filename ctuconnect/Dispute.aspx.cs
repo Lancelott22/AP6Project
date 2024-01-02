@@ -34,7 +34,7 @@ namespace ctuconnect
             disputeListView.DataBind();
             if (disputeListView.Items.Count == 0)
             {
-                /*ListViewPager.Visible = false;*/
+                ListViewPager.Visible = false;
             }
         }
         protected void statusBtn_Command(object sender, CommandEventArgs e)
@@ -327,6 +327,11 @@ namespace ctuconnect
             da.Fill(ds);
             disputeListView.DataSource = ds;
             disputeListView.DataBind();
+        }
+
+        protected void disputeListView_PagePropertiesChanged(object sender, EventArgs e)
+        {
+            BindDispute();
         }
     }
 }

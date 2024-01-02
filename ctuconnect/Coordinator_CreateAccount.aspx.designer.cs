@@ -96,6 +96,15 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.ListView CoordinatorListView;
 
         /// <summary>
+        /// ListViewPager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataPager ListViewPager;
+
+        /// <summary>
         /// addError control.
         /// </summary>
         /// <remarks>

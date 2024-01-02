@@ -184,7 +184,7 @@ namespace ctuconnect
                 CoordinatorListView.DataBind();
                 if (CoordinatorListView.Items.Count == 0)
                 {
-                    /*  ListViewPager.Visible = false;*/
+                    ListViewPager.Visible = false;
                 }
         }
 
@@ -343,6 +343,11 @@ namespace ctuconnect
             da.Fill(ds);
             CoordinatorListView.DataSource = ds;
             CoordinatorListView.DataBind();
+        }
+
+        protected void CoordinatorListView_PagePropertiesChanged(object sender, EventArgs e)
+        {
+            BindCoordinator();
         }
     }
 }
