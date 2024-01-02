@@ -302,7 +302,7 @@
                         <br />
                         <div class="box" id="MyJobHiredView" runat="server" visible="false">
                             <h3 class="my-5">My Hired Job</h3>
-                            <asp:ListView ID="MyJobView" runat="server" class="container-fluid" OnItemDataBound="HiredView_ItemDataBound">
+                            <asp:ListView ID="MyJobView" runat="server" class="container-fluid" OnItemDataBound="HiredView_ItemDataBound" OnPagePropertiesChanged="MyJobView_PagePropertiesChanged">
                                 <ItemTemplate>
                                     <div id="MyHiredJob" runat="server" class="row d-flex align-items-center jobAppliedBox">
                                         <span runat="server" id="HiredBadge" class="NewBadge" visible="false">New</span>
@@ -377,7 +377,13 @@
                                         <asp:Label CssClass="alert alert-light d-flex p-2 bd-highlight justify-content-sm-center" runat="server" ID="lblNoAppliedJob" Text="You're not hired yet!"></asp:Label></h3>
                                 </EmptyDataTemplate>
                             </asp:ListView>
-
+                            <asp:DataPager ID="ListViewPager1" runat="server" PagedControlID="MyJobView" PageSize="10" class="btn-group btn-group-sm float-end">
+                                <Fields>
+                                    <asp:NextPreviousPagerField ButtonType="Link" ShowFirstPageButton="true" ShowPreviousPageButton="true" ShowNextPageButton="false" RenderDisabledButtonsAsLabels="false" RenderNonBreakingSpacesBetweenControls="false" ButtonCssClass="btn btn-default" />
+                                    <asp:NumericPagerField ButtonType="Link" RenderNonBreakingSpacesBetweenControls="false" ButtonCount="5" NumericButtonCssClass="btn btn-default" CurrentPageLabelCssClass="btn btn-primary disabled" NextPreviousButtonCssClass="btn btn-default" />
+                                    <asp:NextPreviousPagerField ButtonType="Link" ShowNextPageButton="true" ShowLastPageButton="true" ShowPreviousPageButton="false" RenderDisabledButtonsAsLabels="false" RenderNonBreakingSpacesBetweenControls="false" ButtonCssClass="btn btn-default" />
+                                </Fields>
+                            </asp:DataPager>
                         </div>
 
                         <div class="box" id="MyJobApplicationView" runat="server">

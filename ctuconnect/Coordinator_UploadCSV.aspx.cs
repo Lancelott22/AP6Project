@@ -11,6 +11,7 @@ using System.IO;
 using System.Net.Mail;
 using System.Net;
 using System.Web.Services.Description;
+using System.Text;
 
 namespace ctuconnect
 { 
@@ -86,7 +87,7 @@ namespace ctuconnect
                         }
                     }*/
 
-                    string csvData = File.ReadAllText(studentCSVFilePath);
+                    string csvData = File.ReadAllText(studentCSVFilePath, Encoding.UTF8);
                     string[] rows = csvData.Split('\n');
                    
                     for (int rowIndex = 1; rowIndex < rows.Length; rowIndex++)
@@ -233,7 +234,7 @@ namespace ctuconnect
                         }
                     }*/
 
-                string csvData = File.ReadAllText(graduateCSVFilePath);
+                string csvData = File.ReadAllText(graduateCSVFilePath, Encoding.UTF8);
                 string[] rows = csvData.Split('\n');
 
                 for (int rowIndex = 1; rowIndex < rows.Length; rowIndex++)

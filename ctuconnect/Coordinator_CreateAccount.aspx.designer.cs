@@ -15,15 +15,6 @@ namespace ctuconnect
     {
 
         /// <summary>
-        /// AddCoordinator control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AddCoordinator;
-
-        /// <summary>
         /// LinkButton1 control.
         /// </summary>
         /// <remarks>
@@ -31,6 +22,15 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
+
+        /// <summary>
+        /// AddCoordinator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AddCoordinator;
 
         /// <summary>
         /// coordinatorCSV control.
@@ -94,6 +94,15 @@ namespace ctuconnect
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListView CoordinatorListView;
+
+        /// <summary>
+        /// ListViewPager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataPager ListViewPager;
 
         /// <summary>
         /// addError control.

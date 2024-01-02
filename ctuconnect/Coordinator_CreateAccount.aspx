@@ -219,7 +219,7 @@
                             <div class="col-sm-6">
                                 <label>Coordinator Name</label>
                                 <div class="input-group mb-3">                    
-                                    <asp:TextBox ID="CoordinatorName" runat="server" class="form-control" Placeholder="Industry name" Width="200px"></asp:TextBox>
+                                    <asp:TextBox ID="CoordinatorName" runat="server" class="form-control" Placeholder="Firstname or Lastname" Width="200px"></asp:TextBox>
                                     <div class="input-group-append">
                                         <asp:LinkButton runat="server" ID="SearchCoordinator" OnClick="SearchCoordinator_Click" CssClass="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></asp:LinkButton>
                                     </div>
@@ -239,13 +239,14 @@
 
                         </div>
 
-                        <div class="row m-2 my-5">
-                            <asp:ListView ID="CoordinatorListView" runat="server">
+                        <div class="row m-2 my-4 mb-5">
+                            <asp:ListView ID="CoordinatorListView" runat="server" OnPagePropertiesChanged="CoordinatorListView_PagePropertiesChanged">
                                 <LayoutTemplate>
                                     <table style="font-size: 18px; line-height: 30px;">
                                         <tr style="background-color: #336699; color: White; padding: 10px;">
                                             <th>Account ID</th>
-                                            <th>Name</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
                                             <th>Email</th>
                                             <th>Deparment</th>
                                             <th>Date Registered</th>
@@ -259,7 +260,8 @@
                                     <tr style="border-bottom: solid 1px #336699">
                                         <span visible="false" runat="server" id="coordinatorID"><%#Eval("coordinator_accID")%></span>
                                          <td><%#Eval("coordinator_accID")%></td>
-                                        <td><%#Eval("Name")%></td>
+                                        <td><%#Eval("firstName")%></td>
+                                        <td><%#Eval("lastName")%></td>
                                         <td><%#Eval("username")%></td>
                                         <td><%#Eval("departmentName")%></td>
                                          <td><%#Eval("dateReg")%></td>
@@ -271,8 +273,15 @@
                                 </EmptyDataTemplate>
                             </asp:ListView>
                         </div>
-                    </div>
-              
+                    <asp:DataPager ID="ListViewPager" runat="server" PagedControlID="CoordinatorListView" PageSize="15" class="btn-group btn-group-sm float-end">
+                        <Fields>
+                            <asp:NextPreviousPagerField ButtonType="Link" ShowFirstPageButton="true" ShowPreviousPageButton="true" ShowNextPageButton="false" RenderDisabledButtonsAsLabels="false" RenderNonBreakingSpacesBetweenControls="false" ButtonCssClass="btn btn-default" />
+                            <asp:NumericPagerField ButtonType="Link" RenderNonBreakingSpacesBetweenControls="false" ButtonCount="5" NumericButtonCssClass="btn btn-default" CurrentPageLabelCssClass="btn btn-primary disabled" NextPreviousButtonCssClass="btn btn-default" />
+                            <asp:NextPreviousPagerField ButtonType="Link" ShowNextPageButton="true" ShowLastPageButton="true" ShowPreviousPageButton="false" RenderDisabledButtonsAsLabels="false" RenderNonBreakingSpacesBetweenControls="false" ButtonCssClass="btn btn-default" />
+                        </Fields>
+                    </asp:DataPager>
+                </div>
+
             </div>
 
         </div>

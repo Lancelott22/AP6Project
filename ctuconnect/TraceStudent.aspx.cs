@@ -50,7 +50,11 @@ namespace ctuconnect
             InternListView.DataBind();
             if (InternListView.Items.Count == 0)
             {
-                /*  ListViewPager.Visible = false;*/
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
             }
         }
         void FilterByStudent()
@@ -67,6 +71,14 @@ namespace ctuconnect
                 da.Fill(ds);
                 InternListView.DataSource = ds;
                 InternListView.DataBind();
+                if (InternListView.Items.Count == 0)
+                {
+                    ListViewPager.Visible = false;
+                }
+                else
+                {
+                    ListViewPager.Visible = true;
+                }
             }
         }
         void SearchByStudentNameOrID(string student)
@@ -78,6 +90,14 @@ namespace ctuconnect
             da.Fill(ds);
             InternListView.DataSource = ds;
             InternListView.DataBind();
+            if (InternListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
         protected void SearchStudent_Click(object sender, EventArgs e)
         {
@@ -135,6 +155,14 @@ namespace ctuconnect
             da.Fill(ds);
             InternListView.DataSource = ds;
             InternListView.DataBind();
+            if (InternListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
         protected void course_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -162,6 +190,14 @@ namespace ctuconnect
             da.Fill(ds);
             InternListView.DataSource = ds;
             InternListView.DataBind();
+            if (InternListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
         }
         protected void industry_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -197,6 +233,14 @@ namespace ctuconnect
                 da.Fill(ds);
                 InternListView.DataSource = ds;
                 InternListView.DataBind();
+                if (InternListView.Items.Count == 0)
+                {
+                    ListViewPager.Visible = false;
+                }
+                else
+                {
+                    ListViewPager.Visible = true;
+                }
             }
         }
 
@@ -247,6 +291,19 @@ namespace ctuconnect
             da.Fill(ds);
             InternListView.DataSource = ds;
             InternListView.DataBind();
+            if (InternListView.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
+        }
+
+        protected void InternListView_PagePropertiesChanged(object sender, EventArgs e)
+        {
+            BindInternList();
         }
     }
 }

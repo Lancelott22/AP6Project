@@ -477,7 +477,7 @@ namespace ctuconnect
             MyJobView.DataBind();
             if (MyJobView.Items.Count == 0)
             {
-                /* ListViewPager.Visible = false;*/
+                ListViewPager1.Visible = false;
             }
         }
         protected void RequestEval_Command(object sender, CommandEventArgs e)
@@ -525,6 +525,11 @@ namespace ctuconnect
             int student_accID = int.Parse(e.CommandArgument.ToString());
             int hiredID = int.Parse(e.CommandName.ToString());
             Response.Redirect("ViewEvaluation.aspx?student_accID=" + student_accID + "&hired_id=" + hiredID);
+        }
+
+        protected void MyJobView_PagePropertiesChanged(object sender, EventArgs e)
+        {
+            myCurrentJobBind();
         }
     }
 }
