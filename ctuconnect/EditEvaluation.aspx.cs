@@ -294,9 +294,9 @@ namespace ctuconnect
                 reader.Close();
             }
         }
-        protected void btnUpdate_Click(object sender, EventArgs e)
+/*        protected void btnUpdate_Click(object sender, EventArgs e)
         {
             Response.Redirect("UpdateEvaluation.aspx");
-        }
+        }*/
     }
 }

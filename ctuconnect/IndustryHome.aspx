@@ -3,12 +3,12 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
@@ -17,72 +17,80 @@
        
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
         
-        .profile-container{
+        .profile-container {
             font-family: 'Poppins', sans-serif;
-            max-width:260px;
-            height:auto;
+            max-width: 260px;
+            height: auto;
             padding: 10px;
-            background-color:white;
-            margin-left:4%;
+            background-color: white;
+            margin-left: 4%;
+            margin-bottom: 20px;
         }
+
         @media (max-width: 790px) {
             .profile-container, .sidemenu-container {
                 max-width: 50%;
-                max-height:auto;
-                
-                 padding:5px 5px 5px 5px;
+                max-height: auto;
+                padding: 5px 5px 5px 5px;
             }
         }
-        .profile-container img{
-            display:block;
-            width:80%;
-            margin-left:auto;
-            margin-right:auto;
 
+        .card {
+            background: rgb(121,101,55);
+            background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%);
         }
-        .profile-container p{
-             display:block;
-             text-align:center;
-             font-size: 19px;
-            margin-top:7%;
+
+        .profile-container img {
+            display: block;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .sidemenu-container{
+
+        .profile-container p {
+            display: block;
+            text-align: center;
+            font-size: 19px;
+            margin-top: 7%;
+        }
+       .sidemenu-container {
             font-family: 'Poppins', sans-serif;
-            width:253px;
-            min-height:280px;
-            background-color:white;
+            width: 253px;
+            min-height: 280px;
+            background-color: white;
             /*margin-top:22%;*/
-            padding-top:4px;
-            padding-bottom:4px;
-            margin-bottom:10%;
-            margin-left:4%;
-            border-radius: 25px;
-            border: 2px ;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            margin-bottom: 10%;
+            margin-left: 2%;
+            border-radius: 20px;
+            border: 2px;
             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
-            
         }
-       
+
             .sidemenu-container a {
-                position:static;
+                position: static;
                 border-radius: 25px;
                 color: black;
                 text-decoration: none;
                 font-size: 19px;
                 display: flex;
-                margin: 10px 15px 5px 15px ;
+                margin: 10px 15px 5px 15px;
                 padding: 0px 0px 0px 20px;
-                align-items:center;
+                align-items: center;
             }
-            .sidemenu-container a.active{
-                 background-color:#F6B665;
-                color:#606060;
-            }
-            .sidemenu-container a:hover{
-                background-color:#fcd49a;
-                color:#606060;
-                margin: 10px 15px 5px 15px ;
-                padding: 0px 0px 0px 20px;
-            }
+
+                .sidemenu-container a.active {
+                    background-color: #F6B665;
+                    color: #606060;
+                }
+
+                .sidemenu-container a:hover {
+                    background-color: #fcd49a;
+                    color: #606060;
+                    margin: 10px 15px 5px 15px;
+                    padding: 0px 0px 0px 20px;
+                }
             .display-container{
                 background-color:white; 
                 width:1000px;
@@ -252,7 +260,7 @@
                 </div>
             </asp:TableCell> 
             <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
-                <div class="display-container container-fluid">
+                <div class="display-container">
                     <h1 class="title">Post a Job</h1>
                    
                         <asp:Label ID="Label1" runat="server" Text="Job Title " Style="font-size:18px;" ></asp:Label><span style="color: red">*</span> 

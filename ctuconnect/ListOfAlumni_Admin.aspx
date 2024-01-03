@@ -29,13 +29,13 @@
     }
 
     .second{
-        border: none;
-        border-top: 1.5px solid black;
-        width: 90%;
-        margin-left:auto;
-        margin-right:auto;
-        margin-top:1%;
-        margin-bottom:0%;
+         border: none;
+         border-top: 1.5px solid black;
+         width: 90%;
+         margin-left:auto;
+         margin-right:auto;
+         margin-top:13%;
+         margin-bottom:0%;
     }
          
     .horizontal-line {
@@ -92,7 +92,7 @@
         padding-top:2em;
         padding-left:2em;
         padding-right:2em;                  
-        margin-left:3px;
+        margin-left:50px;
     }
     .container .title{
     font-size:25px;
@@ -159,7 +159,7 @@
 </style>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-3 d-flex flex-column" >
+        <div class="col-2 d-flex flex-column" >
             <div class="nav flex-column flex-nowrap vh-100 overflow-auto p-2">
                 <div class="profile-container">
                     <img src="images/administratorpic.jpg" />
@@ -169,7 +169,7 @@
                         <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Dashboard
                     </a>
-                    <a  href="IndustryVerification.aspx">
+                    <a href="IndustryVerification.aspx">
                         <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Industry Verification
                     </a>
@@ -182,7 +182,7 @@
                         <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         List of Industry
                     </a>
-                    <a href="ListOfInterns_Alumni.aspx">
+                    <a href="ListOfInterns_Alumni">
                         <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         List of Interns
                     </a>
@@ -190,41 +190,41 @@
                         <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         List of Alumni
                     </a>
-                        <hr class="horizontal-line" />
-                        <a href="Dispute.aspx">
-                            <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
-                            Dispute
-                        </a>
-                        <a href="Blacklist_Admin.aspx">
-                            <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
-                            Blacklisted
-                        </a>
-                        <a href="SuggestionsAdmin.aspx">
-                            <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
-                            Suggestions
-                        </a>
-                        <a href="Admin_Contact.aspx">
-                            <i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
-                            Contact
-                        </a>
-                        <hr class="second" />
-                        <a href="TracerDashboard.aspx">
-                            <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
-                            Tracer
-                        </a>
-                        <a href="#">
-                            <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
-                            Profile
-                        </a>
-                        <a href="Coordinator_CreateAccount.aspx">
-                            <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
-                            Coordinator Account
-                        </a>
+                    <hr class="horizontal-line" />
+                    <a href="Dispute.aspx">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                        Dispute
+                    </a>
+                    <a href="Blacklist_Admin.aspx">
+                        <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                        Blacklisted
+                    </a>
+                    <a href="SuggestionsAdmin.aspx">
+                        <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                        Suggestions
+                    </a>
+                    <a href="Admin_Contact.aspx">
+                        <i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                        Contact
+                    </a>
+                    <hr class="second" />
+                    <a href="TracerDashboard.aspx">
+                        <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                        Tracer
+                    </a>
+                    <a href="AdminProfile.aspx">
+                        <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                        Profile
+                    </a>
+                    <a href="Coordinator_CreateAccount.aspx">
+                        <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                        Coordinator Account
+                    </a>
                 </div>
                 
             </div>
         </div>
-        <div class="col-9 d-flex flex-column">
+        <div class="col-10 d-flex flex-column">
             <br />
             <div class="container">
                 <h1 class="title">List of Alumni</h1>

@@ -5,38 +5,38 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        .profile-container {
-            background-color: white;
-            margin-left: 4%;
-            padding-bottom: 8px;
-            border: 2px;
+        .profile-container{
+            background-color:white;
+            margin-left:4%;
+            padding-bottom:8px;
+            border: 2px ;
             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
         }
 
-            .profile-container img {
-                display: block;
-                width: 50%;
-                margin-left: auto;
-                margin-right: auto;
-                margin-top: auto;
-                padding-top: 10px;
+            .profile-container img{
+                display:block;
+                width:50%;
+                margin-left:auto;
+                margin-right:auto;
+                margin-top:auto;
+                padding-top:10px;
             }
 
-            .profile-container p {
-                display: block;
-                text-align: center;
+            .profile-container p{
+                display:block;
+                text-align:center;
                 font-size: 19px;
-                margin-top: 7%;
+                margin-top:7%;
             }
 
-        .second {
+        .second{
             border: none;
             border-top: 1.5px solid black;
             width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 2%;
-            margin-bottom: 0%;
+            margin-left:auto;
+            margin-right:auto;
+            margin-top:13%;
+            margin-bottom:0%;
         }
 
         .horizontal-line {
@@ -49,38 +49,39 @@
             margin-bottom: 0%;
         }
 
-        .nav {
-            padding: 10px 10px 10px 10px;
-            width: 350px;
-            margin: auto;
-            margin-top: 20px;
+        .nav{
+            padding:10px 10px 0px 10px;
+            width:300px;
+            margin-top:5px;
             position: absolute;
-            margin-left: 25px;
+            margin-left:10px;
         }
 
-            .nav a {
-                font-size: 18px;
-                font-family: 'Arial Rounded MT';
-                color: #000000;
-                text-decoration: none;
-                position: static;
-                font-size: 19px;
-                display: block;
-                margin: 2px 15px 5px 15px;
-                padding: 0px 0px 0px 30px;
-            }
+        .nav a{
+            font-size:18px;
+            font-family:'Arial Rounded MT';
+            color:#000000;
+            text-decoration:none;
+            position:static;
+            font-size: 19px;
+            display: block;
+            margin: 2px 15px 5px 15px ;
+            padding: 0px 0px 0px 8px;
+        }
 
-                .nav a.active {
-                    background-color: rgb(255, 194, 102);
-                    border-radius: 10px;
-                    min-height: 10px;
-                }
+        .nav a.active{
+            background-color:rgb(255, 194, 102);
+            border-radius:10px;
+            min-height:10px;
+    
+        }
 
-                .nav a:hover {
-                    background-color: rgb(255, 194, 102);
-                    border-radius: 10px;
-                    min-height: 10px;
-                }
+        .nav a:hover{
+            background-color:rgb(255, 194, 102);
+            border-radius:10px;
+            min-height:10px;
+    
+        }
 
         .container {
             min-height: 100%;
@@ -91,7 +92,7 @@
             padding-top: 2em;
             padding-left: 2em;
             padding-right: 2em;
-            margin-left: 1px;
+            margin-left: 50px;
         }
 
         .card {
@@ -132,44 +133,44 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3 d-flex flex-column">
+            <div class="col-2 d-flex flex-column">
                 <div class="nav flex-column flex-nowrap overflow-auto p-2">
                     <div class="profile-container">
                         <img src="images/administratorpic.jpg" />
-                        <p>Admin</p>
+                        <p >Admin</p>
                         <hr class="horizontal-line" />
                         <a href="AdminDashboard.aspx">
-                            <i class="fa fa-tachometer" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             Dashboard
                         </a>
                         <a href="IndustryVerification.aspx">
-                            <i class="fa fa-users" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             Industry Verification
                         </a>
                         <a href="ReferralList_Admin.aspx">
-                            <i class="fa fa-handshake-o" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            <i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             Referred Student
                         </a>
                         <hr class="horizontal-line" />
                         <a href="ListOfIndustries_Alumni.aspx">
-                            <i class="fa fa-industry" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             List of Industry
                         </a>
-                        <a href="ListOfInterns_Alumni.aspx">
-                            <i class="fa fa-industry" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                        <a href="ListOfInterns_Alumni">
+                            <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             List of Interns
                         </a>
                         <a href="ListOfAlumni_Admin.aspx">
-                            <i class="fa fa-industry" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             List of Alumni
                         </a>
                         <hr class="horizontal-line" />
                         <a href="Dispute.aspx">
-                            <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             Dispute
                         </a>
                         <a href="Blacklist_Admin.aspx">
-                            <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
+                            <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             Blacklisted
                         </a>
                         <a href="SuggestionsAdmin.aspx">
@@ -185,7 +186,7 @@
                             <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
                             Tracer
                         </a>
-                        <a href="#">
+                        <a href="AdminProfile.aspx">
                             <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Profile
                         </a>
@@ -197,7 +198,7 @@
 
                 </div>
             </div>
-            <div class="col-9 d-flex flex-column">
+            <div class="col-10 d-flex flex-column">
                 <br />
                 <div class="container bg-light">
                     <h2 class="title opacity-75">Coordinator Account</h2>
