@@ -101,8 +101,8 @@ namespace ctuconnect
             { 
                 string industryName = txtIndustryName.Text;
                 string industryEmail = txtemail.Text;
-                //string industryPwd = txtpwd.Text;
-               // string industryLoc = txtLocation.Text;
+                string industryPwd = txtpwd.Text;
+                string industryLoc = txtLocation.Text;
                 HttpPostedFile postedFile = mouUpload.PostedFile;
                 string filename = Path.GetFileName(postedFile.FileName); ///to check the filename
                 string fileExtension = Path.GetExtension(filename).ToLower(); //to get the extension filename
@@ -127,16 +127,16 @@ namespace ctuconnect
                             //SQL Statement
                             cmd.CommandType = CommandType.Text;
 
-                            cmd.CommandText = "INSERT INTO INDUSTRY_ACCOUNT (INDUSTRYNAME, LOCATION, EMAIL, PASSWORD, MOU, DATEREGISTERED,ISVERIFIED, )"
+                            cmd.CommandText = "INSERT INTO INDUSTRY_ACCOUNT (INDUSTRYNAME, LOCATION, EMAIL, PASSWORD, MOU, DATEREGISTERED,ISVERIFIED )"
                                 + "VALUES (@industryName, @location, @email, @password, @mou, @datereg, @verified )";
 
 
 
 
                             cmd.Parameters.AddWithValue("@industryName", industryName);
-                            //cmd.Parameters.AddWithValue("@location", industryLoc);
+                            cmd.Parameters.AddWithValue("@location", industryLoc);
                             cmd.Parameters.AddWithValue("@email", industryEmail);
-                            //cmd.Parameters.AddWithValue("@password", industryPwd);
+                            cmd.Parameters.AddWithValue("@password", industryPwd);
                             cmd.Parameters.AddWithValue("@mou", filename);
                             cmd.Parameters.AddWithValue("@datereg", DateTime.Now.ToString("yyyy/MM/dd"));
                             cmd.Parameters.AddWithValue("@verified", true);
