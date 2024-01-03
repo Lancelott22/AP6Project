@@ -41,7 +41,6 @@ namespace ctuconnect
                                 txtinitials.Text = reader["midInitials"].ToString();
                                 txtlname.Text = reader["lastName"].ToString();
                                 txtemail.Text = reader["username"].ToString();
-                                txtpassword.Text = reader["password"].ToString();
                             }
                         }
 
@@ -131,7 +130,6 @@ namespace ctuconnect
             var firstname = txtfname.Text;
             var initials = txtinitials.Text;
             var email = txtemail.Text;
-            var password = txtpassword.Text;
 
             using (var db = new SqlConnection(connDB))
             {
@@ -143,8 +141,7 @@ namespace ctuconnect
                         + "lastName ='" + lastname + "', "
                         + "firstName ='" + firstname + "',"
                         + "midInitials ='" + initials + "',"
-                        + "username ='" + email + "',"
-                        + "password ='" + password + "'"
+                        + "username ='" + email + "'"
                         + "WHERE coordinator_accID='" + coordinatorID + "'";
                     var ctr = cmd.ExecuteNonQuery();
                     if (ctr > 0)

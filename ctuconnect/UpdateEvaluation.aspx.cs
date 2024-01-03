@@ -28,13 +28,7 @@ namespace ctuconnect
             string prod3 = txtProd3.Text;
             string prod4 = txtProd4.Text;
             string prod5 = txtProd5.Text;
-           
-                string prod1 = txtProd1.Text;
-                string prod2 = txtProd2.Text;
-                string prod3 = txtProd3.Text;
-                string prod4 = txtProd4.Text;
-                string prod5 = txtProd5.Text;
-            {
+
             string coop1 = txtCoop1.Text;
             string coop2 = txtCoop2.Text;
             string coop3 = txtCoop3.Text;
@@ -122,115 +116,6 @@ namespace ctuconnect
         {
             try
             {
-                string coop1 = txtCoop1.Text;
-                string coop2 = txtCoop2.Text;
-                string coop3 = txtCoop3.Text;
-                string coop4 = txtCoop4.Text;
-                string coop5 = txtCoop5.Text;
-
-                string abilityF1 = txtAbilityF1.Text;
-                string abilityF2 = txtAbilityF2.Text;
-                string abilityF3 = txtAbilityF3.Text;
-                string abilityF4 = txtAbilityF4.Text;
-                string abilityF5 = txtAbilityF5.Text;
-
-                string abilityG1 = txtAbilityG1.Text;
-                string abilityG2 = txtAbilityG2.Text;
-                string abilityG3 = txtAbilityG3.Text;
-                string abilityG4 = txtAbilityG4.Text;
-                string abilityG5 = txtAbilityG5.Text;
-
-                string init1 = txtInit1.Text;
-                string init2 = txtInit2.Text;
-                string init3 = txtInit3.Text;
-                string init4 = txtInit4.Text;
-                string init5 = txtInit5.Text;
-
-                string attend1 = txtAttend1.Text;
-                string attend2 = txtAttend2.Text;
-                string attend3 = txtAttend3.Text;
-                string attend4 = txtAttend4.Text;
-                string attend5 = txtAttend5.Text;
-
-                string qual1 = txtQual1.Text;
-                string qual2 = txtQual2.Text;
-                string qual3 = txtQual3.Text;
-                string qual4 = txtQual4.Text;
-                string qual5 = txtQual5.Text;
-
-                string appear1 = txtAppear1.Text;
-                string appear2 = txtAppear2.Text;
-                string appear3 = txtAppear3.Text;
-                string appear4 = txtAppear4.Text;
-                string appear5 = txtAppear5.Text;
-
-                string depend1 = txtDepend1.Text;
-                string depend2 = txtDepend2.Text;
-                string depend3 = txtDepend3.Text;
-                string depend4 = txtDepend4.Text;
-                string depend5 = txtDepend5.Text;
-
-                string overall1 = txtOverall1.Text;
-                string overall2 = txtOverall2.Text;
-                string overall3 = txtOverall3.Text;
-                string overall4 = txtOverall4.Text;
-                string overall5 = txtOverall5.Text;
-
-                int categoryID1 = 1;
-                int categoryID2 = 2;
-                int categoryID3 = 3;
-                int categoryID4 = 4;
-                int categoryID5 = 5;
-                int categoryID6 = 6;
-                int categoryID7 = 7;
-                int categoryID8 = 8;
-                int categoryID9 = 9;
-                int categoryID10 = 10;
-                // Call the UpdateProductivity method when the "Save" button is clicked
-                UpdateCategoryDetails(prod1, prod2, prod3, prod4, prod5, categoryID1, coop1, coop2, coop3, coop4, coop5,
-                categoryID2, abilityF1, abilityF2, abilityF3, abilityF4, abilityF5, categoryID3, abilityG1, abilityG2,
-                abilityG3, abilityG4, abilityG5, categoryID4, init1, init2, init3, init4, init5, categoryID5, attend1,
-                attend2, attend3, attend4, attend5, categoryID6, qual1, qual2, qual3, qual4, qual5, categoryID7, appear1,
-                appear2, appear3, appear4, appear5, categoryID8, depend1, depend2, depend3, depend4, depend5, categoryID9,
-                overall1, overall2, overall3, overall4, overall5, categoryID10);
-            
-            
-        }
-        private void UpdateCategoryDetails(string prod1, string prod2, string prod3, string prod4, string prod5, int categoryID1,
-        string coop1, string coop2, string coop3, string coop4, string coop5, int categoryID2,
-        string abilityF1, string abilityF2, string abilityF3, string abilityF4, string abilityF5, int categoryID3,
-        string abilityG1, string abilityG2, string abilityG3, string abilityG4, string abilityG5, int categoryID4,
-        string init1, string init2, string init3, string init4, string init5, int categoryID5,
-        string attend1, string attend2, string attend3, string attend4, string attend5, int categoryID6,
-        string qual1, string qual2, string qual3, string qual4, string qual5, int categoryID7,
-        string appear1, string appear2, string appear3, string appear4, string appear5, int categoryID8,
-        string depend1, string depend2, string depend3, string depend4, string depend5, int categoryID9,
-        string overall1, string overall2, string overall3, string overall4, string overall5, int categoryID10)
-        {
-            try
-            {
-                // Log or handle the exception
-                // For example, you can log it using ILogger
-                // logger.LogError(ex, "An error occurred while updating productivity.");
-            }
-        }
-
-        protected void btnCancel_Click(object sender, EventArgs e)
-        {
-            // Handle cancel button click if needed
-        }
-
-        private void UpdateProductivity()
-        {
-            try
-            {
-                string prod1 = txtProd1.Text;
-                string prod2 = txtProd2.Text;
-                string prod3 = txtProd3.Text;
-                string prod4 = txtProd4.Text;
-                string prod5 = txtProd5.Text;
-                int categoryID = 1;
-
                 using (conDB)
                 {
                     conDB.Open();

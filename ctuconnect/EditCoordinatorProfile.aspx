@@ -105,13 +105,6 @@
                     <asp:TextBox ID="txtemail" runat="server" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>                    
                 </div>
             </div>
-            <br />
-            <div class="row">
-                <div class="col-sm-9">
-                    Password<br />
-                    <asp:TextBox ID="txtpassword" runat="server" TextMode="Password" CssClass="txtbox" Width="400px" Height="30px"></asp:TextBox>                    
-                </div>
-            </div>
             <br /><br />
             <div class="row">
                 <div class="col-sm-3">
