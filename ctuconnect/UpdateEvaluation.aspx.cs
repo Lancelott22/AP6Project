@@ -18,7 +18,10 @@ namespace ctuconnect
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                GetProductivity();
+            }
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -275,13 +278,58 @@ namespace ctuconnect
             }
             catch
             {
-                // Log or handle the exception
-                // For example, you can log it using ILogger
-                //logger.LogError(ex, "An error occurred while updating evaluation and cooperation.");
+               
                 throw; // Re-throw the exception to the calling method
             }
         }
+        void GetProductivity()
+        {
+            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            int category_ID = 1;
+            using (con)
+            {
+                con.Open();
+                string query = "SELECT categoryDetail12, categoryDetail34, categoryDetail56, categoryDetail78, categoryDetail910 FROM CATEGORY_DETAILS WHERE category_ID = '" + category_ID + "'";
 
+                SqlCommand command = new SqlCommand(query, con);
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    txtProd1.Text = reader["categoryDetail12"].ToString();
+                    txtProd2.Text = reader["categoryDetail34"].ToString();
+                    txtProd3.Text = reader["categoryDetail56"].ToString();
+                    txtProd4.Text = reader["categoryDetail78"].ToString();
+                    txtProd5.Text = reader["categoryDetail910"].ToString();
+                }
+                con.Close();
+                reader.Close();
+            }
+        }
+        void GetCooperation()
+        {
+            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            int category_ID = 2;
+            using (con)
+            {
+                con.Open();
+                string query = "SELECT categoryDetail12, categoryDetail34, categoryDetail56, categoryDetail78, categoryDetail910 FROM CATEGORY_DETAILS WHERE category_ID = '" + category_ID + "'";
+
+                SqlCommand command = new SqlCommand(query, con);
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    txtCoop1.Text = reader["categoryDetail12"].ToString();
+                    txtCoop2.Text = reader["categoryDetail34"].ToString();
+                    txtCoop3.Text = reader["categoryDetail56"].ToString();
+                    txtCoop4.Text = reader["categoryDetail78"].ToString();
+                    txtCoop5.Text = reader["categoryDetail910"].ToString();
+                }
+                con.Close();
+                reader.Close();
+            }
+        }
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
