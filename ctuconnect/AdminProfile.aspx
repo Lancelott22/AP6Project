@@ -91,7 +91,7 @@
         padding-top:2em;
         padding-left:2em;
         padding-right:2em;                  
-        margin-left:1px;
+        margin-left:50px;
     }
    
     .profile-pic{
@@ -103,21 +103,17 @@
 </style>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-3 d-flex flex-column" >
+        <div class="col-2 d-flex flex-column" >
             <div class="nav flex-column flex-nowrap vh-100 overflow-auto p-2">
                 <div class="profile-container">
                     <img src="images/administratorpic.jpg" />
                     <p >Admin</p>
                     <hr class="horizontal-line" />
                     <a href="AdminDashboard.aspx">
-                        <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
+                        <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Dashboard
                     </a>
-                    <a href="#myaccount">
-                        <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Create Partnership
-                    </a>
-                    <a  href="IndustryVerification.aspx">
+                    <a href="IndustryVerification.aspx">
                         <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         Industry Verification
                     </a>
@@ -130,7 +126,7 @@
                         <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         List of Industry
                     </a>
-                    <a href="ListOfInterns_Alumni.aspx">
+                    <a href="ListOfInterns_Alumni">
                         <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                         List of Interns
                     </a>
@@ -145,31 +141,34 @@
                     </a>
                     <a href="Blacklist_Admin.aspx">
                         <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Blacklist
+                        Blacklisted
                     </a>
-                        <a href="SuggestionsAdmin.aspx">
-                        <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
+                    <a href="SuggestionsAdmin.aspx">
+                        <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                         Suggestions
+                    </a>
+                    <a href="Admin_Contact.aspx">
+                        <i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                        Contact
                     </a>
                     <hr class="second" />
                     <a href="TracerDashboard.aspx">
-                        <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                        <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
                         Tracer
                     </a>
-                    <a class="active" href="#">
-                        <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
+                    <a class="active" href="AdminProfile.aspx">
+                        <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                         Profile
                     </a>
-                    <asp:LinkButton runat="server" ID ="LinkButton1">
-                        <i class="fa fa-sign-out" aria-hidden="true" style="padding-right:12px;"></i>
-                        Sign-out
-                    </asp:LinkButton>
-
-                    </div>
+                    <a href="Coordinator_CreateAccount.aspx">
+                        <i class="fa fa-users" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                        Coordinator Account
+                    </a>
+                </div>
                 
                 </div>
             </div>
-            <div class="col-9 d-flex flex-column">
+            <div class="col-10 d-flex flex-column">
                 <br />
                 <div class="container">
                     <div class="row">

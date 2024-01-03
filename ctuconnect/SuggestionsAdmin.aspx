@@ -12,21 +12,21 @@
             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
         }
 
-        .profile-container img{
-            display:block;
-            width:50%;
-            margin-left:auto;
-            margin-right:auto;
-            margin-top:auto;
-            padding-top:10px;
-        }
+            .profile-container img{
+                display:block;
+                width:50%;
+                margin-left:auto;
+                margin-right:auto;
+                margin-top:auto;
+                padding-top:10px;
+            }
 
-        .profile-container p{
-            display:block;
-            text-align:center;
-            font-size: 19px;
-            margin-top:7%;
-        }
+            .profile-container p{
+                display:block;
+                text-align:center;
+                font-size: 19px;
+                margin-top:7%;
+            }
 
         .second{
             border: none;
@@ -34,7 +34,7 @@
             width: 90%;
             margin-left:auto;
             margin-right:auto;
-            margin-top:1%;
+            margin-top:13%;
             margin-bottom:0%;
         }
              
@@ -49,12 +49,11 @@
         }
                 
         .nav{
-            padding:10px 10px 10px 10px;
-            width:350px;
-            margin:auto;
-            margin-top:20px;
+            padding:10px 10px 0px 10px;
+            width:300px;
+            margin-top:5px;
             position: absolute;
-            margin-left:25px;
+            margin-left:10px;
         }
 
         .nav a{
@@ -66,7 +65,7 @@
             font-size: 19px;
             display: block;
             margin: 2px 15px 5px 15px ;
-            padding: 0px 0px 0px 30px;
+            padding: 0px 0px 0px 8px;
         }
 
         .nav a.active{
@@ -93,7 +92,7 @@
         padding-top:2em;
         padding-left:2em;
         padding-right:2em;                  
-        margin-left:3px;
+        margin-left:50px;
     }
     .container .title{
     font-size:25px;
@@ -150,50 +149,50 @@
     </style>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3 d-flex flex-column" >
+            <div class="col-2 d-flex flex-column" >
                 <div class="nav flex-column flex-nowrap vh-100 overflow-auto p-2">
                     <div class="profile-container">
                         <img src="images/administratorpic.jpg" />
                         <p >Admin</p>
                         <hr class="horizontal-line" />
                         <a href="AdminDashboard.aspx">
-                            <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
+                            <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             Dashboard
                         </a>
-                    <a  href="IndustryVerification.aspx">
-                        <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Industry Verification
-                    </a>
-                    <a href="ReferralList_Admin.aspx">
-                        <i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Referred Student
-                    </a>
-                    <hr class="horizontal-line" />
-                    <a href="ListOfIndustries_Alumni.aspx">
-                        <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        List of Industry
-                    </a>
-                    <a href="ListOfInterns_Alumni.aspx">
-                        <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        List of Interns
-                    </a>
-                    <a href="ListOfAlumni_Admin.aspx">
-                        <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        List of Alumni
-                    </a>
-                    <hr class="horizontal-line" />
-                    <a href="Dispute.aspx">
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Dispute
-                    </a>
-                    <a href="Blacklist_Admin.aspx">
-                        <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
-                        Blacklisted
-                    </a>
-                        <a  class="active" href="SuggestionsAdmin.aspx">
-                        <i class="fa fa-user" aria-hidden="true" style="padding-right:12px; width:32px;"></i>
-                        Suggestions
-                    </a>
+                        <a href="IndustryVerification.aspx">
+                            <i class="fa fa-users" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                            Industry Verification
+                        </a>
+                        <a href="ReferralList_Admin.aspx">
+                            <i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                            Referred Student
+                        </a>
+                        <hr class="horizontal-line" />
+                        <a href="ListOfIndustries_Alumni.aspx">
+                            <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                            List of Industry
+                        </a>
+                        <a href="ListOfInterns_Alumni">
+                            <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                            List of Interns
+                        </a>
+                        <a href="ListOfAlumni_Admin.aspx">
+                            <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                            List of Alumni
+                        </a>
+                        <hr class="horizontal-line" />
+                        <a href="Dispute.aspx">
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                            Dispute
+                        </a>
+                        <a href="Blacklist_Admin.aspx">
+                            <i class="fa fa-ban" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
+                            Blacklisted
+                        </a>
+                        <a class="active" href="SuggestionsAdmin.aspx">
+                            <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
+                            Suggestions
+                        </a>
                         <a href="Admin_Contact.aspx">
                             <i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Contact
@@ -203,7 +202,7 @@
                             <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
                             Tracer
                         </a>
-                        <a href="#">
+                        <a href="AdminProfile.aspx">
                             <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Profile
                         </a>
@@ -215,7 +214,7 @@
                     
                 </div>
             </div>
-            <div class="col-9 d-flex flex-column">
+            <div class="col-10 d-flex flex-column">
                 <br />
             <div class="container">
                 <h1 class="title">List of Suggestions</h1>
