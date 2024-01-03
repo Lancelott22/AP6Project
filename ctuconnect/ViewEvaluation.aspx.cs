@@ -26,6 +26,7 @@ namespace ctuconnect
                 {
                     string student_accID = Request.QueryString["student_accID"];
                     getEvalInfo();
+                    GetAddress();
                     GetProductivity();
                     GetCooperation();
                     GetAbilityToFollow();
@@ -36,6 +37,7 @@ namespace ctuconnect
                     GetAppearance();
                     GetDependability();
                     GetOverAll();
+
                 }
 
                 SetSelectedRadioButtons();
@@ -348,7 +350,7 @@ namespace ctuconnect
                     txtStrengths.Text = reader["describeStrength"].ToString();
                     txtImprovement.Text = reader["describeImprovement"].ToString();
                     disp_industryName.Text = reader["cooperatingAgency"].ToString();
-                    disp_Indlocation.Text = reader["address"].ToString();
+                    disp_Indlocation.Text = reader["address"] != DBNull.Value ? reader["address"].ToString() : string.Empty;
                     disp_dateEval.Text = reader["dateEvaluated"].ToString();
                     Session["Productivity"] = reader["productivity"].ToString();
                     Session["Cooperation"] = reader["cooperation"].ToString();
@@ -363,6 +365,42 @@ namespace ctuconnect
                 }
                 conDB.Close();
                 reader.Close();
+            }
+        }
+         void GetAddress()
+        {
+            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            string student_accID = Request.QueryString["student_accID"];
+            string hired_ID = Request.QueryString["hired_id"];
+            using (con)
+            {
+                con.Open();
+                string query = "SELECT ADDRESS FROM EVALUATION WHERE student_accID = @student_accID and hired_id = @hired_id ";
+                SqlCommand command = new SqlCommand(query, con);
+                command.Parameters.AddWithValue("@student_accID", student_accID);
+                command.Parameters.AddWithValue("@hired_id", hired_ID);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    if (!reader.IsDBNull(reader.GetOrdinal("address")))
+                    {
+                        string addressValue = reader["address"].ToString();
+
+                        if (!string.IsNullOrEmpty(addressValue))
+                        {
+                            // Use the addressValue here
+                            disp_Indlocation.Text = addressValue;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Empty no address");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Null");
+                    }
+                }
             }
         }
         protected void btnDownLoad_Click(object sender, EventArgs e)
