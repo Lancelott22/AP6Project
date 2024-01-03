@@ -363,7 +363,7 @@ namespace ctuconnect
             }
             if (checkRequestedEval(hired_Id))
             {
-                reqEval.Text = "Requested";
+                reqEval.Text = "For Evaluation";
                 reqEval.Enabled = false;
                 reqEval.CssClass = "buttonStyle my-2";               
             }
@@ -433,7 +433,7 @@ namespace ctuconnect
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
-                if (reader["evaluationRequest"].ToString() == "Requested")
+                if (reader["evaluationRequest"].ToString() == "For Evaluation")
                 {
                     reader.Close();
                     conDB.Close();
@@ -492,7 +492,7 @@ namespace ctuconnect
             {
 
                 conDB.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE HIRED_LIST SET evaluationRequest = 'Requested' WHERE id = @hiredID", conDB);
+                SqlCommand cmd = new SqlCommand("UPDATE HIRED_LIST SET evaluationRequest = 'For Evaluation' WHERE id = @hiredID", conDB);
                 cmd.Parameters.AddWithValue("@hiredID", hiredID);
                 var ctr = cmd.ExecuteNonQuery();
                 if (ctr > 0)
