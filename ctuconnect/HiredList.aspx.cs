@@ -1036,7 +1036,7 @@ namespace ctuconnect
         {
             Button Evalbtn = (Button)sender;
 
-            if (Evalbtn.Text == "Requested"){
+            if (Evalbtn.Text == "For Evaluation"){
                 Response.Redirect("EvaluationForm.aspx?student_accID=" + e.CommandArgument.ToString() + "&hired_id=" + e.CommandName.ToString());
             }
             else if (Evalbtn.Text == "Evaluation")
@@ -1054,7 +1054,7 @@ namespace ctuconnect
 
             switch (requestStatus)
             {
-                case "Requested":
+                case "For Evaluation":
                     return "btn-danger"; // Red
                 case "Evaluated":
                     return "btn-success"; // Green
@@ -1070,10 +1070,10 @@ namespace ctuconnect
             {
                 case "no request":
                     return "no request";
-                case "Requested":
-                    return "Requested"; // Change the text to "Evaluation" for Requested status
+                case "For Evaluation":
+                    return "For Evaluation"; // Change the text to "Evaluation" for Requested status
                 case "Evaluated":
-                    return "Evaluation"; // Change the text to "Evaluation" for Evaluated status
+                    return "Evaluated"; // Change the text to "Evaluation" for Evaluated status
                 default:
                     return string.Empty; // No text if no request
             }
