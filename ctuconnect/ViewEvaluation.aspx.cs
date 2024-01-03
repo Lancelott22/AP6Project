@@ -39,6 +39,7 @@ namespace ctuconnect
                 }
 
                 SetSelectedRadioButtons();
+                
             }
             
         }

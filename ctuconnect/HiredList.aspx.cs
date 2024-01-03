@@ -1039,7 +1039,7 @@ namespace ctuconnect
             if (Evalbtn.Text == "Requested"){
                 Response.Redirect("EvaluationForm.aspx?student_accID=" + e.CommandArgument.ToString() + "&hired_id=" + e.CommandName.ToString());
             }
-            else if (Evalbtn.Text == "Evaluated")
+            else if (Evalbtn.Text == "Evaluation")
             {
                 Response.Redirect("ViewEvaluation.aspx?student_accID=" + e.CommandArgument.ToString() + "&hired_id=" + e.CommandName.ToString());
             }
@@ -1048,7 +1048,7 @@ namespace ctuconnect
                 Evalbtn.Enabled = false;
             }
         }
-        protected string GetButtonCssClass(object evaluationRequest)
+        public string GetButtonCssClass(object evaluationRequest)
         {
             string requestStatus = evaluationRequest.ToString();
 
@@ -1062,7 +1062,7 @@ namespace ctuconnect
                     return string.Empty; // No CSS class if no request
             }
         }
-        protected string GetButtonText(object evaluationRequest)
+        public string GetButtonText(object evaluationRequest)
         {
             string requestStatus = evaluationRequest.ToString();
 
