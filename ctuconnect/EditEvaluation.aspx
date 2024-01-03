@@ -328,7 +328,7 @@
                 <div class="container2">
                     <div class="row">
                         <div class="col-2 d-flex flex-column">
-                            <asp:Button ID="btnUpdate" class="btn btn-primary btn-md" runat="server" Text="Update" OnClick="btnUpdate_Click"/>
+<%--                            <asp:Button ID="btnUpdate" class="btn btn-primary btn-md" runat="server" Text="Update" OnClick="btnUpdate_Click"/>--%>
                         </div>
 
                     </div>
