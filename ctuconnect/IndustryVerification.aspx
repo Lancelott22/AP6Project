@@ -92,7 +92,7 @@
             padding-top:2em;
             padding-left:2em;
             padding-right:2em;                  
-            margin-left:3px;
+            margin-left:50px;
         }
         
        
@@ -100,13 +100,13 @@
     </style>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3 d-flex flex-column" >
+            <div class="col-2 d-flex flex-column" >
                 <div class="nav flex-column flex-nowrap vh-100 overflow-auto p-2">
                     <div class="profile-container">
                         <img src="images/administratorpic.jpg" />
                         <p >Admin</p>
                         <hr class="horizontal-line" />
-                        <a href="#">
+                        <a href="AdminDashboard.aspx">
                             <i class="fa fa-tachometer" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             Dashboard
                         </a>
@@ -123,7 +123,7 @@
                             <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             List of Industry
                         </a>
-                        <a href="#">
+                        <a href="ListOfInterns_Alumni">
                             <i class="fa fa-industry" aria-hidden="true" style="padding-right:7px; width:32px;"></i>
                             List of Interns
                         </a>
@@ -153,7 +153,7 @@
                             <i class="fa fa-ban" aria-hidden="true" style="padding-right: 7px; width: 32px;"></i>
                             Tracer
                         </a>
-                        <a href="#">
+                        <a href="AdminProfile.aspx">
                             <i class="fa fa-user" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>
                             Profile
                         </a>
@@ -165,7 +165,7 @@
                     
                 </div>
             </div>
-            <div class="col-9 d-flex flex-column">
+            <div class="col-10 d-flex flex-column">
                 <br />
                 <div class="container">
                     <h1 class="title">Industry Verification</h1>

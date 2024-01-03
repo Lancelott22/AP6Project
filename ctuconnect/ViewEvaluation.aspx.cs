@@ -89,7 +89,6 @@ namespace ctuconnect
 
                 SqlCommand command = new SqlCommand(query, con);
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@studentAcctID", category_ID);
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -114,7 +113,6 @@ namespace ctuconnect
 
                 SqlCommand command = new SqlCommand(query, con);
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@studentAcctID", category_ID);
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -139,7 +137,6 @@ namespace ctuconnect
 
                 SqlCommand command = new SqlCommand(query, con);
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@studentAcctID", category_ID);
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -164,7 +161,6 @@ namespace ctuconnect
 
                 SqlCommand command = new SqlCommand(query, con);
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@studentAcctID", category_ID);
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -189,7 +185,6 @@ namespace ctuconnect
 
                 SqlCommand command = new SqlCommand(query, con);
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@studentAcctID", category_ID);
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -214,7 +209,6 @@ namespace ctuconnect
 
                 SqlCommand command = new SqlCommand(query, con);
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@studentAcctID", category_ID);
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -239,7 +233,6 @@ namespace ctuconnect
 
                 SqlCommand command = new SqlCommand(query, con);
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@studentAcctID", category_ID);
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -264,7 +257,6 @@ namespace ctuconnect
 
                 SqlCommand command = new SqlCommand(query, con);
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@studentAcctID", category_ID);
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -289,7 +281,6 @@ namespace ctuconnect
 
                 SqlCommand command = new SqlCommand(query, con);
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@studentAcctID", category_ID);
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -314,7 +305,6 @@ namespace ctuconnect
 
                 SqlCommand command = new SqlCommand(query, con);
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@studentAcctID", category_ID);
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
