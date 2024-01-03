@@ -408,6 +408,10 @@ namespace ctuconnect
             // Get the HTML content from the ASPX page
             string htmlContent = GetHtmlFromControl(evaluationForm);
 
+            // Update HTML content to reflect selected state of radio buttons
+            htmlContent = UpdateRadioButtons(htmlContent);
+
+
             // Create a MemoryStream to hold the PDF bytes
             using (MemoryStream memoryStream = new MemoryStream())
             {
@@ -441,6 +445,38 @@ namespace ctuconnect
             return sw.ToString();
         }
 
+        // Helper method to update radio buttons in HTML content
+        private string UpdateRadioButtons(string htmlContent)
+        {
+            // Modify the HTML content to set the checked attribute based on the selected state
+            foreach (var kvp in GetSelectedRadioButtons())
+            {
+                string radioName = kvp.Key;
+                string radioValue = kvp.Value;
+
+                htmlContent = htmlContent.Replace($"name=\"{radioName}\" value=\"{radioValue}\"", $"name=\"{radioName}\" value=\"{radioValue}\" checked=\"checked\"");
+            }
+
+            return htmlContent;
+        }
+
+        // Helper method to get selected radio buttons from the session
+        private Dictionary<string, string> GetSelectedRadioButtons()
+        {
+            return new Dictionary<string, string>
+    {
+        { "productivity", Session["Productivity"] as string },
+        { "cooperation", Session["Cooperation"] as string },
+        { "abilityToFollow", Session["AbilityToFollow"] as string },
+        { "abilityToGet", Session["AbilityToGet"] as string },
+        { "category5", Session["Category5"] as string },
+        { "category6", Session["Category6"] as string },
+        { "category7", Session["Category7"] as string },
+        { "category8", Session["Category8"] as string },
+        { "category9", Session["Category9"] as string },
+        { "category10", Session["Category10"] as string },
+    };
+        }
 
         // Helper method to save the PDF to the database
         /*private void SavePdfToDatabase(byte[] pdfBytes)

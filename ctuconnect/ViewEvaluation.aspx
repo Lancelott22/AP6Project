@@ -381,6 +381,18 @@
                 }
             }
         }
+
+        // Set the state of the radio button based on some condition
+        document.getElementById("productivity").checked = true;
+        document.getElementById("cooperation").checked = true;
+        document.getElementById("abilityToFollow").checked = true;
+        document.getElementById("abilityToGet").checked = true;
+        document.getElementById("category5").checked = true;
+        document.getElementById("category6").checked = true;
+        document.getElementById("category7").checked = true;
+        document.getElementById("category8").checked = true;
+        document.getElementById("category9").checked = true;
+        document.getElementById("category10").checked = true;
     </script>
     
 </html>
