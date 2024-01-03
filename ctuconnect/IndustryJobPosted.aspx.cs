@@ -35,6 +35,7 @@ namespace ctuconnect
             if (!IsPostBack)
             {
                 IndustryJobPostedBind();
+                TotalJob();
             }
         }
         private void IndustryJobPostedBind()
@@ -43,7 +44,6 @@ namespace ctuconnect
             SqlCommand cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
                 " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
                 " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);
-            cmd.Parameters.AddWithValue("@Industry_accID", industryAccID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
@@ -52,6 +52,10 @@ namespace ctuconnect
             if (IndustryJobPostedList.Items.Count == 0)
             {
                 ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
             }
         }
         protected void SignOut_Click(object sender, EventArgs e)
@@ -81,7 +85,26 @@ namespace ctuconnect
         }
         protected void IndustryJobPostedList_PagePropertiesChanged(object sender, EventArgs e)
         {
-            IndustryJobPostedBind();
+            if (JobTypeSort.SelectedValue != "All" && JobTypeSort.SelectedValue != "0")
+            {
+                JobBindByType();
+            }
+            else if (JobStatusSort.SelectedValue != "All" && JobStatusSort.SelectedValue != "0")
+            {
+                JobBindByStatus();
+            }
+            else if (ddlDateFilter.SelectedValue != "All" && ddlDateFilter.SelectedValue != "0")
+            {
+                FilterJobsByDate();
+            }
+            else if (txtsearchJob.Text != string.Empty)
+            {
+                JobBindBySearch();
+            }
+            else
+            {
+                IndustryJobPostedBind();
+            }            
         }
 
         protected void ViewApplicants_Command(object sender, CommandEventArgs e)
@@ -96,22 +119,211 @@ namespace ctuconnect
 
         protected void SearchJob_Click(object sender, EventArgs e)
         {
-
+            JobTypeSort.SelectedValue = "0";
+            ddlDateFilter.SelectedValue = "0";
+            JobStatusSort.SelectedValue = "0";
+            JobBindBySearch();
         }
 
         protected void JobTypeSort_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            txtsearchJob.Text = string.Empty;
+            ddlDateFilter.SelectedValue = "0";
+            JobStatusSort.SelectedValue = "0";
+            JobBindByType();
         }
 
         protected void ddlDateFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            JobTypeSort.SelectedValue = "0";
+            txtsearchJob.Text = string.Empty;
+            JobStatusSort.SelectedValue = "0";
+            FilterJobsByDate();
         }
 
         protected void JobStatusSort_SelectedIndexChanged(object sender, EventArgs e)
         {
+            JobTypeSort.SelectedValue = "0";
+            txtsearchJob.Text = string.Empty;
+            ddlDateFilter.SelectedValue = "0";
+            JobBindByStatus();
+        }
+        void JobBindByStatus()
+        {
+            int industryAccID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
+            SqlCommand cmd = new SqlCommand();
+            if (JobStatusSort.SelectedValue == "All")
+            {
+                cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
+                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
+                " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);
+                TotalJob();
+            }
+            else
+            {
+                string status = "";
+                if (JobStatusSort.SelectedValue == "Active")
+                {
+                    status = "true";
+                }
+                else if (JobStatusSort.SelectedValue == "Inactive")
+                {
+                    status = "false";
+                }
+                cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
+                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
+                " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE isActive = '" + status + "' and (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);
+                TotalJob();
+            }
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            IndustryJobPostedList.DataSource = ds;
+            IndustryJobPostedList.DataBind();
+            if (IndustryJobPostedList.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
+        }
+        void JobBindByType()
+        {
+            int industryAccID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
+            SqlCommand cmd = new SqlCommand();
+            if (JobTypeSort.SelectedValue == "All")
+            {
+                cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
+                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
+                " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);                
+                TotalJob();
+            }
+            else
+            {
+                cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
+                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
+                " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE jobType LIKE '%" + JobTypeSort.SelectedValue + "%' and (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);               
+                TotalJob();
+            }
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            IndustryJobPostedList.DataSource = ds;
+            IndustryJobPostedList.DataBind();
+            if (IndustryJobPostedList.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
+        }
+        void JobBindBySearch()
+        {
+             int industryAccID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
+            SqlCommand cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
+                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
+                " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE jobTitle LIKE '%" + txtsearchJob.Text + "%' and (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);
+            TotalJob();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            IndustryJobPostedList.DataSource = ds;
+            IndustryJobPostedList.DataBind();
+            if (IndustryJobPostedList.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
+        }
+        void FilterJobsByDate()
+        {
+            int industryAccID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
+            SqlCommand cmd = new SqlCommand();
+            if (ddlDateFilter.SelectedValue == "All")
+            {
+                cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
+                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
+                " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);
+                TotalJob();
+            }
+            else
+            {
+                int days = Convert.ToInt32(ddlDateFilter.SelectedValue);
+                DateTime startDate = DateTime.Today.AddDays(-days);
+                cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
+                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
+                " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE jobPostedDate >= '" + startDate + "' and (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);
+                TotalJob();
+            }
 
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            IndustryJobPostedList.DataSource = ds;
+            IndustryJobPostedList.DataBind();
+            if (IndustryJobPostedList.Items.Count == 0)
+            {
+                ListViewPager.Visible = false;
+            }
+            else
+            {
+                ListViewPager.Visible = true;
+            }
+        }
+
+        void TotalJob()
+        {
+            int industryAccID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand();
+            if (JobTypeSort.SelectedValue != "All" && JobTypeSort.SelectedValue != "0")
+            {
+                cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobType LIKE '%" + JobTypeSort.SelectedValue + "%' and (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "'", conDB);
+
+            }
+            else if (JobStatusSort.SelectedValue != "All" && JobStatusSort.SelectedValue != "0")
+            {
+                string status = "";
+                if(JobStatusSort.SelectedValue == "Active")
+                {
+                    status = "true";
+                }
+                else if(JobStatusSort.SelectedValue == "Inactive")
+                {
+                    status = "false";
+                }
+                cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE isActive = '" + status + "' and (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "'", conDB);
+
+            }
+            else if (ddlDateFilter.SelectedValue != "All" && ddlDateFilter.SelectedValue != "0")
+            {
+                int days = Convert.ToInt32(ddlDateFilter.SelectedValue);
+                DateTime startDate = DateTime.Today.AddDays(-days);
+                cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobPostedDate >= '" + startDate + "' and (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "'", conDB);
+
+            }
+            else if (txtsearchJob.Text != string.Empty)
+            {
+                cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE jobTitle LIKE '%" + txtsearchJob.Text + "%' and (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "'", conDB);
+            }
+            else
+            {
+                cmd = new SqlCommand("select COUNT(jobID) as TotalJob from HIRING WHERE (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "'", conDB);
+            }
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                totalJob.InnerText = "Total " + reader["TotalJob"].ToString() + " jobs found";
+            }
+            reader.Close();
+            conDB.Close();
         }
     }
 }
