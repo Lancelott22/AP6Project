@@ -20,6 +20,15 @@ namespace ctuconnect
             if (!IsPostBack)
             {
                 GetProductivity();
+                GetCooperation();
+                GetAbilityToFollow();
+                GetAbilityToGetAlong();
+                GetInitiative();
+                GetAttendance();
+                GetQualityOfWork();
+                GetAppearance();
+                GetDependability();
+                GetOverAll();
             }
         }
 
@@ -324,6 +333,198 @@ namespace ctuconnect
                     txtCoop3.Text = reader["categoryDetail56"].ToString();
                     txtCoop4.Text = reader["categoryDetail78"].ToString();
                     txtCoop5.Text = reader["categoryDetail910"].ToString();
+                }
+                con.Close();
+                reader.Close();
+            }
+        }
+        void GetAbilityToFollow()
+        {
+            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            int category_ID = 3;
+            using (con)
+            {
+                con.Open();
+                string query = "SELECT categoryDetail12, categoryDetail34, categoryDetail56, categoryDetail78, categoryDetail910 FROM CATEGORY_DETAILS WHERE category_ID = '" + category_ID + "'";
+
+                SqlCommand command = new SqlCommand(query, con);
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    txtAbilityF1.Text = reader["categoryDetail12"].ToString();
+                    txtAbilityF2.Text = reader["categoryDetail34"].ToString();
+                    txtAbilityF3.Text = reader["categoryDetail56"].ToString();
+                    txtAbilityF4.Text = reader["categoryDetail78"].ToString();
+                    txtAbilityF5.Text = reader["categoryDetail910"].ToString();
+                }
+                con.Close();
+                reader.Close();
+            }
+        }
+        void GetAbilityToGetAlong()
+        {
+            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            int category_ID = 4;
+            using (con)
+            {
+                con.Open();
+                string query = "SELECT categoryDetail12, categoryDetail34, categoryDetail56, categoryDetail78, categoryDetail910 FROM CATEGORY_DETAILS WHERE category_ID = '" + category_ID + "'";
+
+                SqlCommand command = new SqlCommand(query, con);
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    txtAbilityG1.Text = reader["categoryDetail12"].ToString();
+                    txtAbilityG2.Text = reader["categoryDetail34"].ToString();
+                    txtAbilityG3.Text = reader["categoryDetail56"].ToString();
+                    txtAbilityG4.Text = reader["categoryDetail78"].ToString();
+                    txtAbilityG5.Text = reader["categoryDetail910"].ToString();
+                }
+                con.Close();
+                reader.Close();
+            }
+        }
+        void GetInitiative()
+        {
+            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            int category_ID = 5;
+            using (con)
+            {
+                con.Open();
+                string query = "SELECT categoryDetail12, categoryDetail34, categoryDetail56, categoryDetail78, categoryDetail910 FROM CATEGORY_DETAILS WHERE category_ID = '" + category_ID + "'";
+
+                SqlCommand command = new SqlCommand(query, con);
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    txtInit1.Text = reader["categoryDetail12"].ToString();
+                    txtInit2.Text = reader["categoryDetail34"].ToString();
+                    txtInit3.Text = reader["categoryDetail56"].ToString();
+                    txtInit4.Text = reader["categoryDetail78"].ToString();
+                    txtInit5.Text = reader["categoryDetail910"].ToString();
+                }
+                con.Close();
+                reader.Close();
+            }
+        }
+        void GetAttendance()
+        {
+            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            int category_ID = 6;
+            using (con)
+            {
+                con.Open();
+                string query = "SELECT categoryDetail12, categoryDetail34, categoryDetail56, categoryDetail78, categoryDetail910 FROM CATEGORY_DETAILS WHERE category_ID = '" + category_ID + "'";
+
+                SqlCommand command = new SqlCommand(query, con);
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    txtAttend1.Text = reader["categoryDetail12"].ToString();
+                    txtAttend2.Text = reader["categoryDetail34"].ToString();
+                    txtAttend3.Text = reader["categoryDetail56"].ToString();
+                    txtAttend4.Text = reader["categoryDetail78"].ToString();
+                    txtAttend5.Text = reader["categoryDetail910"].ToString();
+                }
+                con.Close();
+                reader.Close();
+            }
+        }
+        void GetQualityOfWork()
+        {
+            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            int category_ID = 7;
+            using (con)
+            {
+                con.Open();
+                string query = "SELECT categoryDetail12, categoryDetail34, categoryDetail56, categoryDetail78, categoryDetail910 FROM CATEGORY_DETAILS WHERE category_ID = '" + category_ID + "'";
+
+                SqlCommand command = new SqlCommand(query, con);
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    txtQual1.Text = reader["categoryDetail12"].ToString();
+                    txtQual2.Text = reader["categoryDetail34"].ToString();
+                    txtQual3.Text = reader["categoryDetail56"].ToString();
+                    txtQual4.Text = reader["categoryDetail78"].ToString();
+                    txtQual5.Text = reader["categoryDetail910"].ToString();
+                }
+                con.Close();
+                reader.Close();
+            }
+        }
+        void GetAppearance()
+        {
+            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            int category_ID = 8;
+            using (con)
+            {
+                con.Open();
+                string query = "SELECT categoryDetail12, categoryDetail34, categoryDetail56, categoryDetail78, categoryDetail910 FROM CATEGORY_DETAILS WHERE category_ID = '" + category_ID + "'";
+
+                SqlCommand command = new SqlCommand(query, con);
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    txtAppear1.Text = reader["categoryDetail12"].ToString();
+                    txtAppear2.Text = reader["categoryDetail34"].ToString();
+                    txtAppear3.Text = reader["categoryDetail56"].ToString();
+                    txtAppear4.Text = reader["categoryDetail78"].ToString();
+                    txtAppear5.Text = reader["categoryDetail910"].ToString();
+                }
+                con.Close();
+                reader.Close();
+            }
+        }
+        void GetDependability()
+        {
+            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            int category_ID = 9;
+            using (con)
+            {
+                con.Open();
+                string query = "SELECT categoryDetail12, categoryDetail34, categoryDetail56, categoryDetail78, categoryDetail910 FROM CATEGORY_DETAILS WHERE category_ID = '" + category_ID + "'";
+
+                SqlCommand command = new SqlCommand(query, con);
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    txtDepend1.Text = reader["categoryDetail12"].ToString();
+                    txtDepend2.Text = reader["categoryDetail34"].ToString();
+                    txtDepend3.Text = reader["categoryDetail56"].ToString();
+                    txtDepend4.Text = reader["categoryDetail78"].ToString();
+                    txtDepend5.Text = reader["categoryDetail910"].ToString();
+                }
+                con.Close();
+                reader.Close();
+            }
+        }
+        void GetOverAll()
+        {
+            SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            int category_ID = 10;
+            using (con)
+            {
+                con.Open();
+                string query = "SELECT categoryDetail12, categoryDetail34, categoryDetail56, categoryDetail78, categoryDetail910 FROM CATEGORY_DETAILS WHERE category_ID = '" + category_ID + "'";
+
+                SqlCommand command = new SqlCommand(query, con);
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    txtOverall1.Text = reader["categoryDetail12"].ToString();
+                    txtOverall2.Text = reader["categoryDetail34"].ToString();
+                    txtOverall3.Text = reader["categoryDetail56"].ToString();
+                    txtOverall4.Text = reader["categoryDetail78"].ToString();
+                    txtOverall5.Text = reader["categoryDetail910"].ToString();
                 }
                 con.Close();
                 reader.Close();
