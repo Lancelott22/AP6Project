@@ -5,7 +5,7 @@
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <style>
         .container{
-            min-height: 550px;
+            min-height: 1050px;
             background-color: #FFFFFF;
             width:55%;
             border: 1px solid #FFFFFF;
@@ -83,7 +83,7 @@
                                                         <asp:TextBox ID="txtProd5" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
                                                     </div>
                                                 </div>
-                                        </div>
+                                        </div><br />
                                         <div class="col-6">
                                         <b>Cooperation</b>
                                         <br />
@@ -97,7 +97,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    </div>
+                                    </div><br />
                                     <div class="row">
                                         <div class="col-6">
                                             <b>Ability to Follow Instructions</b>
@@ -112,7 +112,7 @@
 
                                                     </div>
                                                 </div>
-                                        </div>
+                                        </div><br />
                                         <div class="col-6">
                                         <b>Ability to Get Along with People</b>
                                         <br />
@@ -126,54 +126,74 @@
                                             </div>
                                         </div>
                                     </div>
-                                    </div>
+                                    </div><br />
                                     <div class="row">
                                         <div class="col-6">
                                             <b>Initiative</b>
                                                 <br />
                                                 <div class="row details">
                                                     <div class="col-6 d-flex flex-column">
-                                                         
+                                                        <asp:TextBox ID="txtInit1" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                        <asp:TextBox ID="txtInit2" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                        <asp:TextBox ID="txtInit3" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                        <asp:TextBox ID="txtInit4" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                        <asp:TextBox ID="txtInit5" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
                                                     </div>
                                                 </div>
-                                        </div>
+                                        </div><br />
                                         <div class="col-6">
                                         <b>Attendance</b>
                                         <br />
                                         <div class="row details">
                                             <div class="col-6 d-flex flex-column">
-                                                 
+                                                <asp:TextBox ID="txtAttend1" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                <asp:TextBox ID="txtAttend2" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                <asp:TextBox ID="txtAttend3" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                <asp:TextBox ID="txtAttend4" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                <asp:TextBox ID="txtAttend5" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
                                             </div>
                                         </div>
                                     </div>
-                                    </div>
+                                    </div><br />
                                     <div class="row">
                                         <div class="col-6">
                                             <b>Quality of Work</b>
                                                 <br />
                                                 <div class="row details">
                                                     <div class="col-6 d-flex flex-column">
-                                                         
+                                                    <asp:TextBox ID="txtQual1" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                    <asp:TextBox ID="txtQual2" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                    <asp:TextBox ID="txtQual3" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                    <asp:TextBox ID="txtQual4" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                    <asp:TextBox ID="txtQual5" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>  
                                                     </div>
                                                 </div>
-                                        </div>
+                                        </div><br />
                                         <div class="col-6">
                                         <b>Appearance</b>
                                         <br />
                                         <div class="row details">
                                             <div class="col-6 d-flex flex-column">
-                                                 
+                                                <asp:TextBox ID="txtAppear1" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                <asp:TextBox ID="txtAppear2" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                <asp:TextBox ID="txtAppear3" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                <asp:TextBox ID="txtAppear4" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                <asp:TextBox ID="txtAppear5" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox> 
                                             </div>
                                         </div>
                                     </div>
-                                    </div>
+                                    </div><br />
                                     <div class="row">
                                         <div class="col-6">
                                             <b>Dependability</b>
                                                 <br />
                                                 <div class="row details">
                                                     <div class="col-6 d-flex flex-column">
-                                                         
+                                                        <asp:TextBox ID="txtDepend1" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                        <asp:TextBox ID="txtDepend2" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                        <asp:TextBox ID="txtDepend3" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                        <asp:TextBox ID="txtDepend4" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                        <asp:TextBox ID="txtDepend5" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox> 
                                                     </div>
                                                 </div>
                                         </div>
@@ -182,7 +202,11 @@
                                         <br />
                                         <div class="row details">
                                             <div class="col-6 d-flex flex-column">
-                                                 
+                                                <asp:TextBox ID="txtOverall1" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                <asp:TextBox ID="txtOverall2" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                <asp:TextBox ID="txtOverall3" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                <asp:TextBox ID="txtOverall4" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox>
+                                                <asp:TextBox ID="txtOverall5" runat="server" CssClass="txtbox" placeholder="Does just enough..."></asp:TextBox> 
                                             </div>
                                         </div>
                                     </div>
