@@ -257,7 +257,7 @@
 
         .JobPostedListbox {
             width: 100%;
-            min-height: 300px;
+            min-height: 500px;
             background-color: #ffffff;           
             border: 1px solid #FFFFFF;
             padding: 10px;
@@ -353,7 +353,7 @@
                         <div class="d-flex flex-column" style="margin-bottom: 30px;">                           
                             <div class="JobPostedListbox" style="padding: 30px;">
                                  <h3 class="title">My Job Posted</h3><br />
-                                <div class="row mb-5">
+                                <div class="row mb-4">
 
                                     <div class="col input-group mb-3">
                                         <asp:TextBox ID="txtsearchJob" CssClass="form-control searchbox" style="width:200px" runat="server" placeholder="Search job title"></asp:TextBox>
@@ -388,6 +388,7 @@
                                         </asp:DropDownList>
                                     </div>
                                 </div>
+                                <label id="totalJob" runat="server" class="mb-3"></label>
                                 <asp:ListView ID="IndustryJobPostedList" runat="server" class="container-fluid" OnItemDataBound="IndustryJobPostedList_ItemDataBound" OnPagePropertiesChanged="IndustryJobPostedList_PagePropertiesChanged">
                                     <ItemTemplate>
                                         <div id="myJobPosted" runat="server" class="row d-flex align-items-center jobPostedBox">
@@ -448,7 +449,7 @@
                                         </div>
                                     </ItemTemplate>
                                     <EmptyDataTemplate>
-                                        <h3 style="position: relative; top: 100px;">
+                                        <h3 style="position: relative;">
                                             <asp:Label CssClass="alert alert-light d-flex p-2 bd-highlight justify-content-sm-center" runat="server" ID="lblNoAppliedJob" Text="No Job Posted Yet!"></asp:Label></h3>
                                     </EmptyDataTemplate>
                                 </asp:ListView>
