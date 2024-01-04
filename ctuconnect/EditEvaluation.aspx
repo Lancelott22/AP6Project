@@ -9,7 +9,7 @@
         .profile-container{
             font-family: 'Poppins', sans-serif;
             max-width:260px;
-            max-height:660px;
+            min-height:660px;
             background-color:white;
             margin-left:4%;
             padding-bottom:8px;
@@ -19,7 +19,7 @@
         @media (max-width: 790px) {
             .profile-container, .sidemenu-container {
                 max-width: 50%;
-                max-height:auto;
+                max-height:100%;
         
                  padding:5px 5px 5px 5px;
             }
