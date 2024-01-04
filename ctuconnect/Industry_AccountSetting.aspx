@@ -7,59 +7,62 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
         
-        .profile-container{
+        .profile-container {
             font-family: 'Poppins', sans-serif;
-            max-width:260px;
-            max-height:300px;
-            background-color:white;
-            margin-left:4%;
+            max-width: 260px;
+            height: auto;
+            padding: 10px;
+            background-color: white;
+            margin-left: 4%;
         }
+
         @media (max-width: 790px) {
             .profile-container, .sidemenu-container {
                 max-width: 50%;
-                max-height:auto;
-                padding:0px 5px 5px 5px;
+                max-height: auto;
+                padding: 5px 5px 5px 5px;
             }
         }
-        .profile-container img{
-            display:block;
-            width:80%;
-            margin-left:auto;
-            margin-right:auto;
 
+        .profile-container img {
+            display: block;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .profile-container p{
-             display:block;
-             text-align:center;
-             font-size: 19px;
-            margin-top:7%;
+
+        .profile-container p {
+            display: block;
+            text-align: center;
+            font-size: 19px;
+            margin-top: 7%;
         }
-        .sidemenu-container{
+
+        .sidemenu-container {
             font-family: 'Poppins', sans-serif;
-            width:253px;
-            min-height:280px;
-            background-color:white;
+            width: 253px;
+            min-height: 280px;
+            background-color: white;
             /*margin-top:22%;*/
-            padding-top:4px;
-            padding-bottom:4px;
-            margin-bottom:10%;
-            margin-left:4%;
-            border-radius: 25px;
-            border: 2px ;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            margin-bottom: 10%;
+            margin-left: 2%;
+            border-radius: 20px;
+            border: 2px;
             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
-            
         }
        
             .sidemenu-container a {
-                position:static;
+                position: static;
                 border-radius: 25px;
                 color: black;
                 text-decoration: none;
                 font-size: 19px;
                 display: flex;
-                margin: 10px 15px 5px 15px ;
+                margin: 10px 15px 5px 15px;
                 padding: 0px 0px 0px 20px;
-                align-items:center;
+                align-items: center;
             }
             .sidemenu-container a.active{
                  background-color:#F6B665;
@@ -210,14 +213,22 @@
     </style>
      <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
-            <asp:TableCell Style="vertical-align:top; height:200px; ">
+            <asp:TableCell Style="vertical-align:top; height:180px; ">
                 <div class="profile-container">
-                <asp:Image ID="industryImage1" runat="server" />
-                    <center><b><asp:Label ID="disp_industryName" CssClass="disp_industryName"  runat="server" Text=""></asp:Label></b></center>
-                    <center><p style="font-size: 14px;">Account ID: <b><asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b></p></center>
+                  <asp:Image ID="industryImage1" runat="server" />
+                 <center>
+                     <b>
+                         <asp:Label ID="disp_industryName" CssClass="disp_industryName" runat="server" Text=""></asp:Label></b>
+                     <span><i class="fa fa-check-circle" id="verifiedIcon" runat="server" aria-hidden="true" data-toggle="tooltip" data-placement="auto"></i></span></center>
+                 <center>
+                     <p style="font-size: 14px;">
+                         Account ID: <b>
+                             <asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b>
+                     </p>
+                 </center>
                 </div>
             </asp:TableCell>
-            <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
+            <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px; vertical-align:top;">
                <div class="display-container">
                    <h1 class="title">Account Setting</h1>
                 <div><b>Change Password</b></div><br />
@@ -259,7 +270,7 @@
             </asp:TableCell>
         </asp:TableRow>
           <asp:TableRow>
-            <asp:TableCell Style=" vertical-align:top;">
+            <asp:TableCell Style=" vertical-align:top; width:230px;">
                 <div class="sidemenu-container">
                     <a  href="IndustryDashboard.aspx"><i class='bx bxs-dashboard' aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
                      <a  href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
@@ -267,10 +278,10 @@
                      <a href="Applicants.aspx"><i class="fa fa-group" aria-hidden="true"></i>Applicants</a>
                      <a href="HiredList.aspx"><i class="fa fa-check-circle" aria-hidden="true"></i>Hired List</a>
                      <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
+                                        <a href="IndustryProfile.aspx"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
+
                     <a class="active" href="Industry_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right:12px;"></i>Account Settings</a>
 <a href="Industry_Contact.aspx"><i class="fa fa-comments" aria-hidden="true"></i>Contact</a>
-                    <a href="IndustryProfile.aspx"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
-
                      <asp:LinkButton runat="server" ID ="SignOut" OnClick="SignOut_Click" >
    <i class="fa fa-sign-out" aria-hidden="true"></i>
     Sign-out

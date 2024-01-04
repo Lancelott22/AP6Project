@@ -9,30 +9,31 @@
         
         .profile-container{
             font-family: 'Poppins', sans-serif;
-            max-width:260px;
-            max-height:300px;
-            background-color:white;
-            margin-left:4%;
+            max-width: 260px;
+            height: auto;
+            padding: 10px;
+            background-color: white;
+            margin-left: 4%;
         }
         @media (max-width: 790px) {
             .profile-container, .sidemenu-container {
                 max-width: 50%;
                 max-height:auto;
-                padding:0px 5px 5px 5px;
+                padding:5px 5px 5px 5px;
             }
         }
-        .profile-container img{
-            display:block;
-            width:80%;
-            margin-left:auto;
-            margin-right:auto;
-
+        .profile-container img {
+            display: block;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .profile-container p{
-             display:block;
-             text-align:center;
-             font-size: 19px;
-            margin-top:7%;
+
+        .profile-container p {
+            display: block;
+            text-align: center;
+            font-size: 19px;
+            margin-top: 7%;
         }
         .sidemenu-container{
             font-family: 'Poppins', sans-serif;
@@ -43,8 +44,8 @@
             padding-top:4px;
             padding-bottom:4px;
             margin-bottom:10%;
-            margin-left:4%;
-            border-radius: 25px;
+            margin-left:2%;
+            border-radius: 20px;
             border: 2px ;
             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
             
@@ -79,16 +80,10 @@
                 bottom:0;
                 padding: 2% 2% 0% 2%;
                 overflow: auto;
-                /*background-color:white;*/
-                height:550px;
-                /*overflow: auto;
-                float:left;
-                margin-left:25%;
-                position:relative;
-                padding: 4% 0% 0% 6%;*/
+                height:800px;
             }
                 .display-container {
-                    max-width: 100%;
+                    min-width: 100%;
                 }
             
             .display-container .title{
@@ -107,12 +102,12 @@
                 background-color: #881A30;
 
             }
-             .content{
-                 height:100%; 
-                 width:97%; 
-                 margin-left:2%; 
-                 margin-right:2%;
-                 padding: 0px 0px 0px 0px;
+         .content{
+                             height: auto;
+            width: 97%;
+            margin-left: 2%;
+            margin-right: 2%;
+            padding: 0px 0px 0px 0px;
              }
              .gridview-style{
                  margin-top:5%;
@@ -210,14 +205,22 @@
     </style>
      <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
-            <asp:TableCell Style="vertical-align:top; height:200px; ">
+            <asp:TableCell Style="vertical-align:top; height:180px; ">
                 <div class="profile-container">
-                <asp:Image ID="industryImage1" runat="server" />
-                    <center><b><asp:Label ID="disp_industryName" CssClass="disp_industryName"  runat="server" Text=""></asp:Label></b></center>
-                    <center><p style="font-size: 14px;">Account ID: <b><asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b></p></center>
+                  <asp:Image ID="industryImage1" runat="server" />
+                 <center>
+                     <b>
+                         <asp:Label ID="disp_industryName" CssClass="disp_industryName" runat="server" Text=""></asp:Label></b>
+                     <span><i class="fa fa-check-circle" id="verifiedIcon" runat="server" aria-hidden="true" data-toggle="tooltip" data-placement="auto"></i></span></center>
+                 <center>
+                     <p style="font-size: 14px;">
+                         Account ID: <b>
+                             <asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b>
+                     </p>
+                 </center>
                 </div>
             </asp:TableCell>
-            <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
+            <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 25px">
                <div class="display-container">
                    <h1 class="title">Referral List</h1>
                    <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
@@ -259,7 +262,7 @@
             </asp:TableCell>
         </asp:TableRow>
           <asp:TableRow>
-            <asp:TableCell Style=" vertical-align:top;">
+            <asp:TableCell Style=" vertical-align:top; width:230px;">
                 <div class="sidemenu-container">
                     <a  href="IndustryDashboard.aspx"><i class='bx bxs-dashboard' aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
                      <a  href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>

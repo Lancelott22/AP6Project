@@ -37,7 +37,7 @@
 
         .profile-container img {
             display: block;
-            width: 80%;
+            width: 60%;
             margin-left: auto;
             margin-right: auto;
         }
@@ -56,10 +56,10 @@
             background-color: white;
             /*margin-top:22%;*/
             padding-top: 4px;
-            padding-bottom:4px;
+            padding-bottom: 4px;
             margin-bottom: 10%;
-            margin-left: 4%;
-            border-radius: 25px;
+            margin-left: 2%;
+            border-radius: 20px;
             border: 2px;
             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
         }
@@ -89,28 +89,18 @@
                 }
 
         .display-container {
-            font-family: 'Poppins', sans-serif;
-            background-color: white;
-            width: 1000px;
-            top: 0;
-            bottom: 0;
-            padding: 2% 7% 4% 7%;
-            overflow: auto;
-            /*background-color:white;*/
-            height: auto;
-            /*overflow: auto;
-                float:left;
-                margin-left:25%;
-                position:relative;
-                padding: 4% 0% 0% 6%;*/
-            margin-bottom: 30px;
+                font-family: 'Poppins', sans-serif;
+                background-color:white; 
+                width:1500px;
+                top:0;
+                bottom:0;
+                padding: 2% 2% 0% 2%;
+                overflow: auto;
+                height:800px;
         }
-
-        @media (max-width: 790px) {
             .display-container {
-                max-width: 50%;
+                min-width: 100%;
             }
-        }
 
         .display-container .title {
             font-size: 25px;
@@ -127,40 +117,8 @@
                 bottom: 0;
                 background-color: #881A30;
             }
-        /* .details1{
-                
-               display:flex;
-                flex-wrap:wrap;
-            }*/
         .title {
         }
-        /*.input-box{
-               width:100%;
-               background:red;
-               margin-top:20px;
-           }*/
-        /* .input-box input{
-               position:relative;
-               height:40px;
-               width:100%;
-               outline: none;
-           }*/
-
-
-        /* .textbox{
-               position:relative;
-               display:inline-block;
-               height:40px;
-               width:100%;
-               background:red;
-               padding-right:0;
-               justify-content:center;
-           }*/
-        /*.details{
-                width:80%;
-                position:relative;
-                background:red;
-            }*/
         .txtbox {
             display: flex;
             position: relative;
@@ -200,25 +158,16 @@
 
         .content {
             height: auto;
-            width: 95%;
+            width: 97%;
             margin-left: 2%;
             margin-right: 2%;
             padding: 0px 0px 0px 0px;
         }
-        /* .profile{
-                 max-width:25%;
-                 height:200px;
-
-             }*/
         @media (max-width: 790px) {
             .profile {
                 max-width: 20%;
             }
         }
-        /*.label{
-                 font-size:20px;
-                 color:black;
-              }*/
 
 
         .dropdown-bx {
@@ -256,8 +205,8 @@
         }
 
         .JobPostedListbox {
-            width: 100%;
-            min-height: 500px;
+            width: 1570px;
+            min-height: 800px;
             background-color: #ffffff;           
             border: 1px solid #FFFFFF;
             padding: 10px;
@@ -335,21 +284,22 @@
         <ContentTemplate>
             <asp:Table ID="Table1" runat="server" CssClass="content">
                 <asp:TableRow>
-                    <asp:TableCell Style="vertical-align: top; height: 200px;">
+                    <asp:TableCell Style="vertical-align: top; height: 180px;">
                         <div class="profile-container">
-                            <asp:Image ID="industryImage1" runat="server" />
-                            <center>
-                                <b>
-                                    <asp:Label ID="disp_industryName" CssClass="disp_industryName" runat="server" Text=""></asp:Label></b></center>
-                            <center>
-                                <p style="font-size: 14px;">
-                                    Account ID: <b>
-                                        <asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b>
-                                </p>
-                            </center>
+                     <asp:Image ID="industryImage1" runat="server" />
+                    <center>
+                        <b>
+                            <asp:Label ID="disp_industryName" CssClass="disp_industryName" runat="server" Text=""></asp:Label></b>
+                        <span><i class="fa fa-check-circle" id="verifiedIcon" runat="server" aria-hidden="true" data-toggle="tooltip" data-placement="auto"></i></span></center>
+                    <center>
+                        <p style="font-size: 14px;">
+                            Account ID: <b>
+                                <asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b>
+                        </p>
+                    </center>
                         </div> 
                     </asp:TableCell>
-                    <asp:TableCell RowSpan="2">
+                    <asp:TableCell RowSpan="2" style="padding:0px 10px 0px 25px; vertical-align:top;">
                         <div class="d-flex flex-column" style="margin-bottom: 30px;">                           
                             <div class="JobPostedListbox" style="padding: 30px;">
                                  <h3 class="title">My Job Posted</h3><br />

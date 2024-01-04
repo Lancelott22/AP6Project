@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
@@ -13,19 +14,67 @@ namespace ctuconnect
     public partial class Industry_AccountSetting : System.Web.UI.Page
     {
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack && Session["IndustryEmail"] == null)
             {
                 Response.Redirect("LoginOJTCoordinator.aspx");
+
             }
             else
             {
                 PasswordErrorMessage.Visible = false;
                 NewpassErrorMessage.Visible = false;
             }
-        }
+            if (!IsPostBack && Session["IndustryEmail"] != null)
+            {
+                disp_industryName.Text = Session["INDUSTRYNAME"].ToString();
+                disp_accID.Text = Session["INDUSTRY_ACC_ID"].ToString();
 
+                string imagePath = "~/images/IndustryProfile/" + Session["INDUSTRYPIC"].ToString();
+                industryImage1.ImageUrl = imagePath;
+            }
+            if (checkVerified())
+            {
+                verifiedIcon.Attributes.Add("title", "Verified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-info");
+            }
+            else
+            {
+                verifiedIcon.Attributes.Add("title", "Unverified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-danger");
+            }
+        }
+        bool checkVerified()
+        {
+            int industry_accId = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
+            con.Open();
+            SqlCommand cmd = new SqlCommand("select isVerified from INDUSTRY_ACCOUNT where industry_accID = @industry_accID", con);
+            cmd.Parameters.AddWithValue("@industry_accID", industry_accId);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (reader["isVerified"] == DBNull.Value || bool.Parse(reader["isVerified"].ToString()) == false)
+                {
+                    reader.Close();
+                    con.Close();
+                    return false;
+
+                }
+                else
+                {
+                    reader.Close();
+                    con.Close();
+                    return true;
+                }
+
+            }
+            reader.Close();
+            con.Close();
+            return false;
+        }
         protected void BtnUpdatePass_Click(object sender, EventArgs e)
         {
             var newPass = Newpass.Text;

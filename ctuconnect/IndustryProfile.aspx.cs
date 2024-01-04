@@ -8,12 +8,15 @@ using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Text;
+using System.Drawing;
 
 namespace ctuconnect
 {
     public partial class IndustryProfile : System.Web.UI.Page
     {
         string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
+
         private DataTable dtFeedback = new DataTable();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -34,6 +37,16 @@ namespace ctuconnect
                 displayContactPerson();
 
                 this.LoadIndustryFeedback();
+            }
+            if (checkVerified())
+            {
+                verifiedIcon.Attributes.Add("title", "Verified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-info");
+            }
+            else
+            {
+                verifiedIcon.Attributes.Add("title", "Unverified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-danger");
             }
         }
 
@@ -60,7 +73,34 @@ namespace ctuconnect
                 reader.Close();
             }
         }*/
+        bool checkVerified()
+        {
+            int industry_accId = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
+            con.Open();
+            SqlCommand cmd = new SqlCommand("select isVerified from INDUSTRY_ACCOUNT where industry_accID = @industry_accID", con);
+            cmd.Parameters.AddWithValue("@industry_accID", industry_accId);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (reader["isVerified"] == DBNull.Value || bool.Parse(reader["isVerified"].ToString()) == false)
+                {
+                    reader.Close();
+                    con.Close();
+                    return false;
 
+                }
+                else
+                {
+                    reader.Close();
+                    con.Close();
+                    return true;
+                }
+
+            }
+            reader.Close();
+            con.Close();
+            return false;
+        }
         void displayIndustryInfo()
         {
             string industryID = Session["INDUSTRY_ACC_ID"].ToString();

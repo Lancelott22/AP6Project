@@ -36,8 +36,10 @@
         }
 
         .card {
-            background: rgb(121,101,55);
-            background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%);
+            background-color:white;
+            border-radius:20px;
+            min-height: 200px;
+             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
         }
 
         .profile-container img {
@@ -69,7 +71,6 @@
         }
 
             .sidemenu-container a {
-                position: static;
                 border-radius: 25px;
                 color: black;
                 text-decoration: none;
@@ -252,11 +253,19 @@
     
     <asp:Table ID="Table1" runat="server" CssClass="content" >
         <asp:TableRow>
-            <asp:TableCell Style="vertical-align:top; height:200px;" >
+            <asp:TableCell Style="vertical-align:top; height:100px;" >
                 <div class="profile-container">
-                <asp:Image ID="industryImage1" runat="server" />
-                    <center><b><asp:Label ID="disp_industryName" CssClass="disp_industryName"  runat="server" Text=""></asp:Label></b></center>
-                    <center><p style="font-size: 14px;">Account ID: <b><asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b></p></center>
+                    <asp:Image ID="industryImage1" runat="server" />
+                    <center>
+                        <b>
+                            <asp:Label ID="disp_industryName" CssClass="disp_industryName" runat="server" Text=""></asp:Label></b>
+                        <span><i class="fa fa-check-circle" id="verifiedIcon" runat="server" aria-hidden="true" data-toggle="tooltip" data-placement="auto"></i></span></center>
+                    <center>
+                        <p style="font-size: 14px;">
+                            Account ID: <b>
+                                <asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b>
+                        </p>
+                    </center>
                 </div>
             </asp:TableCell> 
             <asp:TableCell  RowSpan="2" Style="padding:0px 5px 0px 40px">
@@ -311,7 +320,7 @@
             </asp:TableRow>
 
         <asp:TableRow>
-            <asp:TableCell Style="vertical-align:top;" >
+            <asp:TableCell Style="vertical-align:top; width:230px;" >
                 <div class="sidemenu-container">
                      <a  href="IndustryDashboard.aspx"><i class='bx bxs-dashboard' aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
                     <a class="active" href="#"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
