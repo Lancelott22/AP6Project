@@ -197,6 +197,8 @@ namespace ctuconnect
 
         protected void UploadGraduate_Click(object sender, EventArgs e)
         {
+            try
+            {
                 HttpPostedFile graduateCSVFile = graduateCSV.PostedFile;
                 string graduateCSVFileName = Path.GetFileName(graduateCSVFile.FileName);
                 string graduateCSVFileEx = Path.GetExtension(graduateCSVFileName).ToLower();
@@ -272,14 +274,91 @@ namespace ctuconnect
                         conDB.Close();
                         Response.Write("<script>alert('The file has been uploaded successfully.');document.location='Coordinator_UploadCSV.aspx';</script>");
                     }
+                    foreach (DataRow row in dt1.Rows)
+                    {
+                        int studentID = int.Parse(row["studentID"].ToString());
+                        if(checkStudentID(studentID))
+                        {
+                            string Name = row["firstName"].ToString() + " " + row["lastName"].ToString();
+                            string graduatedYear = row["yearGraduated"].ToString();
+                            string studentCourse = row["course"].ToString();
+                            // Send email to each student
+                            SendEmailToGraduates(studentID, Name, graduatedYear, studentCourse);
+                        }                       
+                    }
                 }
                 else
                 {
                     Response.Write("<script>alert('The file extension of the uploaded file is not acceptable! Must be .csv file.');document.location='Coordinator_UploadCSV.aspx';</script>");
                 }
-           
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('The csv is not in correct format. The number of columns is not consistent or the column names are missing or invalid. Or the StudentID is already in the list or duplicated.');document.location='Coordinator_UploadCSV.aspx';</script>");
+            }
         }
+        private void SendEmailToGraduates(int studentID, string studentName, string graduatedYear, string studentCourse)
+        {
+            try
+            {
+                string studentEmail = getStudentEmail(studentID);
+                string sendToEmail = studentEmail;
+                string sendFrom = "ctuconnect00@gmail.com";
+                string sendMessage = $"Congratulations ! <br/><br/>" +
+                    $"Hi {studentName}, the Cebu Technological University would like to extend a heartfelt congratulations on completing your degree in {studentCourse} year {graduatedYear}.Your hard work and dedication have truly paid off, and we are thrilled to see you succeed.<br/><br/> " +
+                    $"As you embark on a new chapter, we wanted to share a valuable resource with you. The CTU Connect website offers an extensive job portal where you can explore exciting career opportunities related to your field of study. Take advantage of this platform to connect with potential employers and find the perfect fit for your skills and aspirations.<br/><br/>" +
+                    $"Wishing you success in your career endeavors.<br/><br/>" +
+                    $"here's the link : <a href=\"#\">www.https://ctuconnect.com</a><br/><br/><br/>" +
+                    $"Best regards,<br/><br/>" +
+                    $"CTU Connect";
+                    
+                string subject = "Congratulations Graduate!";
+                using (MailMessage mm = new MailMessage())
+                {
+                    mm.From = new MailAddress(sendFrom, "CTU Connect");
+                    mm.To.Add(sendToEmail);
+                    mm.Subject = subject;
+                    mm.Body = sendMessage;
+                    mm.IsBodyHtml = true;
+                    mm.ReplyToList.Add(new MailAddress(sendFrom));
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.EnableSsl = true;
+                        NetworkCredential NetworkCred = new NetworkCredential();
+                        NetworkCred.UserName = "ctuconnect00@gmail.com";
+                        NetworkCred.Password = "diwvlfhaanwwfsid";
+                        smtp.UseDefaultCredentials = true;
+                        smtp.Credentials = NetworkCred;
+                        smtp.Port = 587;
+                        smtp.Send(mm);
+                    }
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='Coordinator_UploadCSV.aspx'</script>");
+            }
+        }
+        string getStudentEmail(int studentID)
+        {
+            string email = "";
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("Select personalEmail from STUDENT_ACCOUNT Where studentId = @studentId", conDB);
+            cmd.Parameters.AddWithValue("@studentId", studentID);
 
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                email = reader["personalEmail"].ToString();
+                reader.Close();
+                conDB.Close();
+                return email;
+            }
+            reader.Close();
+            conDB.Close();
+            return email;
+        }
         protected void AddIntern_Click(object sender, EventArgs e)
         {
             try

@@ -290,7 +290,7 @@
                     <div>
                         <h3>Upload CSV for Graduates</h3>
                         <asp:FileUpload ID="graduateCSV" runat="server" />
-                        <asp:Button Text="Upload Graduate CSV" CssClass="btn btn-success" ID="UploadGraduate" OnClick="UploadGraduate_Click" runat="server" />
+                        <asp:Button Text="Upload Graduate CSV" CssClass="btn btn-success" ID="UploadGraduate" OnClientClick="showOverlay(this.id);" OnClick="UploadGraduate_Click" runat="server" />
                     </div>
                 </div>
             </asp:TableCell>
@@ -423,14 +423,18 @@
         function showOverlay(buttonId) {
             var SaveInternBtn = document.getElementById('<%= Save.ClientID %>').id;
             var UploadInternBtn = document.getElementById('<%= UploadInternCSV.ClientID %>').id;
+            var UploadGraduateBtn = document.getElementById('<%= UploadGraduate.ClientID %>').id;
             var textLoading = document.getElementById("LoadAddIntern");
             if (buttonId === UploadInternBtn) {
-                textLoading.innerText = 'Uploading CSV';
+                textLoading.innerText = 'Uploading Interns CSV';
             }
             else if (buttonId === SaveInternBtn) {
                 var firstName = document.getElementById('<%= FirstName.ClientID %>').value;
                 var lastName = document.getElementById('<%= LastName.ClientID %>').value;
                 textLoading.innerText = 'Saving ' + firstName + ' ' + lastName + ' Data';
+            }
+            else if (buttonId === UploadGraduateBtn) {
+                textLoading.innerText = 'Uploading Graduates CSV';
             }
             $(".overlay").css("display", "flex");
         }
