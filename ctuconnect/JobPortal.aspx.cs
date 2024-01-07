@@ -104,15 +104,18 @@ namespace ctuconnect
                 job_Type.SelectedIndex = 0;
             }
             int jobId = int.Parse(e.CommandArgument.ToString());
+            ApplyForJob.Value = e.CommandName.ToString();
             if (checkResume())
             {
-              /*  if (isCurrentlyHired())
+                /*  if (isCurrentlyHired())
+                  {
+                      ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertError", "alert('You are currently hired in a company. You cannot apply for another job now. Contact your company if there is a problem.');", true);
+                      //Response.Write("<script>alert('You are currently hired in a company. You cannot apply for another job now. Contact your company if there is a problem.');</script>");
+                  }
+                  else
+                  {*/
+                if (checkApplicantNeeded(jobId))
                 {
-                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertError", "alert('You are currently hired in a company. You cannot apply for another job now. Contact your company if there is a problem.');", true);
-                    //Response.Write("<script>alert('You are currently hired in a company. You cannot apply for another job now. Contact your company if there is a problem.');</script>");
-                }
-                else
-                {*/
                     if (checkJobApplied(jobId) == true)
                     {
                         SubmitApply.Enabled = true;
@@ -150,8 +153,13 @@ namespace ctuconnect
                         Endorsement_LetterBox.Attributes.Add("style", "display:none");
                     }
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "Popup", "showModalFunction();", true);
-                //}
+                    //}
 
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertJobError", "alert('Sorry! "+ ApplyForJob.Value + " Position is Currently Unavailable due to Reached Applicant Limit.');", true);
+                }
             }
             else
             {
@@ -171,6 +179,32 @@ namespace ctuconnect
                     JobBox.Attributes["class"] = "row d-flex align-items-center jobBox";
                 }
             }
+        }
+        bool checkApplicantNeeded(int jobId)
+        {
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("Select totalPositionNeeded, numberOfApplicant from HIRING Where jobID = @jobId", conDB);
+            cmd.Parameters.AddWithValue("@jobId", jobId);
+            
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                int currentApplied = int.Parse(reader["numberOfApplicant"].ToString());
+                int totalNeeded = int.Parse(reader["totalPositionNeeded"].ToString());
+                if (currentApplied != totalNeeded)
+                {
+                    conDB.Close();
+                    return true;
+                }
+                else
+                {
+                    conDB.Close();
+                    return false;
+                }              
+            }
+
+            conDB.Close();
+            return false;
         }
         private int getApplyIndustryId(int jobId)
         {
@@ -265,8 +299,8 @@ namespace ctuconnect
                 int ctr = cmd.ExecuteNonQuery();
                 if (ctr > 0)
                 {
-
-                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('You have successfully submitted your job application.');document.location='MyJobApplication.aspx';", true);
+                    updateHiringApplicant(jobID);
+                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('You have successfully submitted your job application for "+ position + " position.');document.location='MyJobApplication.aspx';", true);
                 }
                 else
                 {
@@ -299,7 +333,8 @@ namespace ctuconnect
                 int ctr = cmd.ExecuteNonQuery();
                 if (ctr > 0)
                 {
-                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('You have successfully submitted your job application.');document.location='MyJobApplication.aspx';", true);
+                    updateHiringApplicant(jobID);
+                    ScriptManager.RegisterClientScriptBlock(Page, GetType(), "alertSuccess", "alert('You have successfully submitted your job application for "+ position + " position.');document.location='MyJobApplication.aspx';", true);
                 }
                 else
                 {
@@ -310,6 +345,18 @@ namespace ctuconnect
 
 
             JobBind();
+        }
+        void updateHiringApplicant(int jobID)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand("UPDATE HIRING SET numberOfApplicant = numberOfApplicant + 1 where jobID = '" + jobID + "'", conDB);
+                cmd.ExecuteNonQuery();
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='JobPortal.aspx'</script>");
+            }
         }
         string getPersonalEmail()
         {
@@ -606,6 +653,7 @@ namespace ctuconnect
                 ApplicationInstruction.Text = reader["applicationInstruction"].ToString();
                 IndustryID.Text = reader["industry_accID"].ToString();
                 DatePosted.Text = reader["DatePosted"].ToString();
+                TotalApplicantsNeeded.Text = reader["numberOfApplicant"].ToString() + " Applied" + " / " + reader["totalPositionNeeded"].ToString() + " Needed";
 
                 if (reader["salaryRange"] == null || reader["salaryRange"].ToString() == string.Empty)
                 {

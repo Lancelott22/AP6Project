@@ -402,6 +402,11 @@
                                                     <asp:Label ID="SalaryRange" runat="server" />
                                                     <br />
                                                 </span>
+                                                <span id="TotalNeeded" runat="server">
+                                                    <label>Total vacancies for this job title: </label>
+                                                    <asp:Label ID="TotalApplicantsNeeded" runat="server" />
+                                                    <br />
+                                                </span>
                                             </div>
                                             <hr style="border: 1px solid #000000;" />
                                             <div class="container-fluid row">

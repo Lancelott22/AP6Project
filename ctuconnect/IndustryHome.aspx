@@ -309,12 +309,25 @@
 
                     <asp:Label ID="Label8" runat="server" Text="Instructions to apply " Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
                      <asp:TextBox ID="jobInstruct" runat="server" TextMode="MultiLine" CssClass="form-control txtbox-instruction" Placeholder="How to apply?"></asp:TextBox>
-                     
-                    <asp:Label ID="Label9" runat="server" Text="Salary Range" Style="font-size:20px;"></asp:Label><span style="color: red">*</span>
-                    <asp:TextBox ID="salary" runat="server" CssClass="form-control txtbox" Placeholder="PHP XXX,XXX - PHP XXX,XXX"></asp:TextBox>
 
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <asp:Label ID="Label9" runat="server" Text="Salary Range" Style="font-size: 20px;"></asp:Label><span style="color: red">*</span>
+                                <asp:TextBox ID="salary" runat="server" CssClass="form-control txtbox" Placeholder="PHP XXX,XXX - PHP XXX,XXX"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <asp:Label ID="Label10" runat="server" Text="Total Position Needed" Style="font-size: 20px;"></asp:Label><span style="color: red">*</span>
+                                <asp:TextBox ID="positionNeeded" runat="server" CssClass="form-control txtbox" TextMode="Number" Placeholder="Number of Applicants Needed"></asp:TextBox>
+                                <asp:RegularExpressionValidator ID="regexPositionNeeded" runat="server" ControlToValidate="positionNeeded"
+                                    ValidationExpression="^[1-9]\d*$" ErrorMessage="Number must be greater than or equal to 1" CssClass="text-danger" Display="Dynamic" EnableClientScript="false" />
+                            </div>
+                        </div>
+                    </div>
                     <asp:CheckBox ID="checkActivateJob" runat="server"/> <span Style="font-size:18px;">Activate Job</span> <span style="color: red">*</span><br />
-                    <asp:Button ID="PostJob" runat="server" CssClass="postJobStyle"  Text="Post" OnClick="PostJob_Click"/>
+                     <asp:Button ID="CancelBtn" runat="server" CssClass="btn btn-danger ms-2" Style="float:right; border-radius:15px; height:40px; width:20%;"  Text="Cancel" PostBackUrl="~/IndustryHome.aspx"/><asp:Button ID="PostJob" runat="server" CssClass="postJobStyle me-2"  Text="Post" OnClick="PostJob_Click"/>
             </div>
                     </asp:TableCell>
             </asp:TableRow>

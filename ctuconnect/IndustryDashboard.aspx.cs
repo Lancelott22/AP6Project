@@ -127,7 +127,7 @@ namespace ctuconnect
         {   
             int industryID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select COUNT(id) as TotalHired from HIRED_LIST WHERE industry_accID = '" + industryID + "'", conDB);
+            SqlCommand cmd = new SqlCommand("select COUNT(id) as TotalHired from HIRED_LIST WHERE ((internshipStatus = 'Ongoing' and studentType = 'Intern' ) or ( workStatus = 'Ongoing' and studentType = 'Alumni')) and industry_accID = '" + industryID + "'", conDB);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
@@ -140,7 +140,7 @@ namespace ctuconnect
         {
             int industryID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
             conDB.Open();
-            SqlCommand cmd = new SqlCommand("select COUNT(applicantID) as TotalApplicant from APPLICANT WHERE industry_accID = '" + industryID + "'", conDB);
+            SqlCommand cmd = new SqlCommand("select COUNT(applicantID) as TotalApplicant from APPLICANT WHERE (applicantStatus = 'Pending' or applicantStatus IS Null) and industry_accID = '" + industryID + "'", conDB);
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
