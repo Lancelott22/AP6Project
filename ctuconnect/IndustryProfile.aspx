@@ -11,52 +11,51 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <style>
      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
-    .profile-container {
-        font-family: 'Poppins', sans-serif;
-        max-width: 260px;
-        height: auto;
-        padding: 10px;
-        background-color: white;
-        margin-left: 4%;
-        margin-bottom: 20px;
-    }
-
-    @media (max-width: 790px) {
-        .profile-container, .sidemenu-container {
-            max-width: 50%;
-            max-height: auto;
-            padding: 5px 5px 5px 5px;
+        .profile-container {
+            font-family: 'Poppins', sans-serif;
+            max-width: 260px;
+            height: auto;
+            padding: 10px;
+            background-color: white;
+            margin-left: 4%;
         }
-    }
 
-    .profile-container img{
-        display:block;
-        width:60%;
-        margin-left:auto;
-        margin-right:auto;
+        @media (max-width: 790px) {
+            .profile-container, .sidemenu-container {
+                max-width: 50%;
+                max-height: auto;
+                padding: 5px 5px 5px 5px;
+            }
+        }
 
-    }
-    .profile-container p{
-         display:block;
-         text-align:center;
-         font-size: 19px;
-        margin-top:7%;
-    }
-    .sidemenu-container{
-        font-family: 'Poppins', sans-serif;
-        width:253px;
-        min-height:280px;
-        background-color:white;
-        /*margin-top:22%;*/
-        padding-top:4px;
-        padding-bottom:4px;
-        margin-bottom:10%;
-        margin-left:2%;
-        border-radius: 20px;
-        border: 2px ;
-        box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
-        
-    }
+        .profile-container img {
+            display: block;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .profile-container p {
+            display: block;
+            text-align: center;
+            font-size: 19px;
+            margin-top: 7%;
+        }
+
+        .sidemenu-container {
+            font-family: 'Poppins', sans-serif;
+            width: 253px;
+            min-height: 280px;
+            background-color: white;
+            /*margin-top:22%;*/
+            padding-top: 4px;
+            padding-bottom: 4px;
+            margin-bottom: 10%;
+            margin-left: 2%;
+            border-radius: 20px;
+            border: 2px;
+            box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+        }
    
         .sidemenu-container a {
             position:static;
@@ -80,21 +79,14 @@
             padding: 0px 0px 0px 20px;
         }
         .display-container{
-            font-family: 'Poppins', sans-serif;
-            font-size:16px;
-            background-color:white; 
-            width:1000px;
-            top:0;
-            bottom:0;
-            padding: 2% 2% 0% 2%;
-            overflow: auto;
-            /*background-color:white;*/
-            height:400px;
-            /*overflow: auto;
-            float:left;
-            margin-left:25%;
-            position:relative;
-            padding: 4% 0% 0% 6%;*/
+                font-family: 'Poppins', sans-serif;
+                background-color:white; 
+                width:1570px;
+                top:0;
+                bottom:0;
+                padding: 2% 2% 0% 2%;
+                overflow: auto;
+                height:350px;
         }
         
         .display-container {
@@ -183,7 +175,7 @@
             font-family: 'Poppins', sans-serif;
             font-size:16px;
             background-color:white; 
-            width:1000px;
+            width:1570px;
             top:0;
             bottom:0;
             padding: 2% 2% 0% 2%;
@@ -196,7 +188,7 @@
             font-family: 'Poppins', sans-serif;
             font-size:12px;
             background-color:white; 
-            width:1000px;
+            width:1570px;
             top:0;
             bottom:0;
             padding: 2% 2% 0% 2%;
@@ -350,14 +342,18 @@
 
     <asp:Table ID="Table1" runat="server" CssClass="content">
         <asp:TableRow>
-            <asp:TableCell Style="vertical-align: top; height: 200px;">
+            <asp:TableCell Style="vertical-align: top; height: 180px;">
                 <div class="profile-container">
-                    <asp:Image ID="industryImage1" runat="server" />
-                    <center><b>
-                        <asp:Label ID="disp_industryName" CssClass="disp_industryName" runat="server" Text=""></asp:Label></b></center>
+                     <asp:Image ID="industryImage1" runat="server" />
                     <center>
-                        <p style="font-size: 14px;">Account ID: <b>
-                            <asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b></p>
+                        <b>
+                            <asp:Label ID="disp_industryName" CssClass="disp_industryName" runat="server" Text=""></asp:Label></b>
+                        <span><i class="fa fa-check-circle" id="verifiedIcon" runat="server" aria-hidden="true" data-toggle="tooltip" data-placement="auto"></i></span></center>
+                    <center>
+                        <p style="font-size: 14px;">
+                            Account ID: <b>
+                                <asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b>
+                        </p>
                     </center>
                 </div>
             </asp:TableCell>
@@ -503,7 +499,7 @@
      
 
         <asp:TableRow>
-            <asp:TableCell Style="vertical-align: top;">
+            <asp:TableCell Style="vertical-align: top; width:230px;">
                 <div class="sidemenu-container">
                     <a href="IndustryDashboard.aspx"><i class="bx bxs-dashboard" aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
                     <a href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>

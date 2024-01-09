@@ -434,6 +434,7 @@ namespace ctuconnect
                 ApplicationInstruction.Text = reader["applicationInstruction"].ToString();
                 IndustryID.Text = reader["industry_accID"].ToString();
                 DatePosted.Text = reader["DatePosted"].ToString();
+                TotalApplicantsNeeded.Text = reader["numberOfApplicant"].ToString() + " Applied" + " / " + reader["totalPositionNeeded"].ToString() + " Needed";
 
                 if (reader["salaryRange"] == null || reader["salaryRange"].ToString() == string.Empty)
                 {

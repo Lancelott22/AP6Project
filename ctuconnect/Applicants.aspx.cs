@@ -26,6 +26,8 @@ namespace ctuconnect
     public partial class Applicants : System.Web.UI.Page
     {
         string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
+
         private DataTable dtApplicants = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -79,9 +81,47 @@ namespace ctuconnect
                 }
 
             }
+            if (checkVerified())
+            {
+                verifiedIcon.Attributes.Add("title", "Verified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-info");
+            }
+            else
+            {
+                verifiedIcon.Attributes.Add("title", "Unverified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-danger");
+            }
 
         }
 
+        bool checkVerified()
+        {
+            int industry_accId = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
+            con.Open();
+            SqlCommand cmd = new SqlCommand("select isVerified from INDUSTRY_ACCOUNT where industry_accID = @industry_accID", con);
+            cmd.Parameters.AddWithValue("@industry_accID", industry_accId);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (reader["isVerified"] == DBNull.Value || bool.Parse(reader["isVerified"].ToString()) == false)
+                {
+                    reader.Close();
+                    con.Close();
+                    return false;
+
+                }
+                else
+                {
+                    reader.Close();
+                    con.Close();
+                    return true;
+                }
+
+            }
+            reader.Close();
+            con.Close();
+            return false;
+        }
         void ChangeReviewButtonText()
         {
             foreach (RepeaterItem item in rptApplicant.Items)
@@ -535,65 +575,73 @@ namespace ctuconnect
 
         void sendInterviewStatus(int applicantID)
         {
-            string industryName = Session["INDUSTRYNAME"].ToString();
-            string industryLocation = Session["LOCATION"].ToString();
-
-            using (SqlConnection connection = new SqlConnection(conDB))
+            try
             {
-                connection.Open();
-                using (SqlCommand command = connection.CreateCommand())
+
+                string industryName = Session["INDUSTRYNAME"].ToString();
+                string industryLocation = Session["LOCATION"].ToString();
+
+                using (SqlConnection connection = new SqlConnection(conDB))
                 {
-                    command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT * FROM APPLICANT WHERE applicantID = @ApplicantID";
-                    command.Parameters.AddWithValue("@ApplicantID", applicantID);
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    connection.Open();
+                    using (SqlCommand command = connection.CreateCommand())
                     {
-                        if (reader.Read())
+                        command.CommandType = CommandType.Text;
+                        command.CommandText = "SELECT * FROM APPLICANT WHERE applicantID = @ApplicantID";
+                        command.Parameters.AddWithValue("@ApplicantID", applicantID);
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
+                            if (reader.Read())
+                            {
 
-                            string emailApplicant = reader["applicantEmail"].ToString();
-                            string positionApplicant = reader["appliedPosition"].ToString();
-                            string nameApplicant = reader["applicantFname"].ToString() + " " + reader["applicantLname"].ToString();
-                            DateTime interviewScheduledDate = Convert.ToDateTime(reader["interviewScheduledDate"]);
-                            string interviewSched = interviewScheduledDate.ToString("MM/dd/yyyy");
-                            string interviewDetails = HttpUtility.HtmlDecode(reader["interviewDetails"].ToString());
+                                string emailApplicant = reader["applicantEmail"].ToString();
+                                string positionApplicant = reader["appliedPosition"].ToString();
+                                string nameApplicant = reader["applicantFname"].ToString() + " " + reader["applicantLname"].ToString();
+                                DateTime interviewScheduledDate = Convert.ToDateTime(reader["interviewScheduledDate"]);
+                                string interviewSched = interviewScheduledDate.ToString("MM/dd/yyyy");
+                                string interviewDetails = HttpUtility.HtmlDecode(reader["interviewDetails"].ToString());
 
 
-                            reader.Close();
+                                reader.Close();
 
-                            string sendFrom = Session["IndustryEmail"].ToString();
-                            MailMessage mm = new MailMessage();
-                            mm.From = new MailAddress(sendFrom, "Message from " + industryName);
-                            mm.To.Add(emailApplicant);
-                            mm.Subject = "Interview Status";
-                            mm.Body = string.Format("Dear {0}, <br /><br />" +
-                                "I trust this email finds you well. We are pleased to inform you that your application for <br/>" +
-                                "the {1} position at {2} has progressed successfully," +
-                                "and we would like to invite you for an interview.<br/><br/>" +
-                                "Your interview has been scheduled for:<br/><br/>" +
-                                "Date: {3}<br/>" +
-                                "Details: {4}<br/><br/>" +
-                                "We look forward to discussing your qualifications, experiences, and how they align with the<br/>" +
-                                "requirements of the position. Please be prepared to share more about your skills and insights into <br/>" +
-                                "how you can contribute to our team.<br/><br/>" +
-                                "Best regards,<br/>" +
-                                "{5}", nameApplicant, positionApplicant, industryName, interviewSched, interviewDetails, industryName);
-                            mm.IsBodyHtml = true;
-                            SmtpClient smtp = new SmtpClient();
-                            smtp.Host = "smtp.gmail.com";
-                            smtp.EnableSsl = true;
-                            NetworkCredential NetworkCred = new NetworkCredential();
-                            NetworkCred.UserName = "ctuconnect00@gmail.com";
-                            NetworkCred.Password = "diwvlfhaanwwfsid";
-                            smtp.UseDefaultCredentials = true;
-                            smtp.Credentials = NetworkCred;
-                            smtp.Port = 587;
-                            smtp.Send(mm);
+                                string sendFrom = Session["IndustryEmail"].ToString();
+                                MailMessage mm = new MailMessage();
+                                mm.From = new MailAddress(sendFrom, "Message from " + industryName);
+                                mm.To.Add(emailApplicant);
+                                mm.Subject = "Interview Status";
+                                mm.Body = string.Format("Dear {0}, <br /><br />" +
+                                    "I trust this email finds you well. We are pleased to inform you that your application for <br/>" +
+                                    "the {1} position at {2} has progressed successfully," +
+                                    "and we would like to invite you for an interview.<br/><br/>" +
+                                    "Your interview has been scheduled for:<br/><br/>" +
+                                    "Date: {3}<br/>" +
+                                    "Details: {4}<br/><br/>" +
+                                    "We look forward to discussing your qualifications, experiences, and how they align with the<br/>" +
+                                    "requirements of the position. Please be prepared to share more about your skills and insights into <br/>" +
+                                    "how you can contribute to our team.<br/><br/>" +
+                                    "Best regards,<br/>" +
+                                    "{5}", nameApplicant, positionApplicant, industryName, interviewSched, interviewDetails, industryName);
+                                mm.IsBodyHtml = true;
+                                SmtpClient smtp = new SmtpClient();
+                                smtp.Host = "smtp.gmail.com";
+                                smtp.EnableSsl = true;
+                                NetworkCredential NetworkCred = new NetworkCredential();
+                                NetworkCred.UserName = "ctuconnect00@gmail.com";
+                                NetworkCred.Password = "diwvlfhaanwwfsid";
+                                smtp.UseDefaultCredentials = true;
+                                smtp.Credentials = NetworkCred;
+                                smtp.Port = 587;
+                                smtp.Send(mm);
 
-                            Response.Write("<script>alert('Interview is successfully scheduled..')</script>");
+                                Response.Write("<script>alert('Interview is successfully scheduled..')</script>");
+                            }
                         }
                     }
                 }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong!.');</script>");
             }
         }
 
@@ -791,7 +839,7 @@ namespace ctuconnect
                         db.Open();
                         cmd.ExecuteNonQuery();
                         sendApplicationStatusReject(applicantID);
-
+                        updateApplicant(applicantID);
                     }
                 }
                 else if (selectedStatus == "Hire")
@@ -858,6 +906,8 @@ namespace ctuconnect
                                             editStudentAccount(studentID);
                                             InsertHiredList(jobType, studentID, applicantfname, applicantlname, jobid, industryID, studentType, WorkedAt, position, resumefile, startingDate);
                                             sendApplicationStatusApprove(applicantID);
+                                            updateHiringApplicant(jobid);
+
                                         }
                                     }
                                 }
@@ -1322,6 +1372,54 @@ namespace ctuconnect
             conDB.Close();
             reader.Close();
             return skills;
+        }
+
+        void updateApplicant(int applicantID)
+        {
+            using (SqlConnection connection = new SqlConnection(conDB))
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT jobID FROM APPLICANT WHERE applicantID = @ApplicantID";
+                    command.Parameters.AddWithValue("@ApplicantID", applicantID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            string jobID = reader["jobID"].ToString();
+                            int jobid = Convert.ToInt32(jobID);
+                            
+                            updateHiringApplicant(jobid);
+
+                        }
+                    }
+                }
+            }
+        }
+        void updateHiringApplicant(int jobID)
+        {
+            try
+            {
+                using (var db = new SqlConnection(conDB))
+                {
+                    db.Open();
+                    using (var cmd = db.CreateCommand())
+                    {
+
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandText = "UPDATE HIRING SET numberOfApplicant = numberOfApplicant - 1 where jobID = '" + jobID + "' ";
+                        var ctr = cmd.ExecuteNonQuery();
+                        //if (ctr > 0)
+
+                    }
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='JobPortal.aspx'</script>");
+            }
         }
     }
         

@@ -37,12 +37,50 @@ namespace ctuconnect
                 IndustryJobPostedBind();
                 TotalJob();
             }
+            if (checkVerified())
+            {
+                verifiedIcon.Attributes.Add("title", "Verified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-info");
+            }
+            else
+            {
+                verifiedIcon.Attributes.Add("title", "Unverified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-danger");
+            }
+        }
+        bool checkVerified()
+        {
+            int industry_accId = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select isVerified from INDUSTRY_ACCOUNT where industry_accID = @industry_accID", conDB);
+            cmd.Parameters.AddWithValue("@industry_accID", industry_accId);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (reader["isVerified"] == DBNull.Value || bool.Parse(reader["isVerified"].ToString()) == false)
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return false;
+
+                }
+                else
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return true;
+                }
+
+            }
+            reader.Close();
+            conDB.Close();
+            return false;
         }
         private void IndustryJobPostedBind()
         {
             int industryAccID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
             SqlCommand cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
-                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
+                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT WHERE (applicantStatus = 'Pending' or applicantStatus IS Null) GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
                 " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
@@ -155,7 +193,7 @@ namespace ctuconnect
             if (JobStatusSort.SelectedValue == "All")
             {
                 cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
-                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
+                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT WHERE (applicantStatus = 'Pending' or applicantStatus IS Null) GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
                 " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);
                 TotalJob();
             }
@@ -171,7 +209,7 @@ namespace ctuconnect
                     status = "false";
                 }
                 cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
-                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
+                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT WHERE (applicantStatus = 'Pending' or applicantStatus IS Null) GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
                 " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE isActive = '" + status + "' and (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);
                 TotalJob();
             }
@@ -196,14 +234,14 @@ namespace ctuconnect
             if (JobTypeSort.SelectedValue == "All")
             {
                 cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
-                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
+                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT WHERE (applicantStatus = 'Pending' or applicantStatus IS Null) GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
                 " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);                
                 TotalJob();
             }
             else
             {
                 cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
-                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
+                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT WHERE (applicantStatus = 'Pending' or applicantStatus IS Null) GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
                 " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE jobType LIKE '%" + JobTypeSort.SelectedValue + "%' and (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);               
                 TotalJob();
             }
@@ -225,7 +263,7 @@ namespace ctuconnect
         {
              int industryAccID = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
             SqlCommand cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
-                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
+                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT WHERE (applicantStatus = 'Pending' or applicantStatus IS Null) GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
                 " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE jobTitle LIKE '%" + txtsearchJob.Text + "%' and (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);
             TotalJob();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -249,7 +287,7 @@ namespace ctuconnect
             if (ddlDateFilter.SelectedValue == "All")
             {
                 cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
-                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
+                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT WHERE (applicantStatus = 'Pending' or applicantStatus IS Null) GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
                 " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);
                 TotalJob();
             }
@@ -258,7 +296,7 @@ namespace ctuconnect
                 int days = Convert.ToInt32(ddlDateFilter.SelectedValue);
                 DateTime startDate = DateTime.Today.AddDays(-days);
                 cmd = new SqlCommand("SELECT HIRING.*,  case when isActive = 1 then 'Active' else 'Inactive' end as JobStatus, CONVERT(nvarchar, jobPostedDate, 1) as DatePosted , INDUSTRY_ACCOUNT.industryPicture, COALESCE(APPLICANT.NumberOfApplicants, 0) AS NumberOfApplicants" +
-                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
+                " FROM HIRING LEFT JOIN (SELECT jobID, COUNT(applicantID) AS NumberOfApplicants FROM APPLICANT WHERE (applicantStatus = 'Pending' or applicantStatus IS Null) GROUP BY jobID) APPLICANT ON HIRING.jobID = APPLICANT.jobID" +
                 " INNER JOIN INDUSTRY_ACCOUNT ON INDUSTRY_ACCOUNT.industry_accID = HIRING.industry_accID WHERE jobPostedDate >= '" + startDate + "' and (isDeletedByAdmin IS NULL OR isDeletedByAdmin != 1) and HIRING.industry_accID = '" + industryAccID + "' ORDER BY jobPostedDate DESC;", conDB);
                 TotalJob();
             }

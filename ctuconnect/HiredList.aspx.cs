@@ -17,6 +17,8 @@ namespace ctuconnect
     {
 
         string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
+
 
         private int currentStudentID;
 
@@ -98,8 +100,45 @@ namespace ctuconnect
                 }
 
             }
+            if (checkVerified())
+            {
+                verifiedIcon.Attributes.Add("title", "Verified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-info");
+            }
+            else
+            {
+                verifiedIcon.Attributes.Add("title", "Unverified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-danger");
+            }
 
+        }
+        bool checkVerified()
+        {
+            int industry_accId = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
+            con.Open();
+            SqlCommand cmd = new SqlCommand("select isVerified from INDUSTRY_ACCOUNT where industry_accID = @industry_accID", con);
+            cmd.Parameters.AddWithValue("@industry_accID", industry_accId);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (reader["isVerified"] == DBNull.Value || bool.Parse(reader["isVerified"].ToString()) == false)
+                {
+                    reader.Close();
+                    con.Close();
+                    return false;
 
+                }
+                else
+                {
+                    reader.Close();
+                    con.Close();
+                    return true;
+                }
+
+            }
+            reader.Close();
+            con.Close();
+            return false;
         }
 
         private bool CheckIfEvaluationPerformed()

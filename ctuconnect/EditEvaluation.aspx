@@ -6,74 +6,75 @@
  <style>
      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
      
-     .profile-container{
-         font-family: 'Poppins', sans-serif;
-         max-width:260px;
-         max-height:630px;
-         background-color:white;
-         margin-left:1%;
-         padding-bottom:8px;
-          border: 2px ;
-         box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
-     }
-     @media (max-width: 790px) {
-         .profile-container, .sidemenu-container {
-             max-width: 50%;
-             max-height:auto;
-              padding:5px 5px 5px 5px;
-         }
-     }
-     .profile-container img{
-         display:block;
-         width:50%;
-         margin-left:auto;
-         margin-right:auto;
-         margin-top:auto;
-         padding-top:10px;
+        .profile-container{
+            font-family: 'Poppins', sans-serif;
+            max-width:260px;
+            min-height:660px;
+            background-color:white;
+            margin-left:4%;
+            padding-bottom:8px;
+             border: 2px ;
+            box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 790px) {
+            .profile-container, .sidemenu-container {
+                max-width: 50%;
+                max-height:100%;
+        
+                 padding:5px 5px 5px 5px;
+            }
+        }
+        .profile-container img{
+            display:block;
+            width:50%;
+            margin-left:auto;
+            margin-right:auto;
+            margin-top:auto;
+            padding-top:10px;
 
-     }
-     .profile-container p{
-          display:block;
-          text-align:center;
-          font-size: 19px;
-         margin-top:7%;
-     }
-     .sidemenu-container{
-         font-family: 'Poppins', sans-serif;
-         width:260px;
-         height:200px;
-         background-color:white;
-         /*margin-top:22%;*/
-         padding-top:4px;
-         margin-bottom:10%;
-         margin-left:4%;
-         border-radius: 25px;
-         border: 2px ;
-         box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
-         
-     }
-    
-         .profile-container a {
-             position:static;
-             border-radius: 10px;
-             color: black;
-             text-decoration: none;
+        }
+        .profile-container p{
+             display:block;
+             text-align:center;
              font-size: 19px;
-             display: block;
-             margin: 2px 15px 5px 15px ;
-             padding: 0px 0px 0px 8px;
-         }
-         .profile-container a.active{
-              background-color:#F6B665;
-             color:#606060;
-         }
-         .profile-container a:hover{
-             background-color:#fcd49a;
-             color:#606060;
-             margin: 2px 15px 5px 15px ;
-             padding: 0px 0px 0px 8px;
-             text-decoration: none;
-         }
+            margin-top:7%;
+        }
+        .sidemenu-container{
+            font-family: 'Poppins', sans-serif;
+            width:260px;
+            height:200px;
+            background-color:white;
+            /*margin-top:22%;*/
+            padding-top:4px;
+            margin-bottom:10%;
+            margin-left:4%;
+            border-radius: 25px;
+            border: 2px ;
+            box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+    
+        }
+       
+            .profile-container a {
+                position:static;
+                border-radius: 10px;
+                color: black;
+                text-decoration: none;
+                font-size: 19px;
+                display: block;
+                margin: 2px 15px 5px 15px ;
+                padding: 0px 0px 0px 8px;
+            }
+            .profile-container a.active{
+                 background-color:#F6B665;
+                color:#606060;
+            }
+            .profile-container a:hover{
+                background-color:#fcd49a;
+                color:#606060;
+                margin: 2px 15px 5px 15px ;
+                padding: 0px 0px 0px 8px;
+                text-decoration: none;
+            }
          .container{
              font-family: 'Poppins', sans-serif;
              background-color:white; 
@@ -105,13 +106,33 @@
         }
              
           .content{
-              height:100%; 
-              width:97%; 
-              margin-left:2%; 
-              margin-right:2%;
-              padding: 0px 0px 0px 0px;
-          }
- 
+            height:100%; 
+            width:97%; 
+            margin-left:2%; 
+            margin-right:2%;
+            padding: 0px 0px 0px 0px;
+        }
+
+          .horizontal-line {
+             border: none;
+             border-top: 2px solid black;
+             width: 90%;
+             margin-left:auto;
+             margin-right:auto;
+             margin-top:1%;
+             margin-bottom:0%;
+         }
+        
+          .second {
+            border: none;
+            border-top: 1.5px solid black;
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 13%;
+            margin-bottom: 0%;
+        }
+
          .full-time:active::before{
                      content:'';
                      position:absolute;
@@ -136,32 +157,37 @@
             height:45px;
         }
 
+         .fa {
+            width:20px;
+            margin-right: 19px; 
+        }
+
  </style>
  <asp:Table ID="Table1" runat="server"  CssClass="content">
      <asp:TableRow>
          <asp:TableCell  style="vertical-align: top;">
-             <div class="profile-container">
-<asp:Image ID="CoordinatorImage" runat="server"/>
-             <p >OJT Coordinator</p>
-                 <hr class="horizontal-line" />
-                 <a href="CoordinatorProfile.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
-                 <a  href="ListOfAlumni.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Alumni</a>
-                 <a  href="PartneredIndustries.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Partnered Industry</a>
-                  <a href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:12px; width:32px;"></i>Refer Student</a>
-                 <a  href="CourseLists.aspx"> <i class="fa fa-book" aria-hidden="true" style="padding-right:12px;"></i>Course List</a>
-                 <a  href="Blacklist.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Blacklist Industry</a>
-                 <a  href="Coordinator_UploadCSV.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Upload CSV</a>
-                 <a  href="TracerDashboard.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
-                 <a  class="active" href="EditEvaluation.aspx"><i class="fa fa-file-text" aria-hidden="true" style="padding-right:12px;"></i>Evaluation Form</a>
-                  <hr class="second" />
-                 <a href="OJTCoordinator_Profile.aspx"><i class="fa fa-user" aria-hidden="true" style="padding-right:12px;"></i>Profile</a>
-                 <a href="Coord_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right:12px;"></i>Account Settings</a>
-                     <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
+              <div class="profile-container">
+               <asp:Image ID="CoordinatorImage" runat="server"/>   
+                   <p >OJT Coordinator</p>
+                   <hr class="horizontal-line" />
+                   <a href="CoordinatorProfile.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
+                   <a href="ListOfAlumni"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Alumni</a>
+                   <a href="PartneredIndustries.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Partnered Industry</a>
+                   <a href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:12px;"></i>Refer Student</a>
+                   <a href="CourseLists.aspx"> <i class="fa fa-book" aria-hidden="true" style="padding-right:12px;"></i>Course List</a>
+                   <a href="Blacklist.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Blacklist Industry</a>
+                   <a href="Coordinator_Contact.aspx"><i class="fa fa-comments" aria-hidden="true" style="padding-right:12px;"></i>Contact</a>
+                   <a href="Coordinator_UploadCSV.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Upload CSV</a>
+                   <a href="TracerDashboard.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
+                   <a class="active" href="EditEvaluation.aspx"><i class="fa fa-file-text" aria-hidden="true" style="padding-right:12px;"></i>Evaluation Form</a>
+                   <hr class="second" />
+                   <a href="OJTCoordinator_Profile.aspx"><i class="fa fa-user" aria-hidden="true" style="padding-right:12px;"></i>Profile</a>
+                   <a href="Coord_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right:12px;"></i>Account Settings</a>
+                   <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
                        <i class="fa fa-sign-out" aria-hidden="true"></i>
-                        Sign-out
-                    </asp:LinkButton>
-
-             </div>
+                       Sign-out
+                       </asp:LinkButton>
+            </div>
          </asp:TableCell>
          <asp:TableCell Style="padding:0px 5px 0px 40px">
             <div class="col-9 d-flex flex-column">

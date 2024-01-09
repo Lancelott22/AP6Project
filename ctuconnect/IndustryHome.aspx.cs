@@ -39,20 +39,64 @@ namespace ctuconnect
             jobLoc.Enabled = false;
             if (!IsPostBack)
             {
-                fillJobDetails();
-                bindCourse();
-
+                if (Request.QueryString["jobid"] != null)
+                {
+                    fillJobDetails();
+                }else
+                {
+                    bindCourse();
+                }
+                   
                 if(bool.Parse(Session["ISVerified"].ToString()) == false)
                 {
                     Response.Write("<script>alert('Your account is not yet verified! You cannot post a job right now.');document.location='IndustryDashboard.aspx';</script>");
                 }
             }
-            
+            if (checkVerified())
+            {
+                verifiedIcon.Attributes.Add("title", "Verified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-info");
+            }
+            else
+            {
+                verifiedIcon.Attributes.Add("title", "Unverified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-danger");
+            }
+
+        }
+        bool checkVerified()
+        {
+            int industry_accId = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select isVerified from INDUSTRY_ACCOUNT where industry_accID = @industry_accID", conDB);
+            cmd.Parameters.AddWithValue("@industry_accID", industry_accId);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (reader["isVerified"] == DBNull.Value || bool.Parse(reader["isVerified"].ToString()) == false)
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return false;
+
+                }
+                else
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return true;
+                }
+
+            }
+            reader.Close();
+            conDB.Close();
+            return false;
         }
         void fillJobDetails()
-        {
+        {           
             if (Request.QueryString["jobid"] != null)
             {
+                bindCourse();
                 int jobId = int.Parse(Request.QueryString["jobid"].ToString());
                 conDB.Open();
                 SqlCommand cmd = new SqlCommand("select * from HIRING where jobID = @jobID", conDB);
@@ -86,6 +130,7 @@ namespace ctuconnect
                     jobQuali.Text = HttpUtility.HtmlDecode(reader["jobQualifications"].ToString());
                     jobInstruct.Text = reader["applicationInstruction"].ToString();
                     salary.Text = reader["salaryRange"].ToString();
+                    positionNeeded.Text = reader["totalPositionNeeded"].ToString();
                     PostJob.Text = "Update Post";
                     JobTitle.Enabled = false;
                     if (bool.Parse(reader["isActive"].ToString()) == true)
@@ -103,9 +148,12 @@ namespace ctuconnect
         }
         protected void PostJob_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(JobTitle.Text) || string.IsNullOrEmpty(IndName.Text) || jobtype.Value.Equals("") || course.Value.Equals("") || string.IsNullOrEmpty(jobLoc.Text) || string.IsNullOrEmpty(jobDescript.Text) || string.IsNullOrEmpty(jobQuali.Text))
+            if (string.IsNullOrEmpty(JobTitle.Text) || string.IsNullOrEmpty(IndName.Text) || jobtype.Value.Equals("") || course.Value.Equals("") || string.IsNullOrEmpty(jobLoc.Text) || string.IsNullOrEmpty(jobDescript.Text) || string.IsNullOrEmpty(jobQuali.Text) || string.IsNullOrEmpty(positionNeeded.Text))
             {
                 Response.Write("<script>alert('Please fill up the required field.')</script>");
+            }
+            else if(!regexPositionNeeded.IsValid) {
+                regexPositionNeeded.Visible = true;
             }
             else if (Request.QueryString["jobid"] != null)
             {
@@ -136,11 +184,12 @@ namespace ctuconnect
                 string jobQualification = HttpUtility.HtmlEncode(jobQuali.Text);
                 string jobInstruction = jobInstruct.Text;
                 string salaryRange = salary.Text;
+                int positionNeed = int.Parse(positionNeeded.Text);
                 bool isActiveJob = checkActivateJob.Checked;
                 conDB.Open();
                 SqlCommand cmd = new SqlCommand("UPDATE HIRING SET jobTitle=@jobTitle, industryName=@industryName, " +
                     "jobType=@jobType, jobCourse=@jobCourse, jobLocation=@jobLocation, jobDescription=@jobDescription, jobQualifications=@jobQualifications, " +
-                    "applicationInstruction=@applicationInstruction,salaryRange=@salary,isActive = @isActive, WHERE jobID = @jobId", conDB);
+                    "applicationInstruction=@applicationInstruction,salaryRange=@salary,totalPositionNeeded = @totalPositionNeeded,  isActive = @isActive WHERE jobID = @jobId", conDB);
                 cmd.Parameters.AddWithValue("@jobTitle", jobTitle);
                 cmd.Parameters.AddWithValue("@industryName", industryName);
                 cmd.Parameters.AddWithValue("@jobType", jobType);
@@ -150,6 +199,7 @@ namespace ctuconnect
                 cmd.Parameters.AddWithValue("@jobQualifications", jobQualification);
                 cmd.Parameters.AddWithValue("@applicationInstruction", jobInstruction);
                 cmd.Parameters.AddWithValue("@salary", salaryRange);
+                cmd.Parameters.AddWithValue("@totalPositionNeeded", positionNeed);
                 cmd.Parameters.AddWithValue("@isActive", isActiveJob);
                 cmd.Parameters.AddWithValue("@jobId", jobId);
                 
@@ -196,12 +246,13 @@ namespace ctuconnect
                 string jobQualification = HttpUtility.HtmlEncode(jobQuali.Text);
                 string jobInstruction = jobInstruct.Text;
                 string salaryRange = salary.Text;
+                int positionNeed = int.Parse(positionNeeded.Text);
                 bool isActiveJob = checkActivateJob.Checked;
                 conDB.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO HIRING( industry_accID, jobTitle, industryName, " +
-                    "jobType, jobCourse, jobLocation, jobDescription, jobQualifications, applicationInstruction,salaryRange,isActive,jobPostedDate, isRead, isRemove)" +
+                    "jobType, jobCourse, jobLocation, jobDescription, jobQualifications, applicationInstruction,salaryRange, totalPositionNeeded, isActive,jobPostedDate, isRead, isRemove)" +
                     "VALUES(@industry_accID, @jobTitle, @industryName,@jobType,@jobCourse,@jobLocation,@jobDescription," +
-                    "@jobQualifications,@applicationInstruction, @salary,@isActive,@jobPostedDate, @isRead, @isRemove)", conDB);
+                    "@jobQualifications,@applicationInstruction, @salary, @totalPositionNeeded, @isActive,@jobPostedDate, @isRead, @isRemove)", conDB);
                 cmd.Parameters.AddWithValue("@industry_accID", industryAccID);
                 cmd.Parameters.AddWithValue("@jobTitle", jobTitle);
                 cmd.Parameters.AddWithValue("@industryName", industryName);
@@ -212,6 +263,7 @@ namespace ctuconnect
                 cmd.Parameters.AddWithValue("@jobQualifications", jobQualification);
                 cmd.Parameters.AddWithValue("@applicationInstruction", jobInstruction);
                 cmd.Parameters.AddWithValue("@salary", salaryRange);
+                cmd.Parameters.AddWithValue("@totalPositionNeeded", positionNeed);
                 cmd.Parameters.AddWithValue("@isActive", isActiveJob);
                 cmd.Parameters.AddWithValue("@jobPostedDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@isRead", 0);

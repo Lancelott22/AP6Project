@@ -195,6 +195,24 @@ namespace ctuconnect
         protected global::System.Web.UI.WebControls.Label SalaryRange;
 
         /// <summary>
+        /// TotalNeeded control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TotalNeeded;
+
+        /// <summary>
+        /// TotalApplicantsNeeded control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TotalApplicantsNeeded;
+
+        /// <summary>
         /// JobDescription control.
         /// </summary>
         /// <remarks>

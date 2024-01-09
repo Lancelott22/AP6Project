@@ -32,8 +32,10 @@
         }
 
         .card {
-            background: rgb(121,101,55);
-            background: linear-gradient(90deg, rgba(121,101,55,1) 0%, rgba(245,168,2,1) 40%);
+            background-color:white;
+            border-radius:20px;
+            min-height: 200px;
+             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
         }
 
         .profile-container img {
@@ -133,6 +135,7 @@
                 flex-wrap:wrap;
             }*/
         .title {
+            
         }
         /*.input-box{
                width:100%;
@@ -249,14 +252,15 @@
             }
 
         .txtsuggestion {
-            background-color: #F0EBEB;
-            border: 1px solid grey;
-            border-radius: 5px;
+            background-color: white;
+            border-radius: 20px;
             min-width: 100%;
             min-height: 200px;
             padding-top: 2px;
             padding: 20px;
             line-height: 60px;
+            border: 2px;
+            box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
         }
 
         .btnSend {
@@ -266,12 +270,13 @@
             border-radius: 25px;
             width: 120px;
             color: #F0EBEB;
+            float:right;
         }
     </style>
 
     <asp:Table ID="Table1" runat="server" CssClass="content">
         <asp:TableRow>
-            <asp:TableCell Style="vertical-align: top; height: 200px;">
+            <asp:TableCell Style="vertical-align: top; height: 90px;">
                 <div class="profile-container">
                     <asp:Image ID="industryImage1" runat="server" />
                     <center>
@@ -287,18 +292,28 @@
                 </div>
             </asp:TableCell>
             <asp:TableCell RowSpan="2" Style="padding: 0px 5px 0px 40px">
-                <h2 class="title opacity-75">Dashboard</h2>
+                
                 <div class="display-container">
-                    <br />
-                    <br />
+                    <h2 class="title opacity-75" style="font-size:30px;">Dashboard</h2>
                     <br />
                     <div class="row">
                         <div class="col">
                             <div class="card text-white p-2" style="max-width: 50rem;">
 
                                 <div class="card-body">
-                                    <h4 class="card-title">Total Hired</h4>
-                                    <h2 class="card-text" id="totalHired" runat="server"></h2>
+                                    <img src="images/Icons/personIcon.png" style="float:left; width:70px; height:auto; border-radius:20px; margin-right:5%;"/>
+                                    <h4 class="card-title" style="color:dimgray;">Total Hired</h4>
+                                    <h2 class="card-text" style="color:black; font-size:80px;" id="totalHired" runat="server"></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card text-white  p-2" style="max-width: 50rem; padding-left:5%;">
+
+                                <div class="card-body">
+                                    <img src="images/Icons/hiredIcon.png" style="float:left; width:70px; height:auto; border-radius:20px; margin-right:5%;"/>
+                                    <h4 class="card-title" style="color:dimgray;">Total Applicants</h4>
+                                    <h2 class="card-text" style="color:black; font-size:80px;" id="totalApplicant" runat="server"></h2>
                                 </div>
                             </div>
                         </div>
@@ -306,17 +321,9 @@
                             <div class="card text-white  p-2" style="max-width: 50rem;">
 
                                 <div class="card-body">
-                                    <h4 class="card-title">Total Applicants</h4>
-                                    <h2 class="card-text" id="totalApplicant" runat="server"></h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card text-white  p-2" style="max-width: 50rem;">
-
-                                <div class="card-body">
-                                    <h4 class="card-title">Total Jobs</h4>
-                                    <h2 class="card-text" id="totalJobs" runat="server"></h2>
+                                    <img src="images/Icons/jobsIcon.png" style="float:left; width:70px; height:auto; border-radius:20px; margin-right:5%;"/>
+                                    <h4 class="card-title" style="color:dimgray;">Total Jobs</h4>
+                                    <h2 class="card-text" style="color:black; font-size:80px;" id="totalJobs" runat="server"></h2>
                                 </div>
                             </div>
                         </div>
@@ -328,7 +335,7 @@
                                     thoughts on how we can make things even better or ideas for new features, we want to hear from you. Help us shape the future by sharing 
                                     your suggestions — because together, we can create an even more exceptional experience for you! 🚀
                                 </p>
-                                <p style="float: right;">--Team Admin</p>
+                                <p style="float: right;">--From Admin</p>
                             </div>
                         </div>
                         <div class="row gx-4 gx-lg-5 h-100">
@@ -340,6 +347,7 @@
                         <div class="row gx-4 gx-lg-5 h-100">
                             <div class="col-lg-12 align-self-end">
                                 <p>
+                                    <br />
                                     <asp:Button ID="btn" class="btnSend" runat="server" Text="Submit" OnClick="Submit_Suggestions" /></p>
                             </div>
                         </div>

@@ -3,16 +3,18 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
 
         .profile-container {
             font-family: 'Poppins', sans-serif;
             max-width: 260px;
-            max-height: 660px;
+            min-height: 660px;
             background-color: white;
-            margin-left: 1%;
+            margin-left: 4%;
             padding-bottom: 8px;
             border: 2px;
             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
@@ -21,7 +23,7 @@
         @media (max-width: 790px) {
             .profile-container, .sidemenu-container {
                 max-width: 50%;
-                max-height: auto;
+                max-height: 100%;
                 padding: 5px 5px 5px 5px;
             }
         }
@@ -119,10 +121,10 @@
                 }
 
         .content {
-            height: 100%;
-            width: 97%;
-            margin-left: 2%;
-            margin-right: 2%;
+            height:100%; 
+            width:97%; 
+            margin-left:2%; 
+            margin-right:2%;
             padding: 0px 0px 0px 0px;
         }
 
@@ -227,6 +229,11 @@
         .spinner-container {
             text-align: center;
         }
+
+        .fa {
+            width:20px;
+            margin-right: 19px; 
+        }
     </style>
     <div class="overlay">
         <div class="spinner-container">
@@ -245,28 +252,27 @@
     <asp:Table ID="Table1" runat="server" CssClass="content">
         <asp:TableRow>
             <asp:TableCell Style="vertical-align: top;">
-                <div class="profile-container">
-                    <asp:Image ID="CoordinatorImage" runat="server" />
-                    <p>OJT Coordinator</p>
-                    <hr class="horizontal-line" />
-                    <a href="CoordinatorProfile.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right: 12px;"></i>List of Interns</a>
-                    <a href="ListOfAlumni.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right: 12px;"></i>List of Alumni</a>
-                    <a href="PartneredIndustries.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right: 12px;"></i>Partnered Industry</a>
-                    <a href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right: 12px; width: 32px;"></i>Refer Student</a>
-                    <a href="CourseLists.aspx"><i class="fa fa-book" aria-hidden="true" style="padding-right: 12px;"></i>Course List</a>
-                    <a href="Blacklist.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right: 12px;"></i>Blacklist Industry</a>
-                    <a href="Coordinator_Contact.aspx"><i class="fa fa-comments" aria-hidden="true" style="padding-right: 12px;"></i>Contact</a>
-                    <a class="active" href="Coordinator_UploadCSV.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right: 12px;"></i>Upload CSV</a>
-                    <a href="TracerDashboard.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right: 12px;"></i>Tracer</a>
-                    <a href="EditEvaluation.aspx"><i class="fa fa-file-text" aria-hidden="true" style="padding-right:12px;"></i>Evaluation Form</a>
-                    <hr class="second" />
-                    <a href="OJTCoordinator_Profile.aspx"><i class="fa fa-user" aria-hidden="true" style="padding-right: 12px;"></i>Profile</a>
-                    <a href="Coord_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right: 12px;"></i>Account Settings</a>
-                    <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
-                       <i class="fa fa-sign-out" aria-hidden="true"></i>
-                        Sign-out
-                    </asp:LinkButton>
-
+                 <div class="profile-container">
+                   <asp:Image ID="CoordinatorImage" runat="server"/>   
+                       <p >OJT Coordinator</p>
+                       <hr class="horizontal-line" />
+                       <a href="CoordinatorProfile.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Interns</a>
+                       <a href="ListOfAlumni"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>List of Alumni</a>
+                       <a href="PartneredIndustries.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Partnered Industry</a>
+                       <a href="Refer.aspx"><i class="fa fa-handshake-o" aria-hidden="true" style="padding-right:12px;"></i>Refer Student</a>
+                       <a href="CourseLists.aspx"> <i class="fa fa-book" aria-hidden="true" style="padding-right:12px;"></i>Course List</a>
+                       <a href="Blacklist.aspx"><i class="fa fa-users" aria-hidden="true" style="padding-right:12px;"></i>Blacklist Industry</a>
+                       <a href="Coordinator_Contact.aspx"><i class="fa fa-comments" aria-hidden="true" style="padding-right:12px;"></i>Contact</a>
+                       <a class="active" href="Coordinator_UploadCSV.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Upload CSV</a>
+                       <a href="TracerDashboard.aspx"><i class="fa fa-bullseye" aria-hidden="true" style="padding-right:12px;"></i>Tracer</a>
+                       <a href="EditEvaluation.aspx"><i class="fa fa-file-text" aria-hidden="true" style="padding-right:12px;"></i>Evaluation Form</a>
+                       <hr class="second" />
+                       <a href="OJTCoordinator_Profile.aspx"><i class="fa fa-user" aria-hidden="true" style="padding-right:12px;"></i>Profile</a>
+                       <a href="Coord_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right:12px;"></i>Account Settings</a>
+                       <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
+                           <i class="fa fa-sign-out" aria-hidden="true"></i>
+                          Sign-out
+                           </asp:LinkButton>
                 </div>
             </asp:TableCell>
             <asp:TableCell Style="padding: 0px 5px 0px 40px">
@@ -284,7 +290,7 @@
                     <div>
                         <h3>Upload CSV for Graduates</h3>
                         <asp:FileUpload ID="graduateCSV" runat="server" />
-                        <asp:Button Text="Upload Graduate CSV" CssClass="btn btn-success" ID="UploadGraduate" OnClick="UploadGraduate_Click" runat="server" />
+                        <asp:Button Text="Upload Graduate CSV" CssClass="btn btn-success" ID="UploadGraduate" OnClientClick="showOverlay(this.id);" OnClick="UploadGraduate_Click" runat="server" />
                     </div>
                 </div>
             </asp:TableCell>
@@ -417,14 +423,18 @@
         function showOverlay(buttonId) {
             var SaveInternBtn = document.getElementById('<%= Save.ClientID %>').id;
             var UploadInternBtn = document.getElementById('<%= UploadInternCSV.ClientID %>').id;
+            var UploadGraduateBtn = document.getElementById('<%= UploadGraduate.ClientID %>').id;
             var textLoading = document.getElementById("LoadAddIntern");
             if (buttonId === UploadInternBtn) {
-                textLoading.innerText = 'Uploading CSV';
+                textLoading.innerText = 'Uploading Interns CSV';
             }
             else if (buttonId === SaveInternBtn) {
                 var firstName = document.getElementById('<%= FirstName.ClientID %>').value;
                 var lastName = document.getElementById('<%= LastName.ClientID %>').value;
                 textLoading.innerText = 'Saving ' + firstName + ' ' + lastName + ' Data';
+            }
+            else if (buttonId === UploadGraduateBtn) {
+                textLoading.innerText = 'Uploading Graduates CSV';
             }
             $(".overlay").css("display", "flex");
         }

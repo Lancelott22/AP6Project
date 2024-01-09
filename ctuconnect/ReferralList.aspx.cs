@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
@@ -13,6 +14,8 @@ namespace ctuconnect
     public partial class ReferralList : System.Web.UI.Page
     {
         SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString);
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack && Session["IndustryEmail"] == null)
@@ -31,24 +34,46 @@ namespace ctuconnect
                 industryImage1.ImageUrl = imagePath;
 
             }
+            if (checkVerified())
+            {
+                verifiedIcon.Attributes.Add("title", "Verified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-info");
+            }
+            else
+            {
+                verifiedIcon.Attributes.Add("title", "Unverified");
+                verifiedIcon.Attributes.Add("class", "fa fa-check-circle m-1 text-danger");
+            }
 
         }
-        /*void BindGridView1()
+        bool checkVerified()
         {
-            string query = "SELECT REFERRAL.referralID, STUDENT_ACCOUNT.lastName, STUDENT_ACCOUNT.firstName, COORDINATOR_ACCOUNT.firstName + ' ' + COORDINATOR_ACCOUNT.lastName AS referredBy, REFERRAL.endorsementLetter, REFERRAL.dateReferred, STUDENT_ACCOUNT.resumeFile " +
-                "FROM REFERRAL JOIN STUDENT_ACCOUNT ON REFERRAL.student_accID = STUDENT_ACCOUNT.student_accID " +
-                "JOIN INDUSTRY_ACCOUNT  ON REFERRAL.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
-                "JOIN COORDINATOR_ACCOUNT ON REFERRAL.coordinator_accID = COORDINATOR_ACCOUNT.coordinator_accID";
-            SqlCommand cmd = new SqlCommand(query, conDB);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataSet ds = new DataSet();
-            da.Fill(ds);
+            int industry_accId = int.Parse(Session["INDUSTRY_ACC_ID"].ToString());
+            con.Open();
+            SqlCommand cmd = new SqlCommand("select isVerified from INDUSTRY_ACCOUNT where industry_accID = @industry_accID", con);
+            cmd.Parameters.AddWithValue("@industry_accID", industry_accId);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (reader["isVerified"] == DBNull.Value || bool.Parse(reader["isVerified"].ToString()) == false)
+                {
+                    reader.Close();
+                    con.Close();
+                    return false;
 
-            // Bind the DataTable to the GridView
-            GridView1.DataSource = ds;
-            GridView1.DataBind();
+                }
+                else
+                {
+                    reader.Close();
+                    con.Close();
+                    return true;
+                }
 
-        }*/
+            }
+            reader.Close();
+            con.Close();
+            return false;
+        }
         void BindGridView2()
         {
             int industryID = Convert.ToInt32(Session["INDUSTRY_ACC_ID"]);

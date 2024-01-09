@@ -21,7 +21,6 @@
             padding: 10px;
             background-color: white;
             margin-left: 4%;
-            margin-bottom: 20px;
         }
 
         @media (max-width: 790px) {
@@ -85,20 +84,13 @@
             }
             .display-container{
                 font-family: 'Poppins', sans-serif;
-                font-size:16px;
                 background-color:white; 
-                width:1000px;
+                width:1500px;
                 top:0;
                 bottom:0;
                 padding: 2% 2% 0% 2%;
                 overflow: auto;
-                /*background-color:white;*/
-                min-height:200%;
-                /*overflow: auto;
-                float:left;
-                margin-left:25%;
-                position:relative;
-                padding: 4% 0% 0% 6%;*/
+                height:800px;
             }
             
             .display-container {
@@ -122,11 +114,11 @@
 
             }
              .content {
-                height: auto;
-                width: 97%;
-                margin-left: 2%;
-                margin-right: 2%;
-                padding: 0px 0px 0px 0px;
+            height: auto;
+            width: 97%;
+            margin-left: 2%;
+            margin-right: 2%;
+            padding: 0px 0px 0px 0px;
             }
 
              .gridview-style{
@@ -332,14 +324,18 @@
     
     <asp:Table ID="Table1" runat="server"  CssClass="content">
         <asp:TableRow>
-            <asp:TableCell Style="vertical-align:top; height:200px;">
+            <asp:TableCell Style="vertical-align:top; height:180px;">
                 <div class="profile-container">
-                    <asp:Image ID="industryImage1" runat="server" />
-                    <center><b>
-                        <asp:Label ID="disp_industryName" CssClass="disp_industryName" runat="server" Text=""></asp:Label></b></center>
+                     <asp:Image ID="industryImage1" runat="server" />
                     <center>
-                        <p style="font-size: 14px;">Account ID: <b>
-                            <asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b></p>
+                        <b>
+                            <asp:Label ID="disp_industryName" CssClass="disp_industryName" runat="server" Text=""></asp:Label></b>
+                        <span><i class="fa fa-check-circle" id="verifiedIcon" runat="server" aria-hidden="true" data-toggle="tooltip" data-placement="auto"></i></span></center>
+                    <center>
+                        <p style="font-size: 14px;">
+                            Account ID: <b>
+                                <asp:Label ID="disp_accID" runat="server" Text=""></asp:Label></b>
+                        </p>
                     </center>
                 </div>
             </asp:TableCell>
@@ -481,7 +477,7 @@
             </asp:TableCell>
         </asp:TableRow>
         <asp:TableRow>
-            <asp:TableCell Style="vertical-align:top; ">
+            <asp:TableCell Style="vertical-align:top; width:230px; ">
                 <div class="sidemenu-container">
                     <a href="IndustryDashboard.aspx"><i class="bx bxs-dashboard" aria-hidden="true"></i>&nbsp&nbsp&nbsp Dashboard</a>
                     <a href="IndustryHome.aspx"><i class="fa fa-edit" aria-hidden="true"></i>Post a Job</a>
@@ -491,6 +487,7 @@
                     <a href="ReferralList.aspx"><i class="fa fa-handshake-o" aria-hidden="true"></i>Referral List</a>
                     <a href="IndustryProfile.aspx"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
                     <a href="Industry_AccountSetting.aspx"><i class="fa fa-cog" aria-hidden="true" style="padding-right:12px;"></i>Account Settings</a>
+                    <a href="Industry_Contact.aspx"><i class="fa fa-comments" aria-hidden="true"></i>Contact</a>
                     <asp:LinkButton runat="server" ID="SignOut" OnClick="SignOut_Click">
                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                      Sign-out

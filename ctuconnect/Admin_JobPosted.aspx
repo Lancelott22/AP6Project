@@ -271,6 +271,7 @@
                                     <LayoutTemplate>
                                         <table style="font-size: 18px; line-height: 30px;">
                                             <tr style="background-color: #336699; color: White; padding: 10px;">
+                                                <th>Report ID</th>
                                                 <th>Problem Type</th>
                                                 <th>Report Details</th>
                                                 <th>Report Date</th>
@@ -282,6 +283,7 @@
                                     </LayoutTemplate>
                                     <ItemTemplate>
                                         <tr style="border-bottom: solid 1px #336699">
+                                            <td><%#Eval("id")%></td>
                                             <td><%#Eval("problemType")%></td>
                                             <td><%#Eval("reportDetails")%></td>
                                             <td><%#Eval("reportDate")%></td>
@@ -347,6 +349,11 @@
                                     <span id="salaryData" runat="server">
                                         <label>Salary: </label>
                                         <asp:Label ID="SalaryRange" runat="server" />
+                                        <br />
+                                    </span>
+                                    <span id="TotalNeeded" runat="server">
+                                        <label>Total vacancies for this job title: </label>
+                                        <asp:Label ID="TotalApplicantsNeeded" runat="server" />
                                         <br />
                                     </span>
                                 </div>
@@ -435,7 +442,7 @@
         function showOverlay() {
             var jobTitle = document.getElementById('<%= Delete_JobTitle.ClientID %>').innerText;
             var textLoading = document.getElementById("LoadDelete");       
-            textLoading.innerText = 'Deleting ' + jobTitle;
+            textLoading.innerText = 'Deleting Post: ' + jobTitle;
             $(".overlay").css("display", "flex");
         }
     </script>
