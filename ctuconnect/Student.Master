@@ -456,9 +456,9 @@
                                                 <p>View Profile</p>
                                                 <span>> </span>
                                             </a>
-                                            <a href="EditAccount.aspx" class="sub-menu-link">
-                                                <i class='bx bxs-edit'></i>
-                                                <p>Edit Profile</p>
+                                            <a href="Resume.aspx" class="sub-menu-link">
+                                                <i class='bx bx-file-blank icon'></i>
+                                                <p>Resume</p>
                                                 <span>> </span>
                                             </a>
                                             <asp:LinkButton class="sub-menu-link" runat="server" ID ="SignOut" OnClick="SignOut_Click">
