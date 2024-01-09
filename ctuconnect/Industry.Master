@@ -472,7 +472,7 @@
                                                 </div>   
                                             </div>
                                             <hr />
-                                            <a href="#" class="sub-menu-link">
+                                            <a href="IndustryProfile.aspx" class="sub-menu-link">
                                                 <i class='bx bx-user-circle icon' ></i>
                                                 <p>View Profile</p>
                                                 <span>> </span>
