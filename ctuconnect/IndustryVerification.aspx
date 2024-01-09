@@ -86,7 +86,7 @@
             min-height: 550px;
             background-color: #FFFFFF;
             max-width:100%;
-            width:1550px;
+            width:1500px;
             border: 2px;
             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
             padding-top:2em;
@@ -182,6 +182,7 @@
                             <th>Address</th>
                             <th>Email</th>
                             <th>Mou</th>
+                            <th>Date Registered</th>
                             <th>Verified</th>
                             <th>Status</th>
                             <th></th>
@@ -200,24 +201,29 @@
                         <td><%#Eval("location")%></td>
                          <td><%#Eval("email")%></td>
                         <td class="my-5">
-                            <asp:LinkButton ID="ViewMou" runat="server" CssClass="btn btn-primary" OnCommand="ViewMou_Command" CommandArgument='<%#Eval("mou")%>'>View Mou</asp:LinkButton>
+                            <asp:LinkButton ID="ViewMou" runat="server" CssClass="btn btn-default" OnCommand="ViewMou_Command" CommandArgument='<%#Eval("mou")%>'>View Mou</asp:LinkButton>
                         </td>
+                         <td><%#Eval("dateRegister")%></td>
                          <td><%#Eval("Verify")%></td>
                         <td><%#Eval("Deactivate")%></td>
                         <td>
                             <asp:LinkButton ID="Verify" runat="server" CssClass="btn btn-info" OnCommand="Verify_Command" OnClientClick="confirmVerify();" CommandName='<%#Eval("email")%>' CommandArgument='<%#Eval("industry_accID")%>'></asp:LinkButton>
-                           </td>
-                            <td> <asp:LinkButton ID="Deactivate" runat="server" OnCommand="Deactivate_Command" OnClientClick="confirmDeactivate();"  CommandArguent='<%#Eval("industry_accID")%>'></asp:LinkButton>
+                        </td>
+                        <td>
+                            <asp:LinkButton ID="Deactivate" runat="server" OnCommand="Deactivate_Command" OnClientClick="confirmDeactivate();" CommandArgument='<%#Eval("industry_accID")%>'></asp:LinkButton>
 
                         </td>
                     </tr>
                 </ItemTemplate>
-                        
-            </asp:ListView>
-                        </div>
+                        <EmptyDataTemplate>
+                            <h3 style="position: relative; top: 40%;">
+                                <asp:Label CssClass="alert alert-light d-flex p-2 bd-highlight justify-content-sm-center" runat="server" Text="No Account Listed!"></asp:Label></h3>
+                        </EmptyDataTemplate>
+                    </asp:ListView>
+                    </div>
                 </div>
-            </div>    
-       
+            </div>
+
         </div>
     </div>
     <script type="text/javascript">

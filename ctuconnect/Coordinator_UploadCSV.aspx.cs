@@ -272,7 +272,7 @@ namespace ctuconnect
                         sqlBulkCopy1.WriteToServer(dt1);
                         sqlBulkCopy1.Close();
                         conDB.Close();
-                        Response.Write("<script>alert('The file has been uploaded successfully.');document.location='Coordinator_UploadCSV.aspx';</script>");
+                        Response.Write("<script>alert('The file has been uploaded successfully.');document.location='ListOfAlumni.aspx';</script>");
                     }
                     foreach (DataRow row in dt1.Rows)
                     {
