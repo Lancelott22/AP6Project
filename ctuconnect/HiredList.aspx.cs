@@ -1078,7 +1078,7 @@ namespace ctuconnect
             if (Evalbtn.Text == "For Evaluation"){
                 Response.Redirect("EvaluationForm.aspx?student_accID=" + e.CommandArgument.ToString() + "&hired_id=" + e.CommandName.ToString());
             }
-            else if (Evalbtn.Text == "Evaluation")
+            else if (Evalbtn.Text == "Evaluated")
             {
                 Response.Redirect("ViewEvaluation.aspx?student_accID=" + e.CommandArgument.ToString() + "&hired_id=" + e.CommandName.ToString());
             }
