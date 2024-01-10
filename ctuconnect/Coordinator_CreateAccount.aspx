@@ -203,20 +203,30 @@
                 <div class="container bg-light">
                     <h2 class="title opacity-75">Coordinator Account</h2>
                     <br />
-                        <div>
+                    <div class="row">
+                        <div class="col-sm-2">
                             <h3>Add Coordinator</h3>
                             <asp:Button Text="Add Coordinator Account" CssClass="btn btn-info" ID="AddCoordinator" OnClick="AddCoordinator_Click" runat="server" />
+                        </div>
+                        <div class="col-sm-1 d-flex align-items-center justify-content-center text-center">
                             <h3 class="my-1 text-danger">or</h3>
-                            <h4>Upload CSV for Coordinator</h4>
+                        </div>
+                        <div class="col-sm-4">
+
+                            <h3>Upload CSV for Coordinator</h3>
                             <asp:FileUpload ID="coordinatorCSV" runat="server" />
                             <asp:Button Text="Upload Coordinator CSV" ID="UploadCoordinatorCSV" CssClass="btn btn-success" OnClientClick="showOverlay(this.id);" OnClick="UploadCoordinatorCSV_Click" runat="server" />
                         </div>
-                        <br /><br /><br />
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>Coordinator Name</label>
-                                <div class="input-group mb-3">                    
-                                    <asp:TextBox ID="CoordinatorName" runat="server" class="form-control" Placeholder="Firstname or Lastname" Width="200px"></asp:TextBox>
+                    </div>
+                    <br />
+                    <div class="row m-2" style="border:1px #d1d1d1 solid;">
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Coordinator Name</label>
+                            <div class="input-group mb-3">
+                                <asp:TextBox ID="CoordinatorName" runat="server" class="form-control" Placeholder="Firstname or Lastname" Width="200px"></asp:TextBox>
                                     <div class="input-group-append">
                                         <asp:LinkButton runat="server" ID="SearchCoordinator" OnClick="SearchCoordinator_Click" CssClass="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></asp:LinkButton>
                                     </div>
@@ -237,7 +247,7 @@
                         </div>
 
                         <div class="row m-2 my-4 mb-5">
-                            <asp:ListView ID="CoordinatorListView" runat="server" OnPagePropertiesChanged="CoordinatorListView_PagePropertiesChanged">
+                            <asp:ListView ID="CoordinatorListView" runat="server" OnItemDataBound="CoordinatorListView_ItemDataBound" OnPagePropertiesChanged="CoordinatorListView_PagePropertiesChanged">
                                 <LayoutTemplate>
                                     <table style="font-size: 18px; line-height: 30px;">
                                         <tr style="background-color: #336699; color: White; padding: 10px;">
@@ -247,6 +257,8 @@
                                             <th>Email</th>
                                             <th>Deparment</th>
                                             <th>Date Registered</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                         <tbody>
                                             <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
@@ -262,6 +274,10 @@
                                         <td><%#Eval("username")%></td>
                                         <td><%#Eval("departmentName")%></td>
                                          <td><%#Eval("dateReg")%></td>
+                                         <td><%#Eval("Deactivate")%></td>
+                                        <td>
+                                            <asp:LinkButton ID="Deactivate" runat="server" OnCommand="Deactivate_Command" OnClientClick="confirmDeactivate();" CommandArgument='<%#Eval("coordinator_accID")%>'></asp:LinkButton>
+                                        </td>
                                     </tr>
                                 </ItemTemplate>
                                 <EmptyDataTemplate>
@@ -374,6 +390,16 @@
                 textLoading.innerText = 'Saving ' + firstName + ' ' + lastName + ' Data';
             }
             $(".overlay").css("display", "flex");
+        }
+    </script>
+    <script>
+        function confirmDeactivate() {
+            if (confirm("Are you sure you want to proceed?")) {
+
+            } else {
+                __doPostBack();
+                alert("You cancelled the operation.");
+            }
         }
     </script>
 </asp:Content>

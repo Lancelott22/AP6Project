@@ -34,7 +34,7 @@
             padding-left:2em;
             min-width:90%;
             float:left;
-            margin-left:75px;
+            margin-left:55px;
             padding-top:2em;
             font-family: 'Poppins', sans-serif;
             border-radius: 10px;
@@ -57,6 +57,7 @@
             margin-top:200px;
             font-size:18px;
             margin: 0 auto; /* This centers the element horizontally */
+            padding-left: 2em;
         }
 
         .display-review{

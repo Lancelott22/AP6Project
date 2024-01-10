@@ -186,7 +186,7 @@
             }
 
             .applicantBox {
-                border: 1px solid #881A30; padding: 10px; margin: auto; margin-bottom: 10px; width: 100%; height: 100%;
+                border: 1px solid #881A30; padding: 10px; margin: auto; margin-bottom: 10px; width: 100%; max-height: 100%;
                 box-shadow: 0px 0px 7px -3px  #bd0606;
                 border-radius: 7px;
                 padding-left:3em;
@@ -577,7 +577,7 @@
 
                             $('.summernote2').summernote({
                                 height: 300,
-                                placeholder: 'Enter Job Qualifications...',
+                                placeholder: 'Enter Requirements...',
                                 toolbar: [
                                     ['style', ['bold', 'italic', 'underline', 'clear']],
                                     ['font',],

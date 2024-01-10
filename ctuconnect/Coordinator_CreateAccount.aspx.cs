@@ -11,6 +11,7 @@ using System.IO;
 using System.Net.Mail;
 using System.Net;
 using System.Text;
+using System.Web.UI.HtmlControls;
 
 namespace ctuconnect
 {
@@ -176,7 +177,7 @@ namespace ctuconnect
 
         void BindCoordinator()
         {           
-                SqlCommand cmd = new SqlCommand("select *, CONVERT(nvarchar, dateRegistered,1) as dateReg FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID", conDB);
+                SqlCommand cmd = new SqlCommand("select *, CONVERT(nvarchar, dateRegistered,1) as dateReg, case when isDeactivated = 1 then 'Deactivated' else 'Active' end as Deactivate FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID", conDB);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable ds = new DataTable();
                 da.Fill(ds);
@@ -309,7 +310,7 @@ namespace ctuconnect
 
         void SearchCoord(string coordinator)
         {
-            SqlCommand cmd = new SqlCommand("select *, CONVERT(nvarchar, dateRegistered,1) as dateReg FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE " +
+            SqlCommand cmd = new SqlCommand("select *, CONVERT(nvarchar, dateRegistered,1) as dateReg, case when isDeactivated = 1 then 'Deactivated' else 'Active' end as Deactivate FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE " +
                 "(COORDINATOR_ACCOUNT.firstName LIKE '%" + coordinator + "%' " + "or COORDINATOR_ACCOUNT.lastName LIKE '%" + coordinator + "%') ", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
@@ -347,7 +348,7 @@ namespace ctuconnect
             }
             else
             {
-                cmd = new SqlCommand("select *, CONVERT(nvarchar, dateRegistered,1) as dateReg FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE " +
+                cmd = new SqlCommand("select *, CONVERT(nvarchar, dateRegistered,1) as dateReg, case when isDeactivated = 1 then 'Deactivated' else 'Active' end as Deactivate FROM COORDINATOR_ACCOUNT JOIN DEPARTMENT ON COORDINATOR_ACCOUNT.department_ID = DEPARTMENT.department_ID WHERE " +
                 " COORDINATOR_ACCOUNT.dateRegistered = '" + dateRegistered + "' ", conDB);
             }
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -368,6 +369,75 @@ namespace ctuconnect
         protected void CoordinatorListView_PagePropertiesChanged(object sender, EventArgs e)
         {
             BindCoordinator();
+        }
+
+        protected void Deactivate_Command(object sender, CommandEventArgs e)
+        {
+            string deactivate = e.CommandName.ToString();
+            int num = -1;
+            int coordinator_accID = int.Parse(e.CommandArgument.ToString());
+
+            if (deactivate == "Activate")
+            {
+                num = 0;
+            }
+            else if (deactivate == "Deactivate")
+            {
+                num = 1;
+            }
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE COORDINATOR_ACCOUNT SET isDeactivated = '" + num + "' where coordinator_accID = '" + coordinator_accID + "'", conDB);
+            var ctr = cmd.ExecuteNonQuery();
+
+            if (ctr > 0)
+            {
+                Response.Write("<script>alert('Coordinator Account has been successfully " + deactivate + "d.')</script>");
+            }
+            else
+            {
+                Response.Write("<script>alert('Cannot deactivate the account now! Please try again later.')</script>");
+            }
+            conDB.Close();
+        }
+        protected void CoordinatorListView_ItemDataBound(object sender, ListViewItemEventArgs e)
+        {
+            HtmlGenericControl coordinatorID = (HtmlGenericControl)e.Item.FindControl("coordinatorID");
+            int coordinator_accID = int.Parse(coordinatorID.InnerText);
+            LinkButton activateBtn = e.Item.FindControl("Deactivate") as LinkButton;
+            
+            if (checkIsDeactivated(coordinator_accID) == true)
+            {
+                activateBtn.Text = "Activate";
+                activateBtn.CssClass = "btn btn-success";
+                activateBtn.CommandName = "Activate";
+            }
+            else
+            {
+                activateBtn.Text = "Deactivate";
+                activateBtn.CssClass = "btn btn-danger";
+                activateBtn.CommandName = "Deactivate";
+            }
+        }
+        bool checkIsDeactivated(int coordinatorID)
+        {
+            int selectedcoordinatorID = coordinatorID;
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("Select isDeactivated from COORDINATOR_ACCOUNT Where coordinator_accID = @coordinator_accID", conDB);
+            cmd.Parameters.AddWithValue("@coordinator_accID", selectedcoordinatorID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (bool.Parse(reader["isDeactivated"].ToString()) == true)
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return true;
+                }
+
+            }
+            conDB.Close();
+            return false;
+
         }
     }
 }

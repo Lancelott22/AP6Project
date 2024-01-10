@@ -24,7 +24,7 @@ namespace ctuconnect
         }
         void bindIndustryAccount()
         {
-            SqlCommand cmd = new SqlCommand("select *, case when isVerified = 1 then 'Verified' else 'Not Verified' end as Verify, case when isDeactivated = 1 then 'Deactivated' else 'Active' end as Deactivate from INDUSTRY_ACCOUNT", conDB);
+            SqlCommand cmd = new SqlCommand("select *, CONVERT(nvarchar, dateRegistered, 1) as dateRegister, case when isVerified = 1 then 'Verified' else 'Not Verified' end as Verify, case when isDeactivated = 1 then 'Deactivated' else 'Active' end as Deactivate from INDUSTRY_ACCOUNT", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
@@ -173,15 +173,13 @@ namespace ctuconnect
             {
                 activateBtn.Text = "Activate";
                 activateBtn.CssClass = "btn btn-success";
-                activateBtn.CommandName = "Activate";
-                activateBtn.CommandArgument = industry_accID.ToString();
+                activateBtn.CommandName = "Activate";              
             }
             else
             {
                 activateBtn.Text = "Deactivate";
                 activateBtn.CssClass = "btn btn-danger";
                 activateBtn.CommandName = "Deactivate";
-                activateBtn.CommandArgument = industry_accID.ToString();
             }
         }
         bool checkIsVerified(int industryID)
