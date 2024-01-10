@@ -1,9 +1,12 @@
-﻿using System;
+﻿using iText.StyledXmlParser.Jsoup.Select;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
@@ -52,14 +55,8 @@ namespace ctuconnect
                             "PROGRAM.course, STUDENT_ACCOUNT.semCode ,  ACADEMIC_YEAR.semDescription + ' of ' + ACADEMIC_YEAR.academicYear AS semDescription, STUDENT_ACCOUNT.contactNumber, STUDENT_ACCOUNT.email " +
             "FROM STUDENT_ACCOUNT  LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
             "LEFT JOIN ACADEMIC_YEAR ON STUDENT_ACCOUNT.semCode = ACADEMIC_YEAR.semCode " +
-            "WHERE STUDENT_ACCOUNT.department_ID = @department";
-
-
-            /*"FROM REFERRAL  JOIN STUDENT_ACCOUNT ON REFERRAL.student_accID = STUDENT_ACCOUNT.student_accID " +
-       "JOIN INDUSTRY_ACCOUNT  ON REFERRAL.industry_accID = INDUSTRY_ACCOUNT.industry_accID " +
-       "JOIN COORDINATOR_ACCOUNT ON REFERRAL.coordinator_accID = COORDINATOR_ACCOUNT.coordinator_accID " +
-       "WHERE REFERRAL.coordinator_accID = @CoordinatorID ORDER BY referralID DESC";*/
-
+            "WHERE STUDENT_ACCOUNT.department_ID = @department AND STUDENT_ACCOUNT.semCode IN (SELECT TOP 3 semCode FROM ACADEMIC_YEAR ORDER BY dateAdded DESC)";
+           
 
             SqlCommand cmd = new SqlCommand(query, connectionDB);
             cmd.Parameters.AddWithValue("@department", departmentiD);
@@ -80,7 +77,7 @@ namespace ctuconnect
                             "PROGRAM.course, STUDENT_ACCOUNT.semCode ,  ACADEMIC_YEAR.semDescription + ' of ' + ACADEMIC_YEAR.academicYear AS semDescription, STUDENT_ACCOUNT.contactNumber, STUDENT_ACCOUNT.email " +
             "FROM STUDENT_ACCOUNT  LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
             "LEFT JOIN ACADEMIC_YEAR ON STUDENT_ACCOUNT.semCode = ACADEMIC_YEAR.semCode " +
-            "WHERE STUDENT_ACCOUNT.department_ID = @department";
+            "WHERE STUDENT_ACCOUNT.department_ID = @department AND STUDENT_ACCOUNT.semCode IN (SELECT TOP 3 semCode FROM ACADEMIC_YEAR ORDER BY dateAdded DESC)";
 
 
 
@@ -109,7 +106,7 @@ namespace ctuconnect
                             "PROGRAM.course, STUDENT_ACCOUNT.semCode , ACADEMIC_YEAR.semDescription + ' of ' + ACADEMIC_YEAR.academicYear AS semDescription, STUDENT_ACCOUNT.contactNumber, STUDENT_ACCOUNT.email " +
             "FROM STUDENT_ACCOUNT  LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
             "LEFT JOIN ACADEMIC_YEAR ON STUDENT_ACCOUNT.semCode = ACADEMIC_YEAR.semCode " +
-            "WHERE STUDENT_ACCOUNT.department_ID = @department";
+            "WHERE STUDENT_ACCOUNT.department_ID = @department AND STUDENT_ACCOUNT.semCode IN (SELECT TOP 3 semCode FROM ACADEMIC_YEAR ORDER BY dateAdded DESC)";
 
 
 
@@ -138,7 +135,7 @@ namespace ctuconnect
                             "PROGRAM.course, STUDENT_ACCOUNT.semCode ,  ACADEMIC_YEAR.semDescription + ' of ' + ACADEMIC_YEAR.academicYear AS semDescription, STUDENT_ACCOUNT.contactNumber, STUDENT_ACCOUNT.email " +
             "FROM STUDENT_ACCOUNT  LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
             "LEFT JOIN ACADEMIC_YEAR ON STUDENT_ACCOUNT.semCode = ACADEMIC_YEAR.semCode " +
-            "WHERE STUDENT_ACCOUNT.department_ID = @department";
+            "WHERE STUDENT_ACCOUNT.department_ID = @department AND STUDENT_ACCOUNT.semCode IN (SELECT TOP 3 semCode FROM ACADEMIC_YEAR ORDER BY dateAdded DESC)";
 
 
 
@@ -167,7 +164,7 @@ namespace ctuconnect
                             "PROGRAM.course, STUDENT_ACCOUNT.semCode , ACADEMIC_YEAR.semDescription + ' of ' + ACADEMIC_YEAR.academicYear AS semDescription , STUDENT_ACCOUNT.contactNumber, STUDENT_ACCOUNT.email " +
             "FROM STUDENT_ACCOUNT  LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
             "LEFT JOIN ACADEMIC_YEAR ON STUDENT_ACCOUNT.semCode = ACADEMIC_YEAR.semCode  " +
-            "WHERE STUDENT_ACCOUNT.department_ID = @department";
+            "WHERE STUDENT_ACCOUNT.department_ID = @department AND STUDENT_ACCOUNT.semCode IN (SELECT TOP 3 semCode FROM ACADEMIC_YEAR ORDER BY dateAdded DESC)";
 
 
 
@@ -196,7 +193,7 @@ namespace ctuconnect
                             "PROGRAM.course, STUDENT_ACCOUNT.semCode ,  ACADEMIC_YEAR.semDescription + ' of ' + ACADEMIC_YEAR.academicYear AS semDescription, STUDENT_ACCOUNT.contactNumber, STUDENT_ACCOUNT.email " +
             "FROM STUDENT_ACCOUNT  LEFT JOIN PROGRAM ON STUDENT_ACCOUNT.course_ID = PROGRAM.course_ID " +
             "LEFT JOIN ACADEMIC_YEAR ON STUDENT_ACCOUNT.semCode = ACADEMIC_YEAR.semCode  " +
-            "WHERE STUDENT_ACCOUNT.department_ID = @department";
+            "WHERE STUDENT_ACCOUNT.department_ID = @department AND STUDENT_ACCOUNT.semCode IN (SELECT TOP 3 semCode FROM ACADEMIC_YEAR ORDER BY dateAdded DESC)";
 
 
 
@@ -265,7 +262,7 @@ namespace ctuconnect
         }
         protected void btnSwitchGrid_CCICT(object sender, EventArgs e)
         {
-            
+
             myLinkButton1.CssClass = "linkbutton";
             myLinkButton2.CssClass = "linkbutton";
             myLinkButton3.CssClass = "linkbutton";
@@ -312,7 +309,7 @@ namespace ctuconnect
         }
         protected void btnSwitchGrid_CME(object sender, EventArgs e)
         {
-            
+
             myLinkButton1.CssClass = "linkbutton";
             myLinkButton2.CssClass = "linkbutton";
             myLinkButton3.CssClass = "linkbutton";
@@ -497,23 +494,23 @@ namespace ctuconnect
             UpdatePanel1.Update();
 
         }
-/*        protected void ddlacademicYear_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        /*        protected void ddlacademicYear_SelectedIndexChanged(object sender, EventArgs e)
+                {
 
-            SqlCommand cmd = new SqlCommand("SELECT semCode, semDescription FROM ACADEMIC_YEAR " +
-                           "WHERE academicYear = '" + ddlAcademicYear.SelectedValue + "'", connectionDB);
+                    SqlCommand cmd = new SqlCommand("SELECT semCode, semDescription FROM ACADEMIC_YEAR " +
+                                   "WHERE academicYear = '" + ddlAcademicYear.SelectedValue + "'", connectionDB);
 
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable ds = new DataTable();
-            da.Fill(ds);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable ds = new DataTable();
+                    da.Fill(ds);
 
-            ddlSemester.DataSource = ds;
-            ddlSemester.DataTextField = "semDescription";
-            ddlSemester.DataValueField = "semCode";
-            ddlSemester.DataBind();
-            ddlSemester.Items.Insert(0, new ListItem("All", "0"));
+                    ddlSemester.DataSource = ds;
+                    ddlSemester.DataTextField = "semDescription";
+                    ddlSemester.DataValueField = "semCode";
+                    ddlSemester.DataBind();
+                    ddlSemester.Items.Insert(0, new ListItem("All", "0"));
 
-        }*/
+                }*/
         protected void dropdownsforCCICT_SelectedIndexChanged(object sender, EventArgs e)
         {
             int selectedSemesterValue2 = Convert.ToInt32(ddlSemester2.SelectedValue);
@@ -797,7 +794,7 @@ namespace ctuconnect
                 COTListview.DataBind();
             }
         }
-        
+
 
 
 
@@ -810,6 +807,26 @@ namespace ctuconnect
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable ds = new DataTable();
                 da.Fill(ds);
+
+                ds.Columns.Add("academicYearInt", typeof(int));
+                foreach (DataRow row in ds.Rows)
+                {
+                    string[] years = row["academicYear"].ToString().Split('-');
+                    if (years.Length == 2)
+                    {
+                        int startYear, endYear;
+                        if (int.TryParse(years[0], out startYear) && int.TryParse(years[1], out endYear))
+                        {
+                            row["academicYearInt"] = endYear;
+                        }
+                    }
+                }
+
+                // Reverse the order of the rows in the DataTable
+                ds.DefaultView.Sort = "academicYearInt DESC";
+                ds = ds.DefaultView.ToTable();
+
+
                 ddlAcademicYear.DataSource = ds;
                 ddlAcademicYear.DataTextField = "academicYear";
                 ddlAcademicYear.DataValueField = "academicYear";
@@ -1000,25 +1017,25 @@ namespace ctuconnect
 
         }
         void BindCourse()
-            {
+        {
             int departmentID = 290000;
             string query = "SELECT course_ID, course FROM PROGRAM " +
                         "WHERE department_ID = @deptID  ";
             using (var db = new SqlConnection(conDB))
-                {
-                    SqlCommand cmd = new SqlCommand(query, db);
-                    cmd.Parameters.AddWithValue("@deptID", departmentID);
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    DataTable ds = new DataTable();
-                    da.Fill(ds);
-                    programList.DataSource = ds;
-                    programList.DataTextField = "course";
-                    programList.DataValueField = "course_ID";
-                    programList.DataBind();
-                    programList.Items.Insert(0, new ListItem("Select Program", "0"));
+            {
+                SqlCommand cmd = new SqlCommand(query, db);
+                cmd.Parameters.AddWithValue("@deptID", departmentID);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable ds = new DataTable();
+                da.Fill(ds);
+                programList.DataSource = ds;
+                programList.DataTextField = "course";
+                programList.DataValueField = "course_ID";
+                programList.DataBind();
+                programList.Items.Insert(0, new ListItem("Select Program", "0"));
 
-                }
             }
+        }
         void BindCourse2()
         {
             int departmentID = 290001;
@@ -1119,6 +1136,64 @@ namespace ctuconnect
 
             }
         }
+        protected void academicYear_Clicked(object sender, EventArgs e)
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "showModal", "$('#AcadPrompt').modal('show');", true);
+        }
+        protected void closePrompt(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#AcadPrompt').modal('hide');document.location='ListOfInterns_Alumni.aspx'", true);
+        }
+        protected void addNewAcademicYear_Clicked(object sender, EventArgs e)
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "showModal", "$('#NewAcad').modal('show');", true);
+        }
+        protected void close_Modal(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#SuccessPrompt').modal('hide');document.location='ListOfInterns_Alumni.aspx'", true);
+        }
+        protected void cancelClicked(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#NewAcad').modal('hide');document.location='ListOfInterns_Alumni.aspx'", true);
+        }
+        
 
+        protected void saveNewAcademicYear(object sender, EventArgs e)
+        {
+            int start = Convert.ToInt32(startYear.Text);
+            int end = Convert.ToInt32(endYear.Text);
+
+            using (var db = new SqlConnection(conDB))
+            {
+                db.Open();
+                for (int i = 0; i < 3; i++) // Iterate for 3 semesters
+                {
+                    // Combine start and end years into semCode
+                    string semesterCode = $"{start}{end}{i}";
+                    string acadYear = $"20{start}-20{end}";
+
+                    using (var cmd = db.CreateCommand())
+                    {
+                        string query = "INSERT ACADEMIC_YEAR(semCode, academicYear, semDescription, dateAdded) VALUES (@semesterCode, @acadYear, @semDesc,@dateAdd) ";
+                        cmd.CommandText = query;
+                        cmd.Parameters.AddWithValue("@semesterCode", semesterCode);
+                        cmd.Parameters.AddWithValue("@acadYear", acadYear);
+
+                        string semDesc = i == 0 ? "whole semester" : i == 1 ? "1st semester" : "2nd semester";
+                        cmd.Parameters.AddWithValue("@semDesc", semDesc);
+                        cmd.Parameters.AddWithValue("@dateAdd", DateTime.Now);
+
+
+
+                        cmd.ExecuteNonQuery();
+
+                    }
+                }
+
+
+            }
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "showModal", "$('#SuccessPrompt').modal('show');", true);
+        }
     }
+
 }

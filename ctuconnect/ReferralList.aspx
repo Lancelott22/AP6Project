@@ -181,26 +181,32 @@
         padding:10px;
     }
     th{
-       border-collapse: collapse;
-        border-color:white;
+         border: 1px solid;
+         border-color:#c4c4c4;
         background-color:#f4f4fb;
         padding:5px;
 
     }
+/*    td{
+        border: 1px solid;
+        border-color:dimgray;
+        padding-left:5px;
+    }*/
     .datas{
-         padding:9px;
-          border: 8px solid;
-          border-color:white;
-         font-weight:bold;
+        border: 1px solid;
+        border-color:#c4c4c4;
+        padding-left:5px;
          color:black;
+         cursor:default;
     }
-    
+
     .table-list{
-         border-collapse: collapse;
+        border-collapse: collapse;        
         font-size:13px; 
         height:auto; 
         width:100%;
         color:dimgray;
+        padding-right:4px;
     }
     </style>
      <asp:Table ID="Table1" runat="server"  CssClass="content">
@@ -225,8 +231,12 @@
                    <h1 class="title">Referral List</h1>
                    <p style="float:right;">Search <input type="text" id="searchInput" Style="border-color:#c1beba; border-width:1px;" /></p>
                    
-                               <table  class="table-list">
-                                    <tr>
+
+
+                           <asp:ListView ID="dataRepeater" runat="server">
+                                    <LayoutTemplate>
+                                      <table  class="table-list">
+                                        <tr>
                                         <th>referral id</th>
                                         <th>Last Name</th>
                                         <th>First Name</th>
@@ -235,29 +245,52 @@
                                         <th>Date</th>
                                         <th>Status</th>
                                         <th></th>
-                                    </tr>
-                                    <asp:Repeater ID="dataRepeater" runat="server">
-                                        <Itemtemplate>
-                                            <tr class="datas">
-                                                <td><%# Eval("referralID") %></td>
-                                                <td><%# Eval("lastName") %></td>
-                                                <td><%# Eval("firstName") %></td>
-                                                <td><%# Eval("referredBy") %></td>
-                                                <td>
-                                                    <asp:Button ID="btnreferralLetterButton" runat="server" Text="View Referral Letter" OnCommand="btnreferralLetterButton_Command"
-                                                        CommandName="Review" CommandArgument='<%# Eval("referralLetter") %>'/>
-                                                    <%--<asp:Button ID="btnEndorsementLetterButton" runat="server" Text="View Referral Letter"
-                                                    OnCommand="ReviewLetter_Command" CommandName="Review"  
-                                                    CommandArgument='<%# Eval("referralLetter") %>'/>--%>
-                                                </td>
-                                                <td><%# Eval("datereferred") %></td>
-                                                <td class='<%# GetStatusCssClass(Eval("ReferralStatus").ToString()) %>' ><%# Eval("ReferralStatus") %></td>
-                                                <td><asp:Button ID="ViewApplicants" Text="View Applicant"  runat="server"  OnCommand="ViewApplicant_Command" CommandArgument='<%#Eval("student_accID")%>' /> </td>
+                                        </tr>
+                                        <tbody>
+                                            <asp:PlaceHolder ID="itemPlaceHolder" runat="server" />
+                                        </tbody>
+                                    </table>
+                                </LayoutTemplate>
+                                    <EmptyDataTemplate>
+                                    <table class="table-list">
+                                        <thead>
+                                            <tr>
+                                        <th>referral id</th>
+                                        <th>Last Name</th>
+                                        <th>First Name</th>
+                                        <th>Referred by</th>
+                                        <th>Referral letter</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th></th>
                                             </tr>
-                                        </Itemtemplate>
-        
-                                    </asp:Repeater>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:center; font-size:18px;" colspan="9">No data available</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </EmptyDataTemplate>
+                                  <ItemTemplate>
+                                        <tr>
+                                        <td class="datas"><%# Eval("referralID") %></td>
+                                        <td class="datas"><%# Eval("lastName") %></td>
+                                        <td class="datas"><%# Eval("firstName") %></td>
+                                        <td class="datas"><%# Eval("referredBy") %></td>
+                                        <td class="datas">
+                                            <asp:Button ID="btnreferralLetterButton" runat="server" Text="View Referral Letter" OnCommand="btnreferralLetterButton_Command"
+                                                CommandName="Review" CommandArgument='<%# Eval("referralLetter") %>'/>
+                                        </td>
+                                        <td class="datas"><%# Eval("datereferred") %></td>
+                                        <td class='<%# "datas " + GetStatusCssClass(Eval("ReferralStatus").ToString()) %>'>
+                                            <%# Eval("ReferralStatus").ToString() == "Pending" ? "Pending" : Eval("ReferralStatus").ToString() == "Approved" ? "Hired" : "" %>
+                                        </td>
+                                        <td class="datas" style="width:50px;"><asp:Button ID="ViewApplicants" Text="View Applicant"  runat="server"  OnCommand="ViewApplicant_Command" CommandArgument='<%#Eval("student_accID")%>' /> </td>
+                                    </tr>
+                                            </ItemTemplate>
+                            </asp:ListView>
+
                </div>
             </asp:TableCell>
         </asp:TableRow>

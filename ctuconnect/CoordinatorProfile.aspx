@@ -430,8 +430,19 @@
                                                     <asp:Button ID="EvaluationBtn" runat="server" Text='<%# Eval("evaluationRequest").ToString() == "Evaluated" ? "Evaluation" : "Not Available" %>' CommandArgument='<%# Eval("student_accID") %>' CommandName='<%# Eval("id") %>'  OnCommand="EvaluationBtn_Command" CssClass='<%# GetButtonCssClass(Eval("evaluationRequest")) %>' />
              
                                                 </td>
-                                                <td><asp:Button ID="ViewIntern" Text="ioi" runat="server" style="padding:0px; width:30px; border:none;"  OnCommand="TraceIntern_Command" CommandArgument='<%#Eval("student_accID")%>' />
-                                                </td>
+                                                <td>
+                                                   <asp:ImageButton 
+                                                    ID="ImageButton1" 
+                                                    runat="server" 
+                                                    ImageUrl="images/Icons/arrow.png" 
+                                                    style="padding: 0px; width: 23px;" 
+                                                    title="Trace Intern" 
+                                                    CommandName="ViewIntern" 
+                                                    OnCommand="TraceIntern_Command" 
+                                                    CommandArgument='<%#Eval("student_accID")%>'
+                                                />
+                                            </td>
+
                                             </tr>
                                         </Itemtemplate>
                    </asp:ListView>
