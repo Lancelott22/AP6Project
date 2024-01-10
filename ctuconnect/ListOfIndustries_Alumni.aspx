@@ -260,7 +260,7 @@
                                          <tr>
                                              <td class="datas"><%# Container.DataItemIndex + 1 %></td>
                                              <td class="datas">
-                                                 <a href='<%# ResolveUrl("~/ViewIndustryProfile_Coord?industry_accID=" + Eval("industry_accID"))%>' style="text-decoration: underline;">
+                                                 <a href='<%# ResolveUrl("~/ViewIndustryProfile_Admin?industry_accID=" + Eval("industry_accID"))%>' style="text-decoration: underline;">
                                                  <asp:Label runat="server" Text='<%# Eval("industryName") %>'></asp:Label>
 
                                              </td>
@@ -295,31 +295,23 @@
                                 <asp:Label ID="Label1" runat="server" Style="font-size:18px;">
                                     IndustryName<span style="color:red;">*</span>
                                 </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
-                                <asp:TextBox ID="txtIndustryName" runat="server" CssClass="txtbox" style="width:400px; margin-left:11px;"></asp:TextBox><br />
+                                <asp:TextBox ID="txtIndustryName" runat="server" CssClass="form-control" placeholder="Industry name" style="width:400px; margin-left:11px;"></asp:TextBox><br />
                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" forecolor="#F7941F" ControlToValidate="txtIndustryName"  runat="server" Display="Dynamic" ErrorMessage="this field is required!" ValidationGroup="AddIndustry"></asp:RequiredFieldValidator><br /><br />
                                 <!-- Row 2 -->
                                 <asp:Label ID="Label2" runat="server" Style="font-size:18px;">
                                     Email<span style="color:red;">*</span>
                                 </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
-                                <asp:TextBox ID="txtemail" runat="server" CssClass="txtbox" style="width:400px; margin-left:11px;"></asp:TextBox><br />
+                                <asp:TextBox ID="txtemail" runat="server" CssClass="form-control" placeholder="example@gmail.com" style="width:400px; margin-left:11px;"></asp:TextBox><br />
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" forecolor="#F7941F" ControlToValidate="txtemail"  runat="server" Display="Dynamic" ErrorMessage="this field is required!" ValidationGroup="AddIndustry"></asp:RequiredFieldValidator><br /><br />
                                 <!-- Row 3 -->
                                 <!--PASSWORD-->
                                 <asp:Label ID="Label3" runat="server" Style="font-size:18px;">
                                     Password<span style="color:red;">*</span>
                                 </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
-                                <asp:TextBox ID="txtpwd" runat="server" CssClass="txtbox" TextMode="Password" style="width:400px; margin-left:11px;"></asp:TextBox>
+                               <input type="text" id="txtpwd" runat="server" class="form-control" style="width:400px; margin-left:11px;" placeholder="Password" readonly onfocus="displayPassword()">
                                 <asp:RegularExpressionValidator ID="revpwd" runat="server" ControlToValidate="txtpwd" ErrorMessage="Invalid Password" CssClass="text-danger" ValidationExpression="^(?=.*\d)(?=.*[A-Z])(?=.*\W)(?!.*\s).{8,}$"></asp:RegularExpressionValidator><br />
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" forecolor="#F7941F" ControlToValidate="txtpwd"  runat="server" Display="Dynamic" ErrorMessage="this field is required!" ValidationGroup="AddIndustry"></asp:RequiredFieldValidator><br /><br />
+                                
                                 <!-- Row 4 -->
-                                <!--CONFIRM PASSWORD-->
-                                <asp:Label ID="Label4" runat="server" Style="font-size:18px;">
-                                    Confirm Password<span style="color:red;">*</span>
-                                </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
-                                <asp:TextBox ID="txtcpwd" runat="server" CssClass="txtbox" TextMode="Password" style="width:400px; margin-left:11px;"></asp:TextBox>
-                                <asp:CompareValidator ID="cvcpwd" runat="server" ErrorMessage="Password did not match!" ControlToCompare="txtpwd" ControlToValidate="txtcpwd"></asp:CompareValidator><br />
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" forecolor="#F7941F" ControlToValidate="txtcpwd"  runat="server" Display="Dynamic" ErrorMessage="this field is required!" ValidationGroup="AddIndustry"></asp:RequiredFieldValidator><br /><br />
-                                <!-- Row 5 -->
                                <!--MOU-->
                                     <asp:Label ID="Label5" runat="server" Style="font-size:18px;">
                                         MOU<span style="color:red;">*</span>
@@ -330,7 +322,7 @@
                                <asp:Label ID="lblocation" runat="server" Style="font-size:18px;">
                                 Location<span style="color:red;">*</span>
                                 </asp:Label><span style="margin-left:11px;  font-size:18px;">:</span><br />
-                               <asp:TextBox ID="txtLocation" runat="server" CssClass="txtbox" style="width:400px; margin-left:11px;"></asp:TextBox><br />
+                               <asp:TextBox ID="txtLocation" runat="server" CssClass="form-control" placeholder="Location" style="width:400px; margin-left:11px;"></asp:TextBox><br />
                                <asp:RequiredFieldValidator ID="RequiredFieldValidator6" forecolor="#F7941F" ControlToValidate="txtLocation"  runat="server" Display="Dynamic" ErrorMessage="this field is required!" ValidationGroup="AddIndustry"></asp:RequiredFieldValidator><br /><br />
                            </div>
                         </div>
@@ -369,6 +361,16 @@
         function close_Modal2() {
             var modal = document.getElementById("SuccessPrompt");
             modal.style.display = "none";
+        }
+        function displayPassword() {
+
+            var inputBox = document.getElementById('<%= txtpwd.ClientID %>');
+            var firstName = document.getElementById('<%= txtIndustryName.ClientID %>').value.replace(/\s/g, '');
+            var currentDate = new Date();
+            var currentYear = currentDate.getFullYear();
+            if (firstName != '') {
+                inputBox.value = '@' + firstName + currentYear;
+            }
         }
     </script>
 </asp:Content>
