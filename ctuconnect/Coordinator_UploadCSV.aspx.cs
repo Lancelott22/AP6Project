@@ -492,7 +492,7 @@ namespace ctuconnect
         }
         void BindSemCode()
         {
-            SqlCommand cmd = new SqlCommand("SELECT *, CONCAT(semDescription,' (',semCode,')') as sem_Description FROM ACADEMIC_YEAR", conDB);
+            SqlCommand cmd = new SqlCommand("SELECT *, CONCAT(semDescription,' of A.Y ', academicYear) as sem_Description FROM ACADEMIC_YEAR", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);
