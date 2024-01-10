@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
@@ -94,6 +96,45 @@ namespace ctuconnect
         {
             ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "$('#AddIndustryModal').modal('show');", true);
         }
+        private void SendEmail(string industryEmail, string industryPwd, string industryName)
+        {
+            try
+            {
+                string sendToEmail = industryEmail;
+                string sendFrom = "ctuconnect00@gmail.com";
+                string sendMessage = $"Hello {industryName}, <br/><br/>" +
+                    $"Your account has been created by our Administrative. You can now use it to sign in on CTU Connect. Please change your default password to make your account secure.<br/><br/>" +
+                    $"Your password is: {industryPwd}<br/>" +
+                    $"Date Created: {DateTime.Now}<br/>" +
+                    $"<br/><br/><h4>Note: This is a confidential information. Please do not share this message to anyone.</h4>";
+                string subject = "New Created Account";
+                using (MailMessage mm = new MailMessage())
+                {
+                    mm.From = new MailAddress(sendFrom, "CTU Connect");
+                    mm.To.Add(sendToEmail);
+                    mm.Subject = subject;
+                    mm.Body = sendMessage;
+                    mm.IsBodyHtml = true;
+                    mm.ReplyToList.Add(new MailAddress(sendFrom));
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.EnableSsl = true;
+                        NetworkCredential NetworkCred = new NetworkCredential();
+                        NetworkCred.UserName = "ctuconnect00@gmail.com";
+                        NetworkCred.Password = "diwvlfhaanwwfsid";
+                        smtp.UseDefaultCredentials = true;
+                        smtp.Credentials = NetworkCred;
+                        smtp.Port = 587;
+                        smtp.Send(mm);
+                    }
+                }
+            }
+            catch
+            {
+                Response.Write("<script>alert('Something went wrong! Please try again.');document.location='Coordinator_UploadCSV.aspx'</script>");
+            }
+        }
 
         protected void BtnSubmit_Click(object sender, EventArgs e)
         {
@@ -101,7 +142,7 @@ namespace ctuconnect
             { 
                 string industryName = txtIndustryName.Text;
                 string industryEmail = txtemail.Text;
-                string industryPwd = txtpwd.Text;
+                string industryPwd = txtpwd.Value;
                 string industryLoc = txtLocation.Text;
                 HttpPostedFile postedFile = mouUpload.PostedFile;
                 string filename = Path.GetFileName(postedFile.FileName); ///to check the filename
@@ -140,10 +181,12 @@ namespace ctuconnect
                             cmd.Parameters.AddWithValue("@mou", filename);
                             cmd.Parameters.AddWithValue("@datereg", DateTime.Now.ToString("yyyy/MM/dd"));
                             cmd.Parameters.AddWithValue("@verified", true);
+
                             cmd.ExecuteNonQuery();
                             conDB.Close();
 
                         }
+                        SendEmail(industryEmail, industryPwd, industryName);
                         Response.Write("<script>alert('Created Successfully');document.location='ListOfIndustries_Alumni.aspx'</script>");
                         //Response.Redirect("ListOfIndustries_Alumni.aspx");
                     }

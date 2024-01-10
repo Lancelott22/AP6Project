@@ -208,11 +208,11 @@
                                     <br />
                                     <div class="row details">
                                         <div class="col-6 d-flex flex-column">
-                                            <asp:Label ID="disp_Prod1" runat="server"></asp:Label>
-                                            <asp:Label ID="disp_Prod2" runat="server"></asp:Label>
-                                            <asp:Label ID="disp_Prod3" runat="server"></asp:Label>
-                                            <asp:Label ID="disp_Prod4" runat="server"></asp:Label>
-                                            <asp:Label ID="disp_Prod5" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Prod1" BorderStyle="Inset" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Prod2" BorderStyle="Inset" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Prod3" BorderStyle="inset" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Prod4" BorderStyle="Inset" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Prod5" BorderStyle="Inset" runat="server"></asp:Label>
                                         </div>
                                     </div>
                                 </div>
@@ -221,11 +221,11 @@
                                     <br />
                                     <div class="row details">
                                         <div class="col-6 d-flex flex-column">
-                                            <asp:Label ID="disp_Coop1" runat="server"></asp:Label>
-                                            <asp:Label ID="disp_Coop2" runat="server"></asp:Label>
-                                            <asp:Label ID="disp_Coop3" runat="server"></asp:Label>
-                                            <asp:Label ID="disp_Coop4" runat="server"></asp:Label>
-                                            <asp:Label ID="disp_Coop5" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Coop1" BorderStyle="Inset" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Coop2" BorderStyle="Inset" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Coop3" BorderStyle="Inset" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Coop4" BorderStyle="Inset" runat="server"></asp:Label>
+                                            <asp:Label ID="disp_Coop5" BorderStyle="Inset" runat="server"></asp:Label>
                                         </div>
                                     </div>
                                 </div>
@@ -237,11 +237,11 @@
                                      <br />
                                      <div class="row details">
                                          <div class="col-6 d-flex flex-column">
-                                             <asp:Label ID="disp_AbilityF1" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_AbilityF2" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_AbilityF3" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_AbilityF4" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_AbilityF5" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityF1" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityF2" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityF3" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityF4" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityF5" BorderStyle="Inset" runat="server"></asp:Label>
                                          </div>
                                      </div>
                                  </div>
@@ -250,11 +250,11 @@
                                      <br />
                                      <div class="row details">
                                          <div class="col-6 d-flex flex-column">
-                                             <asp:Label ID="disp_AbilityG1" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_AbilityG2" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_AbilityG3" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_AbilityG4" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_AbilityG5" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityG1" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityG2" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityG3" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityG4" BorderStyle="Inset"  runat="server"></asp:Label>
+                                             <asp:Label ID="disp_AbilityG5" BorderStyle="Inset" runat="server"></asp:Label>
                                          </div>
                                      </div>
                                  </div>
@@ -266,11 +266,11 @@
                                      <br />
                                      <div class="row details">
                                          <div class="col-6 d-flex flex-column">
-                                             <asp:Label ID="disp_Init1" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Init2" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Init3" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Init4" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Init5" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Init1" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Init2" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Init3" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Init4" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Init5" BorderStyle="Inset" runat="server"></asp:Label>
                                          </div>
                                      </div>
                                  </div>
@@ -279,11 +279,11 @@
                                      <br />
                                      <div class="row details">
                                          <div class="col-6 d-flex flex-column">
-                                             <asp:Label ID="disp_Attend1" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Attend2" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Attend3" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Attend4" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Attend5" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Attend1" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Attend2" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Attend3" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Attend4" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Attend5" BorderStyle="Inset" runat="server"></asp:Label>
                                          </div>
                                      </div>
                                  </div>
@@ -295,11 +295,11 @@
                                      <br />
                                      <div class="row details">
                                          <div class="col-6 d-flex flex-column">
-                                             <asp:Label ID="disp_Qual1" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Qual2" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Qual3" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Qual4" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Qual5" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Qual1" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Qual2" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Qual3" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Qual4" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Qual5" BorderStyle="Inset" runat="server"></asp:Label>
                                          </div>
                                      </div>
                                  </div>
@@ -308,11 +308,11 @@
                                      <br />
                                      <div class="row details">
                                          <div class="col-6 d-flex flex-column">
-                                             <asp:Label ID="disp_Appear1" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Appear2" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Appear3" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Appear4" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Appear5" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Appear1" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Appear2" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Appear3" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Appear4" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Appear5" BorderStyle="Inset" runat="server"></asp:Label>
                                          </div>
                                      </div>
                                  </div>
@@ -324,11 +324,11 @@
                                      <br />
                                      <div class="row details">
                                          <div class="col-6 d-flex flex-column">
-                                             <asp:Label ID="disp_Depend1" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Depend2" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Depend3" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Depend4" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Depend5" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Depend1" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Depend2" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Depend3" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Depend4" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Depend5" BorderStyle="Inset" runat="server"></asp:Label>
                                          </div>
                                      </div>
                                  </div>
@@ -337,11 +337,11 @@
                                      <br />
                                      <div class="row details">
                                          <div class="col-6 d-flex flex-column">
-                                             <asp:Label ID="disp_Overall1" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Overall2" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Overall3" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Overall4" runat="server"></asp:Label>
-                                             <asp:Label ID="disp_Overall5" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Overall1" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Overall2" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Overall3" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Overall4" BorderStyle="Inset" runat="server"></asp:Label>
+                                             <asp:Label ID="disp_Overall5" BorderStyle="Inset" runat="server"></asp:Label>
                                          </div>
                                      </div>
                                  </div>
