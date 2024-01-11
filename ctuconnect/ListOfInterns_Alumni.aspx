@@ -155,6 +155,21 @@
       border-bottom: 2px solid black;
       color:#881A30;
      }
+    .add-button{
+    background-color: #881A30;
+    border: 1px solid;
+    border-color: gray;
+    box-shadow: 0 0px 8px rgba(0, 0, 0.8, 0.2);
+    color: white;
+    padding-left: 8px;
+    padding-right: 8px; 
+    text-decoration:none;
+    float:right;
+    }
+    .add-button:hover{
+         color:white;
+         text-decoration:none;
+    }
 
 </style>
 <div class="container-fluid">
@@ -228,7 +243,7 @@
             <br />
             <div class="container">
                 <h1 class="title">List of Interns</h1>
-                 <div id="academicYearSemesterFilter" style="float:left; min-width:50%;" runat="server">
+                 <div id="academicYearSemesterFilter" style="float:left; min-width:100%;" runat="server">
                  <p style="float:left;">Academic Year  <asp:DropDownList ID="ddlAcademicYear" runat="server" CssClass="sort-dropdown1" AutoPostBack="true" OnSelectedIndexChanged="dropdownsforCAS_SelectedIndexChanged"></asp:DropDownList></p>
                  <asp:DropDownList ID="ddlSemester" runat="server" style="margin-left:1%;" CssClass="sort-dropdown2" OnSelectedIndexChanged="dropdownsforCAS_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                  <asp:DropDownList ID="programList" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="dropdownsforCAS_SelectedIndexChanged" ></asp:DropDownList>
@@ -252,6 +267,10 @@
                  <asp:DropDownList ID="ddlAcademicYear6" runat="server" CssClass="sort-dropdown1" AutoPostBack="true" OnSelectedIndexChanged="dropdownsforCOT_SelectedIndexChanged" Visible="false" ></asp:DropDownList>
                  <asp:DropDownList ID="ddlSemester6" runat="server" style="margin-left:1%;" CssClass="sort-dropdown2" OnSelectedIndexChanged="dropdownsforCOT_SelectedIndexChanged" AutoPostBack="true" Visible="false"></asp:DropDownList>
                  <asp:DropDownList ID="programList6" runat="server" AutoPostBack="true" Style="width:150px;" CssClass="sort-dropdown" OnSelectedIndexChanged="dropdownsforCOT_SelectedIndexChanged" Visible="false"></asp:DropDownList>
+
+                <asp:LinkButton ID="BtnStartAcademicYear" runat="server" CssClass="add-button" OnClick="academicYear_Clicked" CausesValidation="false">
+                    <i class="fa fa-plus"></i> Start new academic year
+                </asp:LinkButton>
 
                 </div><div style="clear: both;"></div>
                 <div class="col-lg-5 order-1 order-lg-2 topnav">
@@ -601,4 +620,67 @@
         </div>    
    
     </div>
+
+        <div class="modal fade" id="AcadPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                         <br />
+                        <asp:Label ID="Label24" runat="server" Text="Are you sure you want to start a new academic year?" Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                         <asp:Button  class="btn btn-success" runat="server" Text="Yes" OnCLick="addNewAcademicYear_Clicked" autopostback="true" />
+                         <asp:Button runat="server" class="btn btn-danger" Text="No" OnCLick="closePrompt" />
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="modal fade" id="NewAcad" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                         <br />
+                        <asp:Label ID="Label1" runat="server" Text="Academic Year" Style="font-size:24px; text-align:center;" ></asp:Label>
+                        <div style="justify-items:center;">
+                            <asp:Label runat="server">20<asp:TextBox ID="startYear" runat="server" style="width:40px;"></asp:TextBox> &mdash;  </asp:Label><asp:Label runat="server">20</asp:Label><asp:TextBox ID="endYear" runat="server" style="width:40px;"></asp:TextBox><br />
+                                <asp:Label ID="Label2" runat="server" Text="Start Year" Style="font-size:12px; margin-right:18px;" ></asp:Label><asp:Label ID="Label3" runat="server" Text="End Year" Style="font-size:12px;"></asp:Label>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                         <asp:Button  class="btn btn-success" runat="server" Text="Submit" OnClick="saveNewAcademicYear" autopostback="true" />
+                         <asp:Button runat="server" class="btn btn-danger" Text="Cancel" OnClick="cancelClicked"  />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="SuccessPrompt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-0">
+                    <div class="modal-body p-4 px-5">
+                    <div class="main-content text-center">
+                         <br />
+                        <img src="images/check-mark.png" style="width:100px; height:auto;" /><br />
+                        <asp:Label ID="Label23" runat="server" Text="New Academic Year Added!" Style="font-size:25px;" ></asp:Label><br />
+                        <asp:Label ID="Label4" runat="server" Text="You succesfully added a new academic year" Style="font-size:18px;" ></asp:Label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button runat="server" type="button" class="btn btn-success" Text="Close" OnCLick="close_Modal" />
+                    </div>
+                </div>
+            </div>
+</div>
+
+        <script type="text/javascript">
+            function closePrompt() {
+                var modal = document.getElementById("AcadPrompt");
+                modal.style.display = "none";
+            }
+        </script>
+
 </asp:Content>
