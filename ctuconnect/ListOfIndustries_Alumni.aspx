@@ -161,6 +161,10 @@
         margin: auto; /* Center the modal content horizontally */
         padding: 20px; /* Add padding for better appearance */
     }
+
+    .container-industry{
+        width:90%;
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -288,7 +292,7 @@
                     <h2 class="title">Create Industry Account</h2>
                 </div>
                 <div class="modal-body" style="align-items:center;">
-                    <div class="container">
+                    <div class="container-industry">
                         <div class="row">
                            <div class="col-md-12">
                                 <!-- Row 1 -->

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Industry.Master" AutoEventWireup="true" CodeBehind="EvaluationForm.aspx.cs" Inherits="ctuconnect.EvaluationForm" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Industry.Master" AutoEventWireup="true" CodeBehind="EvaluationForm.aspx.cs" Inherits="ctuconnect.EvaluationForm" EnableViewState="true"%>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -86,7 +86,7 @@
     }
     </style>
 
-<div class="evaluation-form" runat="server">
+<div class="evaluation-form" runat="server" enableviewstate="true">
     <h1>OJT PERFORMANCE EVALUATION FORM</h1>
     <p>for&nbsp <asp:Label ID="forCourse" runat="server" ></asp:Label></p>
     
