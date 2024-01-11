@@ -71,6 +71,7 @@ namespace ctuconnect
                             command.Parameters.AddWithValue("password", newPass);
                             command.Parameters.AddWithValue("username", username);
                             command.ExecuteNonQuery();
+                            Response.Write("<script>alert('Change password was successful!');document.location='Coord_AccountSetting.aspx'</script>");
                         }
                         else
                         {

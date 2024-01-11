@@ -554,10 +554,11 @@ namespace ctuconnect
         }
         protected void btnprevious2_Click(object sender, EventArgs e)
         {
-            // Your existing code for handling the PrevView button click
-
+            
             // Hide the Submit button
             btnsubmit.Visible = false;
+
+
         }
     }
 }

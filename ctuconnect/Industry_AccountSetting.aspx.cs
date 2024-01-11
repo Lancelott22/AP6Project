@@ -100,6 +100,7 @@ namespace ctuconnect
                             command.Parameters.AddWithValue("password", newPass);
                             command.Parameters.AddWithValue("email", email);
                             command.ExecuteNonQuery();
+                            Response.Write("<script>alert('Change password was successful!');document.location='Industry_AccountSetting.aspx'</script>");
                         }
                         else
                         {
