@@ -38,7 +38,7 @@
             padding-left:2em;
             min-width:90%;
             float:left;
-            margin-left:75px;
+            margin-left:55px;
             padding-top:2em;
             font-family: 'Poppins', sans-serif;
             border-radius: 10px;
@@ -57,10 +57,11 @@
         }
 
         .student-container{
-            width:85%;
+            width: 1310px;
             margin-top:200px;
             font-size:18px;
             margin: 0 auto; /* This centers the element horizontally */
+            margin-left:8.5em;
         }
 
         .display-review{
@@ -275,7 +276,7 @@
                 
                 <div class="student-container" id="about">
                     <div class="row">
-                        <div class="col-7">
+                        <div class="col-12">
                             <div class="display-industry">
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -347,16 +348,7 @@
                                 <br /><br />
                             </div>
                         </div>
-                        <div class="col-4">
-                            <div class="student-details2">
-                                <div class="row">
-                                    <div class="col-sm-12" style="font-weight:bold;">
-                                        
-                                    </div>
-                                </div>
-                                <br />
-                            </div>
-                        </div>
+                        
                     </div>
                     
                 </div>

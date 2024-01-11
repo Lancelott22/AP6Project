@@ -272,7 +272,7 @@ namespace ctuconnect
                         sqlBulkCopy1.WriteToServer(dt1);
                         sqlBulkCopy1.Close();
                         conDB.Close();
-                        Response.Write("<script>alert('The file has been uploaded successfully.');document.location='Coordinator_UploadCSV.aspx';</script>");
+                        Response.Write("<script>alert('The file has been uploaded successfully.');document.location='ListOfAlumni.aspx';</script>");
                     }
                     foreach (DataRow row in dt1.Rows)
                     {
@@ -492,7 +492,7 @@ namespace ctuconnect
         }
         void BindSemCode()
         {
-            SqlCommand cmd = new SqlCommand("SELECT *, CONCAT(semDescription,' (',semCode,')') as sem_Description FROM ACADEMIC_YEAR", conDB);
+            SqlCommand cmd = new SqlCommand("SELECT *, CONCAT(semDescription,' of A.Y ', academicYear) as sem_Description FROM ACADEMIC_YEAR", conDB);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable ds = new DataTable();
             da.Fill(ds);

@@ -67,8 +67,15 @@ namespace ctuconnect
                                     Session["StudentEmail"] = txtemail.Text;
                                     Response.Redirect("Alumni_Employment_Form.aspx");
                                 }
+                                else if(checkIsFirstTimeLogin(Session["Student_ACC_ID"].ToString()))
+                                {
+                                    Session["ChangePass"] = true;
+                                    var usertype = "student";
+                                    Response.Redirect("ChangePasswordFirstTimeLogin.aspx?account_ID=" + Session["Student_ACC_ID"].ToString() + "&Email=" + txtemail.Text + "&UserType=" + usertype);
+                                }
                                 else
                                 {
+                                    Session["ChangePass"] = null;
                                     Session["StudentEmail"] = txtemail.Text;
                                     Response.Redirect("JobPortal.aspx");
                                 }
@@ -102,6 +109,27 @@ namespace ctuconnect
                 ShowErrorMessage("Something went wrong! Please try again.");
             }
 
+        }
+        bool checkIsFirstTimeLogin(string student_accID)
+        {
+
+            SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select isFirstTimeLogin from STUDENT_ACCOUNT WHERE student_accID = @student_accID", conDB);
+            cmd.Parameters.AddWithValue("@student_accID", student_accID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (bool.Parse(reader["isFirstTimeLogin"].ToString()) == true)
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return true;
+                }
+            }
+            reader.Close();
+            conDB.Close();
+            return false;
         }
         bool checkStatusAndIsAnsweredAlumniForm(string studentID)
         {
@@ -155,7 +183,6 @@ namespace ctuconnect
                     Session["Student_COURSE"] = reader["course"];
                     Session["PROFILE"] = reader["studentPicture"];
                     Session["ResumeFile"] = reader["resumeFile"];
-                    Session["StudentEmail"] = reader["email"];
                         Session["PASSWORD"] = reader["password"];
                         Session["DATEREG"] = reader["dateRegistered"];
                     Session["IsAnswered"] = reader["isAnsweredAlumniForm"];

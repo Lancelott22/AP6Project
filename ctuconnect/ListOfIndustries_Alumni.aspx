@@ -264,7 +264,7 @@
                                          <tr>
                                              <td class="datas"><%# Container.DataItemIndex + 1 %></td>
                                              <td class="datas">
-                                                 <a href='<%# ResolveUrl("~/ViewIndustryProfile_Coord?industry_accID=" + Eval("industry_accID"))%>' style="text-decoration: underline;">
+                                                 <a href='<%# ResolveUrl("~/ViewIndustryProfile_Admin?industry_accID=" + Eval("industry_accID"))%>' style="text-decoration: underline;">
                                                  <asp:Label runat="server" Text='<%# Eval("industryName") %>'></asp:Label>
 
                                              </td>

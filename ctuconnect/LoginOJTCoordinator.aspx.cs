@@ -70,8 +70,19 @@ namespace ctuconnect
                                 conDB2.Close();
                                 reader.Close();
                             }
-                            Session["Username"] = txtusername.Text;
-                            Response.Redirect("CoordinatorProfile.aspx");// User is authenticated, you can redirect to another page
+                            if(checkIsFirstTimeLogin(Session["Coor_ACC_ID"].ToString()))
+                            {
+                                Session["ChangePass"] = true;
+                                var usertype = "coordinator";
+                                Response.Redirect("ChangePasswordFirstTimeLogin.aspx?account_ID=" + Session["Coor_ACC_ID"].ToString() + "&Email=" + txtusername.Text + "&UserType=" + usertype);
+                            }
+                            else
+                            {
+                                Session["ChangePass"] = null;
+                                Session["Username"] = txtusername.Text;
+                                Response.Redirect("CoordinatorProfile.aspx");// User is authenticated, you can redirect to another page
+                            }
+                           
                             
                         }
                         else
@@ -98,6 +109,28 @@ namespace ctuconnect
                 }
             }
 
+        }
+
+        bool checkIsFirstTimeLogin(string coordinator_accID)
+        {
+
+            SqlConnection conDB = new SqlConnection(WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString); //databse connection
+            conDB.Open();
+            SqlCommand cmd = new SqlCommand("select isFirstTimeLogin from COORDINATOR_ACCOUNT WHERE coordinator_accID = @coordinator_accID", conDB);
+            cmd.Parameters.AddWithValue("@coordinator_accID", coordinator_accID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                if (bool.Parse(reader["isFirstTimeLogin"].ToString()) == true)
+                {
+                    reader.Close();
+                    conDB.Close();
+                    return true;
+                }
+            }
+            reader.Close();
+            conDB.Close();
+            return false;
         }
 
         protected void CheckBox1_CheckedChanged(object sender, EventArgs e)

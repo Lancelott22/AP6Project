@@ -64,7 +64,7 @@
     </style>
     <h2 class="opacity-75">Dashboard</h2>
     <div class="container m-auto w-75 h-100 d-flex flex-column">
-        <div class="row my-5" style="height: 200px; margin-top: 10%;">
+        <div class="row my-5" style="height: 300px; margin-top: 10%; padding: 40px; border: 2px grey; box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);">
             <div class="col-sm">
                 <div class="card h-100">
                     <div class="card-body">
@@ -101,7 +101,7 @@
                 </div>
             </div>
         </div>
-        <div class="row my-5">
+        <div class="row my-5" style="border: 2px grey; padding: 40px; box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);">
             <h2 class="text-center">Industry Graphs</h2>
             <div class="col">
                 <asp:Chart ID="Chart1" runat="server" Width="500px" BorderlineDashStyle="Solid">
@@ -147,103 +147,104 @@
                 </asp:Chart>
             </div>
         </div>
-
-        <div class="row my-5">
-            <h2 class="text-center">Alumni Graphs</h2>
-            <div class="row my-5">
-                <div class="col-4">
-                    <span>Deparment</span>
-                    <asp:DropDownList runat="server" CssClass="selectpicker" ID="Department" AutoPostBack="true" OnSelectedIndexChanged="Department_SelectedIndexChanged">
-                    </asp:DropDownList>
+        <div class="row my-5" style="border: 2px grey; padding: 40px; box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);">
+            <div class="row mb-5">
+                <h2 class="text-center">Alumni Graphs</h2>
+                <div class="row my-5">
+                    <div class="col-4">
+                        <span>Deparment</span>
+                        <asp:DropDownList runat="server" CssClass="selectpicker" ID="Department" AutoPostBack="true" OnSelectedIndexChanged="Department_SelectedIndexChanged">
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-4">
+                        <span>Course</span>
+                        <asp:DropDownList runat="server" CssClass="selectpicker" ID="Course" AutoPostBack="true" OnSelectedIndexChanged="Course_SelectedIndexChanged">
+                            <asp:ListItem Value="0" Text="All" Selected="true"></asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
                 </div>
-                <div class="col-4">
-                    <span>Course</span>
-                    <asp:DropDownList runat="server" CssClass="selectpicker" ID="Course" AutoPostBack="true" OnSelectedIndexChanged="Course_SelectedIndexChanged">
-                        <asp:ListItem Value="0" Text="All" Selected="true"></asp:ListItem>
-                    </asp:DropDownList>
+                <div class="col">
+
+                    <asp:Chart ID="Chart3" runat="server" Width="500px" BorderlineDashStyle="Solid">
+                        <Titles>
+                            <asp:Title Name="ChartTitle" Text="Employment Status" />
+                        </Titles>
+                        <Series>
+                            <asp:Series Name="EmploymentType" ChartType="Pie" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="EmploymentType" XValueMember="employmentStatus" YValueMembers="employmentCount">
+                            </asp:Series>
+                        </Series>
+                        <ChartAreas>
+                            <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
+
+                        </ChartAreas>
+                        <Legends>
+                            <asp:Legend Name="EmploymentType" Docking="Bottom"></asp:Legend>
+                        </Legends>
+                    </asp:Chart>
+                </div>
+                <div class="col d-flex flex-column align-items-center">
+
+                    <asp:Label ID="Label1" Text="No data available" runat="server" Visible="false"></asp:Label>
+                    <asp:Chart ID="Chart4" runat="server" Width="500px" BorderlineDashStyle="Solid">
+                        <Titles>
+                            <asp:Title Name="ChartTitle" Text="Job Connected to Course" />
+                        </Titles>
+                        <Series>
+                            <asp:Series Name="IsConnectedCourse" ChartType="Pie" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="IsConnectedToCourse" XValueMember="isConnectedToCourse" YValueMembers="isConnectedCount">
+                            </asp:Series>
+                        </Series>
+                        <ChartAreas>
+                            <asp:ChartArea Name="ChartArea2"></asp:ChartArea>
+                        </ChartAreas>
+                        <Legends>
+                            <asp:Legend Name="IsConnectedToCourse" Docking="Bottom"></asp:Legend>
+                        </Legends>
+                    </asp:Chart>
                 </div>
             </div>
-            <div class="col">
+            <div class="row mt-5">
 
-                <asp:Chart ID="Chart3" runat="server" Width="500px" BorderlineDashStyle="Solid">
-                    <Titles>
-                        <asp:Title Name="ChartTitle" Text="Employment Status" />
-                    </Titles>
-                    <Series>
-                        <asp:Series Name="EmploymentType" ChartType="Pie" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="EmploymentType" XValueMember="employmentStatus" YValueMembers="employmentCount">
-                        </asp:Series>
-                    </Series>
-                    <ChartAreas>
-                        <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
+                <div class="col">
 
-                    </ChartAreas>
-                    <Legends>
-                        <asp:Legend Name="EmploymentType" Docking="Bottom"></asp:Legend>
-                    </Legends>
-                </asp:Chart>
-            </div>
-            <div class="col d-flex flex-column align-items-center">
+                    <asp:Chart ID="Chart5" runat="server" Width="500px" BorderlineDashStyle="Solid">
+                        <Titles>
+                            <asp:Title Name="ChartTitle" Text="Salary Range" />
+                        </Titles>
+                        <Series>
+                            <asp:Series Name="SalaryRange" ChartType="Pie" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="SalaryRange" XValueMember="SalaryRange" YValueMembers="SalaryCount">
+                            </asp:Series>
+                        </Series>
+                        <ChartAreas>
+                            <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
 
-                <asp:Label ID="Label1" Text="No data available" runat="server" Visible="false"></asp:Label>
-                <asp:Chart ID="Chart4" runat="server" Width="500px" BorderlineDashStyle="Solid">
-                    <Titles>
-                        <asp:Title Name="ChartTitle" Text="Job Connected to Course" />
-                    </Titles>
-                    <Series>
-                        <asp:Series Name="IsConnectedCourse" ChartType="Pie" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="IsConnectedToCourse" XValueMember="isConnectedToCourse" YValueMembers="isConnectedCount">
-                        </asp:Series>
-                    </Series>
-                    <ChartAreas>
-                        <asp:ChartArea Name="ChartArea2"></asp:ChartArea>
-                    </ChartAreas>
-                    <Legends>
-                        <asp:Legend Name="IsConnectedToCourse" Docking="Bottom"></asp:Legend>
-                    </Legends>
-                </asp:Chart>
+                        </ChartAreas>
+                        <Legends>
+                            <asp:Legend Name="SalaryRange" Docking="Bottom"></asp:Legend>
+                        </Legends>
+                    </asp:Chart>
+                </div>
+                <div class="col d-flex flex-column align-items-center">
+
+                    <asp:Label ID="Label2" Text="No data available" runat="server" Visible="false"></asp:Label>
+                    <asp:Chart ID="Chart6" runat="server" Width="500px" BorderlineDashStyle="Solid">
+                        <Titles>
+                            <asp:Title Name="ChartTitle" Text="Job Aligned To Skills" />
+                        </Titles>
+                        <Series>
+                            <asp:Series Name="AlignedToSkill" ChartType="Pie" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="AlignedToSkill" XValueMember="isAlignedToSkill" YValueMembers="AlignedToSkillCount">
+                            </asp:Series>
+                        </Series>
+                        <ChartAreas>
+                            <asp:ChartArea Name="ChartArea2"></asp:ChartArea>
+                        </ChartAreas>
+                        <Legends>
+                            <asp:Legend Name="AlignedToSkill" Docking="Bottom"></asp:Legend>
+                        </Legends>
+                    </asp:Chart>
+                </div>
             </div>
         </div>
-        <div class="row my-5">
-           
-            <div class="col">
-
-                <asp:Chart ID="Chart5" runat="server" Width="500px" BorderlineDashStyle="Solid">
-                    <Titles>
-                        <asp:Title Name="ChartTitle" Text="Salary Range" />
-                    </Titles>
-                    <Series>
-                        <asp:Series Name="SalaryRange" ChartType="Pie" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="SalaryRange" XValueMember="SalaryRange" YValueMembers="SalaryCount">
-                        </asp:Series>
-                    </Series>
-                    <ChartAreas>
-                        <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
-
-                    </ChartAreas>
-                    <Legends>
-                        <asp:Legend Name="SalaryRange" Docking="Bottom"></asp:Legend>
-                    </Legends>
-                </asp:Chart>
-            </div>
-            <div class="col d-flex flex-column align-items-center">
-
-                <asp:Label ID="Label2" Text="No data available" runat="server" Visible="false"></asp:Label>
-                <asp:Chart ID="Chart6" runat="server" Width="500px" BorderlineDashStyle="Solid">
-                    <Titles>
-                        <asp:Title Name="ChartTitle" Text="Job Aligned To Skills" />
-                    </Titles>
-                    <Series>
-                        <asp:Series Name="AlignedToSkill" ChartType="Pie" IsValueShownAsLabel="true" IsVisibleInLegend="true" Legend="AlignedToSkill" XValueMember="isAlignedToSkill" YValueMembers="AlignedToSkillCount">
-                        </asp:Series>
-                    </Series>
-                    <ChartAreas>
-                        <asp:ChartArea Name="ChartArea2"></asp:ChartArea>
-                    </ChartAreas>
-                    <Legends>
-                        <asp:Legend Name="AlignedToSkill" Docking="Bottom"></asp:Legend>
-                    </Legends>
-                </asp:Chart>
-            </div>
-        </div>
-        <div class="row my-5">
+        <div class="row my-5 mb-5" style="border: 2px grey; padding: 40px; box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);" >
             <h2 class="text-center">Intern Graphs</h2>
             <div class="row my-5">
                 <div class="col-4">

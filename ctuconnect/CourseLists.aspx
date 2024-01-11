@@ -358,9 +358,9 @@
                     </div>
                      <div style="float:left;">
                     
-                        <asp:TextBox ID="txtCoursecode" CssClass="txtbox" runat="server" style="width:400px; margin-left:11px;" > </asp:TextBox><br />
+                        <asp:TextBox ID="txtCoursecode" CssClass="txtbox" runat="server" style="width:400px; margin-left:11px;" placeholder="e.g. BSIT" > </asp:TextBox><br />
                     
-                        <asp:TextBox ID="txtCourseName" CssClass="txtbox" runat="server" style="width:400px; margin-left:11px;" > </asp:TextBox><br />
+                        <asp:TextBox ID="txtCourseName" CssClass="txtbox" runat="server" style="width:400px; margin-left:11px;" placeholder="e.g. Bachelor of Science in ..."  > </asp:TextBox><br />
                     
                         <asp:TextBox ID="txtMajor" CssClass="txtbox" runat="server" style="width:400px; margin-left:11px;"  > </asp:TextBox><br /> 
                     
