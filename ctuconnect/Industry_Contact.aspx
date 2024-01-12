@@ -337,7 +337,7 @@
                             <asp:ListItem Value="" Enabled="false" Selected="true">Select User</asp:ListItem>
                             <asp:ListItem Value="Admin">Admin</asp:ListItem>
                             <asp:ListItem Value="OJTCoordinator">OJT Coordinator</asp:ListItem>
-                            <asp:ListItem Value="HiredStudent">Hired</asp:ListItem>
+                            <asp:ListItem Value="HiredStudent">Intern</asp:ListItem>
                         </asp:DropDownList>
                         <br />
                         <br />

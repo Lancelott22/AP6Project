@@ -8,7 +8,7 @@
             background: #FFFFFF;
             padding: 30px;
             border-radius: 5px;
-            width: 450px;
+            width: 350px;
             margin: auto;
             box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
         }
@@ -45,7 +45,7 @@
             <br />
             <div class="form-group">
                 <asp:Label runat="server" Style="left: 0px; top: 10px;">New Password</asp:Label>
-                <asp:TextBox ID="Newpass" runat="server" TextMode="Password" CssClass="form-control" Width="250px" placeholder="Enter new password"></asp:TextBox>
+                <asp:TextBox ID="Newpass" runat="server" TextMode="Password" CssClass="form-control" Width="300px" placeholder="Enter new password"></asp:TextBox>
                 <asp:Label ID="NewpassErrorMessage" Font-Size="15px" runat="server" Text="New password must be different from current password!" CssClass="text-danger"></asp:Label>
                 <asp:RequiredFieldValidator ID="reqnewpassword" Font-Size="15px" runat="server" ErrorMessage="Required Field!" ControlToValidate="Newpass" Display="Dynamic" CssClass="text-danger" ValidationGroup="UpdateSave"></asp:RequiredFieldValidator>
                 <!-- "^(?=.*\d)(?=.*[A-Z])(?=.*\W)(?!.*\s).{8,}$"-->
@@ -54,15 +54,14 @@
             <div class="form-group">
                 <asp:Label runat="server" Style="left: 0px; top: 10px;">Confirm New Password</asp:Label>
 
-                <asp:TextBox ID="confirmNewPass" runat="server" TextMode="Password" CssClass="form-control" Width="250px" placeholder="Enter new confirm password"></asp:TextBox>
+                <asp:TextBox ID="confirmNewPass" runat="server" TextMode="Password" CssClass="form-control" Width="300px" placeholder="Enter new confirm password"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="reqConfirmNewPass" Font-Size="15px" runat="server" ErrorMessage="Required Field!" ControlToValidate="confirmNewPass" Display="Dynamic" CssClass="text-danger" ValidationGroup="UpdateSave"></asp:RequiredFieldValidator>
                 <asp:CompareValidator ID="comNewPassword" Font-Size="15px" runat="server" ErrorMessage="The new password did not match!" ControlToCompare="Newpass" Display="Dynamic" ControlToValidate="confirmNewPass" CssClass="text-danger"></asp:CompareValidator>
 
             </div>
             <div class="form-group mt-5">
-                <div style="margin-left: 10px">
-                    <asp:Button ID="BtnUpdatePass" class="btn btn-success" runat="server" Text="Update Password" OnClick="BtnUpdatePass_Click" ValidationGroup="UpdateSave" />
-                    <asp:Button ID="cancelButton" class="btn btn-danger" runat="server" Text="Cancel" CausesValidation="False"/>
+                <div>
+                    <asp:Button ID="BtnUpdatePass" class="btn btn-success w-100" runat="server" Text="Change Password" OnClick="BtnUpdatePass_Click" ValidationGroup="UpdateSave" />                    
                 </div>
             </div>
 
