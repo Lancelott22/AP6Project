@@ -47,7 +47,7 @@ namespace ctuconnect
                     bindCourse();
                 }
                    
-                if(bool.Parse(Session["ISVerified"].ToString()) == false)
+                if(checkVerified() == false)
                 {
                     Response.Write("<script>alert('Your account is not yet verified! You cannot post a job right now.');document.location='IndustryDashboard.aspx';</script>");
                 }

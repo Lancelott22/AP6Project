@@ -107,8 +107,8 @@ namespace ctuconnect
                             //SQL Statement
                             cmd.CommandType = CommandType.Text;
 
-                            cmd.CommandText = "INSERT INTO INDUSTRY_ACCOUNT (INDUSTRYNAME, LOCATION, EMAIL, PASSWORD, MOU, INDUSTRYPICTURE, DATEREGISTERED, ISDEACTIVATED, ISREAD, ISREMOVE, ISVERIFIED, ISDELETE )"
-                                + "VALUES (@industryName, @location, @email, @password, @mou, @industryPicture, @datereg, @deact, @read, @remove, @verified, @delete )";
+                            cmd.CommandText = "INSERT INTO INDUSTRY_ACCOUNT (INDUSTRYNAME, LOCATION, EMAIL, PASSWORD, MOU, INDUSTRYPICTURE, DATEREGISTERED, ISDEACTIVATED, ISREAD, ISREMOVE, ISVERIFIED)"
+                                + "VALUES (@industryName, @location, @email, @password, @mou, @industryPicture, @datereg, @deact, @read, @remove, @verified)";
                             
 
                             
@@ -124,7 +124,7 @@ namespace ctuconnect
                             cmd.Parameters.AddWithValue("@read", false );
                             cmd.Parameters.AddWithValue("@remove", false);
                             cmd.Parameters.AddWithValue("@verified", false);
-                            cmd.Parameters.AddWithValue("@delete", false);
+                      
                             cmd.ExecuteNonQuery();
                             conDB.Close();
 

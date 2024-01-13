@@ -510,7 +510,7 @@ namespace ctuconnect
         
         void RedirectToListOfIndustries(int industryID)
         {
-            Response.Redirect("ListOfIndustries.aspx?industryID=" + industryID);
+            Response.Redirect("ListOfIndustries_Alumni.aspx?industryID=" + industryID);
         }
         
 
