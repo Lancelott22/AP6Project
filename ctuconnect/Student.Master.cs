@@ -15,13 +15,21 @@ namespace ctuconnect
         string conDB = WebConfigurationManager.ConnectionStrings["CTUConnection"].ConnectionString;
         private DataTable dtRefer = new DataTable();
         private DataTable dtFeedback = new DataTable();
-
+        bool isHired = false;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                Page.DataBind();
                 studentDetails();
                 displayStudentPic();
+                if (isHired == false)
+                {
+                    attendance.Visible = false;
+                }else
+                {
+                    attendance.Visible = true;
+                }
             }
             int totalCounts = UnreadReferCount() + UnreadFeedbackCount();
             lblUnreadCount.Text = totalCounts.ToString();
@@ -74,7 +82,7 @@ namespace ctuconnect
                     lblname.Text = reader["firstName"].ToString() + " " + reader["lastName"].ToString();
                     Session["PICTURE"] = reader["studentPicture"];
                     lblstudentID.Text = reader["studentID"].ToString();
-
+                    isHired = bool.Parse(reader["isHired"].ToString());
                 }
                 reader.Close();
             }

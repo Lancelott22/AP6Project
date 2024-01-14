@@ -361,6 +361,7 @@
                     <ul class="navbar-nav flex-grow-1 navbar-right" id="navvbar" runat="server">
                         <li class="nav-item"><a class="nav-link" id="alumniForm" visible="false" runat="server" href="~/ALUMNI_EMPLOYMENT_FORM">Employment Form</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Home">Home</a></li>
+                        <li class="nav-item" id="attendance" runat="server"><a class="nav-link" runat="server" href='<%# "http://localhost:3000/attendance/" + Session["Student_ACC_ID"] + "/student" %> '>Attendance</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/MyJobApplication">Application</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/JobPortal">Job Portal</a></li>
                         <li class="nav-item">
