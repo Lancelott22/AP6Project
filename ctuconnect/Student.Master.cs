@@ -20,7 +20,7 @@ namespace ctuconnect
         {
             if (!IsPostBack)
             {
-                Page.DataBind();
+                studNavAttendance.DataBind();
                 studentDetails();
                 displayStudentPic();
                 if (isHired == false)

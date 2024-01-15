@@ -23,7 +23,7 @@ namespace ctuconnect
         {
             if (!IsPostBack)
             {
-                Page.DataBind();
+                navAttendance.DataBind();
                 if (Session["INDUSTRY_ACC_ID"] != null)
                 {
                     string industryID = Session["INDUSTRY_ACC_ID"].ToString();
